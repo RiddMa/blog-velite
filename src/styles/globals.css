@@ -17,6 +17,8 @@
 }
 
 body {
+  font-family: -apple-system, BlinkMacSystemFont, SFProDisplay-Regular, "PingFang SC", "Myriad Pro",
+  "Noto Sans SC", sans-serif;
   color: rgb(var(--foreground-rgb));
   background: linear-gradient(
       to bottom,
