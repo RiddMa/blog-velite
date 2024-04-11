@@ -1,8 +1,8 @@
 import React from "react";
-import { usePageStateStore } from "@/store/store";
+import { usePageStateStore } from "@/src/store/store";
 import { useShallow } from "zustand/react/shallow";
-import MobileNavMenu from "@/app/layout/components/mobile-nav-menu";
-import DarkModeToggleClient from "@/app/layout/components/dark-mode-toggle.client";
+import MobileNavMenu from "@/src/app/layout/components/mobile-nav-menu";
+import DarkModeToggleClient from "@/src/app/layout/components/dark-mode-toggle.client";
 
 interface TopNavbarProps {
   className?: string; // 可选的string类型
@@ -10,27 +10,19 @@ interface TopNavbarProps {
 
 // 精简后的TopNavbar组件，只关注布局和基本逻辑
 const TopNavbar: React.FC<TopNavbarProps> = ({ className = "" }) => {
-  const [
-    darkMode,
-    setDarkMode,
-    topNavOpen,
-    setTopNav,
-    rightNavOpen,
-    setRightNav,
-    leftNavOpen,
-    setLeftNav,
-  ] = usePageStateStore(
-    useShallow((state) => [
-      state.darkMode,
-      state.setDarkMode,
-      state.topNavOpen,
-      state.setTopNav,
-      state.rightNavOpen,
-      state.setRightNav,
-      state.leftNavOpen,
-      state.setLeftNav,
-    ]),
-  );
+  const [darkMode, setDarkMode, topNavOpen, setTopNav, rightNavOpen, setRightNav, leftNavOpen, setLeftNav] =
+    usePageStateStore(
+      useShallow((state) => [
+        state.darkMode,
+        state.setDarkMode,
+        state.topNavOpen,
+        state.setTopNav,
+        state.rightNavOpen,
+        state.setRightNav,
+        state.leftNavOpen,
+        state.setLeftNav,
+      ]),
+    );
 
   // 移动端和桌面端的NavList可以复用相同的组件，但传入不同的样式或props
   return (

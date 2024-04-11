@@ -21,7 +21,15 @@ const posts = defineCollection({
       tags: s.array(s.string()),
     })
     // more additional fields (computed fields)
-    .transform((data) => ({ ...data, permalink: `/posts/${data.slug}` })),
+    .transform((data) => ({
+      ...data,
+      permalink: `/posts/${data.slug}`,
+      authorLink: `/authors/${data.author}`,
+      categoryLinks: data.categories.reduce((acc, categoryName) => {
+        acc[categoryName] = `/categories/${categoryName}`;
+        return acc;
+      }, {}),
+    })),
 });
 
 const authors = defineCollection({
@@ -31,13 +39,27 @@ const authors = defineCollection({
     .object({
       name: s.string(),
       slug: s.slug("authors"),
-      bio: s.string(),
+      bio: s.string().optional(),
       avatar: s.image().optional(),
-      social: s.object({
-        github: s.string().optional(),
-      }),
+      social: s
+        .object({
+          github: s.string().optional(),
+        })
+        .optional(),
     })
     .transform((data) => ({ ...data, permalink: `/authors/${data.slug}` })),
+});
+
+const categories = defineCollection({
+  name: "Category",
+  pattern: ["categories/**/*.yaml", "categories/**/*.yml"],
+  schema: s
+    .object({
+      name: s.string(),
+      slug: s.slug("categories"),
+      description: s.string().optional(),
+    })
+    .transform((data) => ({ ...data, permalink: `/categories/${data.slug}` })),
 });
 
 const tags = defineCollection({
@@ -58,6 +80,7 @@ export default defineConfig({
   collections: {
     posts,
     authors,
+    categories,
     tags,
   },
 });

@@ -10,5 +10,8 @@ export declare const posts: Post[]
 export type Author = Collections['authors']['schema']['_output']
 export declare const authors: Author[]
 
+export type Category = Collections['categories']['schema']['_output']
+export declare const categories: Category[]
+
 export type Tag = Collections['tags']['schema']['_output']
 export declare const tags: Tag[]

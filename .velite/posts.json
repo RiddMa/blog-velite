@@ -19,14 +19,18 @@
       "readingTime": 1,
       "wordCount": 2
     },
-    "author": "<NAME>",
+    "author": "ridd",
     "categories": [
-      "General"
+      "coding"
     ],
     "tags": [
       "hello",
       "world"
     ],
-    "permalink": "/posts/hello-world"
+    "permalink": "/posts/hello-world",
+    "authorLink": "/authors/ridd",
+    "categoryLinks": {
+      "coding": "/categories/coding"
+    }
   }
 ]
