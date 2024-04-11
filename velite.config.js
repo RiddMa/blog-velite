@@ -17,6 +17,7 @@ const posts = defineCollection({
       toc: s.toc(), // table of contents of markdown content
       metadata: s.metadata(), // extract markdown reading-time, word-count, etc.
       author: s.unique("authors"),
+      columns: s.array(s.string()),
       categories: s.array(s.string()),
       tags: s.array(s.string()),
     })
@@ -24,11 +25,11 @@ const posts = defineCollection({
     .transform((data) => ({
       ...data,
       permalink: `/posts/${data.slug}`,
-      authorLink: `/authors/${data.author}`,
-      categoryLinks: data.categories.reduce((acc, categoryName) => {
-        acc[categoryName] = `/categories/${categoryName}`;
-        return acc;
-      }, {}),
+      // authorLink: `/authors/${data.author}`,
+      // categoryLinks: data.categories.reduce((acc, categoryName) => {
+      //   acc[categoryName] = `/categories/${categoryName}`;
+      //   return acc;
+      // }, {}),
     })),
 });
 
@@ -39,15 +40,27 @@ const authors = defineCollection({
     .object({
       name: s.string(),
       slug: s.slug("authors"),
-      bio: s.string().optional(),
+      bio: s.string(),
       avatar: s.image().optional(),
       social: s
         .object({
-          github: s.string().optional(),
+          github: s.string(),
         })
         .optional(),
     })
     .transform((data) => ({ ...data, permalink: `/authors/${data.slug}` })),
+});
+
+const columns = defineCollection({
+  name: "Column",
+  pattern: ["columns/**/*.md", "columns/**/*.md"],
+  schema: s
+    .object({
+      name: s.string(),
+      slug: s.slug("columns"),
+      description: s.markdown(),
+    })
+    .transform((data) => ({ ...data, permalink: `/columns/${data.slug}` })),
 });
 
 const categories = defineCollection({
@@ -57,7 +70,7 @@ const categories = defineCollection({
     .object({
       name: s.string(),
       slug: s.slug("categories"),
-      description: s.string().optional(),
+      description: s.string(),
     })
     .transform((data) => ({ ...data, permalink: `/categories/${data.slug}` })),
 });
@@ -69,7 +82,7 @@ const tags = defineCollection({
     .object({
       name: s.string(),
       slug: s.slug("tags"),
-      description: s.string().optional(),
+      description: s.string(),
     })
     .transform((data) => ({ ...data, permalink: `/tags/${data.slug}` })),
 });
@@ -80,6 +93,7 @@ export default defineConfig({
   collections: {
     posts,
     authors,
+    columns,
     categories,
     tags,
   },

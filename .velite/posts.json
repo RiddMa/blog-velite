@@ -20,17 +20,18 @@
       "wordCount": 2
     },
     "author": "ridd",
+    "columns": [
+      "openwrt-software-based-router",
+      "column2"
+    ],
     "categories": [
-      "coding"
+      "coding",
+      "category1"
     ],
     "tags": [
       "hello",
       "world"
     ],
-    "permalink": "/posts/hello-world",
-    "authorLink": "/authors/ridd",
-    "categoryLinks": {
-      "coding": "/categories/coding"
-    }
+    "permalink": "/posts/hello-world"
   }
 ]
