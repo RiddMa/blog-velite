@@ -16,7 +16,7 @@ const posts = defineCollection({
       excerpt: s.excerpt(), // excerpt of markdown content
       toc: s.toc(), // table of contents of markdown content
       metadata: s.metadata(), // extract markdown reading-time, word-count, etc.
-      author: s.unique("authors"),
+      author: s.string(),
       columns: s.array(s.string()),
       categories: s.array(s.string()),
       tags: s.array(s.string()),

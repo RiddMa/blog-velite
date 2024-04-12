@@ -1,5 +1,75 @@
 [
   {
+    "title": "Explore Data Science!",
+    "slug": "explore-data-science",
+    "created": "2024-04-10T04:30:00.000Z",
+    "updated": "2024-04-10T04:30:00.000Z",
+    "draft": false,
+    "featured": false,
+    "content": "<h1>Explore Data Science!</h1>\n<p>This is the first post in the data science series. Here, we will explore the basics of data science and how it can be applied to real-world problems.</p>",
+    "excerpt": "Explore Data Science!\nThis is the first post in the data science series. Here, we will explore the basics of data science and how it can be applied to real-world problems.",
+    "toc": [
+      {
+        "title": "Explore Data Science!",
+        "url": "#explore-data-science",
+        "items": []
+      }
+    ],
+    "metadata": {
+      "readingTime": 1,
+      "wordCount": 32
+    },
+    "author": "ridd",
+    "columns": [
+      "data-science-basics",
+      "column2"
+    ],
+    "categories": [
+      "data analysis",
+      "category4"
+    ],
+    "tags": [
+      "data science",
+      "explore"
+    ],
+    "permalink": "/posts/explore-data-science"
+  },
+  {
+    "title": "Greetings from Python!",
+    "slug": "greetings-from-python",
+    "created": "2024-04-10T04:00:00.000Z",
+    "updated": "2024-04-10T04:00:00.000Z",
+    "draft": false,
+    "featured": false,
+    "content": "<h1>Greetings from Python!</h1>\n<p>Welcome to my blog! I hope you find my posts interesting and informative.</p>",
+    "excerpt": "Greetings from Python!\nWelcome to my blog! I hope you find my posts interesting and informative.",
+    "toc": [
+      {
+        "title": "Greetings from Python!",
+        "url": "#greetings-from-python",
+        "items": []
+      }
+    ],
+    "metadata": {
+      "readingTime": 1,
+      "wordCount": 16
+    },
+    "author": "ridd",
+    "columns": [
+      "python-programming",
+      "column2"
+    ],
+    "categories": [
+      "coding",
+      "category2"
+    ],
+    "tags": [
+      "python",
+      "greetings"
+    ],
+    "permalink": "/posts/greetings-from-python"
+  },
+  {
     "title": "Hello, World!",
     "slug": "hello-world",
     "created": "2024-04-10T03:35:55.000Z",
@@ -33,5 +103,40 @@
       "world"
     ],
     "permalink": "/posts/hello-world"
+  },
+  {
+    "title": "Discover JavaScript!",
+    "slug": "discover-javascript",
+    "created": "2024-04-10T04:15:00.000Z",
+    "updated": "2024-04-10T04:15:00.000Z",
+    "draft": false,
+    "featured": false,
+    "content": "<h1>Discover JavaScript!</h1>\n<p>JavaScript is a popular programming language used for building interactive web applications, mobile applications, and more. In this article, we will explore the basics of JavaScript and learn how to use it to build web applications.</p>",
+    "excerpt": "Discover JavaScript!\nJavaScript is a popular programming language used for building interactive web applications, mobile applications, and more. In this article, we will explore the basics of JavaScript and learn how to use it to build web applications.",
+    "toc": [
+      {
+        "title": "Discover JavaScript!",
+        "url": "#discover-javascript",
+        "items": []
+      }
+    ],
+    "metadata": {
+      "readingTime": 1,
+      "wordCount": 38
+    },
+    "author": "ridd",
+    "columns": [
+      "javascript-development",
+      "column2"
+    ],
+    "categories": [
+      "web development",
+      "category3"
+    ],
+    "tags": [
+      "javascript",
+      "discovery"
+    ],
+    "permalink": "/posts/discover-javascript"
   }
 ]

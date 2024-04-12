@@ -23,11 +23,6 @@ export function generateStaticParams(): PostProps["params"][] {
 }
 
 export default function PostPage({ params }: PostProps) {
-  const pageRegex = /^\d+$/; // 匹配全数字的字符串
-  if (pageRegex.test(params.slug)) {
-    return <div>页码{params.slug}</div>;
-  }
-
   const post = getPostBySlug(params.slug);
 
   if (post == null) notFound();
