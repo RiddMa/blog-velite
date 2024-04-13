@@ -1,4 +1,4 @@
-import create from 'zustand';
+import { create } from "zustand";
 
 // 定义状态和操作的接口
 interface PageState {
@@ -15,11 +15,11 @@ interface PageState {
 // 使用 create 方法创建状态仓库
 export const usePageStateStore = create<PageState>((set) => ({
   topNavOpen: false,
-  setTopNav: (value) => set(() => ({topNavOpen: value})),
+  setTopNav: (value) => set(() => ({ topNavOpen: value })),
   rightNavOpen: false,
-  setRightNav: (value) => set(() => ({rightNavOpen: value})),
+  setRightNav: (value) => set(() => ({ rightNavOpen: value })),
   leftNavOpen: false,
-  setLeftNav: (value) => set(() => ({leftNavOpen: value})),
+  setLeftNav: (value) => set(() => ({ leftNavOpen: value })),
   darkMode: false,
-  setDarkMode: (value: boolean) => set(() => ({darkMode: value})),
+  setDarkMode: (value: boolean) => set(() => ({ darkMode: value })),
 }));

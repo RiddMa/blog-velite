@@ -35,5 +35,5 @@ body {
 }
 
 .side-navbar{
-  @apply h-screen sticky top-0 overflow-y-auto overflow-x-hidden
+  @apply h-screen sticky top-0 p-4 overflow-y-auto overflow-x-hidden flex flex-col
 }

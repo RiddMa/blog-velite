@@ -6,11 +6,9 @@ interface LeftNavbarProps {
 
 const LeftNavbar: React.FC<LeftNavbarProps> = ({ children }) => {
   return (
-    <div className="side-navbar">
-      <div className="bg-blue-800 text-white p-4">
-        <h2>Left Navbar</h2>
-        {children}
-      </div>
+    <div className="side-navbar bg-blue-800 text-white justify-start">
+      <h2>Left Navbar</h2>
+      {children}
     </div>
   );
 };

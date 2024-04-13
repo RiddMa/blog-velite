@@ -24,7 +24,7 @@ const posts = defineCollection({
     // more additional fields (computed fields)
     .transform((data) => ({
       ...data,
-      permalink: `/posts/${data.slug}`,
+      permalink: `/post/${data.slug}`,
       // authorLink: `/authors/${data.author}`,
       // categoryLinks: data.categories.reduce((acc, categoryName) => {
       //   acc[categoryName] = `/categories/${categoryName}`;
@@ -48,7 +48,7 @@ const authors = defineCollection({
         })
         .optional(),
     })
-    .transform((data) => ({ ...data, permalink: `/authors/${data.slug}` })),
+    .transform((data) => ({ ...data, permalink: `/author/${data.slug}` })),
 });
 
 const columns = defineCollection({
@@ -60,7 +60,7 @@ const columns = defineCollection({
       slug: s.slug("columns"),
       description: s.markdown(),
     })
-    .transform((data) => ({ ...data, permalink: `/columns/${data.slug}` })),
+    .transform((data) => ({ ...data, permalink: `/column/${data.slug}` })),
 });
 
 const categories = defineCollection({
@@ -72,7 +72,7 @@ const categories = defineCollection({
       slug: s.slug("categories"),
       description: s.string(),
     })
-    .transform((data) => ({ ...data, permalink: `/categories/${data.slug}` })),
+    .transform((data) => ({ ...data, permalink: `/category/${data.slug}` })),
 });
 
 const tags = defineCollection({
@@ -84,7 +84,7 @@ const tags = defineCollection({
       slug: s.slug("tags"),
       description: s.string(),
     })
-    .transform((data) => ({ ...data, permalink: `/tags/${data.slug}` })),
+    .transform((data) => ({ ...data, permalink: `/tag/${data.slug}` })),
 });
 
 // `s` is extended from Zod with some custom schemas,
