@@ -11,7 +11,7 @@ export default function PostListPage({ params }: PostListProps) {
   const pageNumber = params.slug ? parseInt(params.slug) : 1;
   const postsPerPage = config.POSTS_PER_PAGE || 25;
 
-  const initialDisplayPosts = posts.slice(postsPerPage * (pageNumber - 1), postsPerPage * pageNumber);
+  const displayedPosts = posts.slice(postsPerPage * (pageNumber - 1), postsPerPage * pageNumber);
   const pagination = {
     currentPage: pageNumber,
     totalPages: Math.ceil(posts.length / postsPerPage),
@@ -21,7 +21,7 @@ export default function PostListPage({ params }: PostListProps) {
     <>
       <div>{JSON.stringify(params, null, 2)}</div>
       <div>
-        <pre>{JSON.stringify(initialDisplayPosts, null, 2)}</pre>
+        <pre>{JSON.stringify(displayedPosts, null, 2)}</pre>
       </div>
     </>
   );
