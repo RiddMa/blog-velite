@@ -33,3 +33,7 @@ body {
     text-wrap: balance;
   }
 }
+
+.side-navbar{
+  @apply h-screen sticky top-0 overflow-y-auto overflow-x-hidden
+}
