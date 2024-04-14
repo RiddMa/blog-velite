@@ -2,30 +2,30 @@
 @tailwind components;
 @tailwind utilities;
 
-:root {
-  --foreground-rgb: 0, 0, 0;
-  --background-start-rgb: 214, 219, 220;
-  --background-end-rgb: 255, 255, 255;
-}
+/*:root {*/
+/*  --foreground-rgb: 0, 0, 0;*/
+/*  --background-start-rgb: 214, 219, 220;*/
+/*  --background-end-rgb: 255, 255, 255;*/
+/*}*/
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --foreground-rgb: 255, 255, 255;
-    --background-start-rgb: 0, 0, 0;
-    --background-end-rgb: 0, 0, 0;
-  }
-}
+/*@media (prefers-color-scheme: dark) {*/
+/*  :root {*/
+/*    --foreground-rgb: 255, 255, 255;*/
+/*    --background-start-rgb: 0, 0, 0;*/
+/*    --background-end-rgb: 0, 0, 0;*/
+/*  }*/
+/*}*/
 
 body {
   font-family: -apple-system, BlinkMacSystemFont, SFProDisplay-Regular, "PingFang SC", "Myriad Pro",
   "Noto Sans SC", sans-serif;
-  color: rgb(var(--foreground-rgb));
-  background: linear-gradient(
-      to bottom,
-      transparent,
-      rgb(var(--background-end-rgb))
-    )
-    rgb(var(--background-start-rgb));
+  /*color: rgb(var(--foreground-rgb));*/
+  /*background: linear-gradient(*/
+  /*    to bottom,*/
+  /*    transparent,*/
+  /*    rgb(var(--background-end-rgb))*/
+  /*  )*/
+  /*  rgb(var(--background-start-rgb));*/
 }
 
 @layer utilities {
@@ -34,6 +34,47 @@ body {
   }
 }
 
+body.light {
+  @apply bg-neutral-100;
+}
+
+body.dark {
+  @apply bg-gray-900;
+}
+
+.color-body {
+  @apply bg-neutral-100 transition-all duration-300 ease-apple dark:bg-gray-900;
+}
+
+.color-footer {
+  @apply bg-neutral-100 transition-all duration-300 ease-apple dark:bg-gray-900;
+}
+
+.color-card {
+  @apply bg-white transition-all duration-300 ease-apple dark:bg-slate-800;
+}
+
+.blur-bg {
+  backdrop-filter: saturate(180%) blur(20px);
+}
+
+.blur-mask {
+  backdrop-filter: saturate(150%) blur(5px);
+}
+
+.transition-apple {
+  @apply transform-gpu transition-all duration-300 ease-apple;
+}
+
+.top-navbar-wrapper {
+  @apply fixed z-[100] w-full pt-2 px-2
+}
+
+.top-navbar {
+  @apply flex flex-col items-center align-middle blur-bg m-auto max-w-[1024px] h-[48px] rounded-2xl p-0 drop-shadow-2xl transition-apple
+}
+
 .side-navbar{
-  @apply h-screen sticky top-0 p-4 overflow-y-auto overflow-x-hidden flex flex-col
+  @apply z-20 sticky h-[calc(100vh-64px)] top-[64px] overflow-y-auto overflow-x-hidden flex flex-col transition-apple;
+  @apply w-full max-w-full lg:max-w-[240px] p-4;
 }

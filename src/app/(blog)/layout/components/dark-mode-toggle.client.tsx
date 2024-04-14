@@ -31,13 +31,11 @@ const useDarkMode = () => {
   return { darkMode: isDarkMode, toggleDarkMode: toggleDarkMode };
 };
 
-const DarkModeToggleClient: React.FC<DarkModeToggleProps> = ({
-  className = "",
-}) => {
+const DarkModeToggleClient: React.FC<DarkModeToggleProps> = ({ className = "" }) => {
   const { darkMode, toggleDarkMode } = useDarkMode();
 
   return (
-    <button onClick={toggleDarkMode} className={"btn" + className}>
+    <button onClick={toggleDarkMode} className={"btn-circle transition-apple " + className}>
       <Icon icon={darkMode ? "heroicons:moon" : "heroicons:sun"} />
     </button>
   );

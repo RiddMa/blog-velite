@@ -2,6 +2,7 @@ import React from "react";
 import BlogLayout from "@/src/app/(blog)/layout/layout";
 import { getCategoryBySlug, getColumnBySlug, getPostBySlug, getPostsByColumn, getTagBySlug } from "@/src/store/velite";
 import Link from "next/link";
+import { formatDate } from "@/src/store/day";
 
 interface PostLayoutProps {
   params: {
@@ -40,9 +41,7 @@ const LeftContent: React.FC<{ slug: string }> = ({ slug }) => {
                     {article.title}
                   </span>
                   <span className={`text-caption text-color-caption line-clamp-3`}>{article.excerpt}</span>
-                  <div className={`text-caption text-color-caption text-right`}>
-                    {/*{DateTime.fromISO(article.updatedAt).setLocale("zh-cn").toLocaleString(DateTime.DATE_SHORT)}*/}
-                  </div>
+                  <div className={`text-caption text-color-caption text-right`}>{formatDate(article.updated)}</div>
                 </Link>
               ))}
             </div>

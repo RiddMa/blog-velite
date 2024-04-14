@@ -10,6 +10,8 @@ interface PageState {
   setLeftNav: (value: boolean) => void;
   darkMode: boolean;
   setDarkMode: (value: boolean) => void;
+  scrollPercentage: number;
+  setScrollPercentage: (value: number) => void;
 }
 
 // 使用 create 方法创建状态仓库
@@ -22,4 +24,6 @@ export const usePageStateStore = create<PageState>((set) => ({
   setLeftNav: (value) => set(() => ({ leftNavOpen: value })),
   darkMode: false,
   setDarkMode: (value: boolean) => set(() => ({ darkMode: value })),
+  scrollPercentage: 0,
+  setScrollPercentage: (value: number) => set(() => ({ scrollPercentage: value })),
 }));

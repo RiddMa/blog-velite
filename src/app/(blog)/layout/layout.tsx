@@ -15,10 +15,10 @@ const BlogLayout: React.FC<LayoutProps> = ({ children, leftNavbar, rightNavbar }
     <div className="flex flex-col min-h-screen">
       <TopNavbar />
       <div className={`h-[96px]`}></div>
-      <div className="flex flex-row flex-1 p-0 mx-auto">
-        <LeftNavbar>{leftNavbar}</LeftNavbar>
-        <MainContainer className="max-w-screen-lg">{children}</MainContainer>
-        <RightNavbar>{rightNavbar}</RightNavbar>
+      <div className="flex flex-row flex-1 p-0 justify-center">
+        <LeftNavbar className="bg-blue-800 mr-4">{leftNavbar}</LeftNavbar>
+        <MainContainer className="flex-grow max-w-full lg:max-w-[1024px]">{children}</MainContainer>
+        <RightNavbar className="bg-green-800 ml-4">{rightNavbar}</RightNavbar>
       </div>
     </div>
   );

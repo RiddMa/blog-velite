@@ -2,15 +2,11 @@ import React from "react";
 
 interface RightNavbarProps {
   children?: React.ReactNode;
+  className?: string;
 }
 
-const RightNavbar: React.FC<RightNavbarProps> = ({ children }) => {
-  return (
-    <div className="side-navbar bg-green-800 text-white">
-      <h2>Right Navbar</h2>
-      {children}
-    </div>
-  );
+const RightNavbar: React.FC<RightNavbarProps> = ({ children, className }) => {
+  return <div className={`side-navbar justify-start ${className}`}>{children}</div>;
 };
 
 export default RightNavbar;

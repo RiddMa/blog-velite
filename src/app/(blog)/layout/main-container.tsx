@@ -7,7 +7,7 @@ interface MainContainerProps {
 
 const MainContainer: React.FC<MainContainerProps> = ({ children, className }) => {
   return (
-    <div className={`flex-grow ${className}`}>
+    <div className={`${className}`}>
       <span>this is the main container</span>
       {children}
     </div>
