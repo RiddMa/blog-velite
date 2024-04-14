@@ -95,6 +95,6 @@ const config: Config = {
       },
     },
   },
-  plugins: [require("daisyui")],
+  plugins: [require("@tailwindcss/typography"), require("@tailwindcss/line-clamp"), require("daisyui")],
 };
 export default config;

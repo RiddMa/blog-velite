@@ -6,7 +6,7 @@ interface RightNavbarProps {
 }
 
 const RightNavbar: React.FC<RightNavbarProps> = ({ children, className }) => {
-  return <div className={`side-navbar justify-start ${className}`}>{children}</div>;
+  return <div className={`side-navbar ${className}`}>{children}</div>;
 };
 
 export default RightNavbar;
