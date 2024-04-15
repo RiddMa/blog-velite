@@ -31,7 +31,7 @@ interface TableOfContentsProps {
 }
 
 const TableOfContents: React.FC<TableOfContentsProps> = ({ toc }) => {
-  return <div className="-ml-2">{toc && toc.length > 0 && <TOCItem items={toc} />}</div>;
+  return <nav className="-ml-2">{toc && toc.length > 0 && <TOCItem items={toc} />}</nav>;
 };
 
 export default TableOfContents;

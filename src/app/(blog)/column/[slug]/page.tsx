@@ -25,7 +25,7 @@ export function generateStaticParams(): PostProps["params"][] {
 export default function ColumnPage({ params }: PostProps) {
   const column = getColumnBySlug(params.slug);
 
-  if (column == null) notFound();
+  if (!column) notFound();
 
   return (
     <article className="prose lg:prose-lg dark:prose-invert py-6">

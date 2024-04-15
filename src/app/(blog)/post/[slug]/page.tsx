@@ -3,6 +3,8 @@ import { notFound } from "next/navigation";
 import { posts } from "@/.velite";
 import type { Metadata } from "next";
 import { getCategoryBySlug, getColumnBySlug, getPostBySlug, getTagBySlug } from "@/src/store/velite";
+import { assertDefined } from "@/src/util/util";
+import { ImageAwesome } from "@/src/components/ImageAwesome";
 
 interface PostProps {
   params: {
@@ -23,46 +25,29 @@ export function generateStaticParams(): PostProps["params"][] {
 }
 
 export default function PostPage({ params }: PostProps) {
-  const post = getPostBySlug(params.slug);
+  let post = getPostBySlug(params.slug);
 
-  if (post == null) notFound();
+  if (!post) notFound();
 
-  const columns = post!.columns.map((column) => getColumnBySlug(column));
-  const categories = post!.categories.map((category) => getCategoryBySlug(category));
-  const tags = post!.tags.map((tag) => getTagBySlug(tag));
+  const columns = post.columns.map((column) => getColumnBySlug(column));
+  const categories = post.categories.map((category) => getCategoryBySlug(category));
+  const tags = post.tags.map((tag) => getTagBySlug(tag));
 
   return (
-    <article className="prose lg:prose-lg dark:prose-invert py-6">
-      <h1 className="mb-2">标题：{post.title}</h1>
-      {post.excerpt && <p className="mt-0 text-xl text-slate-700 dark:text-slate-200">摘要：{post.excerpt}</p>}
+    <article className="prose-article">
+      <h1 className={`text-h0 text-center`}>{post.title}</h1>
+      {post.cover && (
+        <ImageAwesome
+          src={post.cover.src}
+          alt={post.title}
+          blurDataURL={post.cover.blurDataURL}
+          width={post.cover.width}
+          height={post.cover.height}
+        />
+      )}
+      {/*{post.excerpt && <p className="mt-0 text-xl text-slate-700 dark:text-slate-200">{post.excerpt}</p>}*/}
       <br />
-      专栏
-      {JSON.stringify(columns, null, 2)}
-      {columns.map((column) => (
-        <>
-          <a href={column?.permalink}>{column?.name}</a>
-        </>
-      ))}
-      <br />
-      分类
-      {JSON.stringify(categories, null, 2)}
-      {categories.map((category) => (
-        <>
-          <a href={category?.permalink}>{category?.name}</a>
-        </>
-      ))}
-      <br />
-      标签
-      {JSON.stringify(tags, null, 2)}
-      {tags.map((tag) => (
-        <>
-          <span>{tag?.name}</span>
-        </>
-      ))}
-      {post.cover && <Image src={post.cover} alt={post.title} placeholder="blur" />}
-      <hr className="my-4" />
-      内容：
-      <div className="prose" dangerouslySetInnerHTML={{ __html: post.content }}></div>
+      <div className="" dangerouslySetInnerHTML={{ __html: post.content }}></div>
     </article>
   );
 }

@@ -1,4 +1,69 @@
 import { defineCollection, defineConfig, s } from "velite";
+import { unified } from "unified";
+
+import remarkGfm from "remark-gfm";
+import remarkFrontmatter from "remark-frontmatter";
+import remarkBreaks from "remark-breaks";
+import remarkMath from "remark-math";
+import remarkEmoji from "remark-emoji";
+import remarkParse from "remark-parse";
+import remarkRehype from "remark-rehype";
+import remarkDirectiveRehype from "remark-directive-rehype";
+import remarkDirective from "remark-directive";
+
+import rehypeSanitize from "rehype-sanitize";
+import rehypeStringify from "rehype-stringify";
+import rehypeRaw from "rehype-raw";
+import rehypeKatex from "rehype-katex";
+import rehypeAutolinkHeadings from "rehype-autolink-headings";
+import rehypeToc from "@jsdevtools/rehype-toc";
+import rehypeSlug from "rehype-slug";
+import rehypePresetMinify from "rehype-preset-minify";
+
+const parseMarkdown2VFile = async (content) => {
+  let result = await unified()
+    .use(remarkParse)
+    .use(remarkFrontmatter)
+    .use(remarkGfm)
+    .use(remarkRehype, { allowDangerousHtml: true })
+    .process(content);
+
+  return result.toString();
+};
+
+const parseVFile2Html = async (raw) => {
+  let result = await unified()
+    .use(remarkParse)
+    .use(remarkBreaks)
+    .use(remarkFrontmatter)
+    .use(remarkGfm)
+    .use(remarkMath)
+    .use(remarkEmoji)
+    .use(remarkDirective)
+    .use(remarkDirectiveRehype)
+    .use(remarkRehype, { allowDangerousHtml: true })
+    .use(rehypeRaw)
+    // .use(rehypeSanitize)
+    .use(rehypeSlug)
+    .use(rehypeAutolinkHeadings)
+    .use(rehypeKatex)
+    .use(rehypePresetMinify)
+    .use(rehypeStringify)
+    .process(raw);
+  return result.toString();
+};
+
+const parseHtml2Html = async (raw) => {
+  let result = await unified()
+    .use(rehypeRaw)
+    .use(rehypeSlug)
+    .use(rehypeAutolinkHeadings)
+    .use(rehypeKatex)
+    .use(rehypePresetMinify)
+    .use(rehypeStringify)
+    .process(raw);
+  return result.toString();
+};
 
 const posts = defineCollection({
   name: "Post", // collection type name
@@ -12,7 +77,22 @@ const posts = defineCollection({
       draft: s.boolean().default(false),
       featured: s.boolean().default(false),
       cover: s.image().optional(), // input image relative path, output image object with blurImage.
-      content: s.markdown(), // transform markdown to html
+      content: s.markdown({
+        gfm: true,
+        removeComments: false,
+        copyLinkedFiles: true,
+        remarkPlugins: [
+          remarkParse,
+          remarkBreaks,
+          remarkFrontmatter,
+          remarkGfm,
+          remarkMath,
+          remarkEmoji,
+          remarkDirective,
+        ],
+        rehypePlugins: [rehypeSlug, rehypeAutolinkHeadings, rehypeKatex, rehypePresetMinify, rehypeStringify],
+      }), // transform markdown to html
+      raw: s.raw(), // raw markdown content
       excerpt: s.excerpt(), // excerpt of markdown content
       toc: s.toc(), // table of contents of markdown content
       metadata: s.metadata(), // extract markdown reading-time, word-count, etc.
@@ -22,14 +102,11 @@ const posts = defineCollection({
       tags: s.array(s.string()),
     })
     // more additional fields (computed fields)
-    .transform((data) => ({
+    .transform(async (data) => ({
       ...data,
       permalink: `/post/${data.slug}`,
-      // authorLink: `/authors/${data.author}`,
-      // categoryLinks: data.categories.reduce((acc, categoryName) => {
-      //   acc[categoryName] = `/categories/${categoryName}`;
-      //   return acc;
-      // }, {}),
+      // remarkVFile: await parseMarkdown2VFile(data.raw),
+      html: await parseVFile2Html(data.raw),
     })),
 });
 

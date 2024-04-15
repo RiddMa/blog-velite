@@ -12,7 +12,7 @@ interface PostLayoutProps {
   children?: React.ReactNode;
 }
 
-function isDefined<T>(value: T | undefined): value is T {
+export function isDefined<T>(value: T | undefined): value is T {
   return value !== undefined;
 }
 
@@ -66,7 +66,9 @@ const RightContent: React.FC<{ slug: string }> = ({ slug }) => {
   return (
     <>
       <aside className={`text-body flex flex-col space-y-2 rounded-3xl drop-shadow-2xl`}>
-        <span className={`text-h1`}>本页（测试版功能尚不完善）</span>
+        <span className={``}>{formatDate(post.created)}发布</span>
+        <span className={``}>{formatDate(post.updated)}更新</span>
+        <span className={`text-h1`}>目录</span>
         <TableOfContents toc={post.toc} />
         <div className={`h-4`}></div>
         <span className={`text-h1`}>分类</span>

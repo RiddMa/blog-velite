@@ -24,7 +24,7 @@ export function generateStaticParams(): CategoryProps["params"][] {
 export default function CategoryPage({ params }: CategoryProps) {
   const category = getCategoryBySlug(params.slug);
 
-  if (category == null) notFound();
+  if (!category) notFound();
 
   return (
     <div className="prose lg:prose-lg dark:prose-invert py-6">

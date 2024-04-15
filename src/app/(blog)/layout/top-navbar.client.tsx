@@ -15,8 +15,6 @@ interface TopNavbarProps {
 
 const TopNavbar: React.FC<TopNavbarProps> = ({ className = "" }) => {
   const [
-    darkMode,
-    setDarkMode,
     topNavOpen,
     setTopNav,
     rightNavOpen,
@@ -27,8 +25,6 @@ const TopNavbar: React.FC<TopNavbarProps> = ({ className = "" }) => {
     setScrollPercentage,
   ] = usePageStateStore(
     useShallow((state) => [
-      state.darkMode,
-      state.setDarkMode,
       state.topNavOpen,
       state.setTopNav,
       state.rightNavOpen,
