@@ -10,26 +10,22 @@ import remarkParse from "remark-parse";
 import remarkRehype from "remark-rehype";
 import remarkDirectiveRehype from "remark-directive-rehype";
 import remarkDirective from "remark-directive";
+import { visit } from "unist-util-visit";
 
 import rehypeSanitize from "rehype-sanitize";
 import rehypeStringify from "rehype-stringify";
 import rehypeRaw from "rehype-raw";
 import rehypeKatex from "rehype-katex";
 import rehypeAutolinkHeadings from "rehype-autolink-headings";
-import rehypeToc from "@jsdevtools/rehype-toc";
 import rehypeSlug from "rehype-slug";
 import rehypePresetMinify from "rehype-preset-minify";
-
-const parseMarkdown2VFile = async (content) => {
-  let result = await unified()
-    .use(remarkParse)
-    .use(remarkFrontmatter)
-    .use(remarkGfm)
-    .use(remarkRehype, { allowDangerousHtml: true })
-    .process(content);
-
-  return result.toString();
-};
+import rehypeParse from "rehype-parse";
+import path, { dirname } from "node:path";
+import fs from "fs/promises";
+import sharp from "sharp";
+import { staticBasePath } from "@/base-path";
+import { fileURLToPath } from "node:url";
+import { extractImg } from "@/src/util/util";
 
 const parseVFile2Html = async (raw) => {
   let result = await unified()
@@ -101,12 +97,10 @@ const posts = defineCollection({
       categories: s.array(s.string()),
       tags: s.array(s.string()),
     })
-    // more additional fields (computed fields)
     .transform(async (data) => ({
       ...data,
       permalink: `/post/${data.slug}`,
-      // remarkVFile: await parseMarkdown2VFile(data.raw),
-      html: await parseVFile2Html(data.raw),
+      images: await extractImg(data.content),
     })),
 });
 
@@ -173,5 +167,9 @@ export default defineConfig({
     columns,
     categories,
     tags,
+  },
+  prepare: async (data) => {
+    // console.log("Preparing data...");
+    // console.log(JSON.stringify(data, null, 2));
   },
 });
