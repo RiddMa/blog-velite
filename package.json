@@ -9,6 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@giscus/react": "^3.0.0",
     "@jsdevtools/rehype-toc": "^3.0.2",
     "dayjs": "^1.11.10",
     "is-url": "^1.2.4",

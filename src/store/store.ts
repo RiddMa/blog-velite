@@ -8,11 +8,22 @@ interface PageState {
   setRightNav: (value: boolean) => void;
   leftNavOpen: boolean;
   setLeftNav: (value: boolean) => void;
-  darkMode: boolean;
-  setDarkMode: (value: boolean) => void;
   scrollPercentage: number;
   setScrollPercentage: (value: number) => void;
+  darkMode: boolean;
+  setDarkMode: (value: boolean) => void;
 }
+
+const getDarkMode = () => {
+  if (typeof window !== "undefined") {
+    const storedPreference = window.localStorage.getItem("darkMode");
+    if (storedPreference) {
+      return storedPreference === "true";
+    }
+    return window.matchMedia("(prefers-color-scheme: dark)").matches;
+  }
+  return false;
+};
 
 // 使用 create 方法创建状态仓库
 export const usePageStateStore = create<PageState>((set) => ({
@@ -22,8 +33,12 @@ export const usePageStateStore = create<PageState>((set) => ({
   setRightNav: (value) => set(() => ({ rightNavOpen: value })),
   leftNavOpen: false,
   setLeftNav: (value) => set(() => ({ leftNavOpen: value })),
-  darkMode: false,
-  setDarkMode: (value: boolean) => set(() => ({ darkMode: value })),
   scrollPercentage: 0,
   setScrollPercentage: (value: number) => set(() => ({ scrollPercentage: value })),
+  darkMode: getDarkMode(),
+  setDarkMode: (value) =>
+    set(() => {
+      window.localStorage.setItem("darkMode", JSON.stringify(value));
+      return { darkMode: value };
+    }),
 }));

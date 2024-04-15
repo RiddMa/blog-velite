@@ -12,8 +12,8 @@ import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
 import { oneDark, oneLight } from "react-syntax-highlighter/dist/cjs/styles/prism";
 import { ImageAwesome } from "@/src/components/ImageAwesome";
 import Copy2Clipboard from "@/src/components/Copy2Clipboard";
-import { getImageMetadata } from "velite";
-import fs from "fs/promises";
+import Giscus from "@giscus/react";
+import PostComment from "@/src/components/PostComment";
 
 interface PostProps {
   params: {
@@ -86,7 +86,7 @@ export default function PostPage({ params }: PostProps) {
         },
         img: ({ src, alt }) => {
           const { width, height } = post.images[src!];
-          return <ImageAwesome src={src!} alt={alt!} width={width} height={height} />;
+          return <ImageAwesome src={src!} alt={alt!} width={width} height={height} halo={false} />;
         },
         gpt: (props: any) => {
           console.log(props);
@@ -119,6 +119,7 @@ export default function PostPage({ params }: PostProps) {
       <br />
       {/*<div className="" dangerouslySetInnerHTML={{ __html: post.content }}></div>*/}
       {ContentComponents}
+      <PostComment />
     </article>
   );
 }

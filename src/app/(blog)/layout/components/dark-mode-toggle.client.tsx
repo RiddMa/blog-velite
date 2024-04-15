@@ -2,40 +2,31 @@
 
 import React, { useEffect, useState } from "react";
 import { Icon } from "@iconify-icon/react";
+import { usePageStateStore } from "@/src/store/store";
+import { useShallow } from "zustand/react/shallow";
 
 interface DarkModeToggleProps {
   className?: string; // Make className optional
 }
 
-const useDarkMode = () => {
-  const [isDarkMode, setIsDarkMode] = useState(() => {
-    if (typeof window !== "undefined") {
-      const storedPreference = window.localStorage.getItem("darkMode");
-      if (storedPreference) {
-        return storedPreference === "true";
-      }
-      return window.matchMedia("(prefers-color-scheme: dark)").matches;
-    }
-    return false;
-  });
+export const useDarkMode = () => {
+  const [darkMode, setDarkMode] = usePageStateStore(useShallow((state) => [state.darkMode, state.setDarkMode]));
 
   useEffect(() => {
-    const className = isDarkMode ? "dark" : "light";
+    const className = darkMode ? "dark" : "light";
     document.documentElement.classList.add(className);
-    document.documentElement.classList.remove(isDarkMode ? "light" : "dark");
-    window.localStorage.setItem("darkMode", String(isDarkMode));
-  }, [isDarkMode]);
+    document.documentElement.classList.remove(darkMode ? "light" : "dark");
+    window.localStorage.setItem("darkMode", String(darkMode));
+  }, [darkMode]);
 
-  const toggleDarkMode = () => setIsDarkMode(!isDarkMode);
-
-  return { darkMode: isDarkMode, toggleDarkMode: toggleDarkMode };
+  return { darkMode, setDarkMode };
 };
 
 const DarkModeToggleClient: React.FC<DarkModeToggleProps> = ({ className = "" }) => {
-  const { darkMode, toggleDarkMode } = useDarkMode();
+  const { darkMode, setDarkMode } = useDarkMode();
 
   return (
-    <button onClick={toggleDarkMode} className={"btn-circle transition-apple " + className}>
+    <button onClick={() => setDarkMode(!darkMode)} className={"btn-circle transition-apple " + className}>
       <Icon icon={darkMode ? "heroicons:moon" : "heroicons:sun"} />
     </button>
   );
