@@ -79,10 +79,15 @@ body.dark {
   @apply flex flex-col items-center align-middle blur-bg m-auto max-w-[1024px] h-[48px] rounded-2xl p-0 drop-shadow-2xl transition-apple
 }
 
+/*.side-navbar{*/
+/*  @apply z-20 sticky h-[calc(100vh-64px)] top-[64px] overflow-y-auto overflow-x-hidden flex flex-col transition-apple;*/
+/*  @apply w-full max-w-full lg:max-w-[240px] p-4;*/
+/*}*/
 .side-navbar{
-  @apply z-20 sticky h-[calc(100vh-64px)] top-[64px] overflow-y-auto overflow-x-hidden flex flex-col transition-apple;
-  @apply w-full max-w-full lg:max-w-[240px] p-4;
+  @apply fixed z-20 top-0 left-0 w-screen h-screen px-4 pb-4 pt-[72px] overflow-y-auto overflow-x-hidden flex flex-col transition-apple;
+  @apply lg:sticky lg:h-[calc(100vh-64px)] lg:top-[64px] lg:max-w-[240px] lg:pt-4;
 }
+
 
 .prose-article {
   @apply prose prose-slate w-full min-w-0 max-w-none transition-all duration-300 ease-apple dark:prose-invert prose-a:text-sky-600 hover:prose-a:underline;

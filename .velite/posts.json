@@ -71,10 +71,10 @@
     },
     "author": "ridd",
     "columns": [
-      "public/content/columns/openwrt-tinkering-guide.md"
+      "openwrt-software-based-router"
     ],
     "categories": [
-      "public/content/categories/coding.md"
+      "coding"
     ],
     "tags": [
       "北邮",

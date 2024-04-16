@@ -6,9 +6,9 @@ cover: assets/test-ipv6-result.png
 excerpt: >
   给只有 128 位前缀的校园网地址配置 IPv6 NAT (NAT6)，与 AdGuardHome、OpenClash 共存。
 categories:
-  - public/content/categories/coding.md
+  - coding
 columns:
-  - public/content/columns/openwrt-tinkering-guide.md
+  - openwrt-software-based-router
 tags:
   - 北邮
   - 校园网

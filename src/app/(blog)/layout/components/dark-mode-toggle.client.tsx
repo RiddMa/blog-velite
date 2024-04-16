@@ -9,7 +9,7 @@ interface DarkModeToggleProps {
   className?: string; // Make className optional
 }
 
-export const useDarkMode = () => {
+const DarkModeToggleClient: React.FC<DarkModeToggleProps> = ({ className = "" }) => {
   const [darkMode, setDarkMode] = usePageStateStore(useShallow((state) => [state.darkMode, state.setDarkMode]));
 
   useEffect(() => {
@@ -18,12 +18,6 @@ export const useDarkMode = () => {
     document.documentElement.classList.remove(darkMode ? "light" : "dark");
     window.localStorage.setItem("darkMode", String(darkMode));
   }, [darkMode]);
-
-  return { darkMode, setDarkMode };
-};
-
-const DarkModeToggleClient: React.FC<DarkModeToggleProps> = ({ className = "" }) => {
-  const { darkMode, setDarkMode } = useDarkMode();
 
   return (
     <button onClick={() => setDarkMode(!darkMode)} className={"btn-circle transition-apple " + className}>
