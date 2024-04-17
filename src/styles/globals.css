@@ -75,7 +75,7 @@ body.dark {
 }
 
 .top-navbar {
-  @apply flex flex-col items-center align-middle blur-bg m-auto max-w-[1024px] h-[48px] rounded-2xl p-0 drop-shadow-2xl transition-apple;
+  @apply flex flex-col items-center align-middle blur-bg m-auto max-w-[1024px] min-h-[48px] rounded-2xl p-0 drop-shadow-2xl transition-apple;
 }
 
 /*.side-navbar{*/

@@ -16,7 +16,7 @@ const MobileNavList: React.FC = () => {
 const NavList: React.FC = () => {
   return (
     <>
-      <ul className="my-4 flex h-full w-full flex-col justify-center gap-4 text-xl xl:m-0 xl:flex-row xl:gap-8">
+      <ul className="my-4 flex h-full w-full flex-col justify-center gap-4 text-xl lg:m-0 lg:flex-row lg:gap-6">
         {globals.topNavItems.map(({ label, href, icon }, key) => (
           <Link
             key={label}
@@ -102,7 +102,9 @@ const TopNavbar: React.FC<TopNavbarProps> = ({ className = "" }) => {
             <div className={`hidden xl:block xl:grow`}>
               <span></span>
             </div>
-            <div className="hidden items-center justify-center lg:block ">{/*<NavList />*/}</div>
+            <div className="hidden items-center justify-center lg:block ">
+              <NavList />
+            </div>
             <div className={`grow xl:hidden`}></div>
             <DarkModeToggleClient className={`text-white/80 hover:text-white h-5 w-5`} />
             <button
@@ -127,7 +129,7 @@ const TopNavbar: React.FC<TopNavbarProps> = ({ className = "" }) => {
           <div
             className={`transition-apple overflow-hidden px-4 py-0 lg:hidden ${topNavOpen ? `max-h-60` : `max-h-0`}`}
           >
-            {/*<NavList />*/}
+            <NavList />
           </div>
         </div>
       </div>
