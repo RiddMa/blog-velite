@@ -1,3 +1,4 @@
+import { nextui } from "@nextui-org/theme";
 import type { Config } from "tailwindcss";
 import colors from "tailwindcss/colors";
 import defaultTheme from "tailwindcss/defaultTheme";
@@ -7,6 +8,7 @@ const config: Config = {
     "./src/pages/**/*.{js,ts,jsx,tsx,mdx}",
     "./src/components/**/*.{js,ts,jsx,tsx,mdx}",
     "./src/app/**/*.{js,ts,jsx,tsx,mdx}",
+    "./node_modules/@nextui-org/theme/dist/**/*.{js,ts,jsx,tsx}",
   ],
   theme: {
     extend: {
@@ -90,6 +92,7 @@ const config: Config = {
       },
     },
   },
-  plugins: [require("@tailwindcss/typography"), require("@tailwindcss/line-clamp"), require("daisyui")],
+  darkMode: "class",
+  plugins: [require("@tailwindcss/typography"), require("@tailwindcss/line-clamp"), require("daisyui"), nextui()],
 };
 export default config;

@@ -5,6 +5,8 @@ import ContentCard from "@/src/components/ContentCard";
 import Link from "next/link";
 import { getCategoryBySlug } from "@/src/store/velite";
 import { formatDate } from "@/src/store/day";
+import { Icon } from "@iconify-icon/react";
+import MyPagination from "@/src/components/MyPagination";
 
 interface PostListProps {
   params: {
@@ -72,10 +74,7 @@ export default function PostListPage({ params }: PostListProps) {
           );
         })}
       </div>
-      {/*<div>{JSON.stringify(pagination, null, 2)}</div>*/}
-      {/*<div>*/}
-      {/*  <pre>{JSON.stringify(displayedPosts, null, 2)}</pre>*/}
-      {/*</div>*/}
+      <MyPagination pageNumber={pageNumber} totalPages={totalPages} />
     </>
   );
 }
