@@ -6,8 +6,31 @@ import { useShallow } from "zustand/react/shallow";
 // import MobileNavMenu from "@/src/app/layout/components/mobile-nav-menu";
 import DarkModeToggleClient from "@/src/app/(blog)/layout/components/dark-mode-toggle.client";
 import { Icon } from "@iconify-icon/react";
-import leftNavbar from "@/src/app/(blog)/layout/left-navbar";
 import Link from "next/link";
+import { globals } from "@/.velite";
+
+const MobileNavList: React.FC = () => {
+  return <></>;
+};
+
+const NavList: React.FC = () => {
+  return (
+    <>
+      <ul className="my-4 flex h-full w-full flex-col justify-center gap-4 text-xl xl:m-0 xl:flex-row xl:gap-8">
+        {globals.topNavItems.map(({ label, href, icon }, key) => (
+          <Link
+            key={label}
+            href={href}
+            className="transition-apple flex flex-row flex-nowrap place-items-center gap-2 text-white/80 hover:text-white"
+          >
+            <Icon icon={icon} className="h-[1.25rem] w-[1.25rem]" />
+            <span className={`whitespace-nowrap inline-block`}>{label}</span>
+          </Link>
+        ))}
+      </ul>
+    </>
+  );
+};
 
 interface TopNavbarProps {
   className?: string; // 可选的string类型
@@ -49,11 +72,8 @@ const TopNavbar: React.FC<TopNavbarProps> = ({ className = "" }) => {
   const backgroundGradient = `linear-gradient(to right, rgb(0,0,0,0.7) ${
     scrollPercentage * 0.75 - 10
   }%, rgb(82, 82, 82,0.8) ${scrollPercentage}%, rgb(0,0,0,0.7) ${scrollPercentage}%)`;
-  let showLeftNavToggle = true;
-  let showRightNavToggle = true;
   let isMobile = false;
 
-  // 移动端和桌面端的NavList可以复用相同的组件，但传入不同的样式或props
   return (
     <>
       {isMobile && topNavOpen && (
@@ -71,15 +91,18 @@ const TopNavbar: React.FC<TopNavbarProps> = ({ className = "" }) => {
               }}
               className="btn-circle h-5 w-5 my-auto p-0 text-white/[0.75] xl:hidden"
             >
-              <Icon icon={leftNavOpen ? "heroicons:chevron-double-right" : "heroicons:chevron-double-left"} />
+              <Icon
+                icon={"heroicons:chevron-double-right"}
+                className={`${leftNavOpen ? "-scale-x-100" : "scale-x-100"} transition-apple`}
+              />
             </button>
-            <Link href="/" className="transition-apple text-xl text-white/80 hover:text-white xl:text-2xl">
+            <Link href="/" className="transition-apple text-xl text-white/80 hover:text-white">
               {"Ridd Blog"}
             </Link>
             <div className={`hidden xl:block xl:grow`}>
               <span></span>
             </div>
-            <div className="hidden items-center justify-center xl:block ">{/*<NavList />*/}</div>
+            <div className="hidden items-center justify-center lg:block ">{/*<NavList />*/}</div>
             <div className={`grow xl:hidden`}></div>
             <DarkModeToggleClient className={`text-white/80 hover:text-white h-5 w-5`} />
             <button
@@ -95,11 +118,14 @@ const TopNavbar: React.FC<TopNavbarProps> = ({ className = "" }) => {
               }}
               className="h-5 w-5 text-white/[0.75] xl:hidden"
             >
-              <Icon icon={rightNavOpen ? "heroicons:chevron-double-right" : "heroicons:chevron-double-left"} />
+              <Icon
+                icon={"heroicons:chevron-double-left"}
+                className={`${rightNavOpen ? "-scale-x-100" : "scale-x-100"} transition-apple`}
+              />
             </button>
           </div>
           <div
-            className={`transition-apple overflow-hidden px-4 py-0 xl:hidden ${topNavOpen ? `max-h-60` : `max-h-0`}`}
+            className={`transition-apple overflow-hidden px-4 py-0 lg:hidden ${topNavOpen ? `max-h-60` : `max-h-0`}`}
           >
             {/*<NavList />*/}
           </div>

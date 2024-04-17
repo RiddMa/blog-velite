@@ -1,0 +1,24 @@
+{
+  "siteName": "Ridd Blog",
+  "siteNameDescription": "Connect the dots.",
+  "social": {
+    "github": "https://github.com/RiddMa"
+  },
+  "topNavItems": [
+    {
+      "label": "分类",
+      "href": "/categories",
+      "icon": "heroicons:queue-list"
+    },
+    {
+      "label": "专栏",
+      "href": "/columns",
+      "icon": "heroicons:archive-box"
+    },
+    {
+      "label": "关于",
+      "href": "/about",
+      "icon": "heroicons:user-circle"
+    }
+  ]
+}

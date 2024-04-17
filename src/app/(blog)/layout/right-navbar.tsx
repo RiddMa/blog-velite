@@ -12,7 +12,9 @@ interface RightNavbarProps {
 const RightNavbar: React.FC<RightNavbarProps> = ({ children, className }) => {
   const [rightNavOpen] = usePageStateStore(useShallow((state) => [state.rightNavOpen]));
   return (
-    <div className={`${rightNavOpen ? "translate-x-0" : "translate-x-full"} side-navbar ${className}`}>{children}</div>
+    <div className={`${rightNavOpen ? "translate-x-0" : "translate-x-full lg:translate-x-0"} side-navbar ${className}`}>
+      {children}
+    </div>
   );
 };
 

@@ -12,6 +12,8 @@ interface PageState {
   setScrollPercentage: (value: number) => void;
   darkMode: boolean;
   setDarkMode: (value: boolean) => void;
+  isMobile: boolean;
+  setIsMobile: (value: boolean) => void;
 }
 
 const getDarkMode = () => {
@@ -21,6 +23,13 @@ const getDarkMode = () => {
       return storedPreference === "true";
     }
     return window.matchMedia("(prefers-color-scheme: dark)").matches;
+  }
+  return false;
+};
+
+const getIsMobile = () => {
+  if (typeof window !== "undefined") {
+    return window.innerWidth < 1024;
   }
   return false;
 };
@@ -41,4 +50,6 @@ export const usePageStateStore = create<PageState>((set) => ({
       window.localStorage.setItem("darkMode", JSON.stringify(value));
       return { darkMode: value };
     }),
+  isMobile: getIsMobile(),
+  setIsMobile: (value) => set(() => ({ isMobile: value })),
 }));
