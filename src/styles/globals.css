@@ -78,6 +78,10 @@ body.dark {
   @apply flex flex-col items-center align-middle blur-bg m-auto max-w-[1024px] min-h-[48px] rounded-2xl p-0 drop-shadow-2xl transition-apple;
 }
 
+.top-navbar-btn {
+  @apply btn-circle relative text-lg h-8 w-6 flex items-center text-white/80 hover:text-white;
+}
+
 /*.side-navbar{*/
 /*  @apply z-20 sticky h-[calc(100vh-64px)] top-[64px] overflow-y-auto overflow-x-hidden flex flex-col transition-apple;*/
 /*  @apply w-full max-w-full lg:max-w-[240px] p-4;*/

@@ -16,14 +16,14 @@ const MobileNavList: React.FC = () => {
 const NavList: React.FC = () => {
   return (
     <>
-      <ul className="my-4 flex h-full w-full flex-col justify-center gap-4 text-xl lg:m-0 lg:flex-row lg:gap-6">
+      <ul className="my-4 flex h-full w-full flex-col justify-center gap-4 text-lg lg:m-0 lg:flex-row lg:gap-6">
         {globals.topNavItems.map(({ label, href, icon }, key) => (
           <Link
             key={label}
             href={href}
             className="transition-apple flex flex-row flex-nowrap place-items-center gap-2 text-white/80 hover:text-white"
           >
-            <Icon icon={icon} className="h-[1.25rem] w-[1.25rem]" />
+            <Icon icon={icon} className="text-lg" />
             <span className={`whitespace-nowrap inline-block`}>{label}</span>
           </Link>
         ))}
@@ -72,24 +72,22 @@ const TopNavbar: React.FC<TopNavbarProps> = ({ className = "" }) => {
   const backgroundGradient = `linear-gradient(to right, rgb(0,0,0,0.7) ${
     scrollPercentage * 0.75 - 10
   }%, rgb(82, 82, 82,0.8) ${scrollPercentage}%, rgb(0,0,0,0.7) ${scrollPercentage}%)`;
-  let isMobile = false;
 
   return (
     <>
-      {isMobile && topNavOpen && (
-        <div
-          className={`blur-mask transition-apple fixed -left-20 -top-20 z-[99] h-[4096px] w-[1300px] bg-black/50`}
-        ></div>
-      )}
+      <div
+        className={`${topNavOpen ? "opacity-100 h-screen" : "opacity-0 h-0"} lg:hidden blur-mask transition-apple fixed top-0 left-0 z-[99] w-screen bg-black/50`}
+      />
+
       <div className={`top-navbar-wrapper ${className}`}>
         <div className="top-navbar" style={{ background: backgroundGradient }}>
-          <div className="flex w-full flex-row gap-2 px-4 xl:px-8 my-auto align-center items-center">
+          <div className="flex w-full flex-row gap-2 px-4 xl:px-8 py-2 align-center items-center">
             <button
               onClick={() => {
                 setRightNav(false);
                 setLeftNav(!leftNavOpen);
               }}
-              className="btn-circle h-5 w-5 my-auto p-0 text-white/[0.75] xl:hidden"
+              className="top-navbar-btn lg:hidden"
             >
               <Icon
                 icon={"heroicons:chevron-double-right"}
@@ -106,19 +104,23 @@ const TopNavbar: React.FC<TopNavbarProps> = ({ className = "" }) => {
               <NavList />
             </div>
             <div className={`grow xl:hidden`}></div>
-            <DarkModeToggleClient className={`text-white/80 hover:text-white h-5 w-5`} />
-            <button
-              onClick={() => setTopNav(!topNavOpen)}
-              className="transition-apple h-5 w-5 text-white/[0.75] hover:text-white xl:hidden"
-            >
-              <Icon icon={topNavOpen ? "heroicons:x-mark" : "heroicons:bars-3"} />
+            <DarkModeToggleClient className={`top-navbar-btn`} />
+            <button onClick={() => setTopNav(!topNavOpen)} className="top-navbar-btn lg:hidden">
+              <Icon
+                icon={"heroicons:bars-3"}
+                className={`${topNavOpen ? "scale-y-0" : ""} transition-apple absolute inset-0 items-center justify-center flex`}
+              />
+              <Icon
+                icon={"heroicons:x-mark"}
+                className={`${topNavOpen ? "" : "scale-y-0"} transition-apple absolute inset-0 items-center justify-center flex`}
+              />
             </button>
             <button
               onClick={() => {
                 setLeftNav(false);
                 setRightNav(!rightNavOpen);
               }}
-              className="h-5 w-5 text-white/[0.75] xl:hidden"
+              className="top-navbar-btn lg:hidden"
             >
               <Icon
                 icon={"heroicons:chevron-double-left"}
@@ -127,7 +129,7 @@ const TopNavbar: React.FC<TopNavbarProps> = ({ className = "" }) => {
             </button>
           </div>
           <div
-            className={`transition-apple overflow-hidden px-4 py-0 lg:hidden ${topNavOpen ? `max-h-60` : `max-h-0`}`}
+            className={`transition-apple overflow-hidden px-4 py-0 lg:hidden ${topNavOpen ? `max-h-screen` : `max-h-0`}`}
           >
             <NavList />
           </div>

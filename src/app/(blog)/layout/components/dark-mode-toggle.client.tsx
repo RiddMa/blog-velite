@@ -21,14 +21,13 @@ const DarkModeToggleClient: React.FC<DarkModeToggleProps> = ({ className = "" })
 
   return (
     <button onClick={() => setDarkMode(!darkMode)} className={`btn-circle relative ${className}`}>
-      {/*<Icon icon={darkMode ? "heroicons:moon" : "heroicons:sun"} />*/}
       <Icon
         icon="heroicons:moon"
-        className={`absolute inset-0 flex items-center justify-center transition-apple ${darkMode ? "opacity-100" : "opacity-0"}`}
+        className={`absolute inset-0 flex items-center justify-center transition-apple ${darkMode ? "" : "scale-y-0"}`}
       />
       <Icon
         icon="heroicons:sun"
-        className={`absolute inset-0 flex items-center justify-center transition-apple ${!darkMode ? "opacity-100" : "opacity-0"}`}
+        className={`absolute inset-0 flex items-center justify-center transition-apple ${darkMode ? "scale-y-0" : ""}`}
       />
     </button>
   );
