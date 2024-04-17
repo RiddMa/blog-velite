@@ -13,7 +13,7 @@ const LeftNavbar: React.FC<LeftNavbarProps> = ({ children, className }) => {
   const [leftNavOpen] = usePageStateStore(useShallow((state) => [state.leftNavOpen]));
   return (
     <div
-      className={`${leftNavOpen ? "translate-x-0" : "-translate-x-full lg:translate-x-0"} side-navbar text-right ${className}`}
+      className={`${leftNavOpen ? "translate-x-0" : "-translate-x-full xl:translate-x-0"} side-navbar text-right ${className}`}
     >
       {children}
     </div>

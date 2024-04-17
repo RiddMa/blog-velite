@@ -1,5 +1,5 @@
 const config = {
-  POSTS_PER_PAGE: 25,
+  POSTS_PER_PAGE: 4,
 };
 
 export default config;

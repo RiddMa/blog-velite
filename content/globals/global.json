@@ -6,6 +6,11 @@
   },
   "topNavItems": [
     {
+      "label": "文章",
+      "href": "/posts",
+      "icon": "ph:article-medium"
+    },
+    {
       "label": "分类",
       "href": "/categories",
       "icon": "heroicons:queue-list"

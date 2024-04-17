@@ -24,8 +24,7 @@ const LeftContent: React.FC<{ slug: string }> = ({ slug }) => {
   const sameColumnPosts = post.columns.map((column) => getPostsByColumn(column));
 
   return (
-    <>
-      {/*{JSON.stringify(post, null, 4)}*/}
+    <aside>
       {columns.map((column, i) => (
         <>
           <Link href={column.permalink} className={`text-h1 transition-apple hover-text-color-href`} key={column.slug}>
@@ -52,7 +51,7 @@ const LeftContent: React.FC<{ slug: string }> = ({ slug }) => {
           <div className={`h-8`}></div>
         </>
       ))}
-    </>
+    </aside>
   );
 };
 

@@ -58,11 +58,11 @@ body.dark {
   @apply bg-white transition-all duration-300 ease-apple dark:bg-slate-800;
 }
 
-.blur-bg {
+.backdrop-blur-bg {
   backdrop-filter: saturate(180%) blur(20px);
 }
 
-.blur-mask {
+.backdrop-blur-mask {
   backdrop-filter: saturate(150%) blur(5px);
 }
 
@@ -71,11 +71,11 @@ body.dark {
 }
 
 .top-navbar-wrapper {
-  @apply fixed z-[100] w-full pt-2 px-4 lg:px-0 transition-apple;
+  @apply fixed z-[100] w-full pt-2 px-4 xl:px-0 transition-apple;
 }
 
 .top-navbar {
-  @apply flex flex-col items-center align-middle blur-bg m-auto max-w-[1024px] min-h-[48px] rounded-2xl p-0 drop-shadow-2xl transition-apple;
+  @apply flex flex-col items-center align-middle backdrop-blur-bg m-auto max-w-[1024px] min-h-[48px] rounded-2xl p-0 drop-shadow-2xl transition-apple will-change-scroll;
 }
 
 .top-navbar-btn {
@@ -84,20 +84,13 @@ body.dark {
 
 /*.side-navbar{*/
 /*  @apply z-20 sticky h-[calc(100vh-64px)] top-[64px] overflow-y-auto overflow-x-hidden flex flex-col transition-apple;*/
-/*  @apply w-full max-w-full lg:max-w-[240px] p-4;*/
+/*  @apply w-full max-w-full xl:max-w-[240px] p-4;*/
 /*}*/
 .side-navbar {
   @apply fixed z-20 top-0 left-0 w-screen h-screen px-4 pb-4 pt-[72px] overflow-y-auto overflow-x-hidden flex flex-col transition-apple;
-  @apply lg:sticky lg:top-[64px] lg:h-[calc(100vh-64px)] lg:max-w-[240px] lg:pt-4;
+  @apply xl:sticky xl:top-[64px] xl:h-[calc(100vh-64px)] xl:max-w-[240px] xl:pt-4;
 }
 
-.prose-article {
-  @apply prose prose-slate w-full min-w-0 max-w-none transition-all duration-300 ease-apple dark:prose-invert prose-a:text-sky-600 hover:prose-a:underline;
-  /*@apply prose prose-slate w-full min-w-0 max-w-[960px] transition-all duration-300 ease-apple dark:prose-invert prose-h1:leading-normal prose-h2:leading-normal prose-h3:leading-normal prose-h4:leading-normal prose-a:text-sky-600 hover:prose-a:underline prose-blockquote:text-slate-600 prose-code:text-base prose-code:text-slate-700 prose-pre:m-0 prose-pre:p-0 dark:prose-a:text-sky-400 dark:prose-blockquote:text-slate-400 dark:prose-code:text-slate-300 xl:prose-code:text-lg;*/
-  word-break: break-word;
-  word-wrap: break-word;
-  -webkit-hyphens: auto;
-  -ms-hyphens: auto;
-  -moz-hyphens: auto;
-  hyphens: auto;
+.px-content {
+  @apply px-4 pb-4 xl:px-8 xl:pb-8;
 }

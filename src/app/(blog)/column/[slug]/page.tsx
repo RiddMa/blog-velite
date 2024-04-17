@@ -28,7 +28,7 @@ export default function ColumnPage({ params }: PostProps) {
   if (!column) notFound();
 
   return (
-    <article className="prose lg:prose-lg dark:prose-invert py-6">
+    <article className="prose xl:prose-lg dark:prose-invert py-6">
       <h1 className="mb-2">标题：{column.name}</h1>
       <hr className="my-4" />
       内容：

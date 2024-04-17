@@ -25,14 +25,9 @@ const config: Config = {
         mono: ["JetBrains Mono", ...defaultTheme.fontFamily.mono],
       },
       screens: {
-        xs: "480px", // 可以用于小型设备如较小的iPhone
-        sm: "640px", // 默认的小设备断点
-        md: "768px", // 适合iPad竖屏
         lg: "1024px", // 适合iPad横屏和低分辨率的笔记本电脑
-        xl: "1280px", // 标准笔记本电脑尺寸
-        "2xl": "1536px", // 大型笔记本电脑
+        xl: "1280px",
         fhd: "1920px", // 常规桌面显示器
-        "3xl": "1920px", // 常规桌面显示器
         "4k": "3840px", // 4K显示器
       },
       backgroundImage: {

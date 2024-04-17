@@ -1,9 +1,7 @@
-import Image from "next/image";
 import { notFound } from "next/navigation";
 import { posts } from "@/.velite";
 import type { Metadata } from "next";
 import { getCategoryBySlug, getColumnBySlug, getPostBySlug, getTagBySlug } from "@/src/store/velite";
-import { assertDefined } from "@/src/util/util";
 import { unified } from "unified";
 import rehypeParse from "rehype-parse";
 import rehypeReact from "rehype-react";
@@ -12,7 +10,6 @@ import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
 import { oneDark, oneLight } from "react-syntax-highlighter/dist/cjs/styles/prism";
 import { ImageAwesome } from "@/src/components/ImageAwesome";
 import Copy2Clipboard from "@/src/components/Copy2Clipboard";
-import Giscus from "@giscus/react";
 import PostComment from "@/src/components/PostComment";
 
 interface PostProps {
@@ -35,12 +32,10 @@ export function generateStaticParams(): PostProps["params"][] {
 
 export default function PostPage({ params }: PostProps) {
   let post = getPostBySlug(params.slug);
-
   if (!post) notFound();
-
-  const columns = post.columns.map((column) => getColumnBySlug(column));
-  const categories = post.categories.map((category) => getCategoryBySlug(category));
-  const tags = post.tags.map((tag) => getTagBySlug(tag));
+  // const columns = post.columns.map((column) => getColumnBySlug(column));
+  // const categories = post.categories.map((category) => getCategoryBySlug(category));
+  // const tags = post.tags.map((tag) => getTagBySlug(tag));
 
   const production = { Fragment: prod.Fragment, jsx: prod.jsx, jsxs: prod.jsxs };
   const processor = unified()
@@ -105,7 +100,7 @@ export default function PostPage({ params }: PostProps) {
   const ContentComponents = processor.processSync(post.content).result;
 
   return (
-    <article className="prose-article px-4 lg:px-0">
+    <article className="prose-article px-4 xl:px-0">
       <h1 className={`text-h0 text-center`}>{post.title}</h1>
       {post.cover && (
         <ImageAwesome
@@ -117,7 +112,6 @@ export default function PostPage({ params }: PostProps) {
         />
       )}
       <br />
-      {/*<div className="" dangerouslySetInnerHTML={{ __html: post.content }}></div>*/}
       {ContentComponents}
       <PostComment />
     </article>

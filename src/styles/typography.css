@@ -1,0 +1,60 @@
+.prose-article {
+  @apply prose prose-slate w-full min-w-0 max-w-none transition-all duration-300 ease-apple dark:prose-invert prose-a:text-sky-600 hover:prose-a:underline;
+  /*@apply prose prose-slate w-full min-w-0 max-w-[960px] transition-all duration-300 ease-apple dark:prose-invert prose-h1:leading-normal prose-h2:leading-normal prose-h3:leading-normal prose-h4:leading-normal prose-a:text-sky-600 hover:prose-a:underline prose-blockquote:text-slate-600 prose-code:text-base prose-code:text-slate-700 prose-pre:m-0 prose-pre:p-0 dark:prose-a:text-sky-400 dark:prose-blockquote:text-slate-400 dark:prose-code:text-slate-300 xl:prose-code:text-lg;*/
+  word-break: break-word;
+  word-wrap: break-word;
+  -webkit-hyphens: auto;
+  -ms-hyphens: auto;
+  -moz-hyphens: auto;
+  hyphens: auto;
+}
+
+.prose-article-card {
+  @apply prose prose-slate max-w-none transition-all duration-300 ease-apple dark:prose-invert prose-h1:m-0 prose-h2:m-0 prose-p:m-0;
+  word-break: break-word;
+  word-wrap: break-word;
+  -webkit-hyphens: auto;
+  -ms-hyphens: auto;
+  -moz-hyphens: auto;
+  hyphens: auto;
+}
+
+.text-body {
+  @apply text-base font-normal;
+}
+
+.text-caption {
+  @apply text-sm;
+}
+
+.text-h0 {
+  @apply text-5xl font-bold leading-normal;
+}
+
+.text-h1 {
+  @apply text-4xl font-semibold leading-normal;
+}
+
+.text-href {
+  @apply no-underline hover:underline hover:text-sky-600 dark:hover:text-sky-300;
+}
+
+.text-color-body {
+  @apply text-slate-700 dark:text-slate-300;
+}
+
+.text-color-caption {
+  @apply text-slate-600 dark:text-slate-400;
+}
+
+.text-color-headings {
+  @apply text-slate-900 dark:text-white;
+}
+
+.text-color-href {
+  @apply text-sky-800 hover:text-sky-600 dark:text-sky-300 dark:opacity-80 dark:hover:opacity-100;
+}
+
+/*.hover-text-color-href {*/
+/*    @apply text-sky-800 hover:text-sky-600 dark:text-sky-300 dark:hover:text-sky-300;*/
+/*}*/

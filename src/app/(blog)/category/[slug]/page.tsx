@@ -27,7 +27,7 @@ export default function CategoryPage({ params }: CategoryProps) {
   if (!category) notFound();
 
   return (
-    <div className="prose lg:prose-lg dark:prose-invert py-6">
+    <div className="prose xl:prose-lg dark:prose-invert py-6">
       <h1 className="mb-2">分类名称：{category.name}</h1>
       {category.description && (
         <p className="mt-0 text-xl text-slate-700 dark:text-slate-200">描述：{category.description}</p>

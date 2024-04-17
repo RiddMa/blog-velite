@@ -3,20 +3,15 @@
 import React, { useEffect } from "react";
 import { usePageStateStore } from "@/src/store/store";
 import { useShallow } from "zustand/react/shallow";
-// import MobileNavMenu from "@/src/app/layout/components/mobile-nav-menu";
 import DarkModeToggleClient from "@/src/app/(blog)/layout/components/dark-mode-toggle.client";
 import { Icon } from "@iconify-icon/react";
 import Link from "next/link";
 import { globals } from "@/.velite";
 
-const MobileNavList: React.FC = () => {
-  return <></>;
-};
-
 const NavList: React.FC = () => {
   return (
     <>
-      <ul className="my-4 flex h-full w-full flex-col justify-center gap-4 text-lg lg:m-0 lg:flex-row lg:gap-6">
+      <ul className="my-4 flex h-full w-full flex-col justify-center gap-4 text-lg xl:m-0 xl:flex-row xl:gap-6">
         {globals.topNavItems.map(({ label, href, icon }, key) => (
           <Link
             key={label}
@@ -76,7 +71,7 @@ const TopNavbar: React.FC<TopNavbarProps> = ({ className = "" }) => {
   return (
     <>
       <div
-        className={`${topNavOpen ? "opacity-100 h-screen" : "opacity-0 h-0"} lg:hidden blur-mask transition-apple fixed top-0 left-0 z-[99] w-screen bg-black/50`}
+        className={`${topNavOpen ? "opacity-100 h-screen" : "opacity-0 h-0"} xl:hidden blur-mask transition-apple fixed top-0 left-0 z-[99] w-screen bg-black/50`}
       />
 
       <div className={`top-navbar-wrapper ${className}`}>
@@ -87,7 +82,7 @@ const TopNavbar: React.FC<TopNavbarProps> = ({ className = "" }) => {
                 setRightNav(false);
                 setLeftNav(!leftNavOpen);
               }}
-              className="top-navbar-btn lg:hidden"
+              className="top-navbar-btn xl:hidden"
             >
               <Icon
                 icon={"heroicons:chevron-double-right"}
@@ -100,12 +95,12 @@ const TopNavbar: React.FC<TopNavbarProps> = ({ className = "" }) => {
             <div className={`hidden xl:block xl:grow`}>
               <span></span>
             </div>
-            <div className="hidden items-center justify-center lg:block ">
+            <div className="hidden items-center justify-center xl:block ">
               <NavList />
             </div>
             <div className={`grow xl:hidden`}></div>
             <DarkModeToggleClient className={`top-navbar-btn`} />
-            <button onClick={() => setTopNav(!topNavOpen)} className="top-navbar-btn lg:hidden">
+            <button onClick={() => setTopNav(!topNavOpen)} className="top-navbar-btn xl:hidden">
               <Icon
                 icon={"heroicons:bars-3"}
                 className={`${topNavOpen ? "scale-y-0" : ""} transition-apple absolute inset-0 items-center justify-center flex`}
@@ -120,7 +115,7 @@ const TopNavbar: React.FC<TopNavbarProps> = ({ className = "" }) => {
                 setLeftNav(false);
                 setRightNav(!rightNavOpen);
               }}
-              className="top-navbar-btn lg:hidden"
+              className="top-navbar-btn xl:hidden"
             >
               <Icon
                 icon={"heroicons:chevron-double-left"}
@@ -129,7 +124,7 @@ const TopNavbar: React.FC<TopNavbarProps> = ({ className = "" }) => {
             </button>
           </div>
           <div
-            className={`transition-apple overflow-hidden px-4 py-0 lg:hidden ${topNavOpen ? `max-h-screen` : `max-h-0`}`}
+            className={`transition-apple overflow-hidden px-4 py-0 xl:hidden ${topNavOpen ? `max-h-screen` : `max-h-0`}`}
           >
             <NavList />
           </div>
