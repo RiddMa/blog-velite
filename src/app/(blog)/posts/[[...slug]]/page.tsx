@@ -27,7 +27,7 @@ export default function PostListPage({ params }: PostListProps) {
 
   return (
     <>
-      <div className="flex flex-col gap-8 px-content">
+      <main className="flex flex-col gap-8 px-content">
         <p className="px-content prose-text text-end text-color-caption">{posts.length}篇文章</p>
         {displayedPosts.map((post) => {
           return (
@@ -73,8 +73,8 @@ export default function PostListPage({ params }: PostListProps) {
             </Link>
           );
         })}
-      </div>
-      <MyPagination pageNumber={pageNumber} totalPages={totalPages} baseUrl={`/posts`} />
+        <MyPagination pageNumber={pageNumber} totalPages={totalPages} baseUrl={`/posts`} />
+      </main>
     </>
   );
 }

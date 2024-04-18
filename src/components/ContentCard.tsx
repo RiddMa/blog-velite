@@ -26,21 +26,20 @@ export const ContentCard: React.FC<IContentCardProps> = ({ cover, title, excerpt
     //       />
     //     </div>
     //   )}
-    <div
-      className={`card color-card flex flex-col xl:flex-row prose-article-card transition-apple drop-shadow-lg hover:drop-shadow-2xl`}
-    >
+    <div className={`card color-card flex flex-col xl:flex-row transition-apple drop-shadow-lg hover:drop-shadow-2xl`}>
       {cover && (
         <div className="relative m-0 p-0 block aspect-video xl:aspect-square xl:w-[250px] xl:h-[250px]">
           <Image
             src={cover.src}
             alt={"cover image"}
             className="card"
-            layout={"fill"}
+            fill={true}
+            sizes="(max-width: 1280px) 100vw, 250px"
             style={{ objectFit: "cover", margin: 0 }}
           />
         </div>
       )}
-      <div className="m-0 flex flex-col flex-grow gap-4 p-4 xl:px-8 ">
+      <div className="m-0 flex flex-col flex-grow gap-4 p-4 xl:px-8 prose-article-card">
         {title && <>{title}</>}
         {excerpt && <>{excerpt}</>}
         <div className={`grow`}></div>

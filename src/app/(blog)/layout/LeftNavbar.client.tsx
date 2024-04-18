@@ -9,15 +9,15 @@ interface LeftNavbarProps {
   className?: string;
 }
 
-const LeftNavbar: React.FC<LeftNavbarProps> = ({ children, className }) => {
+const LeftNavbarClient: React.FC<LeftNavbarProps> = ({ children, className }) => {
   const [leftNavOpen] = usePageStateStore(useShallow((state) => [state.leftNavOpen]));
   return (
     <div
-      className={`${leftNavOpen ? "translate-x-0" : "-translate-x-full xl:translate-x-0"} side-navbar text-right ${className}`}
+      className={`${leftNavOpen ? "translate-x-0" : "-translate-x-full xl:translate-x-0"} side-navbar m-0 xl:mr-4 text-right ${className}`}
     >
       {children}
     </div>
   );
 };
 
-export default LeftNavbar;
+export default LeftNavbarClient;

@@ -2,7 +2,7 @@
 
 import React, { useEffect, useState } from "react";
 import { Icon } from "@iconify-icon/react";
-import { usePageStateStore } from "@/src/store/store";
+import { getDarkMode, usePageStateStore } from "@/src/store/store";
 import { useShallow } from "zustand/react/shallow";
 import { Button } from "@nextui-org/button";
 

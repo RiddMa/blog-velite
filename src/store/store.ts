@@ -16,7 +16,7 @@ interface PageState {
   setIsMobile: (value: boolean) => void;
 }
 
-const getDarkMode = () => {
+export const getDarkMode = () => {
   if (typeof window !== "undefined") {
     const storedPreference = window.localStorage.getItem("darkMode");
     if (storedPreference) {
@@ -44,7 +44,7 @@ export const usePageStateStore = create<PageState>((set) => ({
   setLeftNav: (value) => set(() => ({ leftNavOpen: value })),
   scrollPercentage: 0,
   setScrollPercentage: (value: number) => set(() => ({ scrollPercentage: value })),
-  darkMode: getDarkMode(),
+  darkMode: true,
   setDarkMode: (value) =>
     set(() => {
       window.localStorage.setItem("darkMode", JSON.stringify(value));

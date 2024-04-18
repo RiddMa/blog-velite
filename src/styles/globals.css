@@ -2,40 +2,36 @@
 @tailwind components;
 @tailwind utilities;
 
-/*:root {*/
-/*  --foreground-rgb: 0, 0, 0;*/
-/*  --background-start-rgb: 214, 219, 220;*/
-/*  --background-end-rgb: 255, 255, 255;*/
-/*}*/
+* {
+  outline: 1px solid tomato;
+}
 
-/*@media (prefers-color-scheme: dark) {*/
-/*  :root {*/
-/*    --foreground-rgb: 255, 255, 255;*/
-/*    --background-start-rgb: 0, 0, 0;*/
-/*    --background-end-rgb: 0, 0, 0;*/
-/*  }*/
-/*}*/
+html {
+  scroll-behavior: smooth;
+}
 
 body {
-  font-family: -apple-system, BlinkMacSystemFont, SFProDisplay-Regular, "PingFang SC", "Myriad Pro", "Noto Sans SC",
-    sans-serif;
-  /*color: rgb(var(--foreground-rgb));*/
-  /*background: linear-gradient(*/
-  /*    to bottom,*/
-  /*    transparent,*/
-  /*    rgb(var(--background-end-rgb))*/
-  /*  )*/
-  /*  rgb(var(--background-start-rgb));*/
+  @apply transition-all duration-300 ease-apple;
+  font-family: -apple-system, BlinkMacSystemFont, SFProDisplay-Regular, "PingFang SC", "Myriad Pro",
+  "Noto Sans SC", sans-serif;
 }
 
-:target {
-  scroll-margin-top: 72px; /* 根据你的顶栏高度调整这个值 */
+pre {
+  font-family: -apple-system, BlinkMacSystemFont, "JetBrains Mono", monospace;
 }
 
-@layer utilities {
-  .text-balance {
-    text-wrap: balance;
-  }
+code {
+  font-family: -apple-system, BlinkMacSystemFont, "JetBrains Mono", monospace;
+}
+
+.gsc-main {
+  font-family: -apple-system, BlinkMacSystemFont, SFProDisplay-Regular, "PingFang SC", "Myriad Pro",
+  "Noto Sans SC", sans-serif !important;
+}
+
+.gsc-reactions-count {
+  font-family: -apple-system, BlinkMacSystemFont, SFProDisplay-Regular, "PingFang SC", "Myriad Pro",
+  "Noto Sans SC", sans-serif !important;
 }
 
 body.light {
@@ -45,6 +41,16 @@ body.light {
 body.dark {
   @apply bg-gray-900;
 }
+
+:target {
+  scroll-margin-top: 72px; /* 根据你的顶栏高度调整这个值 */
+}
+
+/*@layer utilities {*/
+/*  .text-balance {*/
+/*    text-wrap: balance;*/
+/*  }*/
+/*}*/
 
 .color-body {
   @apply bg-neutral-100 transition-all duration-300 ease-apple dark:bg-gray-900;
@@ -87,10 +93,66 @@ body.dark {
 /*  @apply w-full max-w-full xl:max-w-[240px] p-4;*/
 /*}*/
 .side-navbar {
-  @apply fixed z-20 top-0 left-0 w-screen h-screen px-4 pb-4 pt-[72px] overflow-y-auto overflow-x-hidden flex flex-col transition-apple;
-  @apply xl:sticky xl:top-[64px] xl:h-[calc(100vh-64px)] xl:max-w-[240px] xl:pt-4;
+  @apply fixed z-[90] w-screen h-[calc(100dvh)] overflow-y-auto overflow-x-hidden flex flex-col transition-apple;
+  @apply px-4 pb-4 pt-[72px] xl:sticky xl:top-[64px] xl:h-[calc(100vh-64px)] xl:max-w-[240px] xl:pt-4;
+  @apply backdrop-blur-bg xl:backdrop-blur-none bg-black/50 xl:bg-transparent;
 }
 
 .px-content {
   @apply px-4 pb-4 xl:px-8 xl:pb-8;
+}
+
+.card {
+  @apply rounded-3xl
+}
+
+.black-corner-top-left {
+  z-index: 180;
+  position: fixed;
+  pointer-events: none;
+  top: -0.08rem;
+  left: -0.08rem;
+  width: 3rem;
+  height: 3rem;
+  background-size: 100% 100%;
+  background: radial-gradient(circle at 3.1rem 3.1rem, transparent 3rem, black 3.1rem) 50% 50%;
+}
+
+.black-corner-top-right {
+  z-index: 180;
+  position: fixed;
+  pointer-events: none;
+  top: -0.08rem;
+  right: -0.08rem;
+  width: 3rem;
+  height: 3rem;
+  background-size: 100% 100%;
+  background: radial-gradient(circle at calc(100% - 3.1rem) 3.1rem, transparent 3rem, black 3.1rem)
+  50% 50%;
+}
+
+.black-corner-bottom-left {
+  z-index: 180;
+  position: fixed;
+  pointer-events: none;
+  bottom: -0.08rem;
+  left: -0.08rem;
+  width: 3rem;
+  height: 3rem;
+  background: radial-gradient(circle at 3.1rem calc(100% - 3.1rem), transparent 3rem, black 3.1rem);
+}
+
+.black-corner-bottom-right {
+  z-index: 180;
+  position: fixed;
+  pointer-events: none;
+  bottom: -0.08rem;
+  right: -0.08rem;
+  width: 3rem;
+  height: 3rem;
+  background: radial-gradient(
+          circle at calc(100% - 3.1rem) calc(100% - 3.1rem),
+          transparent 3rem,
+          black 3.1rem
+  );
 }
