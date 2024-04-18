@@ -74,7 +74,7 @@ export default function PostListPage({ params }: PostListProps) {
           );
         })}
       </div>
-      <MyPagination pageNumber={pageNumber} totalPages={totalPages} />
+      <MyPagination pageNumber={pageNumber} totalPages={totalPages} baseUrl={`/posts`} />
     </>
   );
 }

@@ -7,19 +7,25 @@ import DarkModeToggleClient from "@/src/app/(blog)/layout/components/dark-mode-t
 import { Icon } from "@iconify-icon/react";
 import Link from "next/link";
 import { globals } from "@/.velite";
+import { Button } from "@nextui-org/button";
 
 const NavList: React.FC = () => {
   return (
     <>
-      <ul className="my-4 flex h-full w-full flex-col justify-center gap-4 text-lg xl:m-0 xl:flex-row xl:gap-6">
+      <ul className="my-4 flex h-full w-full flex-col justify-center gap-2 text-lg xl:m-0 xl:flex-row xl:gap-1">
         {globals.topNavItems.map(({ label, href, icon }, key) => (
-          <Link
-            key={label}
-            href={href}
-            className="transition-apple flex flex-row flex-nowrap place-items-center gap-2 text-white/80 hover:text-white"
-          >
-            <Icon icon={icon} className="text-lg" />
-            <span className={`whitespace-nowrap inline-block`}>{label}</span>
+          <Link key={label} href={href} className="w-full">
+            <Button
+              variant={`light`}
+              aria-label={label}
+              startContent={<Icon icon={icon} className="text-lg" />}
+              className={`transition-apple text-white/80 hover:text-white`}
+              fullWidth={true}
+            >
+              <span className={`whitespace-nowrap inline-block`}>{label}</span>
+            </Button>
+            {/*<Icon icon={icon} className="text-lg" />*/}
+            {/*<span className={`whitespace-nowrap inline-block`}>{label}</span>*/}
           </Link>
         ))}
       </ul>
@@ -76,8 +82,11 @@ const TopNavbar: React.FC<TopNavbarProps> = ({ className = "" }) => {
 
       <div className={`top-navbar-wrapper ${className}`}>
         <div className="top-navbar" style={{ background: backgroundGradient }}>
-          <div className="flex w-full flex-row gap-2 px-4 xl:px-8 py-2 align-center items-center">
-            <button
+          <div className="flex w-full flex-row gap-0 px-1 xl:px-4 py-2 align-center items-center">
+            <Button
+              isIconOnly
+              variant={`light`}
+              aria-label="Toggle Left Navbar"
               onClick={() => {
                 setRightNav(false);
                 setLeftNav(!leftNavOpen);
@@ -88,19 +97,27 @@ const TopNavbar: React.FC<TopNavbarProps> = ({ className = "" }) => {
                 icon={"heroicons:chevron-double-right"}
                 className={`${leftNavOpen ? "-scale-x-100" : "scale-x-100"} transition-apple`}
               />
-            </button>
-            <Link href="/" className="transition-apple text-xl text-white/80 hover:text-white">
-              {"Ridd Blog"}
+            </Button>
+            <Link href="/" className="transition-apple text-xl text-white/80 hover:text-white xl:-ml-2">
+              <Button variant={`light`} aria-label="Homepage" className="top-navbar-btn">
+                {"Ridd Blog"}
+              </Button>
             </Link>
             <div className={`hidden xl:block xl:grow`}>
               <span></span>
             </div>
-            <div className="hidden items-center justify-center xl:block ">
+            <div className="hidden items-center justify-center xl:block xl:mr-1">
               <NavList />
             </div>
             <div className={`grow xl:hidden`}></div>
             <DarkModeToggleClient className={`top-navbar-btn`} />
-            <button onClick={() => setTopNav(!topNavOpen)} className="top-navbar-btn xl:hidden">
+            <Button
+              isIconOnly
+              variant={`light`}
+              aria-label="Toggle Nav Menu"
+              onClick={() => setTopNav(!topNavOpen)}
+              className="top-navbar-btn xl:hidden"
+            >
               <Icon
                 icon={"heroicons:bars-3"}
                 className={`${topNavOpen ? "scale-y-0" : ""} transition-apple absolute inset-0 items-center justify-center flex`}
@@ -109,8 +126,11 @@ const TopNavbar: React.FC<TopNavbarProps> = ({ className = "" }) => {
                 icon={"heroicons:x-mark"}
                 className={`${topNavOpen ? "" : "scale-y-0"} transition-apple absolute inset-0 items-center justify-center flex`}
               />
-            </button>
-            <button
+            </Button>
+            <Button
+              isIconOnly
+              variant={`light`}
+              aria-label="Toggle Right Navbar"
               onClick={() => {
                 setLeftNav(false);
                 setRightNav(!rightNavOpen);
@@ -121,10 +141,10 @@ const TopNavbar: React.FC<TopNavbarProps> = ({ className = "" }) => {
                 icon={"heroicons:chevron-double-left"}
                 className={`${rightNavOpen ? "-scale-x-100" : "scale-x-100"} transition-apple`}
               />
-            </button>
+            </Button>
           </div>
           <div
-            className={`transition-apple overflow-hidden px-4 py-0 xl:hidden ${topNavOpen ? `max-h-screen` : `max-h-0`}`}
+            className={`transition-apple w-full overflow-hidden px-2 py-0 xl:hidden ${topNavOpen ? `max-h-screen` : `max-h-0`}`}
           >
             <NavList />
           </div>

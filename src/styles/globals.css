@@ -79,7 +79,7 @@ body.dark {
 }
 
 .top-navbar-btn {
-  @apply btn-circle relative text-lg h-8 w-6 flex items-center text-white/80 hover:text-white;
+  @apply relative text-lg flex items-center text-white/80 hover:text-white;
 }
 
 /*.side-navbar{*/
