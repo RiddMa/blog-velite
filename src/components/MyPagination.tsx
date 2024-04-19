@@ -113,6 +113,7 @@ const MyPagination: React.FC<IPaginationProps> = ({ pageNumber, totalPages, base
       showControls
       showShadow
       onChange={(page) => router.push(`${baseUrl}/${page}`)}
+      className={`p-0 m-0`}
     />
   );
 };

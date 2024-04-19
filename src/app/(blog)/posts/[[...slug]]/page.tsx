@@ -28,7 +28,7 @@ export default function PostListPage({ params }: PostListProps) {
   return (
     <>
       <main className="flex flex-col gap-8 px-content">
-        <p className="px-content prose-text text-end text-color-caption">{posts.length}篇文章</p>
+        <p className="prose-text text-end text-color-caption">{posts.length}篇文章</p>
         {displayedPosts.map((post) => {
           return (
             <Link key={post.slug} href={post.permalink}>
@@ -42,7 +42,7 @@ export default function PostListPage({ params }: PostListProps) {
                   />
                 }
                 caption={
-                  <div className={`flex flex-row m-0`}>
+                  <div className={`flex flex-row m-0 opacity-80`}>
                     {/*<div className={`my-0 flex flex-row gap-2 xl:gap-4 p-0`}>*/}
                     {/*  {post.categories.map((slug) => {*/}
                     {/*    const category = getCategoryBySlug(slug);*/}
@@ -58,7 +58,7 @@ export default function PostListPage({ params }: PostListProps) {
                     {/*    );*/}
                     {/*  })}*/}
                     {/*</div>*/}
-                    <div className={`my-0 p-0 line-clamp-1 text-body text-color-caption`}>
+                    <div className={`my-0 p-0 line-clamp-1 text-body text-color-caption `}>
                       {post.tags.map((tag) => (
                         <>{tag}&nbsp;&nbsp;&nbsp;</>
                       ))}

@@ -24,8 +24,6 @@ const NavList: React.FC = () => {
             >
               <span className={`whitespace-nowrap inline-block`}>{label}</span>
             </Button>
-            {/*<Icon icon={icon} className="text-lg" />*/}
-            {/*<span className={`whitespace-nowrap inline-block`}>{label}</span>*/}
           </Link>
         ))}
       </ul>
@@ -110,7 +108,7 @@ const TopNavbar: React.FC<TopNavbarProps> = ({ className = "" }) => {
               <NavList />
             </div>
             <div className={`grow xl:hidden`}></div>
-            <DarkModeToggleClient className={`top-navbar-btn`} />
+            <DarkModeToggleClient className={`top-navbar-btn xl:-mr-2`} />
             <Button
               isIconOnly
               variant={`light`}

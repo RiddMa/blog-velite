@@ -47,7 +47,9 @@ export const usePageStateStore = create<PageState>((set) => ({
   darkMode: true,
   setDarkMode: (value) =>
     set(() => {
-      window.localStorage.setItem("darkMode", JSON.stringify(value));
+      if (typeof window !== "undefined") {
+        window.localStorage.setItem("darkMode", JSON.stringify(value));
+      }
       return { darkMode: value };
     }),
   isMobile: getIsMobile(),

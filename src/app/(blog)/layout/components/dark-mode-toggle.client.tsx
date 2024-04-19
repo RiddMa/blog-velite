@@ -14,11 +14,15 @@ const DarkModeToggleClient: React.FC<DarkModeToggleProps> = ({ className = "" })
   const [darkMode, setDarkMode] = usePageStateStore(useShallow((state) => [state.darkMode, state.setDarkMode]));
 
   useEffect(() => {
+    // console.log("darkMode", darkMode);
+    // console.log("getDarkMode()", getDarkMode());
+    setDarkMode(getDarkMode());
+
     const className = darkMode ? "dark" : "light";
-    document.documentElement.classList.add(className);
     document.documentElement.classList.remove(darkMode ? "light" : "dark");
-    window.localStorage.setItem("darkMode", String(darkMode));
-  }, [darkMode]);
+    document.documentElement.classList.add(className);
+    document.documentElement.setAttribute("data-theme", className);
+  }, [darkMode, setDarkMode]);
 
   return (
     <Button
