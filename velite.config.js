@@ -71,7 +71,7 @@ const posts = defineCollection({
     .transform(async (data) => ({
       ...data,
       permalink: `/post/${data.slug}`,
-      images: await extractImg(data.content),
+      images: await extractImg(data),
     })),
 });
 

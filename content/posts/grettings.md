@@ -1,5 +1,6 @@
 ---
 title: Greetings from Python!
+cover: assets/magn-poster.jpeg
 slug: greetings-from-python
 author: ridd
 created: 2024-4-10 12:00:00

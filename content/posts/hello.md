@@ -1,5 +1,6 @@
 ---
 title: Hello, World!
+cover: assets/xueyi.png
 slug: hello-world
 author: ridd
 created: 2024-4-10 11:35:55

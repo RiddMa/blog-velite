@@ -13,7 +13,13 @@ export function assertDefined<T>(val: T | undefined): asserts val is T {
   }
 }
 
-export const extractImg = async (html: string) => {
+export const extractImg = async (data: any) => {
+  const imgSet: { [key: string]: any } = await extractImgFromHtml(data.content);
+  // imgSet[data.cover] = await extractCoverImageMetadata(data.coverImage);
+  return imgSet;
+};
+
+export const extractImgFromHtml = async (html: string) => {
   const imgSet: { [key: string]: any } = {};
 
   unified()
@@ -44,4 +50,15 @@ export const extractImg = async (html: string) => {
   }
 
   return imgSet;
+};
+
+export const extractCoverImageMetadata = async (src: string) => {
+  try {
+    const filePath = path.join(staticBasePath, src);
+    const data = await fs.readFile(filePath);
+    const metadata = await sharp(data).metadata();
+    return { width: metadata.width, height: metadata.height };
+  } catch (error) {
+    console.error("Error processing image:", src, error);
+  }
 };
