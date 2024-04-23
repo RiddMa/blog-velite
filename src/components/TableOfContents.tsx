@@ -1,4 +1,5 @@
 import React from "react";
+import Link from "next/link";
 
 // 定义 TOC 项的接口
 interface TOCItemProps {
@@ -10,15 +11,21 @@ interface TOCItemProps {
 // 递归组件接口
 interface TOCRecursiveProps {
   items: TOCItemProps[];
+  useNextLink?: boolean;
+  urlPrefix?: string;
+  plain?: boolean;
 }
 
-const TOCItem: React.FC<TOCRecursiveProps> = ({ items }) => {
+const TOCItem: React.FC<TOCRecursiveProps> = ({ items, urlPrefix = "", useNextLink = false, plain = false }) => {
   return (
     <ul className="ml-2">
       {items.map((item, index) => (
         <li key={index}>
-          <a href={item.url}>{item.title}</a>
-          {item.items && item.items.length > 0 && <TOCItem items={item.items} />}
+          {useNextLink && <Link href={`${urlPrefix}${item.url}`}>{item.title}</Link>}
+          {!useNextLink && <a href={`${urlPrefix}${item.url}`}>{item.title}</a>}
+          {item.items && item.items.length > 0 && (
+            <TOCItem items={item.items} urlPrefix={urlPrefix} useNextLink={useNextLink} plain={plain} />
+          )}
         </li>
       ))}
     </ul>
@@ -28,10 +35,22 @@ const TOCItem: React.FC<TOCRecursiveProps> = ({ items }) => {
 // 主组件接口
 interface TableOfContentsProps {
   toc: TOCItemProps[];
+  useNextLink?: boolean;
+  plain?: boolean;
+  urlPrefix?: string;
 }
 
-const TableOfContents: React.FC<TableOfContentsProps> = ({ toc }) => {
-  return <nav className="-ml-2">{toc && toc.length > 0 && <TOCItem items={toc} />}</nav>;
+const TableOfContents: React.FC<TableOfContentsProps> = ({
+  toc,
+  urlPrefix = "",
+  useNextLink = false,
+  plain = false,
+}) => {
+  return (
+    <nav className="-ml-2">
+      {toc && toc.length > 0 && <TOCItem items={toc} urlPrefix={urlPrefix} useNextLink={useNextLink} plain={plain} />}
+    </nav>
+  );
 };
 
 export default TableOfContents;

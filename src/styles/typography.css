@@ -19,7 +19,7 @@
 }
 
 .prose-article h2 {
-  @apply my-2 text-4xl font-semibold text-slate-900 dark:text-white;
+  @apply my-2 text-3xl font-semibold text-slate-900 dark:text-white;
 }
 
 .prose-article a {
@@ -55,7 +55,7 @@
 }
 
 .prose-article-card h2 {
-  @apply my-2 text-4xl font-semibold text-slate-900 dark:text-white;
+  @apply my-2 text-3xl font-semibold text-slate-900 dark:text-white;
 }
 
 .prose-article-card a {

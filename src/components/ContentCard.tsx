@@ -6,6 +6,7 @@ import Image from "next/image";
 import { Card } from "@nextui-org/card";
 import { Image as NextUIImage } from "@nextui-org/image";
 import { motion } from "framer-motion";
+import { transitionApple } from "@/src/styles/framer-motion";
 
 interface IContentCardProps {
   cover?: VeliteImage;
@@ -16,6 +17,7 @@ interface IContentCardProps {
 }
 
 export const ContentCard: React.FC<IContentCardProps> = ({ cover, title, excerpt, caption, imgWidth }) => {
+  const cardGap = 16;
   let imgHeight = 0;
   if (cover) {
     const aspectRatio = cover.width / cover.height;
@@ -28,7 +30,11 @@ export const ContentCard: React.FC<IContentCardProps> = ({ cover, title, excerpt
     <motion.div onHoverStart={() => setIsHovered(true)} onHoverEnd={() => setIsHovered(false)}>
       <Card className={`group transition-apple drop-shadow-lg hover:drop-shadow-2xl prose-article-card gap-4 p-4`}>
         {cover && (
-          <motion.div className={`relative m-0 p-0 block`} animate={{ opacity: isHovered ? 0 : 1 }}>
+          <motion.div
+            className={`relative m-0 p-0 block`}
+            animate={{ opacity: isHovered ? 0 : 1 }}
+            transition={transitionApple}
+          >
             <NextUIImage
               as={Image}
               src={cover.src}
@@ -42,19 +48,25 @@ export const ContentCard: React.FC<IContentCardProps> = ({ cover, title, excerpt
             />
           </motion.div>
         )}
-        <motion.div animate={{ translateY: isHovered ? -imgHeight : 0 }}>{title}</motion.div>
         <motion.div
-          className={`absolute bottom-0 left-4 pr-4`}
-          animate={{
-            opacity: isHovered ? 1 : 0,
-            display: isHovered ? "block" : "hidden",
-            translateY: isHovered ? -imgHeight : 0,
-          }}
+          animate={{ translateY: isHovered ? -imgHeight - cardGap : 0 }}
+          transition={transitionApple}
+          className={`relative`}
         >
-          {excerpt}
+          {title}
+          {excerpt && (
+            <motion.div
+              className={`absolute`}
+              animate={{
+                opacity: isHovered ? 1 : 0,
+                display: isHovered ? "block" : "hidden",
+              }}
+              transition={transitionApple}
+            >
+              {excerpt}
+            </motion.div>
+          )}
         </motion.div>
-        {/*{excerpt && <>{excerpt}</>}*/}
-        {/*<div className={`grow`}></div>*/}
         {caption && <>{caption}</>}
       </Card>
     </motion.div>
