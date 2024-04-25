@@ -1,36 +1,35 @@
-import { posts } from "@/.velite";
-import config from "@/blog.config";
-import { notFound } from "next/navigation";
-import ContentCard from "@/src/components/ContentCard";
-import Link from "next/link";
-import { getCategoryBySlug } from "@/src/store/velite";
-import { formatDate } from "@/src/store/day";
-import { Icon } from "@iconify-icon/react";
-import MyPagination from "@/src/components/MyPagination";
+import { Post, posts } from "@/.velite";
 import WaterfallGrid from "@/src/components/WaterfallGrid";
 
 interface PostListProps {
   params: {
     slug: string;
   };
+  searchParams: {
+    column?: string;
+    category?: string;
+    tag?: string;
+  };
 }
 
-export default function PostListPage({ params }: PostListProps) {
-  const pageNumber = params.slug ? parseInt(params.slug) : 1;
-  const postsPerPage = config.POSTS_PER_PAGE || 25;
-  const totalPages = Math.ceil(posts.length / postsPerPage);
-  if (!pageNumber || pageNumber < 1 || pageNumber > totalPages) {
-    return notFound();
-  }
+// Function to filter posts based on search parameters
+function filterPosts(posts: Post[], params: PostListProps["searchParams"]): Post[] {
+  return posts.filter((post) => {
+    const columnMatch = params.column ? post.columns.includes(params.column) : true;
+    const categoryMatch = params.category ? post.categories.includes(params.category) : true;
+    const tagMatch = params.tag ? post.tags.includes(params.tag) : true;
+    return columnMatch && categoryMatch && tagMatch;
+  });
+}
 
-  const displayedPosts = posts.slice(postsPerPage * (pageNumber - 1), postsPerPage * pageNumber);
-  const pagination = { pageNumber, totalPages };
+export default function PostListPage({ params, searchParams }: PostListProps) {
+  const displayedPosts = filterPosts(posts, searchParams);
 
   return (
     <>
       <main className="flex flex-col gap-8 px-content">
         <p className="prose-text text-end text-color-caption">{posts.length}篇文章</p>
-        <WaterfallGrid posts={posts} />
+        <WaterfallGrid posts={displayedPosts} />
         {/*{displayedPosts.map((post) => {*/}
         {/*  return (*/}
         {/*    <Link key={post.slug} href={post.permalink}>*/}
