@@ -37,7 +37,7 @@ export const PostCard: React.FC<IPostCardProps> = ({ post, imgWidth }) => {
             <motion.div
               className={`relative m-0 p-0 z-[1]`}
               animate={{
-                opacity: isHovered ? 0.2 : 1,
+                opacity: isHovered ? 0.1 : 1,
                 filter: isHovered ? "blur(20px) saturate(1.5)" : "none",
               }}
               transition={transitionApple}
@@ -59,7 +59,9 @@ export const PostCard: React.FC<IPostCardProps> = ({ post, imgWidth }) => {
             transition={transitionApple}
             className={`relative h-full z-[2]`}
           >
-            <h1 className="line-clamp-2 overflow-ellipsis">{title}</h1>
+            <div className={`not-prose`}>
+              <h1 className="line-clamp-2 overflow-ellipsis text-h3">{title}</h1>
+            </div>
             {excerpt && (
               <motion.div
                 className={`absolute overflow-y-auto`}
@@ -71,7 +73,7 @@ export const PostCard: React.FC<IPostCardProps> = ({ post, imgWidth }) => {
                 transition={transitionApple}
               >
                 <p>{excerpt}</p>
-                <TableOfContents toc={toc} urlPrefix={permalink} useNextLink={true} />
+                <TableOfContents toc={toc} urlPrefix={permalink} useNextLink={true} className={`prose-article-card`} />
               </motion.div>
             )}
           </motion.div>

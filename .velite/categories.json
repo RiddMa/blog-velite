@@ -4,5 +4,23 @@
     "slug": "coding",
     "description": "Code the world!",
     "permalink": "/category/coding"
+  },
+  {
+    "name": "随感",
+    "slug": "feeling",
+    "description": "记录杂七杂八心事。",
+    "permalink": "/category/feeling"
+  },
+  {
+    "name": "MAGN",
+    "slug": "magn",
+    "description": "MAGN 是 Movie Anime Game Network 的缩写，读作“马 GN”。这个分类主要记录对于影视、动漫、游戏的讨论。",
+    "permalink": "/category/magn"
+  },
+  {
+    "name": "科技数码",
+    "slug": "tech",
+    "description": "油腻中年男什么的，那种事情不要啊！",
+    "permalink": "/category/tech"
   }
 ]

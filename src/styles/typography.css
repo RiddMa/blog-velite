@@ -1,5 +1,5 @@
 .prose-article {
-  @apply prose prose-slate w-full min-w-0 max-w-none transition-all duration-300 ease-apple dark:prose-invert;
+  @apply prose prose-slate w-full min-w-0 max-w-none transition-all duration-300 ease-apple dark:prose-invert leading-normal;
   @apply text-slate-700 dark:text-slate-300;
   /*@apply prose prose-slate w-full min-w-0 max-w-[960px] transition-all duration-300 ease-apple dark:prose-invert prose-h1:leading-normal prose-h2:leading-normal prose-h3:leading-normal prose-h4:leading-normal prose-a:text-sky-600 hover:prose-a:underline prose-blockquote:text-slate-600 prose-code:text-base prose-code:text-slate-700 prose-pre:m-0 prose-pre:p-0 dark:prose-a:text-sky-400 dark:prose-blockquote:text-slate-400 dark:prose-code:text-slate-300 xl:prose-code:text-lg;*/
   word-break: break-word;
@@ -36,7 +36,7 @@
 }
 
 .prose-article-card {
-  @apply prose dark:prose-invert prose-slate max-w-none transition-all duration-300 ease-apple;
+  @apply prose dark:prose-invert prose-slate max-w-none transition-all duration-300 ease-apple leading-normal;
   @apply text-base text-slate-700 dark:text-slate-300;
   word-break: break-word;
   word-wrap: break-word;
@@ -59,7 +59,7 @@
 }
 
 .prose-article-card a {
-  @apply transition-all duration-300 ease-apple no-underline hover:underline hover:text-sky-600 dark:hover:text-sky-300;
+  @apply transition-all duration-300 ease-apple no-underline text-slate-700 dark:text-slate-300 font-normal hover:underline hover:text-sky-600 dark:hover:text-sky-300;
 }
 
 .prose-article-card p,
@@ -78,11 +78,11 @@
 }
 
 .text-body {
-  @apply text-base font-normal;
+  @apply text-base font-normal text-slate-700 dark:text-slate-300;
 }
 
 .text-caption {
-  @apply text-sm;
+  @apply text-sm text-slate-600 dark:text-slate-400;
 }
 
 .text-h0 {
@@ -90,7 +90,15 @@
 }
 
 .text-h1 {
-  @apply text-4xl font-semibold leading-normal;
+  @apply my-2 text-4xl font-semibold leading-normal text-slate-900 dark:text-white;
+}
+
+.text-h2 {
+  @apply my-2 text-2xl font-semibold leading-normal text-slate-900 dark:text-white;
+}
+
+.text-h3 {
+  @apply my-2 text-xl font-semibold leading-normal text-slate-900 dark:text-white;
 }
 
 .text-href {

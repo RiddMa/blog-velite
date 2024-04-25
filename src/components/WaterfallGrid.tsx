@@ -68,7 +68,7 @@ const WaterfallGrid: React.FC<WaterfallGridProps> = ({ posts }) => {
 
   return (
     <>
-      <pre>{JSON.stringify({ columnHeights, positions, imgWidth }, null, 4)}</pre>
+      {/*<pre>{JSON.stringify({ columnHeights, positions, imgWidth }, null, 4)}</pre>*/}
       <div
         ref={containerRef}
         className="flex flex-wrap relative"

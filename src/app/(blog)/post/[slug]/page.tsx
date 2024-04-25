@@ -100,7 +100,7 @@ export default function PostPage({ params }: PostProps) {
   const ContentComponents = processor.processSync(post.content).result;
 
   return (
-    <article className="prose-article px-4 xl:px-0">
+    <article className="prose-article px-content">
       <h1 className={`text-h0 text-center`}>{post.title}</h1>
       {post.cover && (
         <ImageAwesome

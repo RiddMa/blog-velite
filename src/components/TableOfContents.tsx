@@ -1,5 +1,6 @@
 import React from "react";
 import Link from "next/link";
+import { cn } from "@/src/util/my-classnames";
 
 // 定义 TOC 项的接口
 interface TOCItemProps {
@@ -38,6 +39,7 @@ interface TableOfContentsProps {
   useNextLink?: boolean;
   plain?: boolean;
   urlPrefix?: string;
+  className?: string;
 }
 
 const TableOfContents: React.FC<TableOfContentsProps> = ({
@@ -45,9 +47,10 @@ const TableOfContents: React.FC<TableOfContentsProps> = ({
   urlPrefix = "",
   useNextLink = false,
   plain = false,
+  className = "",
 }) => {
   return (
-    <nav className="-ml-2">
+    <nav className={cn(className)}>
       {toc && toc.length > 0 && <TOCItem items={toc} urlPrefix={urlPrefix} useNextLink={useNextLink} plain={plain} />}
     </nav>
   );

@@ -1,5 +1,6 @@
 import { Post, posts } from "@/.velite";
 import WaterfallGrid from "@/src/components/WaterfallGrid";
+import Link from "next/link";
 
 interface PostListProps {
   params: {
@@ -14,11 +15,15 @@ interface PostListProps {
 
 // Function to filter posts based on search parameters
 function filterPosts(posts: Post[], params: PostListProps["searchParams"]): Post[] {
+  const columns = params.column ? params.column.split(",") : [];
+  const categories = params.category ? params.category.split(",") : [];
+  const tags = params.tag ? params.tag.split(",") : [];
+
   return posts.filter((post) => {
-    const columnMatch = params.column ? post.columns.includes(params.column) : true;
-    const categoryMatch = params.category ? post.categories.includes(params.category) : true;
-    const tagMatch = params.tag ? post.tags.includes(params.tag) : true;
-    return columnMatch && categoryMatch && tagMatch;
+    const columnMatch = columns.length > 0 ? columns.some((col) => post.columns.includes(col)) : true;
+    const categoryMatch = categories.length > 0 ? categories.some((cat) => post.categories.includes(cat)) : true;
+    const tagMatch = tags.length > 0 ? tags.some((tag) => post.tags.includes(tag)) : true;
+    return columnMatch || categoryMatch || tagMatch;
   });
 }
 
@@ -28,53 +33,20 @@ export default function PostListPage({ params, searchParams }: PostListProps) {
   return (
     <>
       <main className="flex flex-col gap-8 px-content">
+        <nav className="flex flex-row gap-4 items-baseline">
+          <Link href={`/posts`} className={`text-h0`}>
+            文章
+          </Link>
+          <Link href={`/categories`} className={`text-h2`}>
+            分类
+          </Link>
+          <Link href={`/columns`} className={`text-h2`}>
+            专栏
+          </Link>
+        </nav>
+        <pre>{JSON.stringify(searchParams, null, 2)}</pre>
         <p className="prose-text text-end text-color-caption">{posts.length}篇文章</p>
         <WaterfallGrid posts={displayedPosts} />
-        {/*{displayedPosts.map((post) => {*/}
-        {/*  return (*/}
-        {/*    <Link key={post.slug} href={post.permalink}>*/}
-        {/*      <ContentCard*/}
-        {/*        cover={post.cover}*/}
-        {/*        title={<h1 className="line-clamp-2 overflow-ellipsis">{post.title}</h1>}*/}
-        {/*        excerpt={*/}
-        {/*          <div*/}
-        {/*            className="m-0 overflow-ellipsis line-clamp-2 xl:line-clamp-3"*/}
-        {/*            dangerouslySetInnerHTML={{ __html: post.excerpt }}*/}
-        {/*          />*/}
-        {/*        }*/}
-        {/*        caption={*/}
-        {/*          <div className={`flex flex-row m-0 opacity-80`}>*/}
-        {/*            /!*<div className={`my-0 flex flex-row gap-2 xl:gap-4 p-0`}>*!/*/}
-        {/*            /!*  {post.categories.map((slug) => {*!/*/}
-        {/*            /!*    const category = getCategoryBySlug(slug);*!/*/}
-        {/*            /!*    if (!category) return <></>;*!/*/}
-        {/*            /!*    return (*!/*/}
-        {/*            /!*      <Link key={category.slug} href={category.permalink}>*!/*/}
-        {/*            /!*        <button*!/*/}
-        {/*            /!*          className={`btn btn-sm text-body text-color-caption opacity-80 hover:opacity-100 transition-apple text-href`}*!/*/}
-        {/*            /!*        >*!/*/}
-        {/*            /!*          {category.name}*!/*/}
-        {/*            /!*        </button>*!/*/}
-        {/*            /!*      </Link>*!/*/}
-        {/*            /!*    );*!/*/}
-        {/*            /!*  })}*!/*/}
-        {/*            /!*</div>*!/*/}
-        {/*            <div className={`my-0 p-0 line-clamp-1 text-body text-color-caption `}>*/}
-        {/*              {post.tags.map((tag) => (*/}
-        {/*                <>{tag}&nbsp;&nbsp;&nbsp;</>*/}
-        {/*              ))}*/}
-        {/*            </div>*/}
-        {/*            <div className={`grow`}></div>*/}
-        {/*            <span className={`text-body text-color-caption inline-block text-nowrap ml-4`}>*/}
-        {/*              {formatDate(post.updated)}*/}
-        {/*            </span>*/}
-        {/*          </div>*/}
-        {/*        }*/}
-        {/*      />*/}
-        {/*    </Link>*/}
-        {/*  );*/}
-        {/*})}*/}
-        {/*<MyPagination pageNumber={pageNumber} totalPages={totalPages} baseUrl={`/posts`} />*/}
       </main>
     </>
   );
