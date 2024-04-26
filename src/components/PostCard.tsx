@@ -32,7 +32,9 @@ export const PostCard: React.FC<IPostCardProps> = ({ post, imgWidth }) => {
   return (
     <Link href={permalink}>
       <motion.div onHoverStart={() => setIsHovered(true)} onHoverEnd={() => setIsHovered(false)}>
-        <Card className={`group transition-apple drop-shadow-lg hover:drop-shadow-2xl prose-article-card gap-4 p-4`}>
+        <Card
+          className={`group transition-apple card drop-shadow-lg hover:drop-shadow-2xl prose-article-card gap-4 p-4`}
+        >
           {cover && (
             <motion.div
               className={`relative m-0 p-0 z-[1]`}
@@ -59,9 +61,7 @@ export const PostCard: React.FC<IPostCardProps> = ({ post, imgWidth }) => {
             transition={transitionApple}
             className={`relative h-full z-[2]`}
           >
-            <div className={`not-prose`}>
-              <h1 className="not-prose line-clamp-2 overflow-ellipsis text-base">{title}</h1>
-            </div>
+            <h1 className="not-prose line-clamp-2 overflow-ellipsis text-h2">{title}</h1>
             {excerpt && (
               <motion.div
                 className={`absolute overflow-y-auto`}

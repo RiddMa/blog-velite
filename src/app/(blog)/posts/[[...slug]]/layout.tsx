@@ -44,7 +44,7 @@ const LeftContent: React.FC<{ slug: string }> = ({ slug }) => {
   };
 
   return (
-    <aside className={`prose-article flex flex-col gap-4 px-0`}>
+    <aside className={`flex flex-col gap-4 px-0`}>
       {/*<pre>{JSON.stringify(params, null, 2)}</pre>*/}
       <p className={`text-h2`}>过滤器</p>
       <Select

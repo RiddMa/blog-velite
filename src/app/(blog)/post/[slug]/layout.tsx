@@ -4,6 +4,8 @@ import { getCategoryBySlug, getColumnBySlug, getPostBySlug, getPostsByColumn, ge
 import Link from "next/link";
 import { formatDate } from "@/src/store/day";
 import TableOfContents from "@/src/components/TableOfContents";
+import { Button } from "@nextui-org/button";
+import { Card } from "@nextui-org/card";
 
 interface PostLayoutProps {
   params: {
@@ -24,24 +26,27 @@ const LeftContent: React.FC<{ slug: string }> = ({ slug }) => {
   const sameColumnPosts = post.columns.map((column) => getPostsByColumn(column));
 
   return (
-    <aside>
+    <aside className={`prose-article-card flex flex-col`}>
       {columns.map((column, i) => (
         <>
-          <Link href={column.permalink} className={`text-h1 transition-apple hover-text-color-href`} key={column.slug}>
+          <Link href={column.permalink} className={`text-h2`} key={column.slug}>
             {column.name}
           </Link>
-          <br />
           <span className={`text-body`}>共{` ${sameColumnPosts[i].length} `}篇专栏文章</span>
-          <br />
+          <div className={`h-8`}></div>
           {sameColumnPosts[i].length ? (
-            <div className={`not-prose mt-8 flex flex-col space-y-8 text-left`}>
+            <div className={`not-prose flex flex-col text-left gap-y-4`}>
               {sameColumnPosts[i].map((article) => (
-                <Link href={article.permalink} className={``} key={article.slug}>
-                  <span className={`transition-apple text-body text-color-body hover-text-color-href line-clamp-2`}>
-                    {article.title}
-                  </span>
-                  <span className={`text-caption text-color-caption line-clamp-3`}>{article.excerpt}</span>
-                  <div className={`text-caption text-color-caption text-right`}>{formatDate(article.updated)}</div>
+                <Link href={article.permalink} key={article.slug} className={`group`}>
+                  <Card className={`card drop-shadow-lg hover:drop-shadow-2xl gap-4 p-4`}>
+                    <span
+                      className={`line-clamp-2 transition-apple group-hover:text-sky-700 dark:group-hover:text-sky-400`}
+                    >
+                      {article.title}
+                    </span>
+                    {/*<span className={`text-caption text-color-caption line-clamp-3`}>{article.excerpt}</span>*/}
+                    <caption className={`text-right`}>{formatDate(article.updated)}</caption>
+                  </Card>
                 </Link>
               ))}
             </div>
@@ -64,13 +69,14 @@ const RightContent: React.FC<{ slug: string }> = ({ slug }) => {
 
   return (
     <>
-      <aside className={`text-body flex flex-col space-y-2 rounded-3xl drop-shadow-2xl`}>
-        <span className={``}>{formatDate(post.created)}发布</span>
-        <span className={``}>{formatDate(post.updated)}更新</span>
-        <span className={`text-h1`}>目录</span>
-        <TableOfContents toc={post.toc} />
+      <aside className={`prose-article-card flex flex-col`}>
+        <span className={``}>发布于 {formatDate(post.created)}</span>
+        <span className={``}>更新于 {formatDate(post.updated)}</span>
         <div className={`h-4`}></div>
-        <span className={`text-h1`}>分类</span>
+        <h1 className={`not-prose text-h2`}>目录</h1>
+        <TableOfContents className={`not-prose`} toc={post.toc} />
+        <div className={`h-4`}></div>
+        <h1 className={`not-prose text-h2`}>分类</h1>
         {categories?.length ? (
           <>
             <div className={`flex flex-row flex-wrap gap-x-2 prose-a:text-slate-700 dark:prose-a:text-slate-300`}>
@@ -91,7 +97,7 @@ const RightContent: React.FC<{ slug: string }> = ({ slug }) => {
           <span className={``}>无</span>
         )}
         <div className={`h-4`}></div>
-        <span className={`text-h1`}>专栏</span>
+        <h1 className={`not-prose text-h2`}>专栏</h1>
         {columns?.length ? (
           <>
             <div className={`flex flex-row flex-wrap gap-x-2 prose-a:text-slate-700 dark:prose-a:text-slate-300`}>
@@ -108,7 +114,7 @@ const RightContent: React.FC<{ slug: string }> = ({ slug }) => {
           <span className={``}>无</span>
         )}
         <div className={`h-4`}></div>
-        <span className={`text-h1`}>标签</span>
+        <h1 className={`not-prose text-h2`}>标签</h1>
         {tags?.length ? (
           <>
             <div className={`flex flex-row flex-wrap gap-x-2 prose-a:text-slate-700 dark:prose-a:text-slate-300`}>
