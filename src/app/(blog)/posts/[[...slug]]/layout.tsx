@@ -44,9 +44,9 @@ const LeftContent: React.FC<{ slug: string }> = ({ slug }) => {
   };
 
   return (
-    <aside>
-      <pre>{JSON.stringify(params, null, 2)}</pre>
-      <h1>过滤器</h1>
+    <aside className={`prose-article flex flex-col gap-4 px-0`}>
+      {/*<pre>{JSON.stringify(params, null, 2)}</pre>*/}
+      <p className={`text-h2`}>过滤器</p>
       <Select
         label="专栏"
         selectionMode="multiple"
@@ -86,7 +86,9 @@ const LeftContent: React.FC<{ slug: string }> = ({ slug }) => {
           </SelectItem>
         ))}
       </Select>
-      <Button onPress={onFilter}>应用</Button>
+      <Button onPress={onFilter} variant={"flat"}>
+        应用
+      </Button>
     </aside>
   );
 };

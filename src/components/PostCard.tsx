@@ -60,7 +60,7 @@ export const PostCard: React.FC<IPostCardProps> = ({ post, imgWidth }) => {
             className={`relative h-full z-[2]`}
           >
             <div className={`not-prose`}>
-              <h1 className="line-clamp-2 overflow-ellipsis text-h3">{title}</h1>
+              <h1 className="not-prose line-clamp-2 overflow-ellipsis text-base">{title}</h1>
             </div>
             {excerpt && (
               <motion.div

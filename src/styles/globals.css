@@ -2,9 +2,9 @@
 @tailwind components;
 @tailwind utilities;
 
-* {
-  outline: 1px solid tomato;
-}
+/** {*/
+/*  outline: 1px solid tomato;*/
+/*}*/
 
 html {
   scroll-behavior: smooth;

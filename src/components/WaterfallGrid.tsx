@@ -3,6 +3,7 @@ import React, { useRef, useState, useEffect, useLayoutEffect } from "react";
 import { Post } from "@/.velite";
 import { useEventListener, useResizeObserver } from "usehooks-ts";
 import PostCard from "@/src/components/PostCard";
+import { useIsMobile } from "@nextui-org/use-is-mobile";
 
 interface WaterfallGridProps {
   posts: Post[];
@@ -14,13 +15,18 @@ const WaterfallGrid: React.FC<WaterfallGridProps> = ({ posts }) => {
   const [columnHeights, setColumnHeights] = useState<number[]>([]);
   const [positions, setPositions] = useState<Array<{ x: number; y: number }>>([]);
   const [imgWidth, setImgWidth] = useState<number>(0);
-  const columnCount = 2;
+  const isMobile = useIsMobile();
+  const columnCount = isMobile ? 1 : 2;
   const cardGap = 16;
   const cardPadding = 16;
 
   const computeImageWidth = () => {
     const columnWidth = containerRef.current!.clientWidth! / columnCount;
-    setImgWidth(columnWidth - cardGap * 2 - cardPadding * 2);
+    if (isMobile) {
+      setImgWidth(columnWidth - cardGap * 2);
+    } else {
+      setImgWidth(columnWidth - cardGap * 2 - cardPadding * 2);
+    }
   };
 
   useLayoutEffect(() => {
@@ -77,7 +83,7 @@ const WaterfallGrid: React.FC<WaterfallGridProps> = ({ posts }) => {
         {posts.map((post, index) => (
           <div
             key={post.slug}
-            className="p-4"
+            className="px-0 py-4 xl:px-4"
             ref={(el) => {
               itemRefs.current[index] = el;
             }}

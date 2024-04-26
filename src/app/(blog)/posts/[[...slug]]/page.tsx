@@ -44,7 +44,7 @@ export default function PostListPage({ params, searchParams }: PostListProps) {
             专栏
           </Link>
         </nav>
-        <pre>{JSON.stringify(searchParams, null, 2)}</pre>
+        {/*<pre>{JSON.stringify(searchParams, null, 2)}</pre>*/}
         <p className="prose-text text-end text-color-caption">{posts.length}篇文章</p>
         <WaterfallGrid posts={displayedPosts} />
       </main>
