@@ -123,6 +123,41 @@ const tags = defineCollection({
     .transform((data) => ({ ...data, permalink: `/tag/${data.slug}` })),
 });
 
+const aboutPage = defineCollection({
+  name: "AboutPage",
+  pattern: "about.md",
+  single: true,
+  schema: s
+    .object({
+      title: s.string(),
+      slug: s.slug("global", [
+        "post",
+        "posts",
+        "author",
+        "authors",
+        "column",
+        "columns",
+        "category",
+        "categories",
+        "tag",
+        "tags",
+      ]),
+      content: blogMarkdown,
+      created: s.isodate(), // input Date-like string, output ISO Date string.
+      updated: s.isodate(),
+      cover: s.image().optional(), // input image relative path, output image object with blurImage.
+      excerpt: s.excerpt(),
+      toc: s.toc(),
+      metadata: s.metadata(), // extract markdown reading-time, word-count, etc.
+      author: s.string(),
+    })
+    .transform(async (data) => ({
+      ...data,
+      permalink: `/${data.slug}`,
+      images: await extractImg(data),
+    })),
+});
+
 // `s` is extended from Zod with some custom schemas,
 // you can also import re-exported `z` from `velite` if you don't need these extension schemas.
 export default defineConfig({
@@ -133,6 +168,7 @@ export default defineConfig({
     columns,
     categories,
     tags,
+    aboutPage,
   },
   prepare: async (data) => {
     // console.log("Preparing data...");

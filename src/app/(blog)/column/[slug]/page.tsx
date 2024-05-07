@@ -38,7 +38,7 @@ export default function ColumnPage({ params, searchParams }: ColumnProps) {
   const displayedPosts = filterPosts(posts, { column: params.slug, ...searchParams });
 
   return (
-    <main className="flex flex-col gap-4 px-content">
+    <div className="flex flex-col gap-4">
       <nav className="flex flex-row gap-4 items-baseline">
         <Link href={`/posts`} className={`text-h2 text-href`}>
           文章
@@ -57,6 +57,6 @@ export default function ColumnPage({ params, searchParams }: ColumnProps) {
       </div>
       {/*// @ts-ignore // TS cannot infer the type of CardComponent*/}
       <WaterfallGrid items={displayedPosts} CardComponent={PostCard} />
-    </main>
+    </div>
   );
 }

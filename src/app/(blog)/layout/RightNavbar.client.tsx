@@ -9,14 +9,14 @@ interface RightNavbarProps {
   className?: string;
 }
 
-const RightNavbarClient: React.FC<RightNavbarProps> = ({ children, className }) => {
+const RightNavbarClient: React.FC<RightNavbarProps> = ({ children, className = "" }) => {
   const [rightNavOpen] = usePageStateStore(useShallow((state) => [state.rightNavOpen]));
   return (
-    <div
+    <aside
       className={`${rightNavOpen ? "translate-x-0" : "translate-x-full xl:translate-x-0"} side-navbar m-0 xl:ml-4 ${className}`}
     >
       {children}
-    </div>
+    </aside>
   );
 };
 

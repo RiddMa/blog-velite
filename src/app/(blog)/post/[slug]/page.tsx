@@ -29,7 +29,7 @@ export default function PostPage({ params }: PostProps) {
   if (!post) notFound();
 
   return (
-    <article className="prose-article px-content">
+    <article className="prose-article">
       <h1 className={`text-h0 text-center`}>{post.title}</h1>
       {post.cover && (
         <ImageAwesome

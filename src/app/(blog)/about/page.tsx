@@ -1,18 +1,22 @@
 // pages/about.js
 import React from "react";
+import BlogLayout from "@/src/app/(blog)/layout/layout";
+import type { Metadata } from "next";
+import { aboutPage } from "@/.velite";
+import BlogHtmlRenderer from "@/src/components/BlogHtmlRenderer";
 
-function About() {
+export function generateMetadata(): Metadata {
+  return { title: aboutPage.title, description: aboutPage.excerpt };
+}
+
+function AboutPage() {
   return (
-    <>
-      <div>
-        <h1>About Us</h1>
-        <p>
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed non risus. Suspendisse lectus tortor, dignissim
-          sit amet, adipiscing nec, ultricies sed, dolor.
-        </p>
-      </div>
-    </>
+    <BlogLayout>
+      <article className="prose-article">
+        <BlogHtmlRenderer html={aboutPage.content} imgMap={aboutPage.images} />
+      </article>
+    </BlogLayout>
   );
 }
 
-export default About;
+export default AboutPage;

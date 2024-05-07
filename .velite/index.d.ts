@@ -21,3 +21,6 @@ export declare const categories: Category[]
 
 export type Tag = Collections['tags']['schema']['_output']
 export declare const tags: Tag[]
+
+export type AboutPage = Collections['aboutPage']['schema']['_output']
+export declare const aboutPage: AboutPage

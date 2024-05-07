@@ -1,0 +1,64 @@
+{
+  "title": "关于本站",
+  "slug": "about",
+  "content": "<blockquote><p>大风起↘↗兮云——飞——扬——<br>安得猛↘↗士↘兮走——四——方——<br>博客，必须要写！不写不行！</blockquote><h1 id=主要内容><a href=#主要内容 aria-hidden=true tabindex=-1><span class=\"icon icon-link\"></span></a>主要内容</h1><ul><li>记录开发踩坑经历，作为备忘<li>MAG(N) 版块记录 Movie、Anime、Game 的评价与感受<li>记录日常胡思乱想</ul><h1 id=技术栈><a href=#技术栈 aria-hidden=true tabindex=-1><span class=\"icon icon-link\"></span></a>技术栈</h1><h2 id=现在重构n次决不再改><a href=#现在重构n次决不再改 aria-hidden=true tabindex=-1><span class=\"icon icon-link\"></span></a>现在（重构N次，决不再改！）</h2><ul><li>前端：Next.js<li>美化：Tailwind CSS + Framer Motion<li>后端：无<li>部署：VCS</ul><h2 id=曾经><a href=#曾经 aria-hidden=true tabindex=-1><span class=\"icon icon-link\"></span></a>曾经</h2><ul><li>CMS 后端：Strapi<li>React 前端：Gatsby<li>美化：Tailwind CSS + Framer Motion<li>部署：Cloudflare Pages + Cloudflare Workers</ul><h1 id=待完善功能><a href=#待完善功能 aria-hidden=true tabindex=-1><span class=\"icon icon-link\"></span></a>待完善功能</h1><h2 id=特性><a href=#特性 aria-hidden=true tabindex=-1><span class=\"icon icon-link\"></span></a>特性</h2><ul><li>画廊模块<li>影评模块<li>文章目录树跟随滚动<li>“回到顶部”按钮</ul><h2 id=外观><a href=#外观 aria-hidden=true tabindex=-1><span class=\"icon icon-link\"></span></a>外观</h2><ul><li>动效优化<li>自隐藏滚动条</ul><h1 id=友情链接><a href=#友情链接 aria-hidden=true tabindex=-1><span class=\"icon icon-link\"></span></a>友情链接</h1><p><a href=https://blog.lxythan2lxy.cn/>Travis' Blog</a><h1 id=时间线><a href=#时间线 aria-hidden=true tabindex=-1><span class=\"icon icon-link\"></span></a>时间线</h1><ul><li>2024年5月7日：<li>2024年4月8日：Next.js+Velite 项目启动<li>2023年6月3日：增加移动端侧边栏开关<li>2023年6月2日：增加深色模式，优化页面颜色样式<li>2023年6月1日：增加左边栏专栏文章目录<li>2023年5月19日：增加 Giscus 评论功能<li>2023年5月19日：优化全平台 Markdown 渲染<li>2023年5月17日：正式部署，新增“专栏”<li>2023年5月13日：Cloudflare 部署测试<li>2023年4月25日：0.1alpha 版开发完成</ul>",
+  "created": "2024-05-07T11:20:29.000Z",
+  "updated": "2024-05-07T11:20:29.000Z",
+  "excerpt": "",
+  "toc": [
+    {
+      "title": "主要内容",
+      "url": "#主要内容",
+      "items": []
+    },
+    {
+      "title": "技术栈",
+      "url": "#技术栈",
+      "items": [
+        {
+          "title": "现在（重构N次，决不再改！）",
+          "url": "#现在重构n次决不再改",
+          "items": []
+        },
+        {
+          "title": "曾经",
+          "url": "#曾经",
+          "items": []
+        }
+      ]
+    },
+    {
+      "title": "待完善功能",
+      "url": "#待完善功能",
+      "items": [
+        {
+          "title": "特性",
+          "url": "#特性",
+          "items": []
+        },
+        {
+          "title": "外观",
+          "url": "#外观",
+          "items": []
+        }
+      ]
+    },
+    {
+      "title": "友情链接",
+      "url": "#友情链接",
+      "items": []
+    },
+    {
+      "title": "时间线",
+      "url": "#时间线",
+      "items": []
+    }
+  ],
+  "metadata": {
+    "readingTime": 1,
+    "wordCount": 167.28
+  },
+  "author": "ridd",
+  "permalink": "/about",
+  "images": {}
+}

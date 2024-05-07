@@ -8,7 +8,7 @@ import { Button } from "@nextui-org/button";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { Selection } from "@nextui-org/react";
 
-interface ColumnLayoutProps {
+interface CategoryLayoutProps {
   params: {
     slug: string;
   };
@@ -22,8 +22,8 @@ const LeftContent: React.FC<{ slug: string }> = ({ slug }) => {
 
   // Parse initial values from URL search params
   const params = new URLSearchParams(Array.from(searchParams.entries()));
-  const initColumns = new Set([slug]);
-  const initCategories = new Set(params.get("category")?.split(","));
+  const initColumns = new Set(params.get("column")?.split(","));
+  const initCategories = new Set([slug]);
   const initTags = new Set(params.get("tag")?.split(","));
 
   // State hooks for selections
@@ -33,7 +33,7 @@ const LeftContent: React.FC<{ slug: string }> = ({ slug }) => {
 
   const onFilter = () => {
     const params = new URLSearchParams();
-    params.set("category", Array.from(selectedCategories).join(","));
+    params.set("column", Array.from(selectedColumns).join(","));
     params.set("tag", Array.from(selectedTags).join(","));
 
     const search = params.toString();
@@ -47,7 +47,6 @@ const LeftContent: React.FC<{ slug: string }> = ({ slug }) => {
       {/*<pre>{JSON.stringify(params, null, 2)}</pre>*/}
       <p className={`text-h2`}>过滤器</p>
       <Select
-        isDisabled
         label="专栏"
         selectionMode="multiple"
         placeholder="筛选专栏"
@@ -61,6 +60,7 @@ const LeftContent: React.FC<{ slug: string }> = ({ slug }) => {
         ))}
       </Select>
       <Select
+        isDisabled
         label="分类"
         selectionMode="multiple"
         placeholder="筛选分类"
@@ -97,7 +97,7 @@ const RightContent: React.FC<{ slug: string }> = ({ slug }) => {
   return <aside></aside>;
 };
 
-const ColumnLayout: React.FC<ColumnLayoutProps> = ({ params, children }) => {
+const CategoryLayout: React.FC<CategoryLayoutProps> = ({ params, children }) => {
   return (
     <BlogLayout leftNavbar={<LeftContent slug={params.slug} />} rightNavbar={<RightContent slug={params.slug} />}>
       {children}
@@ -105,4 +105,4 @@ const ColumnLayout: React.FC<ColumnLayoutProps> = ({ params, children }) => {
   );
 };
 
-export default ColumnLayout;
+export default CategoryLayout;

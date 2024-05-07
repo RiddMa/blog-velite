@@ -20,15 +20,15 @@ export default function PostListPage({ params, searchParams }: PostListProps) {
 
   return (
     <>
-      <main className="flex flex-col gap-4 px-content">
+      <div className="flex flex-col gap-4">
         <nav className="flex flex-row gap-4 items-baseline">
-          <Link href={`/posts`} className={`text-h0`}>
+          <Link href={`/posts`} className={`text-h0 text-href`}>
             文章
           </Link>
-          <Link href={`/categories`} className={`text-h2`}>
+          <Link href={`/categories`} className={`text-h2 text-href`}>
             分类
           </Link>
-          <Link href={`/columns`} className={`text-h2`}>
+          <Link href={`/columns`} className={`text-h2 text-href`}>
             专栏
           </Link>
         </nav>
@@ -37,7 +37,7 @@ export default function PostListPage({ params, searchParams }: PostListProps) {
         </div>
         {/*// @ts-ignore // TS cannot infer the type of CardComponent*/}
         <WaterfallGrid items={displayedPosts} CardComponent={PostCard} />
-      </main>
+      </div>
     </>
   );
 }
