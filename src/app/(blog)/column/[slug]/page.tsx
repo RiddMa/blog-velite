@@ -1,38 +1,62 @@
 import Image from "next/image";
 import { notFound } from "next/navigation";
-import { columns } from "@/.velite";
+import { columns, posts } from "@/.velite";
 import type { Metadata } from "next";
 import { getColumnBySlug } from "@/src/store/velite";
+import Link from "next/link";
+import WaterfallGrid from "@/src/components/WaterfallGrid";
+import PostCard from "@/src/components/PostCard";
+import BlogHtmlRenderer from "@/src/components/BlogHtmlRenderer";
+import { filterPosts } from "@/src/util/util";
 
-interface PostProps {
+interface ColumnProps {
   params: {
     slug: string;
   };
+  searchParams: {
+    category?: string;
+    tag?: string;
+  };
 }
 
-export function generateMetadata({ params }: PostProps): Metadata {
+export function generateMetadata({ params }: ColumnProps): Metadata {
   const column = getColumnBySlug(params.slug);
   if (column == null) return {};
   return { title: column.name, description: column.description };
 }
 
-export function generateStaticParams(): PostProps["params"][] {
+export function generateStaticParams(): ColumnProps["params"][] {
   return columns.map((column) => ({
     slug: column.slug,
   }));
 }
 
-export default function ColumnPage({ params }: PostProps) {
+export default function ColumnPage({ params, searchParams }: ColumnProps) {
   const column = getColumnBySlug(params.slug);
-
   if (!column) notFound();
 
+  const displayedPosts = filterPosts(posts, { column: params.slug, ...searchParams });
+
   return (
-    <article className="prose xl:prose-lg dark:prose-invert py-6">
-      <h1 className="mb-2">标题：{column.name}</h1>
-      <hr className="my-4" />
-      内容：
-      <div className="prose" dangerouslySetInnerHTML={{ __html: column.description }}></div>
-    </article>
+    <main className="flex flex-col gap-4 px-content">
+      <nav className="flex flex-row gap-4 items-baseline">
+        <Link href={`/posts`} className={`text-h2 text-href`}>
+          文章
+        </Link>
+        <Link href={`/categories`} className={`text-h2 text-href`}>
+          分类
+        </Link>
+        <Link href={`/columns`} className={`text-h0 text-href`}>
+          专栏
+        </Link>
+      </nav>
+      <div className={`prose-article`}>
+        <h1>{column.name}</h1>
+        <BlogHtmlRenderer html={column.description} />
+        <p className="text-end opacity-80">{displayedPosts.length}篇文章</p>
+      </div>
+      {/*// @ts-ignore // TS cannot infer the type of CardComponent*/}
+      <WaterfallGrid items={displayedPosts} CardComponent={PostCard} />
+    </main>
   );
 }

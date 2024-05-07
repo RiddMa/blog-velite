@@ -92,7 +92,13 @@
 }
 
 .text-href {
-  @apply no-underline hover:underline hover:text-sky-600 dark:hover:text-sky-300;
+  @apply ease-apple underline hover:text-sky-600 dark:hover:text-sky-300 decoration-transparent hover:decoration-inherit;
+  text-underline-offset: 0;
+  transition: all 300ms;
+}
+
+.text-href:hover {
+  text-underline-offset: 0.5rem;
 }
 
 .text-color-body {

@@ -6,6 +6,7 @@ import path from "node:path";
 import { staticBasePath } from "@/base-path";
 import fs from "fs/promises";
 import sharp from "sharp";
+import { Post } from "@/.velite";
 
 export function assertDefined<T>(val: T | undefined): asserts val is T {
   if (val === undefined) {
@@ -62,3 +63,24 @@ export const extractCoverImageMetadata = async (src: string) => {
     console.error("Error processing image:", src, error);
   }
 };
+
+// Function to filter posts based on search parameters
+export function filterPosts(
+  posts: Post[],
+  params: {
+    column?: string;
+    category?: string;
+    tag?: string;
+  },
+): Post[] {
+  const columns = params.column ? params.column.split(",") : [];
+  const categories = params.category ? params.category.split(",") : [];
+  const tags = params.tag ? params.tag.split(",") : [];
+
+  return posts.filter((post) => {
+    const columnMatch = columns.length > 0 ? columns.some((col) => post.columns.includes(col)) : true;
+    const categoryMatch = categories.length > 0 ? categories.some((cat) => post.categories.includes(cat)) : true;
+    const tagMatch = tags.length > 0 ? tags.some((tag) => post.tags.includes(tag)) : true;
+    return columnMatch && categoryMatch && tagMatch;
+  });
+}

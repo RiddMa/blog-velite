@@ -1,6 +1,8 @@
 import { Post, posts } from "@/.velite";
 import WaterfallGrid from "@/src/components/WaterfallGrid";
 import Link from "next/link";
+import PostCard from "@/src/components/PostCard";
+import { filterPosts } from "@/src/util/util";
 
 interface PostListProps {
   params: {
@@ -13,26 +15,12 @@ interface PostListProps {
   };
 }
 
-// Function to filter posts based on search parameters
-function filterPosts(posts: Post[], params: PostListProps["searchParams"]): Post[] {
-  const columns = params.column ? params.column.split(",") : [];
-  const categories = params.category ? params.category.split(",") : [];
-  const tags = params.tag ? params.tag.split(",") : [];
-
-  return posts.filter((post) => {
-    const columnMatch = columns.length > 0 ? columns.some((col) => post.columns.includes(col)) : true;
-    const categoryMatch = categories.length > 0 ? categories.some((cat) => post.categories.includes(cat)) : true;
-    const tagMatch = tags.length > 0 ? tags.some((tag) => post.tags.includes(tag)) : true;
-    return columnMatch || categoryMatch || tagMatch;
-  });
-}
-
 export default function PostListPage({ params, searchParams }: PostListProps) {
   const displayedPosts = filterPosts(posts, searchParams);
 
   return (
     <>
-      <main className="flex flex-col gap-8 px-content">
+      <main className="flex flex-col gap-4 px-content">
         <nav className="flex flex-row gap-4 items-baseline">
           <Link href={`/posts`} className={`text-h0`}>
             文章
@@ -44,9 +32,11 @@ export default function PostListPage({ params, searchParams }: PostListProps) {
             专栏
           </Link>
         </nav>
-        {/*<pre>{JSON.stringify(searchParams, null, 2)}</pre>*/}
-        <p className="prose-text text-end text-color-caption">{posts.length}篇文章</p>
-        <WaterfallGrid posts={displayedPosts} />
+        <div className={`prose-article`}>
+          <p className="text-end opacity-80">{displayedPosts.length}篇文章</p>
+        </div>
+        {/*// @ts-ignore // TS cannot infer the type of CardComponent*/}
+        <WaterfallGrid items={displayedPosts} CardComponent={PostCard} />
       </main>
     </>
   );

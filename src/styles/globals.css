@@ -96,7 +96,7 @@ body.dark {
   @apply fixed z-[90] w-screen h-[calc(100dvh)] overflow-y-auto overflow-x-hidden flex flex-col transition-apple;
   @apply px-4 pb-4 pt-[72px] xl:sticky xl:top-[64px] xl:h-[calc(100vh-64px)] xl:max-w-[240px] xl:pt-4;
   @apply backdrop-blur-bg xl:backdrop-blur-none bg-black/50 xl:bg-transparent;
-  @apply opacity-70 hover:opacity-100;
+  @apply xl:opacity-70 xl:hover:opacity-100;
 }
 
 .px-content {

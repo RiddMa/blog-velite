@@ -16,6 +16,14 @@ import rehypeSlug from "rehype-slug";
 import rehypePresetMinify from "rehype-preset-minify";
 import { extractImg } from "@/src/util/util";
 
+const blogMarkdown = s.markdown({
+  gfm: true,
+  removeComments: false,
+  copyLinkedFiles: true,
+  remarkPlugins: [remarkParse, remarkBreaks, remarkFrontmatter, remarkGfm, remarkMath, remarkEmoji, remarkDirective],
+  rehypePlugins: [rehypeSlug, rehypeAutolinkHeadings, rehypeKatex, rehypePresetMinify, rehypeStringify],
+});
+
 const globals = {
   name: "Global",
   pattern: "globals/*.json",
@@ -44,21 +52,7 @@ const posts = defineCollection({
       draft: s.boolean().default(false),
       featured: s.boolean().default(false),
       cover: s.image().optional(), // input image relative path, output image object with blurImage.
-      content: s.markdown({
-        gfm: true,
-        removeComments: false,
-        copyLinkedFiles: true,
-        remarkPlugins: [
-          remarkParse,
-          remarkBreaks,
-          remarkFrontmatter,
-          remarkGfm,
-          remarkMath,
-          remarkEmoji,
-          remarkDirective,
-        ],
-        rehypePlugins: [rehypeSlug, rehypeAutolinkHeadings, rehypeKatex, rehypePresetMinify, rehypeStringify],
-      }), // transform markdown to html
+      content: blogMarkdown,
       raw: s.raw(), // raw markdown content
       excerpt: s.excerpt(), // excerpt of markdown content
       toc: s.toc(), // table of contents of markdown content
@@ -82,7 +76,7 @@ const authors = defineCollection({
     .object({
       name: s.string(),
       slug: s.slug("authors"),
-      bio: s.string(),
+      bio: blogMarkdown,
       avatar: s.image().optional(),
       social: s
         .object({
@@ -100,7 +94,7 @@ const columns = defineCollection({
     .object({
       name: s.string(),
       slug: s.slug("columns"),
-      description: s.markdown(),
+      description: blogMarkdown,
     })
     .transform((data) => ({ ...data, permalink: `/column/${data.slug}` })),
 });

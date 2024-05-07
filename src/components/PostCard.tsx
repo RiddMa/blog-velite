@@ -12,11 +12,11 @@ import { Post } from "@/.velite";
 import Link from "next/link";
 
 interface IPostCardProps {
-  post: Post;
+  item: Post;
   imgWidth: number;
 }
 
-export const PostCard: React.FC<IPostCardProps> = ({ post, imgWidth }) => {
+export const PostCard: React.FC<IPostCardProps> = ({ item: post, imgWidth }) => {
   const { permalink, cover, title, excerpt, toc, tags, updated } = post;
   const cardGap = 16;
   let imgHeight = 0;
@@ -80,8 +80,8 @@ export const PostCard: React.FC<IPostCardProps> = ({ post, imgWidth }) => {
 
           <div className="flex flex-row m-0 opacity-80 w-full relative">
             <div className="my-0 p-0 text-body text-color-caption line-clamp-1 overflow-ellipsis break-after-all">
-              {tags.map((tag) => (
-                <>{tag} &nbsp;</>
+              {tags.map((tag, index) => (
+                <span key={index}>{tag} &nbsp;</span>
               ))}
             </div>
             <div className="grow"></div>

@@ -22,7 +22,7 @@ const LeftContent: React.FC<{ slug: string }> = ({ slug }) => {
 
   // Parse initial values from URL search params
   const params = new URLSearchParams(Array.from(searchParams.entries()));
-  const initColumns = new Set(params.get("column")?.split(","));
+  const initColumns = new Set([slug]);
   const initCategories = new Set(params.get("category")?.split(","));
   const initTags = new Set(params.get("tag")?.split(","));
 
@@ -33,7 +33,6 @@ const LeftContent: React.FC<{ slug: string }> = ({ slug }) => {
 
   const onFilter = () => {
     const params = new URLSearchParams();
-    params.set("column", Array.from(selectedColumns).join(","));
     params.set("category", Array.from(selectedCategories).join(","));
     params.set("tag", Array.from(selectedTags).join(","));
 
@@ -48,6 +47,7 @@ const LeftContent: React.FC<{ slug: string }> = ({ slug }) => {
       {/*<pre>{JSON.stringify(params, null, 2)}</pre>*/}
       <p className={`text-h2`}>过滤器</p>
       <Select
+        isDisabled
         label="专栏"
         selectionMode="multiple"
         placeholder="筛选专栏"
@@ -97,7 +97,7 @@ const RightContent: React.FC<{ slug: string }> = ({ slug }) => {
   return <aside></aside>;
 };
 
-const PostLayout: React.FC<PostsLayoutProps> = ({ params, children }) => {
+const ColumnLayout: React.FC<PostsLayoutProps> = ({ params, children }) => {
   return (
     <BlogLayout leftNavbar={<LeftContent slug={params.slug} />} rightNavbar={<RightContent slug={params.slug} />}>
       {children}
@@ -105,4 +105,4 @@ const PostLayout: React.FC<PostsLayoutProps> = ({ params, children }) => {
   );
 };
 
-export default PostLayout;
+export default ColumnLayout;
