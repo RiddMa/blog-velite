@@ -43,5 +43,5 @@ jobs:
           script: |
             cd ${{ secrets.PROJECT_DIRECTORY }}
             npm install --production
-            next start
+            npm run start
 #            pm2 restart all # 或使用其他命令重新启动你的应用
