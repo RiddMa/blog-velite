@@ -31,7 +31,7 @@ jobs:
         run: echo "::set-output name=key::$(date +%s)"
 
       - name: Archive Artifacts
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v4
         with:
           name: built-app
           path: |
@@ -44,7 +44,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Download Artifacts
-        uses: actions/download-artifact@v2
+        uses: actions/download-artifact@v4
         with:
           name: built-app
 
@@ -71,4 +71,6 @@ jobs:
             source ~/.nvm/nvm.sh
             NODE_OPTIONS="--max-old-space-size=1536" yarn install
             NODE_OPTIONS="--max-old-space-size=1536" yarn add sharp --ignore-engines
-            yarn run start
+            yarn global add pm2
+            pm2 list | grep "blog-velite" && pm2 restart "blog-velite" || pm2 start yarn --name "blog-velite" -- start
+            pm2 save
