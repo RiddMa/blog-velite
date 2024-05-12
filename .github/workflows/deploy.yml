@@ -42,6 +42,8 @@ jobs:
           port: ${{ secrets.SSH_PORT }}
           script: |
             cd ${{ secrets.PROJECT_DIRECTORY }}
+            export NVM_DIR=~/.nvm
+            source ~/.nvm/nvm.sh
             npm install --production
             npm run start
 #            pm2 restart all # 或使用其他命令重新启动你的应用
