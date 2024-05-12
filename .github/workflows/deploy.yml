@@ -6,8 +6,10 @@ on:
       - master
 
 jobs:
-  build-and-deploy:
+  build:
     runs-on: ubuntu-latest
+    outputs:
+      cache-key: ${{ steps.cache-key.outputs.key }}
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v4
@@ -16,12 +18,35 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: '18' # 确保这里的版本与你的项目兼容
+          cache: 'npm'
 
       - name: Install Dependencies
         run: npm install
 
       - name: Build Project
         run: npm run build
+
+      - name: Generate Cache Key
+        id: cache-key
+        run: echo "::set-output name=key::$(date +%s)"
+
+      - name: Archive Artifacts
+        uses: actions/upload-artifact@v2
+        with:
+          name: built-app
+          path: |
+            .next
+            public
+            package.json
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Download Artifacts
+        uses: actions/download-artifact@v2
+        with:
+          name: built-app
 
       - name: Deploy to Server
         uses: appleboy/scp-action@master
@@ -40,10 +65,10 @@ jobs:
           username: ${{ secrets.SSH_USERNAME }}
           key: ${{ secrets.SSH_KEY }}
           port: ${{ secrets.SSH_PORT }}
-          script: |
+          script: | 
             cd ${{ secrets.PROJECT_DIRECTORY }}
             export NVM_DIR=~/.nvm
             source ~/.nvm/nvm.sh
-            npm install --production
-            npm run start
-#            pm2 restart all # 或使用其他命令重新启动你的应用
+            NODE_OPTIONS="--max-old-space-size=1536" yarn install
+            NODE_OPTIONS="--max-old-space-size=1536" yarn add sharp --ignore-engines
+            yarn run start
