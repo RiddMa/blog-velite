@@ -5,11 +5,9 @@ import { Card } from "@nextui-org/card";
 import { formatDate } from "@/src/store/day";
 import { isDefined } from "@/src/util/util";
 
-const LeftContent: React.FC<{
-  params: {
-    slug: string;
-  };
-}> = ({ params: { slug } }) => {
+const PostRelationPanel: React.FC<{
+  slug: string;
+}> = ({ slug }) => {
   const post = getPostBySlug(slug);
   if (!post) return <div></div>;
   const columns = post.columns.map((column) => getColumnBySlug(column)).filter(isDefined);
@@ -51,4 +49,4 @@ const LeftContent: React.FC<{
   );
 };
 
-export default LeftContent;
+export default PostRelationPanel;

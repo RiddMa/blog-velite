@@ -1,8 +1,8 @@
 import React from "react";
-import TopNavbar from "@/src/app/(blog)/layoutComponents/TopNavbar.client";
-import LeftNavbarClient from "@/src/app/(blog)/layoutComponents/LeftNavbar.client";
-import RightNavbarClient from "@/src/app/(blog)/layoutComponents/RightNavbar.client";
-import MainContainer from "@/src/app/(blog)/layoutComponents/main-container";
+import TopNavbar from "@/src/components/layout/TopNavbar.client";
+import LeftNavbarClient from "@/src/components/layout/LeftNavbar.client";
+import RightNavbarClient from "@/src/components/layout/RightNavbar.client";
+import MainContainer from "@/src/components/layout/MainContainer";
 
 interface BlogLayoutProps {
   children: React.ReactNode;

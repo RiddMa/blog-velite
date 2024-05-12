@@ -1,28 +1,25 @@
 "use client";
 
 import React, { useState } from "react";
-import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import { useParams, usePathname, useRouter, useSearchParams } from "next/navigation";
 import { Selection } from "@nextui-org/react";
 import { Select, SelectItem } from "@nextui-org/select";
 import { categories, columns, tags } from "@/.velite";
 import { Button } from "@nextui-org/button";
 
-const LeftContent: React.FC<{
-  params: {
-    slug: string;
-  };
-  searchParams: {
-    category?: string;
-    tag?: string;
-  };
-}> = ({ params: { slug }, searchParams }) => {
+const PostFilterWidget: React.FC<{ useColumn?: string; useCategory?: string; useTag?: string }> = ({
+  useColumn,
+  useCategory,
+  useTag,
+}) => {
   const router = useRouter();
   const pathname = usePathname();
+  const searchParams = useSearchParams();
 
   // Parse initial values from URL search params
-  const initColumns = new Set([slug]);
-  const initCategories = new Set(searchParams.category?.split(","));
-  const initTags = new Set(searchParams.tag?.split(","));
+  const initColumns = new Set(useColumn ? [useColumn] : searchParams.getAll("column"));
+  const initCategories = new Set(useCategory ? [useCategory] : searchParams.getAll("category"));
+  const initTags = new Set(useTag ? [useTag] : searchParams.getAll("tag"));
 
   // State hooks for selections
   const [selectedColumns, setSelectedColumns] = useState<Selection>(initColumns);
@@ -31,6 +28,7 @@ const LeftContent: React.FC<{
 
   const onFilter = () => {
     const params = new URLSearchParams();
+    params.set("column", Array.from(selectedColumns).join(","));
     params.set("category", Array.from(selectedCategories).join(","));
     params.set("tag", Array.from(selectedTags).join(","));
 
@@ -45,7 +43,7 @@ const LeftContent: React.FC<{
       {/*<pre>{JSON.stringify(params, null, 2)}</pre>*/}
       <p className={`text-h2`}>过滤器</p>
       <Select
-        isDisabled
+        isDisabled={!!useColumn}
         label="专栏"
         selectionMode="multiple"
         placeholder="筛选专栏"
@@ -59,6 +57,7 @@ const LeftContent: React.FC<{
         ))}
       </Select>
       <Select
+        isDisabled={!!useCategory}
         label="分类"
         selectionMode="multiple"
         placeholder="筛选分类"
@@ -72,6 +71,7 @@ const LeftContent: React.FC<{
         ))}
       </Select>
       <Select
+        isDisabled={!!useTag}
         label="标签"
         selectionMode="multiple"
         placeholder="筛选标签"
@@ -91,4 +91,4 @@ const LeftContent: React.FC<{
   );
 };
 
-export default LeftContent;
+export default PostFilterWidget;

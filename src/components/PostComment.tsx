@@ -12,13 +12,14 @@ const PostComment: React.FC = () => {
     <>
       <Giscus
         id="comments"
-        repo="RiddMa/ridd-strapi-gatsby-blog-giscus"
-        repoId="R_kgDOJlKe7g"
-        category="Announcements"
-        categoryId="DIC_kwDOJlKe7s4CWm_0"
+        repo="RiddMa/blog-velite"
+        repoId="R_kgDOLs3K6A"
+        category="Comments"
+        categoryId="DIC_kwDOLs3K6M4CfTSA"
         mapping="pathname"
+        strict="1"
         reactionsEnabled="1"
-        emitMetadata="0"
+        emitMetadata="1"
         inputPosition="top"
         theme={`${darkMode ? "dark" : "light"}`}
         lang="zh-CN"

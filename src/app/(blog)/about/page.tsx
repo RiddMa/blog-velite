@@ -1,5 +1,4 @@
 import React from "react";
-import BlogLayout from "@/src/components/layout";
 import type { Metadata } from "next";
 import { aboutPage } from "@/.velite";
 import BlogHtmlRenderer from "@/src/components/BlogHtmlRenderer";
@@ -10,11 +9,9 @@ export function generateMetadata(): Metadata {
 
 function AboutPage() {
   return (
-    <BlogLayout>
-      <article className="prose-article">
-        <BlogHtmlRenderer html={aboutPage.content} imgMap={aboutPage.images} />
-      </article>
-    </BlogLayout>
+    <article className="prose-article">
+      <BlogHtmlRenderer html={aboutPage.content} imgMap={aboutPage.images} />
+    </article>
   );
 }
 

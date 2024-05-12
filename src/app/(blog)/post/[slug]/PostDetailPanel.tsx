@@ -5,21 +5,18 @@ import TableOfContents from "@/src/components/TableOfContents";
 import Link from "next/link";
 import { isDefined } from "@/src/util/util";
 
-const RightContent: React.FC<{
-  children: React.ReactNode;
-  params: {
-    slug: string;
-  };
-}> = ({ children, params: { slug } }) => {
+const PostDetailPanel: React.FC<{
+  slug: string;
+}> = ({ slug }) => {
   const post = getPostBySlug(slug);
   if (!post) return <div></div>;
+
   const categories = post.categories.map((category) => getCategoryBySlug(category)).filter(isDefined);
   const columns = post.columns.map((column) => getColumnBySlug(column)).filter(isDefined);
   const tags = post.tags.map((tag) => getTagBySlug(tag)).filter(isDefined);
 
   return (
     <>
-      {children}
       <aside className={`prose-article-card flex flex-col`}>
         <span className={``}>发布于 {formatDate(post.created)}</span>
         <span className={``}>更新于 {formatDate(post.updated)}</span>
@@ -87,4 +84,4 @@ const RightContent: React.FC<{
   );
 };
 
-export default RightContent;
+export default PostDetailPanel;
