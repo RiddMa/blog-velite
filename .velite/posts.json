@@ -90,46 +90,16 @@
     ],
     "permalink": "/post/bupt-cernet-openwrt-ipv6-configuration",
     "images": {
-      "/static/20240118222203-2ca29b7c.png": {
-        "width": 506,
-        "height": 345
-      },
-      "/static/20240118222722-d915746d.png": {
-        "width": 1072,
-        "height": 330
-      },
-      "/static/20240118222753-f0c9e7f7.png": {
-        "width": 1339,
-        "height": 742
-      },
-      "/static/20240118222818-99caf081.png": {
-        "width": 935,
-        "height": 781
-      },
-      "/static/20240118222838-5f517c87.png": {
-        "width": 1503,
-        "height": 1633
-      },
-      "/static/20240118222856-3300208e.png": {
-        "width": 938,
-        "height": 790
-      },
-      "/static/20240118222914-a6043dae.png": {
-        "width": 985,
-        "height": 1024
-      },
-      "/static/20240118222927-d9e1873c.png": {
-        "width": 997,
-        "height": 919
-      },
-      "/static/20240118222939-38a5dd1f.png": {
-        "width": 2039,
-        "height": 1385
-      },
-      "/static/20240118222956-94cb44f9.png": {
-        "width": 1503,
-        "height": 964
-      }
+      "/static/20240118222203-2ca29b7c.png": {},
+      "/static/20240118222722-d915746d.png": {},
+      "/static/20240118222753-f0c9e7f7.png": {},
+      "/static/20240118222818-99caf081.png": {},
+      "/static/20240118222838-5f517c87.png": {},
+      "/static/20240118222856-3300208e.png": {},
+      "/static/20240118222914-a6043dae.png": {},
+      "/static/20240118222927-d9e1873c.png": {},
+      "/static/20240118222939-38a5dd1f.png": {},
+      "/static/20240118222956-94cb44f9.png": {}
     }
   },
   {
