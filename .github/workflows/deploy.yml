@@ -10,10 +10,10 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Repository
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
 
       - name: Setup Node.js
-        uses: actions/setup-node@v2
+        uses: actions/setup-node@v4
         with:
           node-version: '18' # 确保这里的版本与你的项目兼容
 
@@ -31,7 +31,7 @@ jobs:
           key: ${{ secrets.SSH_KEY }}
           port: ${{ secrets.SSH_PORT }}
           source: ".next,public,package.json"
-          target: ${{ PROJECT_DIRECTORY }}
+          target: ${{ secrets.PROJECT_DIRECTORY }}
 
       - name: Restart Server
         uses: appleboy/ssh-action@master
@@ -41,7 +41,7 @@ jobs:
           key: ${{ secrets.SSH_KEY }}
           port: ${{ secrets.SSH_PORT }}
           script: |
-            cd ${{ PROJECT_DIRECTORY }}
+            cd ${{ secrets.PROJECT_DIRECTORY }}
             npm install --production
             next start
 #            pm2 restart all # 或使用其他命令重新启动你的应用
