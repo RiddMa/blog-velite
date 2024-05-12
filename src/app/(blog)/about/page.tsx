@@ -1,6 +1,5 @@
-// pages/about.js
 import React from "react";
-import BlogLayout from "@/src/app/(blog)/layout/layout";
+import BlogLayout from "@/src/components/layout";
 import type { Metadata } from "next";
 import { aboutPage } from "@/.velite";
 import BlogHtmlRenderer from "@/src/components/BlogHtmlRenderer";

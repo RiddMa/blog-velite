@@ -1,16 +1,16 @@
 import React from "react";
-import TopNavbar from "./TopNavbar.client";
-import LeftNavbarClient from "./LeftNavbar.client";
-import RightNavbarClient from "./RightNavbar.client";
-import MainContainer from "./main-container";
+import TopNavbar from "@/src/app/(blog)/layoutComponents/TopNavbar.client";
+import LeftNavbarClient from "@/src/app/(blog)/layoutComponents/LeftNavbar.client";
+import RightNavbarClient from "@/src/app/(blog)/layoutComponents/RightNavbar.client";
+import MainContainer from "@/src/app/(blog)/layoutComponents/main-container";
 
-interface LayoutProps {
-  children?: React.ReactNode;
+interface BlogLayoutProps {
+  children: React.ReactNode;
   leftNavbar?: React.ReactNode;
   rightNavbar?: React.ReactNode;
 }
 
-const BlogLayout: React.FC<LayoutProps> = ({ children, leftNavbar, rightNavbar }) => {
+const BlogLayout: React.FC<BlogLayoutProps> = ({ children, leftNavbar, rightNavbar }) => {
   return (
     <div className="flex flex-col inset-0 min-h-[calc(100dvh)]">
       <TopNavbar />

@@ -3,10 +3,14 @@ import rehypeParse from "rehype-parse";
 import { visit } from "unist-util-visit";
 import rehypeStringify from "rehype-stringify";
 import path from "node:path";
-import { staticBasePath } from "@/base-path";
+import { basePath, staticBasePath } from "@/base-path";
 import fs from "fs/promises";
 import sharp from "sharp";
 import { Post } from "@/.velite";
+
+export function isDefined<T>(value: T | undefined): value is T {
+  return value !== undefined;
+}
 
 export function assertDefined<T>(val: T | undefined): asserts val is T {
   if (val === undefined) {
@@ -38,6 +42,7 @@ export const extractImgFromHtml = async (html: string) => {
     .use(rehypeStringify) // 仅为了满足编译器需求
     .processSync(html); // 处理HTML字符串
 
+  console.warn(`basePath: ${basePath}\nstaticBasePath: ${staticBasePath}`);
   // 读取每个图像文件并获取尺寸
   for (const src of Object.keys(imgSet)) {
     try {

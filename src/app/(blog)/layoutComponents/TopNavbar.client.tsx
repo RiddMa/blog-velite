@@ -3,7 +3,7 @@
 import React, { useEffect } from "react";
 import { usePageStateStore } from "@/src/store/store";
 import { useShallow } from "zustand/react/shallow";
-import DarkModeToggleClient from "@/src/app/(blog)/layout/components/dark-mode-toggle.client";
+import DarkModeToggleClient from "@/src/components/dark-mode-toggle.client";
 import { Icon } from "@iconify-icon/react";
 import Link from "next/link";
 import { globals } from "@/.velite";
