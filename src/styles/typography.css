@@ -3,13 +3,18 @@
   @apply text-slate-700 dark:text-slate-300;
   @apply prose-h1:my-4 prose-h1:text-4xl prose-h1:font-semibold prose-h1:text-slate-900 prose-h1:dark:text-white;
   @apply prose-h2:my-4 prose-h2:text-3xl prose-h2:font-semibold prose-h2:text-slate-900 prose-h2:dark:text-white;
-  /*@apply prose prose-slate w-full min-w-0 max-w-[960px] transition-all duration-300 ease-apple dark:prose-invert prose-h1:leading-normal prose-h2:leading-normal prose-h3:leading-normal prose-h4:leading-normal prose-a:text-sky-600 hover:prose-a:underline prose-blockquote:text-slate-600 prose-code:text-base prose-code:text-slate-700 prose-pre:m-0 prose-pre:p-0 dark:prose-a:text-sky-400 dark:prose-blockquote:text-slate-400 dark:prose-code:text-slate-300 xl:prose-code:text-lg;*/
+  @apply prose-h3:text-2xl prose-h3:font-semibold prose-h3:text-slate-900 prose-h3:dark:text-white;
+  @apply prose-h4:text-xl prose-h4:font-semibold prose-h4:text-slate-900 prose-h4:dark:text-white;
+  /*@apply prose-a: prose-a:duration-300 prose-a:ease-apple prose-a:no-underline prose-a:text-slate-700 dark:prose-a:text-slate-300 prose-a:font-normal hover:prose-a:underline hover:prose-a:text-sky-700 dark:hover:prose-a:text-sky-400;*/
   word-break: break-word;
   word-wrap: break-word;
   -webkit-hyphens: auto;
   -ms-hyphens: auto;
   -moz-hyphens: auto;
   hyphens: auto;
+  text-underline-offset: 0;
+  transition: all 300ms;
+
 }
 
 .prose-article .h0 {
