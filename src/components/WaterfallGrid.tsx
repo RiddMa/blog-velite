@@ -1,5 +1,5 @@
 "use client";
-import React, { useRef, useState, useEffect, useLayoutEffect } from "react";
+import React, { useRef, useState, useEffect, useLayoutEffect, useCallback } from "react";
 import { useIsMobile } from "@nextui-org/use-is-mobile";
 
 interface WaterfallGridProps {
@@ -19,17 +19,7 @@ const WaterfallGrid: React.FC<WaterfallGridProps> = ({ items, CardComponent }) =
   const cardGap = 16;
   const cardPadding = 16;
 
-  useLayoutEffect(() => {
-    const columnWidth = containerRef.current!.clientWidth / columnCount;
-    const newImgWidth = isMobile ? columnWidth - cardGap * 2 : columnWidth - cardGap * 2 - cardPadding * 2;
-    setImgWidth(newImgWidth);
-  }, [items, isMobile, columnCount]);
-
-  useEffect(() => {
-    computeLayout();
-  }, [components]); // Recompute layout when components change
-
-  const computeLayout = () => {
+  const computeLayout = useCallback(() => {
     const columnWidth = containerRef.current!.clientWidth / columnCount;
     const newColumnHeights = new Array(columnCount).fill(0);
     const newPositions: Array<{ x: number; y: number }> = [];
@@ -47,7 +37,17 @@ const WaterfallGrid: React.FC<WaterfallGridProps> = ({ items, CardComponent }) =
 
     setColumnHeights(newColumnHeights);
     setPositions(newPositions);
-  };
+  }, [columnCount]);
+
+  useLayoutEffect(() => {
+    const columnWidth = containerRef.current!.clientWidth / columnCount;
+    const newImgWidth = isMobile ? columnWidth - cardGap * 2 : columnWidth - cardGap * 2 - cardPadding * 2;
+    setImgWidth(newImgWidth);
+  }, [items, isMobile, columnCount]);
+
+  useEffect(() => {
+    computeLayout();
+  }, [components, computeLayout]); // Recompute layout when components change
 
   useEffect(() => {
     const observer = new ResizeObserver(() => {
@@ -59,7 +59,7 @@ const WaterfallGrid: React.FC<WaterfallGridProps> = ({ items, CardComponent }) =
     }
 
     return () => observer.disconnect();
-  }, [items, imgWidth, components]); // Also recompute when image width or components array changes
+  }, [items, imgWidth, components, computeLayout]); // Also recompute when image width or components array changes
 
   return (
     <div

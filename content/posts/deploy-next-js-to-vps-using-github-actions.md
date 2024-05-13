@@ -14,6 +14,16 @@ updated: 2024-05-13T11:43:56+08:00
 
 
 
+```bash
+NODE_OPTIONS="--max-old-space-size=1536" yarn add sharp --ignore-engines
+# 使用 yarn
+yarn global add pm2
+```
+
+
+
+
+
 ```yaml
 # .github/workflows/deploy.yml
 
@@ -85,7 +95,7 @@ jobs:
           username: ${{ secrets.SSH_USERNAME }}
           key: ${{ secrets.SSH_KEY }}
           port: ${{ secrets.SSH_PORT }}
-          source: ".next,.velite,public,package.json"
+          source: ".next,public,package.json"
           target: ${{ secrets.PROJECT_DIRECTORY }}
 
       - name: Restart Server
@@ -95,14 +105,11 @@ jobs:
           username: ${{ secrets.SSH_USERNAME }}
           key: ${{ secrets.SSH_KEY }}
           port: ${{ secrets.SSH_PORT }}
-          script: |
-                    cd ${{ secrets.PROJECT_DIRECTORY }}
-                    export NVM_DIR=~/.nvm
-                    source ~/.nvm/nvm.sh
-                    NODE_OPTIONS="--max-old-space-size=1536" yarn install
-            #            NODE_OPTIONS="--max-old-space-size=1536" yarn add sharp --ignore-engines
-            #            yarn global add pm2
-                    pm2 list | grep "blog-velite" && pm2 restart "blog-velite" || pm2 start yarn --name "blog-velite" -- start
-                    pm2 save
-
+          script: | 
+            cd ${{ secrets.PROJECT_DIRECTORY }}
+            export NVM_DIR=~/.nvm
+            source ~/.nvm/nvm.sh
+            NODE_OPTIONS="--max-old-space-size=1536" yarn install
+            pm2 list | grep "blog-velite" && pm2 restart "blog-velite" || pm2 start yarn --name "blog-velite" -- start
+            pm2 save
 ```

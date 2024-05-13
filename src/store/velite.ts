@@ -1,4 +1,4 @@
-import { posts, Post, authors, Author, columns, Column, categories, Category, tags, Tag } from "@/.velite";
+import { posts, Post, authors, Author, columns, Column, categories, Category, tags, Tag, Page, pages } from "@/.velite";
 
 // interface VeliteState {
 //   posts: typeof posts;
@@ -41,4 +41,8 @@ export function getCategoryBySlug(slug: string): Category | undefined {
 
 export function getTagBySlug(slug: string): Tag | undefined {
   return tags.find((tag) => tag.slug === slug);
+}
+
+export function getPageBySlug(slug: string): Page | undefined {
+  return pages.find((page) => page.slug === slug);
 }

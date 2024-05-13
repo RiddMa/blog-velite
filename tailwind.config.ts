@@ -93,6 +93,6 @@ const config: Config = {
     },
   },
   darkMode: "class",
-  plugins: [require("@tailwindcss/typography"), require("@tailwindcss/line-clamp"), require("daisyui"), nextui()],
+  plugins: [require("@tailwindcss/typography"), require("daisyui"), nextui()],
 };
 export default config;

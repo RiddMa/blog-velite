@@ -1,16 +1,18 @@
 import React from "react";
 import type { Metadata } from "next";
-import { aboutPage } from "@/.velite";
 import BlogHtmlRenderer from "@/src/components/BlogHtmlRenderer";
+import { getPageBySlug } from "@/src/store/velite";
 
 export function generateMetadata(): Metadata {
-  return { title: aboutPage.title, description: aboutPage.excerpt };
+  const { title, excerpt } = getPageBySlug("about")!;
+  return { title: title, description: excerpt };
 }
 
 function AboutPage() {
+  const { content, images } = getPageBySlug("about")!;
   return (
     <article className="prose-article">
-      <BlogHtmlRenderer html={aboutPage.content} imgMap={aboutPage.images} />
+      <BlogHtmlRenderer html={content} imgMap={images} />
     </article>
   );
 }

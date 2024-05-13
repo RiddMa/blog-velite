@@ -3,10 +3,11 @@ import rehypeParse from "rehype-parse";
 import { visit } from "unist-util-visit";
 import rehypeStringify from "rehype-stringify";
 import path from "node:path";
-import { basePath, staticBasePath } from "@/base-path";
+import { staticBasePath } from "@/base-path";
 import fs from "fs/promises";
 import sharp from "sharp";
 import { Post } from "@/.velite";
+import remarkParse from "remark-parse";
 
 export function isDefined<T>(value: T | undefined): value is T {
   return value !== undefined;
@@ -18,13 +19,76 @@ export function assertDefined<T>(val: T | undefined): asserts val is T {
   }
 }
 
-export const extractImg = async (data: any) => {
-  const imgSet: { [key: string]: any } = await extractImgFromHtml(data.content);
-  // imgSet[data.cover] = await extractCoverImageMetadata(data.coverImage);
+export async function listFiles(dirPath: string): Promise<string[]> {
+  try {
+    const entries = await fs.readdir(dirPath, { withFileTypes: true });
+    const files = entries.filter((file) => file.isFile()).map((file) => path.join(dirPath, file.name));
+    return files;
+  } catch (error) {
+    console.error("Error reading directory:", error);
+    throw error;
+  }
+}
+
+export async function postProcessMarkdownImages(filePath: string, staticBasePath: string): Promise<void> {
+  try {
+    // Read the file
+    const data = JSON.parse(await fs.readFile(filePath, "utf8"));
+
+    // Process each post
+    const processedData = await Promise.all(
+      data.map(async (el: any) => {
+        const imgSet = await extractImgFromHtml(staticBasePath, el.content);
+        return { ...el, images: imgSet }; // Return new object with added images
+      }),
+    );
+
+    // Write the processed posts back to the file or another file
+    await fs.writeFile(filePath, JSON.stringify(processedData, null, 2), "utf8");
+
+    console.log(`File ${filePath} have been processed and saved.`);
+  } catch (error) {
+    console.error("An error occurred:", error);
+  }
+}
+
+export const extractImg = async (basePath: string, data: any) => {
+  return await extractImgFromHtml(basePath, data.content);
+};
+
+export const extractImgFromMarkdown = async (basePath: string, markdown: string) => {
+  type MarkdownNode = {
+    type: string;
+    url?: string;
+    children?: MarkdownNode[];
+  };
+
+  const imgSet: { [key: string]: any } = {};
+  const processor = unified().use(remarkParse);
+  const tree = processor.parse(markdown);
+
+  visit(tree, "image", (node: MarkdownNode) => {
+    if (node.url) {
+      imgSet[node.url] = {};
+    }
+  });
+
+  // 读取每个图像文件并获取尺寸
+  for (const src of Object.keys(imgSet)) {
+    try {
+      const filePath = path.join(basePath, src);
+      const data = await fs.readFile(filePath);
+      const metadata = await sharp(data).metadata();
+      imgSet[src] = { ...imgSet[src], width: metadata.width, height: metadata.height };
+    } catch (error) {
+      console.error("Error processing image:", src, error);
+    }
+  }
+
   return imgSet;
 };
 
-export const extractImgFromHtml = async (html: string) => {
+export const extractImgFromHtml = async (basePath: string, html: string) => {
   const imgSet: { [key: string]: any } = {};
 
   unified()
@@ -42,11 +106,10 @@ export const extractImgFromHtml = async (html: string) => {
     .use(rehypeStringify) // 仅为了满足编译器需求
     .processSync(html); // 处理HTML字符串
 
-  // console.warn(`basePath: ${basePath}\nstaticBasePath: ${staticBasePath}`);
   // 读取每个图像文件并获取尺寸
   for (const src of Object.keys(imgSet)) {
     try {
-      const filePath = path.join(staticBasePath, src);
+      const filePath = path.join(basePath, src);
       const data = await fs.readFile(filePath);
       const metadata = await sharp(data).metadata();
       imgSet[src] = { ...imgSet[src], width: metadata.width, height: metadata.height };
