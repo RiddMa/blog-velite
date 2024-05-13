@@ -90,46 +90,16 @@
     ],
     "permalink": "/post/bupt-cernet-openwrt-ipv6-configuration",
     "images": {
-      "/static/20240118222203-2ca29b7c.png": {
-        "width": 506,
-        "height": 345
-      },
-      "/static/20240118222722-d915746d.png": {
-        "width": 1072,
-        "height": 330
-      },
-      "/static/20240118222753-f0c9e7f7.png": {
-        "width": 1339,
-        "height": 742
-      },
-      "/static/20240118222818-99caf081.png": {
-        "width": 935,
-        "height": 781
-      },
-      "/static/20240118222838-5f517c87.png": {
-        "width": 1503,
-        "height": 1633
-      },
-      "/static/20240118222856-3300208e.png": {
-        "width": 938,
-        "height": 790
-      },
-      "/static/20240118222914-a6043dae.png": {
-        "width": 985,
-        "height": 1024
-      },
-      "/static/20240118222927-d9e1873c.png": {
-        "width": 997,
-        "height": 919
-      },
-      "/static/20240118222939-38a5dd1f.png": {
-        "width": 2039,
-        "height": 1385
-      },
-      "/static/20240118222956-94cb44f9.png": {
-        "width": 1503,
-        "height": 964
-      }
+      "/static/20240118222203-2ca29b7c.png": {},
+      "/static/20240118222722-d915746d.png": {},
+      "/static/20240118222753-f0c9e7f7.png": {},
+      "/static/20240118222818-99caf081.png": {},
+      "/static/20240118222838-5f517c87.png": {},
+      "/static/20240118222856-3300208e.png": {},
+      "/static/20240118222914-a6043dae.png": {},
+      "/static/20240118222927-d9e1873c.png": {},
+      "/static/20240118222939-38a5dd1f.png": {},
+      "/static/20240118222956-94cb44f9.png": {}
     }
   },
   {
@@ -170,10 +140,10 @@
     "images": {}
   },
   {
-    "title": "BUPT 校园网 OpenWrt 配置 IPv6",
+    "title": "使用 GitHub Actions 部署 Next.js 项目到 VPS",
     "slug": "deploy-next-js-to-vps-using-github-actions",
-    "created": "2023-05-19T04:26:00.000Z",
-    "updated": "2023-05-19T15:51:00.000Z",
+    "created": "2024-05-13T03:43:56.000Z",
+    "updated": "2024-05-13T03:43:56.000Z",
     "draft": false,
     "featured": false,
     "cover": {
@@ -184,13 +154,13 @@
       "blurWidth": 8,
       "blurHeight": 6
     },
-    "content": "<p><img alt=image-20240513105803547 src=/static/actions-deploy-success-b58d58c0.png>",
-    "raw": "![image-20240513105803547](deploy-next-js-to-vps-using-github-actions.assets/actions-deploy-success.png)",
+    "content": "<pre><code class=language-yaml># .github/workflows/deploy.yml\r\n\r\nname: Deploy Next.js Project\r\n\r\non:\r\n  push:\r\n    branches:\r\n      - master\r\n\r\njobs:\r\n  build:\r\n    runs-on: ubuntu-latest\r\n    outputs:\r\n      cache-key: ${{ steps.cache-key.outputs.key }}\r\n    steps:\r\n      - name: Checkout Repository\r\n        uses: actions/checkout@v4\r\n\r\n      - name: Setup Node.js\r\n        uses: actions/setup-node@v4\r\n        with:\r\n          node-version: '18' # 确保这里的版本与你的项目兼容\r\n          cache: 'npm'\r\n\r\n      - name: Install Dependencies\r\n        run: npm install\r\n\r\n      - name: Build Project\r\n        run: npm run build\r\n\r\n      - name: Generate Cache Key\r\n        id: cache-key\r\n        run: echo \"::set-output name=key::$(date +%s)\"\r\n\r\n      - name: Archive Artifacts\r\n        uses: actions/upload-artifact@v4\r\n        with:\r\n          name: built-app\r\n          path: |\r\n            .next\r\n            public\r\n            package.json\r\n\r\n  deploy:\r\n    needs: build\r\n    runs-on: ubuntu-latest\r\n    steps:\r\n      - name: Download Artifacts\r\n        uses: actions/download-artifact@v4\r\n        with:\r\n          name: built-app\r\n\r\n      - name: Deploy to Server\r\n        uses: appleboy/scp-action@master\r\n        with:\r\n          host: ${{ secrets.SSH_HOST }}\r\n          username: ${{ secrets.SSH_USERNAME }}\r\n          key: ${{ secrets.SSH_KEY }}\r\n          port: ${{ secrets.SSH_PORT }}\r\n          source: \".next,public,package.json\"\r\n          target: ${{ secrets.PROJECT_DIRECTORY }}\r\n\r\n      - name: Restart Server\r\n        uses: appleboy/ssh-action@master\r\n        with:\r\n          host: ${{ secrets.SSH_HOST }}\r\n          username: ${{ secrets.SSH_USERNAME }}\r\n          key: ${{ secrets.SSH_KEY }}\r\n          port: ${{ secrets.SSH_PORT }}\r\n          script: | \r\n            cd ${{ secrets.PROJECT_DIRECTORY }}\r\n            export NVM_DIR=~/.nvm\r\n            source ~/.nvm/nvm.sh\r\n            NODE_OPTIONS=\"--max-old-space-size=1536\" yarn install\r\n            NODE_OPTIONS=\"--max-old-space-size=1536\" yarn add sharp --ignore-engines\r\n            yarn global add pm2\r\n            pm2 list | grep \"blog-velite\" &#38&#38 pm2 restart \"blog-velite\" || pm2 start yarn --name \"blog-velite\" -- start\r\n            pm2 save\r\n\n</code></pre>",
+    "raw": "```yaml\r\n# .github/workflows/deploy.yml\r\n\r\nname: Deploy Next.js Project\r\n\r\non:\r\n  push:\r\n    branches:\r\n      - master\r\n\r\njobs:\r\n  build:\r\n    runs-on: ubuntu-latest\r\n    outputs:\r\n      cache-key: ${{ steps.cache-key.outputs.key }}\r\n    steps:\r\n      - name: Checkout Repository\r\n        uses: actions/checkout@v4\r\n\r\n      - name: Setup Node.js\r\n        uses: actions/setup-node@v4\r\n        with:\r\n          node-version: '18' # 确保这里的版本与你的项目兼容\r\n          cache: 'npm'\r\n\r\n      - name: Install Dependencies\r\n        run: npm install\r\n\r\n      - name: Build Project\r\n        run: npm run build\r\n\r\n      - name: Generate Cache Key\r\n        id: cache-key\r\n        run: echo \"::set-output name=key::$(date +%s)\"\r\n\r\n      - name: Archive Artifacts\r\n        uses: actions/upload-artifact@v4\r\n        with:\r\n          name: built-app\r\n          path: |\r\n            .next\r\n            public\r\n            package.json\r\n\r\n  deploy:\r\n    needs: build\r\n    runs-on: ubuntu-latest\r\n    steps:\r\n      - name: Download Artifacts\r\n        uses: actions/download-artifact@v4\r\n        with:\r\n          name: built-app\r\n\r\n      - name: Deploy to Server\r\n        uses: appleboy/scp-action@master\r\n        with:\r\n          host: ${{ secrets.SSH_HOST }}\r\n          username: ${{ secrets.SSH_USERNAME }}\r\n          key: ${{ secrets.SSH_KEY }}\r\n          port: ${{ secrets.SSH_PORT }}\r\n          source: \".next,public,package.json\"\r\n          target: ${{ secrets.PROJECT_DIRECTORY }}\r\n\r\n      - name: Restart Server\r\n        uses: appleboy/ssh-action@master\r\n        with:\r\n          host: ${{ secrets.SSH_HOST }}\r\n          username: ${{ secrets.SSH_USERNAME }}\r\n          key: ${{ secrets.SSH_KEY }}\r\n          port: ${{ secrets.SSH_PORT }}\r\n          script: | \r\n            cd ${{ secrets.PROJECT_DIRECTORY }}\r\n            export NVM_DIR=~/.nvm\r\n            source ~/.nvm/nvm.sh\r\n            NODE_OPTIONS=\"--max-old-space-size=1536\" yarn install\r\n            NODE_OPTIONS=\"--max-old-space-size=1536\" yarn add sharp --ignore-engines\r\n            yarn global add pm2\r\n            pm2 list | grep \"blog-velite\" && pm2 restart \"blog-velite\" || pm2 start yarn --name \"blog-velite\" -- start\r\n            pm2 save\r\n\r\n```",
     "excerpt": "给只有 128 位前缀的校园网地址配置 IPv6 NAT (NAT6)，与 AdGuardHome、OpenClash 共存。\n",
     "toc": [],
     "metadata": {
       "readingTime": 1,
-      "wordCount": 0
+      "wordCount": 235.84
     },
     "author": "ridd",
     "columns": [
@@ -201,23 +171,14 @@
       "tech"
     ],
     "tags": [
-      "北邮",
-      "校园网",
-      "CERNERT",
-      "OpenWrt",
-      "MosDNS",
-      "IPv6",
-      "NAT6",
-      "AdGuard Home",
-      "OpenClash"
+      "GitHub Actions",
+      "GitHub",
+      "Next.js",
+      "VPS",
+      "Self-hosted"
     ],
     "permalink": "/post/deploy-next-js-to-vps-using-github-actions",
-    "images": {
-      "/static/actions-deploy-success-b58d58c0.png": {
-        "width": 2201,
-        "height": 1738
-      }
-    }
+    "images": {}
   },
   {
     "title": "Greetings from Python!",
