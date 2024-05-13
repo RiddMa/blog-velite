@@ -42,7 +42,7 @@ export const extractImgFromHtml = async (html: string) => {
     .use(rehypeStringify) // 仅为了满足编译器需求
     .processSync(html); // 处理HTML字符串
 
-  console.warn(`basePath: ${basePath}\nstaticBasePath: ${staticBasePath}`);
+  // console.warn(`basePath: ${basePath}\nstaticBasePath: ${staticBasePath}`);
   // 读取每个图像文件并获取尺寸
   for (const src of Object.keys(imgSet)) {
     try {
