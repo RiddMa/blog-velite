@@ -47,7 +47,7 @@ jobs:
 
       - name: Generate Cache Key
         id: cache-key
-        run: echo "::set-output name=key::$(date +%s)"
+        run: echo "cache_key=$(date +%s)" >> $GITHUB_OUTPUT
 
       - name: Archive Artifacts
         uses: actions/upload-artifact@v4
@@ -67,6 +67,17 @@ jobs:
         with:
           name: built-app
 
+      - name: Clean Previous Build
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.SSH_HOST }}
+          username: ${{ secrets.SSH_USERNAME }}
+          key: ${{ secrets.SSH_KEY }}
+          port: ${{ secrets.SSH_PORT }}
+          script: |
+            cd ${{ secrets.PROJECT_DIRECTORY }}
+            rm -rf .next public package.json
+
       - name: Deploy to Server
         uses: appleboy/scp-action@master
         with:
@@ -74,7 +85,7 @@ jobs:
           username: ${{ secrets.SSH_USERNAME }}
           key: ${{ secrets.SSH_KEY }}
           port: ${{ secrets.SSH_PORT }}
-          source: ".next,public,package.json"
+          source: ".next,.velite,public,package.json"
           target: ${{ secrets.PROJECT_DIRECTORY }}
 
       - name: Restart Server
@@ -84,14 +95,14 @@ jobs:
           username: ${{ secrets.SSH_USERNAME }}
           key: ${{ secrets.SSH_KEY }}
           port: ${{ secrets.SSH_PORT }}
-          script: | 
-            cd ${{ secrets.PROJECT_DIRECTORY }}
-            export NVM_DIR=~/.nvm
-            source ~/.nvm/nvm.sh
-            NODE_OPTIONS="--max-old-space-size=1536" yarn install
-            NODE_OPTIONS="--max-old-space-size=1536" yarn add sharp --ignore-engines
-            yarn global add pm2
-            pm2 list | grep "blog-velite" && pm2 restart "blog-velite" || pm2 start yarn --name "blog-velite" -- start
-            pm2 save
+          script: |
+                    cd ${{ secrets.PROJECT_DIRECTORY }}
+                    export NVM_DIR=~/.nvm
+                    source ~/.nvm/nvm.sh
+                    NODE_OPTIONS="--max-old-space-size=1536" yarn install
+            #            NODE_OPTIONS="--max-old-space-size=1536" yarn add sharp --ignore-engines
+            #            yarn global add pm2
+                    pm2 list | grep "blog-velite" && pm2 restart "blog-velite" || pm2 start yarn --name "blog-velite" -- start
+                    pm2 save
 
 ```

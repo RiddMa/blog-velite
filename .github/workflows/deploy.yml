@@ -48,6 +48,17 @@ jobs:
         with:
           name: built-app
 
+      - name: Clean Previous Build
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.SSH_HOST }}
+          username: ${{ secrets.SSH_USERNAME }}
+          key: ${{ secrets.SSH_KEY }}
+          port: ${{ secrets.SSH_PORT }}
+          script: |
+            cd ${{ secrets.PROJECT_DIRECTORY }}
+            rm -rf .next public package.json
+
       - name: Deploy to Server
         uses: appleboy/scp-action@master
         with:
@@ -70,7 +81,7 @@ jobs:
             export NVM_DIR=~/.nvm
             source ~/.nvm/nvm.sh
             NODE_OPTIONS="--max-old-space-size=1536" yarn install
-            NODE_OPTIONS="--max-old-space-size=1536" yarn add sharp --ignore-engines
-            yarn global add pm2
+#            NODE_OPTIONS="--max-old-space-size=1536" yarn add sharp --ignore-engines
+#            yarn global add pm2
             pm2 list | grep "blog-velite" && pm2 restart "blog-velite" || pm2 start yarn --name "blog-velite" -- start
             pm2 save

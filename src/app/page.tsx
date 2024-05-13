@@ -6,7 +6,7 @@ export default function Home() {
   return (
     <>
       <TopNavbar />
-      <main className="min-h-[100dvh]"></main>
+      <main className="min-h-[100dvh]">The React Framework for the Web</main>
     </>
   );
 }
