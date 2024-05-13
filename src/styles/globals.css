@@ -107,6 +107,14 @@ body.dark {
   @apply rounded-3xl
 }
 
+.gpt{
+  @apply rounded-3xl bg-cyan-900 p-4;
+  @apply prose-p:leading-normal prose-p:m-0;
+}
+.gpt p{
+  @apply leading-normal m-0;
+}
+
 .black-corner-top-left {
   z-index: 180;
   position: fixed;

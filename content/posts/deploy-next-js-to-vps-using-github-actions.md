@@ -169,41 +169,41 @@ jobs:
 ### 工作定义
 #### 构建工作 (`build`)
 1. **运行环境**:
-   - `runs-on: ubuntu-latest` 表示该工作在最新版本的 Ubuntu 运行环境中执行。
+    - `runs-on: ubuntu-latest` 表示该工作在最新版本的 Ubuntu 运行环境中执行。
 
 2. **输出**:
-   - `outputs: cache-key: ${{ steps.cache-key.outputs.key }}` 指定一个输出值，保存生成的缓存键，其他工作可以使用这个值。
+    - `outputs: cache-key: ${{ steps.cache-key.outputs.key }}` 指定一个输出值，保存生成的缓存键，其他工作可以使用这个值。
 
 3. **步骤**:
-   - **代码检出**:
-     - 使用 `actions/checkout@v4` 动作检出仓库代码。
-   - **设置 Node.js**:
-     - 使用 `actions/setup-node@v4` 动作设置 Node.js 环境，指定使用 Node.js 版本 18，并且配置 npm 缓存。
-   - **安装依赖**:
-     - 运行 `npm install` 安装项目依赖。
-   - **构建项目**:
-     - 运行 `npm run build` 构建 Next.js 项目。
-   - **生成缓存键**:
-     - 运行脚本生成一个基于当前时间戳的缓存键，并存储为步骤输出。
-   - **归档项目构建产物**:
-     - 使用 `actions/upload-artifact@v4` 动作上传构建后的文件，包括 `.next` 目录、`public` 目录和 `package.json` 文件。
+    - **代码检出**:
+        - 使用 `actions/checkout@v4` 动作检出仓库代码。
+    - **设置 Node.js**:
+        - 使用 `actions/setup-node@v4` 动作设置 Node.js 环境，指定使用 Node.js 版本 18，并且配置 npm 缓存。
+    - **安装依赖**:
+        - 运行 `npm install` 安装项目依赖。
+    - **构建项目**:
+        - 运行 `npm run build` 构建 Next.js 项目。
+    - **生成缓存键**:
+        - 运行脚本生成一个基于当前时间戳的缓存键，并存储为步骤输出。
+    - **归档项目构建产物**:
+        - 使用 `actions/upload-artifact@v4` 动作上传构建后的文件，包括 `.next` 目录、`public` 目录和 `package.json` 文件。
 
 #### 部署工作 (`deploy`)
 1. **依赖**:
-   - `needs: build` 表示部署工作需要在构建工作完成后执行。
+    - `needs: build` 表示部署工作需要在构建工作完成后执行。
 
 2. **运行环境**:
-   - 与构建工作相同，运行在 `ubuntu-latest`。
+    - 与构建工作相同，运行在 `ubuntu-latest`。
 
 3. **步骤**:
-   - **下载构建产物**:
-     - 使用 `actions/download-artifact@v4` 动作下载之前上传的构建产物。
-   - **清理旧构建**:
-     - 使用 `appleboy/ssh-action@master` 动作通过 SSH 连接到服务器，执行脚本删除旧的构建文件。
-   - **部署新构建**:
-     - 使用 `appleboy/scp-action@master` 动作通过 SCP 将新构建文件上传到服务器。
-   - **重启服务器上的服务**:
-     - 再次使用 `appleboy/ssh-action@master` 动作执行服务器上的脚本，包括安装依赖、重启或启动服务，并保存 PM2 配置。
+    - **下载构建产物**:
+        - 使用 `actions/download-artifact@v4` 动作下载之前上传的构建产物。
+    - **清理旧构建**:
+        - 使用 `appleboy/ssh-action@master` 动作通过 SSH 连接到服务器，执行脚本删除旧的构建文件。
+    - **部署新构建**:
+        - 使用 `appleboy/scp-action@master` 动作通过 SCP 将新构建文件上传到服务器。
+    - **重启服务器上的服务**:
+        - 再次使用 `appleboy/ssh-action@master` 动作执行服务器上的脚本，包括安装依赖、重启或启动服务，并保存 PM2 配置。
 
 ### 安全与配置
 - 配置文件中使用了 `secrets` 来引用敏感信息，如 SSH 连接信息，确保这些信息不会直接暴露在公共配置文件中。

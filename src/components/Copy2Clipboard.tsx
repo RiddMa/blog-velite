@@ -17,7 +17,9 @@ const Copy2Clipboard: React.FC<Copy2ClipboardProps> = ({ children }) => {
         setTimeout(() => setCopied(false), 2000);
       }}
     >
-      <button className={`absolute right-4 top-4`}>{copied ? <span>OK!</span> : <span>Copy</span>}</button>
+      <button className={`absolute right-4 top-7 opacity-0 group-hover:opacity-100`}>
+        {copied ? <span>OK!</span> : <span>Copy</span>}
+      </button>
     </CopyToClipboard>
   );
 };

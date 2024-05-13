@@ -5,6 +5,7 @@
   @apply prose-h2:my-4 prose-h2:text-3xl prose-h2:font-semibold prose-h2:text-slate-900 prose-h2:dark:text-white;
   @apply prose-h3:text-2xl prose-h3:font-semibold prose-h3:text-slate-900 prose-h3:dark:text-white;
   @apply prose-h4:text-xl prose-h4:font-semibold prose-h4:text-slate-900 prose-h4:dark:text-white;
+  @apply prose-pre:m-0 prose-pre:p-0 prose-pre:font-mono prose-pre:leading-tight prose-pre:text-slate-700 prose-pre:dark:text-slate-300 prose-code:m-0 prose-code:font-mono prose-code:leading-tight prose-code:text-slate-700 prose-code:dark:text-slate-300;
   /*@apply prose-a: prose-a:duration-300 prose-a:ease-apple prose-a:no-underline prose-a:text-slate-700 dark:prose-a:text-slate-300 prose-a:font-normal hover:prose-a:underline hover:prose-a:text-sky-700 dark:hover:prose-a:text-sky-400;*/
   word-break: break-word;
   word-wrap: break-word;
@@ -27,11 +28,6 @@
 
 .prose-article caption {
   @apply text-sm text-slate-600 dark:text-slate-400;
-}
-
-.prose-article code,
-.prose-article pre {
-  @apply font-mono text-base leading-tight text-slate-700 dark:text-slate-300;
 }
 
 .prose-article-card {

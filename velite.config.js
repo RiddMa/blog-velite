@@ -22,8 +22,17 @@ const blogMarkdown = s.markdown({
   gfm: true,
   removeComments: false,
   copyLinkedFiles: true,
-  remarkPlugins: [remarkParse, remarkBreaks, remarkFrontmatter, remarkGfm, remarkMath, remarkEmoji, remarkDirective],
-  rehypePlugins: [rehypeSlug, rehypeAutolinkHeadings, rehypeKatex, rehypePresetMinify, rehypeStringify],
+  remarkPlugins: [
+    remarkParse,
+    remarkBreaks,
+    remarkFrontmatter,
+    remarkGfm,
+    remarkMath,
+    remarkEmoji,
+    remarkDirective,
+    remarkDirectiveRehype,
+  ],
+  rehypePlugins: [rehypeSlug, rehypeAutolinkHeadings, rehypeKatex, rehypeStringify],
 });
 
 const globals = {

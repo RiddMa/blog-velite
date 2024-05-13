@@ -24,6 +24,7 @@ const BlogHtmlRenderer: React.FC<HtmlProcessorProps> = ({ html, imgMap = {} }) =
     .use(rehypeParse, { fragment: true }) // Parse the HTML as fragment
     // @ts-ignore
     .use(rehypeReact, {
+      passNode: true,
       components: {
         pre: (props) => {
           return <pre className={`relative m-0 p-0`}>{props.children}</pre>;
@@ -32,7 +33,7 @@ const BlogHtmlRenderer: React.FC<HtmlProcessorProps> = ({ html, imgMap = {} }) =
           const match = /language-(\w+)/.exec(className || "");
           const language = match?.[1] ? match[1] : "";
           return language ? (
-            <>
+            <div className={`group`}>
               <Copy2Clipboard>{String(children).replace(/\n$/, "")}</Copy2Clipboard>
               <SyntaxHighlighter
                 wrapLines={false}
@@ -42,19 +43,14 @@ const BlogHtmlRenderer: React.FC<HtmlProcessorProps> = ({ html, imgMap = {} }) =
                 showLineNumbers={true}
                 PreTag="div"
                 customStyle={{
-                  margin: 0,
-                  padding: "1rem 0.5rem",
+                  margin: "1rem 0",
+                  padding: "0.75rem 0.5rem",
                   borderRadius: "1rem",
-                  fontSize: "1.125rem",
-                  fontWeight: "regular",
-                }}
-                codeTagProps={{
-                  style: { fontFamily: "JetBrains Mono, monospace", color: "#cbd5e1" },
                 }}
               >
                 {String(children).replace(/\n$/, "")}
               </SyntaxHighlighter>
-            </>
+            </div>
           ) : (
             <code {...props} className={`${className}`}>
               {children}
@@ -65,15 +61,9 @@ const BlogHtmlRenderer: React.FC<HtmlProcessorProps> = ({ html, imgMap = {} }) =
           const { width, height } = imgMap[src!];
           return <ImageAwesome src={src!} alt={alt!} width={width} height={height} halo={false} />;
         },
-        gpt: (props: any) => {
-          console.log(props);
-          return (
-            <div>
-              {props.title}
-              <br />
-              {props.children}
-            </div>
-          );
+        gpt: ({ node, children }: any) => {
+          const { properties } = node;
+          return <div className={`gpt`}>{children}</div>;
         },
       },
       ...production,
@@ -81,7 +71,12 @@ const BlogHtmlRenderer: React.FC<HtmlProcessorProps> = ({ html, imgMap = {} }) =
 
   const ContentComponents = processor.processSync(html).result;
 
-  return <>{ContentComponents}</>;
+  return (
+    <>
+      <pre className={`text-wrap`}>{html}</pre>
+      {ContentComponents}
+    </>
+  );
 };
 
 export default BlogHtmlRenderer;
