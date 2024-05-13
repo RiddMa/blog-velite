@@ -23,12 +23,15 @@ jobs:
       - name: Install Dependencies
         run: npm install
 
+      - name: Build Velite
+        run: velite build
+
       - name: Build Project
         run: npm run build
 
       - name: Generate Cache Key
         id: cache-key
-        run: echo "::set-output name=key::$(date +%s)"
+        run: echo "cache_key=$(date +%s)" >> $GITHUB_OUTPUT
 
       - name: Archive Artifacts
         uses: actions/upload-artifact@v4
@@ -55,7 +58,7 @@ jobs:
           username: ${{ secrets.SSH_USERNAME }}
           key: ${{ secrets.SSH_KEY }}
           port: ${{ secrets.SSH_PORT }}
-          source: ".next,public,package.json"
+          source: ".next,.velite,public,package.json"
           target: ${{ secrets.PROJECT_DIRECTORY }}
 
       - name: Restart Server
