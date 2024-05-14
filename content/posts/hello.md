@@ -1,13 +1,18 @@
 ---
-title: Hello, World!
+title: 'Hello, World!'
 cover: assets/xueyi.png
 slug: hello-world
 author: ridd
-created: 2024-4-10 11:35:55
-updated: 2024-4-10 11:35:55
-columns: [column2]
-categories: [category1]
-tags: [hello, world]
+created: 2024-04-10T11:35:55.000Z
+updated: 2024-04-10T11:35:55.000Z
+columns:
+  - column2
+categories:
+  - category1
+tags:
+  - hello
+  - world
+excerpt: ' 在鹅城，县长张麻子与恶霸黄四郎展开了一场智谋与勇气的较量。张麻子以剿匪之名，实则为了公平正义，与黄四郎斗智斗勇，揭露了黄四郎贩卖人口、倒卖烟土的罪行。在这场斗争中，张麻子失去了亲人，但他坚持不懈，最终揭露了黄四郎的真面目，赢得了百姓的支持。黄四郎虽然拥有财富和权力，但最终因为失去民心而败北。张麻子用智慧和勇气证明了，没有正义的支撑，任何财富和权力都是空洞的。故事以张麻子的胜利和黄四郎的失败告终，传达了正义必胜、邪恶必败的深刻道理。'
 ---
 
 # Hello, World!

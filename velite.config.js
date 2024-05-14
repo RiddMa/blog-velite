@@ -16,8 +16,9 @@ import rehypeSlug from "rehype-slug";
 import { listFiles, mergePostsTags, mergeTags, postProcessMarkdownImages } from "@/src/util/util";
 import path from "node:path";
 import { projectRootPath, staticBasePath } from "@/base-path";
-import { completeChat, generateSlugForTags } from "@/src/util/llm";
+import { generateExcerptForPost, generateSlugForTags } from "@/src/util/llm";
 import fs from "fs/promises";
+import matter from "gray-matter";
 
 const blogMarkdown = s.markdown({
   gfm: true,
@@ -67,18 +68,17 @@ const posts = defineCollection({
       content: blogMarkdown,
       raw: s.raw(),
       path: s.path(),
-      excerpt: s.excerpt(), // excerpt of markdown content
+      excerpt: s.string().default(""),
       toc: s.toc(), // table of contents of markdown content
       metadata: s.metadata(), // extract markdown reading-time, word-count, etc.
       author: s.string(),
       columns: s.array(s.string()),
       categories: s.array(s.string()),
-      tags: s.array(s.string()),
+      tags: s.array(s.string()).default([]),
     })
     .transform(async (data) => ({
       ...data,
       permalink: `/post/${data.slug}`,
-      // tags: data.tags.map((tag) => ({ name: tag, slug: encodeURIComponent(tag.toLowerCase()) })),
       images: {},
     })),
 });
@@ -166,7 +166,7 @@ const pages = defineCollection({
       created: s.isodate(), // input Date-like string, output ISO Date string.
       updated: s.isodate(),
       cover: s.image().optional(), // input image relative path, output image object with blurImage.
-      excerpt: s.excerpt(),
+      excerpt: s.excerpt().default(""),
       toc: s.toc(),
       metadata: s.metadata(), // extract markdown reading-time, word-count, etc.
       author: s.string(),
@@ -195,29 +195,50 @@ export default defineConfig({
     pages,
   },
   prepare: async (data) => {
-    const tagsFromPosts = mergePostsTags(data.posts);
-    const filteredTags = tagsFromPosts.filter((tag) => !(tag in data.tagDict));
-    if (filteredTags.length > 0) {
-      console.log("Filtered tags send to LLM for slug generation:", filteredTags);
-      const slugs = await generateSlugForTags(filteredTags);
-      for (let i = 0; i < filteredTags.length; i++) {
-        data.tagDict[filteredTags[i]] = slugs[i];
-        data.tagDict[slugs[i]] = filteredTags[i];
+    try {
+      const tagsFromPosts = mergePostsTags(data.posts);
+      const filteredTags = tagsFromPosts.filter((tag) => !(tag in data.tagDict));
+      if (filteredTags.length > 0) {
+        console.log("Filtered tags send to LLM for slug generation:", filteredTags);
+        const slugs = await generateSlugForTags(filteredTags);
+        console.log("LLM generated slugs:", slugs);
+        for (let i = 0; i < filteredTags.length; i++) {
+          data.tagDict[filteredTags[i]] = slugs[i];
+          data.tagDict[slugs[i]] = filteredTags[i];
+        }
+
+        await fs.writeFile(
+          path.join(projectRootPath, veliteRoot, tagDictName),
+          JSON.stringify(data.tagDict, null, 2),
+          "utf8",
+        ); // Write tagDict back to content/tagDict.json
+      } else {
+        console.log("No filtered tags found, skipping LLM slug generation.");
       }
 
-      await fs.writeFile(
-        path.join(projectRootPath, veliteRoot, tagDictName),
-        JSON.stringify(data.tagDict, null, 2),
-        "utf8",
-      ); // Write tagDict back to content/tagDict.json
-    } else {
-      console.log("No filtered tags found, skipping LLM slug generation.");
-    }
+      data.tags = mergeTags(
+        data.tags,
+        tagsFromPosts.map((tag) => ({ name: tag, slug: data.tagDict[tag] })),
+      );
 
-    data.tags = mergeTags(
-      data.tags,
-      tagsFromPosts.map((tag) => ({ name: tag, slug: data.tagDict[tag] })),
-    );
+      await Promise.all(
+        data.posts.map(async (post, index) => {
+          if (post.excerpt === "") {
+            console.log("Post sent to LLM for excerpt generation:", post.title);
+            data.posts[index].excerpt = await generateExcerptForPost(post.raw);
+
+            const filePath = path.join(projectRootPath, veliteRoot, `${post.path}.md`);
+            const fileContent = await fs.readFile(filePath, "utf8"); // Read the markdown file
+            const { content, data: frontmatter } = matter(fileContent); // Parse the frontmatter using gray-matter
+            frontmatter.excerpt = data.posts[index].excerpt; // Update the excerpt in the frontmatter
+            const updatedContent = matter.stringify(content, frontmatter); // Stringify the updated content
+            await fs.writeFile(filePath, updatedContent); // Write the updated content back to the file
+          }
+        }),
+      );
+    } catch (error) {
+      console.error("Error:", error);
+    }
   },
   complete: async (data) => {
     try {

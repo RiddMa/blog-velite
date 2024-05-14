@@ -3,13 +3,20 @@ title: 使用 GitHub Actions 部署 Next.js 项目到 VPS
 slug: deploy-next-js-to-vps-using-github-actions
 author: ridd
 cover: deploy-next-js-to-vps-using-github-actions.assets/image-20240514011402733.png
-excerpt: >
-  配置 GitHub Actions，实现仓库更新时，触发自动部署项目到 VPS。
-categories: [coding]
-columns: [blog]
-tags: [GitHub Actions, Next.js, VPS, Self-hosted, PM2, SSH]
-created: 2024-05-13T11:43:56+08:00
-updated: 2024-05-14T22:24:13+08:00
+categories:
+  - coding
+columns:
+  - blog
+tags:
+  - GitHub Actions
+  - Next.js
+  - VPS
+  - Self-hosted
+  - PM2
+  - SSH
+created: 2024-05-13T03:43:56.000Z
+updated: 2024-05-14T14:24:13.000Z
+excerpt: ' 本文详细介绍了如何使用GitHub Actions自动化部署Next.js项目到VPS服务器的流程。首先，配置SSH允许GitHub Actions通过SSH连接到服务器，包括为GitHub Actions创建系统用户、生成SSH密钥并添加到服务器，以及将私钥添加到GitHub仓库。接着，设置GitHub Actions Workflow，包括配置仓库Secrets和创建CI/CD流程。在Workflow中，定义了构建和部署两个主要工作，分别负责项目的构建和部署到服务器。构建工作包括检出代码、设置Node.js环境、安装依赖、构建项目和上传构建产物。部署工作则负责下载构建产物、清理服务器上的旧构建、上传新构建和重启服务器上的服务。此外，还介绍了如何在VPS服务器上预先安装依赖，并通过pm2管理应用。整个流程自动化程度高，提高了部署效率，减少了人工干预。'
 ---
 
 # 流程

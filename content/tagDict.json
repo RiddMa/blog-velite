@@ -37,5 +37,15 @@
   "hello": "hello",
   "world": "world",
   "javascript": "javascript",
-  "discovery": "discovery"
+  "discovery": "discovery",
+  "Markdown": "markdown",
+  "markdown": "Markdown",
+  "React": "react",
+  "react": "React",
+  "Unified": "unified",
+  "unified": "Unified",
+  "remark": "remark",
+  "rehype": "rehype",
+  "Custom Directives": "custom-directives",
+  "custom-directives": "Custom Directives"
 }

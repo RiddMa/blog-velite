@@ -18,6 +18,9 @@ interface PostListProps {
 export default function PostListPage({ params, searchParams }: PostListProps) {
   const displayedPosts = filterPosts(posts, searchParams);
 
+  // Sort the posts array by the updated date in descending order
+  displayedPosts.sort((a, b) => new Date(b.updated).getTime() - new Date(a.updated).getTime());
+
   return (
     <>
       <div className="flex flex-col gap-4">

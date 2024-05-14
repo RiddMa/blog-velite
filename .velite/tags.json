@@ -90,5 +90,29 @@
   {
     "name": "discovery",
     "slug": "discovery"
+  },
+  {
+    "name": "Markdown",
+    "slug": "markdown"
+  },
+  {
+    "name": "React",
+    "slug": "react"
+  },
+  {
+    "name": "Unified",
+    "slug": "unified"
+  },
+  {
+    "name": "remark",
+    "slug": "remark"
+  },
+  {
+    "name": "rehype",
+    "slug": "rehype"
+  },
+  {
+    "name": "Custom Directives",
+    "slug": "custom-directives"
   }
 ]
