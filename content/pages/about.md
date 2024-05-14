@@ -4,7 +4,7 @@ slug: about
 author: ridd
 excerpt: ""
 created: 2024-05-07T19:20:29+08:00
-updated: 2024-05-07T19:20:29+08:00
+updated: 2024-05-14T22:57:35+08:00
 ---
 
 > 大风起↘↗兮云——飞——扬—— 
@@ -23,8 +23,8 @@ updated: 2024-05-07T19:20:29+08:00
 
 - 前端：Next.js
 - 美化：Tailwind CSS + Framer Motion
-- 后端：无
-- 部署：VCS
+- CMS：基于 Git 和 Velite 的 Serverless 架构
+- 部署：GitHub Actions CI/CD + 搬瓦工 VPS（大阪）
 
 ## 曾经
 
@@ -47,14 +47,25 @@ updated: 2024-05-07T19:20:29+08:00
 - 动效优化
 - 自隐藏滚动条
 
-# 友情链接
-
-[Travis' Blog](https://blog.lxythan2lxy.cn/)
-
 # 时间线
 
-- 2024年5月7日：
+- 2024年5月14日：接入LLM
+- 2024年5月13日：搭建CI/CD管线
+- 2024年4月24日：增加小红书瀑布流文章布局
+- 2024年4月15日：完成页面基础布局
 - 2024年4月8日：Next.js+Velite 项目启动
 - 2023年5月17日：正式部署
 - 2023年5月13日：Cloudflare 部署测试
 - 2023年4月20日：Gatsby.js+Strapi 项目启动
+
+# 功能
+
+- LLM 总结文章、生成 slug
+- 小红书瀑布流布局
+- 深色/浅色模式
+- Giscus 评论系统
+- 专栏、分类、标签过滤文章
+
+# 友情链接
+
+[Travis' Blog](https://blog.lxythan2lxy.cn/)
