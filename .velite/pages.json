@@ -2,11 +2,11 @@
   {
     "title": "关于本站",
     "slug": "about",
-    "content": "<blockquote>\n<p>大风起↘↗兮云——飞——扬——<br>\n安得猛↘↗士↘兮走——四——方——<br>\n博客，必须要写！不写不行！</p>\n</blockquote>\n<h1 id=\"主要内容\"><a aria-hidden=\"true\" tabindex=\"-1\" href=\"#主要内容\"><span class=\"icon icon-link\"></span></a>主要内容</h1>\n<ul>\n<li>记录开发踩坑经历，作为备忘</li>\n<li>MAG(N) 版块记录 Movie、Anime、Game 的评价与感受</li>\n<li>记录日常胡思乱想</li>\n</ul>\n<h1 id=\"技术栈\"><a aria-hidden=\"true\" tabindex=\"-1\" href=\"#技术栈\"><span class=\"icon icon-link\"></span></a>技术栈</h1>\n<h2 id=\"现在重构n次决不再改\"><a aria-hidden=\"true\" tabindex=\"-1\" href=\"#现在重构n次决不再改\"><span class=\"icon icon-link\"></span></a>现在（重构N次，决不再改！）</h2>\n<ul>\n<li>前端：Next.js</li>\n<li>美化：Tailwind CSS + Framer Motion</li>\n<li>后端：无</li>\n<li>部署：VCS</li>\n</ul>\n<h2 id=\"曾经\"><a aria-hidden=\"true\" tabindex=\"-1\" href=\"#曾经\"><span class=\"icon icon-link\"></span></a>曾经</h2>\n<ul>\n<li>CMS 后端：Strapi</li>\n<li>React 前端：Gatsby</li>\n<li>美化：Tailwind CSS + Framer Motion</li>\n<li>部署：Cloudflare Pages + Cloudflare Workers</li>\n</ul>\n<h1 id=\"待完善功能\"><a aria-hidden=\"true\" tabindex=\"-1\" href=\"#待完善功能\"><span class=\"icon icon-link\"></span></a>待完善功能</h1>\n<h2 id=\"特性\"><a aria-hidden=\"true\" tabindex=\"-1\" href=\"#特性\"><span class=\"icon icon-link\"></span></a>特性</h2>\n<ul>\n<li>画廊模块</li>\n<li>影评模块</li>\n<li>文章目录树跟随滚动</li>\n<li>“回到顶部”按钮</li>\n</ul>\n<h2 id=\"外观\"><a aria-hidden=\"true\" tabindex=\"-1\" href=\"#外观\"><span class=\"icon icon-link\"></span></a>外观</h2>\n<ul>\n<li>动效优化</li>\n<li>自隐藏滚动条</li>\n</ul>\n<h1 id=\"友情链接\"><a aria-hidden=\"true\" tabindex=\"-1\" href=\"#友情链接\"><span class=\"icon icon-link\"></span></a>友情链接</h1>\n<p><a href=\"https://blog.lxythan2lxy.cn/\">Travis' Blog</a></p>\n<h1 id=\"时间线\"><a aria-hidden=\"true\" tabindex=\"-1\" href=\"#时间线\"><span class=\"icon icon-link\"></span></a>时间线</h1>\n<ul>\n<li>2024年5月7日：</li>\n<li>2024年4月8日：Next.js+Velite 项目启动</li>\n<li>2023年5月17日：正式部署</li>\n<li>2023年5月13日：Cloudflare 部署测试</li>\n<li>2023年4月20日：Gatsby.js+Strapi 项目启动</li>\n</ul>",
-    "raw": "> 大风起↘↗兮云——飞——扬—— \r\n> 安得猛↘↗士↘兮走——四——方—— \r\n> 博客，必须要写！不写不行！\r\n\r\n# 主要内容\r\n\r\n- 记录开发踩坑经历，作为备忘 \r\n- MAG(N) 版块记录 Movie、Anime、Game 的评价与感受 \r\n- 记录日常胡思乱想\r\n\r\n# 技术栈\r\n\r\n## 现在（重构N次，决不再改！）\r\n\r\n- 前端：Next.js\r\n- 美化：Tailwind CSS + Framer Motion\r\n- 后端：无\r\n- 部署：VCS\r\n\r\n## 曾经\r\n\r\n- CMS 后端：Strapi\r\n- React 前端：Gatsby\r\n- 美化：Tailwind CSS + Framer Motion\r\n- 部署：Cloudflare Pages + Cloudflare Workers\r\n\r\n# 待完善功能\r\n\r\n## 特性\r\n\r\n- 画廊模块\r\n- 影评模块\r\n- 文章目录树跟随滚动\r\n- “回到顶部”按钮\r\n\r\n## 外观\r\n\r\n- 动效优化\r\n- 自隐藏滚动条\r\n\r\n# 友情链接\r\n\r\n[Travis' Blog](https://blog.lxythan2lxy.cn/)\r\n\r\n# 时间线\r\n\r\n- 2024年5月7日：\r\n- 2024年4月8日：Next.js+Velite 项目启动\r\n- 2023年5月17日：正式部署\r\n- 2023年5月13日：Cloudflare 部署测试\r\n- 2023年4月20日：Gatsby.js+Strapi 项目启动",
+    "content": "<blockquote>\n<p>大风起↘↗兮云——飞——扬——<br>\n安得猛↘↗士↘兮走——四——方——<br>\n博客，必须要写！不写不行！</p>\n</blockquote>\n<h1 id=\"主要内容\"><a aria-hidden=\"true\" tabindex=\"-1\" href=\"#主要内容\"><span class=\"icon icon-link\"></span></a>主要内容</h1>\n<ul>\n<li>记录开发踩坑经历，作为备忘</li>\n<li>MAG(N) 版块记录 Movie、Anime、Game 的评价与感受</li>\n<li>记录日常胡思乱想</li>\n</ul>\n<h1 id=\"技术栈\"><a aria-hidden=\"true\" tabindex=\"-1\" href=\"#技术栈\"><span class=\"icon icon-link\"></span></a>技术栈</h1>\n<h2 id=\"现在重构n次决不再改\"><a aria-hidden=\"true\" tabindex=\"-1\" href=\"#现在重构n次决不再改\"><span class=\"icon icon-link\"></span></a>现在（重构N次，决不再改！）</h2>\n<ul>\n<li>前端：Next.js</li>\n<li>美化：Tailwind CSS + Framer Motion</li>\n<li>CMS：基于 Git 和 Velite 的 Serverless 架构</li>\n<li>部署：GitHub Actions CI/CD + 搬瓦工 VPS（大阪）</li>\n</ul>\n<h2 id=\"曾经\"><a aria-hidden=\"true\" tabindex=\"-1\" href=\"#曾经\"><span class=\"icon icon-link\"></span></a>曾经</h2>\n<ul>\n<li>CMS 后端：Strapi</li>\n<li>React 前端：Gatsby</li>\n<li>美化：Tailwind CSS + Framer Motion</li>\n<li>部署：Cloudflare Pages + Cloudflare Workers</li>\n</ul>\n<h1 id=\"待完善功能\"><a aria-hidden=\"true\" tabindex=\"-1\" href=\"#待完善功能\"><span class=\"icon icon-link\"></span></a>待完善功能</h1>\n<h2 id=\"特性\"><a aria-hidden=\"true\" tabindex=\"-1\" href=\"#特性\"><span class=\"icon icon-link\"></span></a>特性</h2>\n<ul>\n<li>画廊模块</li>\n<li>影评模块</li>\n<li>文章目录树跟随滚动</li>\n<li>“回到顶部”按钮</li>\n</ul>\n<h2 id=\"外观\"><a aria-hidden=\"true\" tabindex=\"-1\" href=\"#外观\"><span class=\"icon icon-link\"></span></a>外观</h2>\n<ul>\n<li>动效优化</li>\n<li>自隐藏滚动条</li>\n</ul>\n<h1 id=\"时间线\"><a aria-hidden=\"true\" tabindex=\"-1\" href=\"#时间线\"><span class=\"icon icon-link\"></span></a>时间线</h1>\n<ul>\n<li>2024年5月14日：接入LLM</li>\n<li>2024年5月13日：搭建CI/CD管线</li>\n<li>2024年4月24日：增加小红书瀑布流文章布局</li>\n<li>2024年4月15日：完成页面基础布局</li>\n<li>2024年4月8日：Next.js+Velite 项目启动</li>\n<li>2023年5月17日：正式部署</li>\n<li>2023年5月13日：Cloudflare 部署测试</li>\n<li>2023年4月20日：Gatsby.js+Strapi 项目启动</li>\n</ul>\n<h1 id=\"功能\"><a aria-hidden=\"true\" tabindex=\"-1\" href=\"#功能\"><span class=\"icon icon-link\"></span></a>功能</h1>\n<ul>\n<li>LLM 总结文章、生成 slug</li>\n<li>小红书瀑布流布局</li>\n<li>深色/浅色模式</li>\n<li>Giscus 评论系统</li>\n<li>专栏、分类、标签过滤文章</li>\n</ul>\n<h1 id=\"友情链接\"><a aria-hidden=\"true\" tabindex=\"-1\" href=\"#友情链接\"><span class=\"icon icon-link\"></span></a>友情链接</h1>\n<p><a href=\"https://blog.lxythan2lxy.cn/\">Travis' Blog</a></p>",
+    "raw": "> 大风起↘↗兮云——飞——扬—— \r\n> 安得猛↘↗士↘兮走——四——方—— \r\n> 博客，必须要写！不写不行！\r\n\r\n# 主要内容\r\n\r\n- 记录开发踩坑经历，作为备忘 \r\n- MAG(N) 版块记录 Movie、Anime、Game 的评价与感受 \r\n- 记录日常胡思乱想\r\n\r\n# 技术栈\r\n\r\n## 现在（重构N次，决不再改！）\r\n\r\n- 前端：Next.js\r\n- 美化：Tailwind CSS + Framer Motion\r\n- CMS：基于 Git 和 Velite 的 Serverless 架构\r\n- 部署：GitHub Actions CI/CD + 搬瓦工 VPS（大阪）\r\n\r\n## 曾经\r\n\r\n- CMS 后端：Strapi\r\n- React 前端：Gatsby\r\n- 美化：Tailwind CSS + Framer Motion\r\n- 部署：Cloudflare Pages + Cloudflare Workers\r\n\r\n# 待完善功能\r\n\r\n## 特性\r\n\r\n- 画廊模块\r\n- 影评模块\r\n- 文章目录树跟随滚动\r\n- “回到顶部”按钮\r\n\r\n## 外观\r\n\r\n- 动效优化\r\n- 自隐藏滚动条\r\n\r\n# 时间线\r\n\r\n- 2024年5月14日：接入LLM\r\n- 2024年5月13日：搭建CI/CD管线\r\n- 2024年4月24日：增加小红书瀑布流文章布局\r\n- 2024年4月15日：完成页面基础布局\r\n- 2024年4月8日：Next.js+Velite 项目启动\r\n- 2023年5月17日：正式部署\r\n- 2023年5月13日：Cloudflare 部署测试\r\n- 2023年4月20日：Gatsby.js+Strapi 项目启动\r\n\r\n# 功能\r\n\r\n- LLM 总结文章、生成 slug\r\n- 小红书瀑布流布局\r\n- 深色/浅色模式\r\n- Giscus 评论系统\r\n- 专栏、分类、标签过滤文章\r\n\r\n# 友情链接\r\n\r\n[Travis' Blog](https://blog.lxythan2lxy.cn/)",
     "path": "pages/about",
     "created": "2024-05-07T11:20:29.000Z",
-    "updated": "2024-05-07T11:20:29.000Z",
+    "updated": "2024-05-14T14:57:35.000Z",
     "excerpt": "",
     "toc": [
       {
@@ -47,19 +47,24 @@
         ]
       },
       {
-        "title": "友情链接",
-        "url": "#友情链接",
+        "title": "时间线",
+        "url": "#时间线",
         "items": []
       },
       {
-        "title": "时间线",
-        "url": "#时间线",
+        "title": "功能",
+        "url": "#功能",
+        "items": []
+      },
+      {
+        "title": "友情链接",
+        "url": "#友情链接",
         "items": []
       }
     ],
     "metadata": {
       "readingTime": 1,
-      "wordCount": 129.2
+      "wordCount": 187.44000000000003
     },
     "author": "ridd",
     "permalink": "/about",

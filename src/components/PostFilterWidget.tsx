@@ -49,7 +49,7 @@ const PostFilterWidget: React.FC<{ useColumn?: string; useCategory?: string; use
 
   useEffect(() => {
     debouncedFilter();
-  }, [selectedColumns, selectedCategories, selectedTags]);
+  }, [selectedColumns, selectedCategories, selectedTags, debouncedFilter]);
 
   return (
     <aside className={`flex flex-col gap-4 px-0`}>
