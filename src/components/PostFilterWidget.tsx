@@ -1,11 +1,12 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useParams, usePathname, useRouter, useSearchParams } from "next/navigation";
 import { Selection } from "@nextui-org/react";
 import { Select, SelectItem } from "@nextui-org/select";
 import { categories, columns, tags } from "@/.velite";
 import { Button } from "@nextui-org/button";
+import { debounce } from "lodash";
 
 const PostFilterWidget: React.FC<{ useColumn?: string; useCategory?: string; useTag?: string }> = ({
   useColumn,
@@ -28,15 +29,27 @@ const PostFilterWidget: React.FC<{ useColumn?: string; useCategory?: string; use
 
   const onFilter = () => {
     const params = new URLSearchParams();
-    params.set("column", Array.from(selectedColumns).join(","));
-    params.set("category", Array.from(selectedCategories).join(","));
-    params.set("tag", Array.from(selectedTags).join(","));
+
+    if (selectedColumns !== "all" && selectedColumns.size > 0) {
+      params.set("column", Array.from(selectedColumns).join(","));
+    }
+    if (selectedCategories !== "all" && selectedCategories.size > 0) {
+      params.set("category", Array.from(selectedCategories).join(","));
+    }
+    if (selectedTags !== "all" && selectedTags.size > 0) {
+      params.set("tag", Array.from(selectedTags).join(","));
+    }
 
     const search = params.toString();
-    const query = search ? `?${search}` : ""; // or const query = `${'?'.repeat(search.length && 1)}${search}`;
-
+    const query = search ? `?${search}` : "";
     router.push(`${pathname}${query}`);
   };
+
+  const debouncedFilter = debounce(onFilter, 300); // Adjust the debounce delay as needed
+
+  useEffect(() => {
+    debouncedFilter();
+  }, [selectedColumns, selectedCategories, selectedTags]);
 
   return (
     <aside className={`flex flex-col gap-4 px-0`}>
@@ -84,9 +97,9 @@ const PostFilterWidget: React.FC<{ useColumn?: string; useCategory?: string; use
           </SelectItem>
         ))}
       </Select>
-      <Button onPress={onFilter} variant={"flat"}>
-        应用
-      </Button>
+      {/*<Button onPress={onFilter} variant={"flat"}>*/}
+      {/*  应用*/}
+      {/*</Button>*/}
     </aside>
   );
 };
