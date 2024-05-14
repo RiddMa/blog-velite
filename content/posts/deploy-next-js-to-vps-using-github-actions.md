@@ -9,7 +9,7 @@ categories: [coding]
 columns: [blog]
 tags: [GitHub Actions, Next.js, VPS, Self-hosted, PM2, SSH]
 created: 2024-05-13T11:43:56+08:00
-updated: 2024-05-14T01:20:00+08:00
+updated: 2024-05-14T22:24:13+08:00
 ---
 
 # 流程
@@ -233,4 +233,3 @@ yarn global add pm2
 配置文件使用 `yarn start` 即`next start`，默认运行在 3000 端口：
 
 ![image-20240514011631894](deploy-next-js-to-vps-using-github-actions.assets/image-20240514011631894.png)
-

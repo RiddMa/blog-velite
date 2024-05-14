@@ -16,6 +16,8 @@ import rehypeSlug from "rehype-slug";
 import { listFiles, mergePostsTags, mergeTags, postProcessMarkdownImages } from "@/src/util/util";
 import path from "node:path";
 import { projectRootPath, staticBasePath } from "@/base-path";
+import { completeChat, generateSlugForTags } from "@/src/util/llm";
+import fs from "fs/promises";
 
 const blogMarkdown = s.markdown({
   gfm: true,
@@ -76,7 +78,7 @@ const posts = defineCollection({
     .transform(async (data) => ({
       ...data,
       permalink: `/post/${data.slug}`,
-      tags: data.tags.map((tag) => ({ name: tag, slug: encodeURIComponent(tag.toLowerCase()) })),
+      // tags: data.tags.map((tag) => ({ name: tag, slug: encodeURIComponent(tag.toLowerCase()) })),
       images: {},
     })),
 });
@@ -132,6 +134,14 @@ const tags = defineCollection({
   }),
 });
 
+const tagDictName = "tagDict.json";
+const tagDict = defineCollection({
+  name: "TagDict",
+  pattern: tagDictName,
+  single: true,
+  schema: s.record(s.string()),
+});
+
 const pages = defineCollection({
   name: "Page",
   pattern: "pages/**/*.md",
@@ -181,12 +191,33 @@ export default defineConfig({
     columns,
     categories,
     tags,
+    tagDict,
     pages,
   },
   prepare: async (data) => {
-    const tags = mergeTags(data.tags, mergePostsTags(data.posts));
-    data.tags = tags;
-    console.log(tags);
+    const tagsFromPosts = mergePostsTags(data.posts);
+    const filteredTags = tagsFromPosts.filter((tag) => !(tag in data.tagDict));
+    if (filteredTags.length > 0) {
+      console.log("Filtered tags send to LLM for slug generation:", filteredTags);
+      const slugs = await generateSlugForTags(filteredTags);
+      for (let i = 0; i < filteredTags.length; i++) {
+        data.tagDict[filteredTags[i]] = slugs[i];
+        data.tagDict[slugs[i]] = filteredTags[i];
+      }
+
+      await fs.writeFile(
+        path.join(projectRootPath, veliteRoot, tagDictName),
+        JSON.stringify(data.tagDict, null, 2),
+        "utf8",
+      ); // Write tagDict back to content/tagDict.json
+    } else {
+      console.log("No filtered tags found, skipping LLM slug generation.");
+    }
+
+    data.tags = mergeTags(
+      data.tags,
+      tagsFromPosts.map((tag) => ({ name: tag, slug: data.tagDict[tag] })),
+    );
   },
   complete: async (data) => {
     try {

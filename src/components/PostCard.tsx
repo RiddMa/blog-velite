@@ -81,7 +81,7 @@ export const PostCard: React.FC<IPostCardProps> = ({ item: post, imgWidth }) => 
           <div className="flex flex-row m-0 opacity-80 w-full relative">
             <div className="my-0 p-0 text-body text-color-caption line-clamp-1 overflow-ellipsis break-after-all">
               {tags.map((tag, index) => (
-                <span key={index}>{tag.name} &nbsp;</span>
+                <span key={index}>{tag} &nbsp;</span>
               ))}
             </div>
             <div className="grow"></div>

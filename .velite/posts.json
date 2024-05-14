@@ -3,7 +3,7 @@
     "title": "BUPT 校园网 OpenWrt 配置 IPv6",
     "slug": "bupt-cernet-openwrt-ipv6-configuration",
     "created": "2023-05-19T04:26:00.000Z",
-    "updated": "2023-05-19T15:51:00.000Z",
+    "updated": "2024-05-14T14:24:13.000Z",
     "draft": false,
     "featured": false,
     "cover": {
@@ -79,42 +79,15 @@
       "tech"
     ],
     "tags": [
-      {
-        "name": "北邮",
-        "slug": "%E5%8C%97%E9%82%AE"
-      },
-      {
-        "name": "校园网",
-        "slug": "%E6%A0%A1%E5%9B%AD%E7%BD%91"
-      },
-      {
-        "name": "CERNERT",
-        "slug": "cernert"
-      },
-      {
-        "name": "OpenWrt",
-        "slug": "openwrt"
-      },
-      {
-        "name": "MosDNS",
-        "slug": "mosdns"
-      },
-      {
-        "name": "IPv6",
-        "slug": "ipv6"
-      },
-      {
-        "name": "NAT6",
-        "slug": "nat6"
-      },
-      {
-        "name": "AdGuard Home",
-        "slug": "adguard%20home"
-      },
-      {
-        "name": "OpenClash",
-        "slug": "openclash"
-      }
+      "北邮",
+      "校园网",
+      "CERNET",
+      "OpenWrt",
+      "MosDNS",
+      "IPv6",
+      "NAT6",
+      "AdGuard Home",
+      "OpenClash"
     ],
     "permalink": "/post/bupt-cernet-openwrt-ipv6-configuration",
     "images": {
@@ -192,14 +165,8 @@
       "category4"
     ],
     "tags": [
-      {
-        "name": "data science",
-        "slug": "data%20science"
-      },
-      {
-        "name": "explore",
-        "slug": "explore"
-      }
+      "data science",
+      "explore"
     ],
     "permalink": "/post/explore-data-science",
     "images": {}
@@ -208,7 +175,7 @@
     "title": "使用 GitHub Actions 部署 Next.js 项目到 VPS",
     "slug": "deploy-next-js-to-vps-using-github-actions",
     "created": "2024-05-13T03:43:56.000Z",
-    "updated": "2024-05-13T17:20:00.000Z",
+    "updated": "2024-05-14T14:24:13.000Z",
     "draft": false,
     "featured": false,
     "cover": {
@@ -321,30 +288,12 @@
       "coding"
     ],
     "tags": [
-      {
-        "name": "GitHub Actions",
-        "slug": "github%20actions"
-      },
-      {
-        "name": "Next.js",
-        "slug": "next.js"
-      },
-      {
-        "name": "VPS",
-        "slug": "vps"
-      },
-      {
-        "name": "Self-hosted",
-        "slug": "self-hosted"
-      },
-      {
-        "name": "PM2",
-        "slug": "pm2"
-      },
-      {
-        "name": "SSH",
-        "slug": "ssh"
-      }
+      "GitHub Actions",
+      "Next.js",
+      "VPS",
+      "Self-hosted",
+      "PM2",
+      "SSH"
     ],
     "permalink": "/post/deploy-next-js-to-vps-using-github-actions",
     "images": {
@@ -406,14 +355,8 @@
       "category2"
     ],
     "tags": [
-      {
-        "name": "python",
-        "slug": "python"
-      },
-      {
-        "name": "greetings",
-        "slug": "greetings"
-      }
+      "python",
+      "greetings"
     ],
     "permalink": "/post/greetings-from-python",
     "images": {}
@@ -479,14 +422,8 @@
       "category1"
     ],
     "tags": [
-      {
-        "name": "hello",
-        "slug": "hello"
-      },
-      {
-        "name": "world",
-        "slug": "world"
-      }
+      "hello",
+      "world"
     ],
     "permalink": "/post/hello-world",
     "images": {}
@@ -523,14 +460,8 @@
       "category3"
     ],
     "tags": [
-      {
-        "name": "javascript",
-        "slug": "javascript"
-      },
-      {
-        "name": "discovery",
-        "slug": "discovery"
-      }
+      "javascript",
+      "discovery"
     ],
     "permalink": "/post/discover-javascript",
     "images": {}

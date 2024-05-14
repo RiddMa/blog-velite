@@ -5,15 +5,15 @@
   },
   {
     "name": "北邮",
-    "slug": "%E5%8C%97%E9%82%AE"
+    "slug": "bupt"
   },
   {
     "name": "校园网",
-    "slug": "%E6%A0%A1%E5%9B%AD%E7%BD%91"
+    "slug": "campus-network"
   },
   {
-    "name": "CERNERT",
-    "slug": "cernert"
+    "name": "CERNET",
+    "slug": "cernet"
   },
   {
     "name": "OpenWrt",
@@ -33,7 +33,7 @@
   },
   {
     "name": "AdGuard Home",
-    "slug": "adguard%20home"
+    "slug": "adguard-home"
   },
   {
     "name": "OpenClash",
@@ -41,7 +41,7 @@
   },
   {
     "name": "data science",
-    "slug": "data%20science"
+    "slug": "data-science"
   },
   {
     "name": "explore",
@@ -49,11 +49,11 @@
   },
   {
     "name": "GitHub Actions",
-    "slug": "github%20actions"
+    "slug": "github-actions"
   },
   {
     "name": "Next.js",
-    "slug": "next.js"
+    "slug": "next-js"
   },
   {
     "name": "VPS",

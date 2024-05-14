@@ -6,7 +6,7 @@ import path from "node:path";
 import { staticBasePath } from "@/base-path";
 import fs from "fs/promises";
 import sharp from "sharp";
-import { Post, Tag } from "@/.velite";
+import { Post, Tag, tagDict } from "@/.velite";
 import remarkParse from "remark-parse";
 
 export function isDefined<T>(value: T | undefined): value is T {
@@ -148,12 +148,12 @@ export function filterPosts(
   return posts.filter((post) => {
     const columnMatch = columns.length > 0 ? columns.some((col) => post.columns.includes(col)) : true;
     const categoryMatch = categories.length > 0 ? categories.some((cat) => post.categories.includes(cat)) : true;
-    const tagMatch = tags.length > 0 ? tags.some((tag) => post.tags.map((t) => t.slug).includes(tag)) : true;
+    const tagMatch = tags.length > 0 ? tags.some((tag) => post.tags.map((t) => tagDict[t])?.includes(tag)) : true;
     return columnMatch && categoryMatch && tagMatch;
   });
 }
 
-export function mergePostsTags(objects: Post[]): Tag[] {
+export function mergePostsTags(objects: Post[]): string[] {
   const tagsArrays = objects.map((obj) => obj.tags);
   return mergeTags(...tagsArrays);
 }

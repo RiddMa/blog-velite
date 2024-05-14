@@ -13,7 +13,7 @@ const PostDetailPanel: React.FC<{
 
   const categories = post.categories.map((category) => getCategoryBySlug(category)).filter(isDefined);
   const columns = post.columns.map((column) => getColumnBySlug(column)).filter(isDefined);
-  const tags = post.tags.map((tag) => getTagBySlug(tag.slug)).filter(isDefined);
+  const tags = post.tags.map((tag) => getTagBySlug(tag)).filter(isDefined);
 
   return (
     <>

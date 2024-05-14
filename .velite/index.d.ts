@@ -22,5 +22,8 @@ export declare const categories: Category[]
 export type Tag = Collections['tags']['schema']['_output']
 export declare const tags: Tag[]
 
+export type TagDict = Collections['tagDict']['schema']['_output']
+export declare const tagDict: TagDict
+
 export type Page = Collections['pages']['schema']['_output']
 export declare const pages: Page[]

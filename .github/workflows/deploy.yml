@@ -36,6 +36,7 @@ jobs:
           name: built-app
           path: |
             .next
+            .velite
             public
             package.json
 
@@ -66,7 +67,7 @@ jobs:
           username: ${{ secrets.SSH_USERNAME }}
           key: ${{ secrets.SSH_KEY }}
           port: ${{ secrets.SSH_PORT }}
-          source: ".next,public,package.json"
+          source: ".next,.velite,public,package.json"
           target: ${{ secrets.PROJECT_DIRECTORY }}
 
       - name: Restart Server
