@@ -82,5 +82,6 @@ jobs:
             export NVM_DIR=~/.nvm
             source ~/.nvm/nvm.sh
             NODE_OPTIONS="--max-old-space-size=1536" yarn install
+            NODE_OPTIONS="--max-old-space-size=1536" yarn add sharp --ignore-engines
             pm2 list | grep "blog-velite" && pm2 restart "blog-velite" || pm2 start yarn --name "blog-velite" -- start
             pm2 save
