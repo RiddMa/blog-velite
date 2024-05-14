@@ -13,8 +13,7 @@ import rehypeStringify from "rehype-stringify";
 import rehypeKatex from "rehype-katex";
 import rehypeAutolinkHeadings from "rehype-autolink-headings";
 import rehypeSlug from "rehype-slug";
-import rehypePresetMinify from "rehype-preset-minify";
-import { extractImg, listFiles, postProcessMarkdownImages } from "@/src/util/util";
+import { listFiles, mergePostsTags, mergeTags, postProcessMarkdownImages } from "@/src/util/util";
 import path from "node:path";
 import { projectRootPath, staticBasePath } from "@/base-path";
 
@@ -77,6 +76,7 @@ const posts = defineCollection({
     .transform(async (data) => ({
       ...data,
       permalink: `/post/${data.slug}`,
+      tags: data.tags.map((tag) => ({ name: tag, slug: encodeURIComponent(tag.toLowerCase()) })),
       images: {},
     })),
 });
@@ -126,13 +126,10 @@ const categories = defineCollection({
 const tags = defineCollection({
   name: "Tag",
   pattern: ["tags/**/*.yaml", "tags/**/*.yml"],
-  schema: s
-    .object({
-      name: s.string(),
-      slug: s.slug("tags"),
-      description: s.string(),
-    })
-    .transform((data) => ({ ...data, permalink: `/tag/${data.slug}` })),
+  schema: s.object({
+    name: s.string(),
+    slug: s.slug("tags"),
+  }),
 });
 
 const pages = defineCollection({
@@ -187,12 +184,9 @@ export default defineConfig({
     pages,
   },
   prepare: async (data) => {
-    // try {
-    //   const files = await listFiles(path.join(staticBasePath, "static"));
-    //   console.log("Files:", files);
-    // } catch (error) {
-    //   console.error("Error:", error);
-    // }
+    const tags = mergeTags(data.tags, mergePostsTags(data.posts));
+    data.tags = tags;
+    console.log(tags);
   },
   complete: async (data) => {
     try {

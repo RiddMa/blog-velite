@@ -79,15 +79,42 @@
       "tech"
     ],
     "tags": [
-      "北邮",
-      "校园网",
-      "CERNERT",
-      "OpenWrt",
-      "MosDNS",
-      "IPv6",
-      "NAT6",
-      "AdGuard Home",
-      "OpenClash"
+      {
+        "name": "北邮",
+        "slug": "%E5%8C%97%E9%82%AE"
+      },
+      {
+        "name": "校园网",
+        "slug": "%E6%A0%A1%E5%9B%AD%E7%BD%91"
+      },
+      {
+        "name": "CERNERT",
+        "slug": "cernert"
+      },
+      {
+        "name": "OpenWrt",
+        "slug": "openwrt"
+      },
+      {
+        "name": "MosDNS",
+        "slug": "mosdns"
+      },
+      {
+        "name": "IPv6",
+        "slug": "ipv6"
+      },
+      {
+        "name": "NAT6",
+        "slug": "nat6"
+      },
+      {
+        "name": "AdGuard Home",
+        "slug": "adguard%20home"
+      },
+      {
+        "name": "OpenClash",
+        "slug": "openclash"
+      }
     ],
     "permalink": "/post/bupt-cernet-openwrt-ipv6-configuration",
     "images": {
@@ -165,8 +192,14 @@
       "category4"
     ],
     "tags": [
-      "data science",
-      "explore"
+      {
+        "name": "data science",
+        "slug": "data%20science"
+      },
+      {
+        "name": "explore",
+        "slug": "explore"
+      }
     ],
     "permalink": "/post/explore-data-science",
     "images": {}
@@ -288,12 +321,30 @@
       "coding"
     ],
     "tags": [
-      "GitHub Actions",
-      "Next.js",
-      "VPS",
-      "Self-hosted",
-      "PM2",
-      "SSH"
+      {
+        "name": "GitHub Actions",
+        "slug": "github%20actions"
+      },
+      {
+        "name": "Next.js",
+        "slug": "next.js"
+      },
+      {
+        "name": "VPS",
+        "slug": "vps"
+      },
+      {
+        "name": "Self-hosted",
+        "slug": "self-hosted"
+      },
+      {
+        "name": "PM2",
+        "slug": "pm2"
+      },
+      {
+        "name": "SSH",
+        "slug": "ssh"
+      }
     ],
     "permalink": "/post/deploy-next-js-to-vps-using-github-actions",
     "images": {
@@ -355,8 +406,14 @@
       "category2"
     ],
     "tags": [
-      "python",
-      "greetings"
+      {
+        "name": "python",
+        "slug": "python"
+      },
+      {
+        "name": "greetings",
+        "slug": "greetings"
+      }
     ],
     "permalink": "/post/greetings-from-python",
     "images": {}
@@ -422,8 +479,14 @@
       "category1"
     ],
     "tags": [
-      "hello",
-      "world"
+      {
+        "name": "hello",
+        "slug": "hello"
+      },
+      {
+        "name": "world",
+        "slug": "world"
+      }
     ],
     "permalink": "/post/hello-world",
     "images": {}
@@ -460,8 +523,14 @@
       "category3"
     ],
     "tags": [
-      "javascript",
-      "discovery"
+      {
+        "name": "javascript",
+        "slug": "javascript"
+      },
+      {
+        "name": "discovery",
+        "slug": "discovery"
+      }
     ],
     "permalink": "/post/discover-javascript",
     "images": {}

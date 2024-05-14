@@ -6,7 +6,7 @@ import path from "node:path";
 import { staticBasePath } from "@/base-path";
 import fs from "fs/promises";
 import sharp from "sharp";
-import { Post } from "@/.velite";
+import { Post, Tag } from "@/.velite";
 import remarkParse from "remark-parse";
 
 export function isDefined<T>(value: T | undefined): value is T {
@@ -148,7 +148,42 @@ export function filterPosts(
   return posts.filter((post) => {
     const columnMatch = columns.length > 0 ? columns.some((col) => post.columns.includes(col)) : true;
     const categoryMatch = categories.length > 0 ? categories.some((cat) => post.categories.includes(cat)) : true;
-    const tagMatch = tags.length > 0 ? tags.some((tag) => post.tags.includes(tag)) : true;
+    const tagMatch = tags.length > 0 ? tags.some((tag) => post.tags.map((t) => t.slug).includes(tag)) : true;
     return columnMatch && categoryMatch && tagMatch;
   });
+}
+
+export function mergePostsTags(objects: Post[]): Tag[] {
+  const tagsArrays = objects.map((obj) => obj.tags);
+  return mergeTags(...tagsArrays);
+}
+
+// 定义一个泛型函数，可以处理 string[][] 和 Tag[][]
+export function mergeTags<T>(...arrays: T[][]): T[] {
+  if (arrays.length === 0) return [];
+
+  const firstElement = arrays[0][0];
+
+  // 检查是否为 Tag 类型
+  if (!!firstElement && typeof firstElement === "object" && "slug" in firstElement) {
+    const tagMap = new Map<string, T>();
+    arrays.forEach((tags) => {
+      tags.forEach((tag) => {
+        const tagObj = tag as unknown as Tag;
+        if (!tagMap.has(tagObj.slug)) {
+          tagMap.set(tagObj.slug, tag);
+        }
+      });
+    });
+    return Array.from(tagMap.values());
+  } else {
+    // 处理 string 类型
+    const tagSet = new Set<string>();
+    arrays.forEach((tags) => {
+      tags.forEach((tag) => {
+        tagSet.add(tag as unknown as string);
+      });
+    });
+    return Array.from(tagSet) as T[];
+  }
 }
