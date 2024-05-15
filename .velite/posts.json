@@ -1,5 +1,96 @@
 [
   {
+    "title": "在 Windows 浏览器中实现 macOS 风格的滚动条",
+    "slug": "macos-like-scrollbar-in-windows-browser",
+    "created": "2024-05-15T22:58:52.000Z",
+    "updated": "2024-05-15T22:58:52.000Z",
+    "draft": false,
+    "featured": false,
+    "content": "<p><a href=\"https://www.zhangxinxu.com/wordpress/2022/01/css-scrollbar-gutter/\">https://www.zhangxinxu.com/wordpress/2022/01/css-scrollbar-gutter/</a></p>\n<p><a href=\"https://www.zhangxinxu.com/wordpress/2015/01/css-page-scrollbar-toggle-center-no-jumping/\">https://www.zhangxinxu.com/wordpress/2015/01/css-page-scrollbar-toggle-center-no-jumping/</a></p>\n<p><a href=\"https://developer.mozilla.org/en-US/docs/Web/CSS/scrollbar-gutter\">https://developer.mozilla.org/en-US/docs/Web/CSS/scrollbar-gutter</a></p>\n<p><a href=\"https://gist.github.com/spemer/a0e218bbb45433bd611e68446523a00b\">https://gist.github.com/spemer/a0e218bbb45433bd611e68446523a00b</a></p>",
+    "raw": "https://www.zhangxinxu.com/wordpress/2022/01/css-scrollbar-gutter/\n\nhttps://www.zhangxinxu.com/wordpress/2015/01/css-page-scrollbar-toggle-center-no-jumping/\n\nhttps://developer.mozilla.org/en-US/docs/Web/CSS/scrollbar-gutter\n\nhttps://gist.github.com/spemer/a0e218bbb45433bd611e68446523a00b",
+    "path": "posts/macos-like-scrollbar",
+    "excerpt": "<p>本文深入探讨了CSS中滚动条槽（scrollbar gutter）的概念及其在网页设计中的应用。滚动条槽是指浏览器窗口中滚动条占据的空间，它对于确保页面内容在滚动条出现或消失时保持稳定布局至关重要。文章首先介绍了如何使用CSS属性<code>scrollbar-gutter</code>来预留滚动条空间，从而避免内容跳动，提升用户体验。接着，文章通过实例展示了如何利用这一属性在不同浏览器中实现页面滚动条的自适应布局，确保页面在各种设备和浏览器环境下都能保持一致的视觉效果。此外，文章还提供了来自Mozilla开发者网络（MDN）和GitHub的资源链接，供读者进一步学习和探索CSS滚动条槽的高级用法和最佳实践。通过这些内容，读者可以更好地理解并掌握滚动条槽在现代网页设计中的重要性，以及如何有效地运用它来优化页面布局。</p>",
+    "toc": [],
+    "metadata": {
+      "readingTime": 1,
+      "wordCount": 43
+    },
+    "author": "ridd",
+    "columns": [
+      "blog"
+    ],
+    "categories": [
+      "coding"
+    ],
+    "tags": [
+      "React",
+      "Next.js",
+      "HTML",
+      "CSS"
+    ],
+    "permalink": "/post/macos-like-scrollbar-in-windows-browser",
+    "images": {}
+  },
+  {
+    "title": "在 Markdown 中使用自定义指令，并渲染为 React 组件",
+    "slug": "use-custom-directives-in-markdown-render-as-react-components",
+    "created": "2024-05-14T17:27:13.000Z",
+    "updated": "2024-05-14T17:42:13.000Z",
+    "draft": false,
+    "featured": false,
+    "cover": {
+      "src": "/static/image-20240515014148084-6424e032.png",
+      "height": 596,
+      "width": 1692,
+      "blurDataURL": "data:image/webp;base64,UklGRiYAAABXRUJQVlA4IBoAAAAwAQCdASoIAAMADMDOJZwAA3AA/unsMcAAAA==",
+      "blurWidth": 8,
+      "blurHeight": 3
+    },
+    "content": "<h1 id=\"什么是自定义指令\"><a aria-hidden=\"true\" tabindex=\"-1\" href=\"#什么是自定义指令\"><span class=\"icon icon-link\"></span></a>什么是自定义指令</h1>\n<p>Markdown 自定义指令的格式可以参考<a href=\"https://talk.commonmark.org/t/generic-directives-plugins-syntax/444\">讨论帖</a>。通过自定义指令，可以扩展 Markdown 基础语法，增加一些个性化的功能（当然，需要渲染器/编辑器支持）。我在博客中希望能有一些基于 Markdown 编写的外链嵌入、图表视频、特殊样式文本等，丰富文章内容。使用自定义指令主要是希望替代部分 MDX 的功能，因为 MDX 的语法与 Markdown 不完全兼容，会造成旧数据迁移困难、复制粘贴文章内容编译报错等很多困扰。</p>\n<gpt model=\"GPT-4o\"><p>根据该网页，Directive有以下几种格式：</p><ol>\n<li><strong>Inline Directives</strong>：以一个冒号开头，格式为<code>:name[content]{key=val}</code>，用于内联元素。</li>\n<li><strong>Leaf Block Directives</strong>：以两个冒号开头，格式为<code>::name [content] {key=val}</code>，用于独立的块元素。</li>\n<li><strong>Container Block Directives</strong>：以三个或更多冒号开头，格式为<code>:::name [inline-content] {key=val} contents :::</code>，用于包含其他块元素的容器。</li>\n</ol><p>更多详细信息和示例可以在网页上找到：<a href=\"https://talk.commonmark.org/t/generic-directives-plugins-syntax/444\">Generic directives/plugins syntax</a></p></gpt>\n<h1 id=\"remark-和-rehype\"><a aria-hidden=\"true\" tabindex=\"-1\" href=\"#remark-和-rehype\"><span class=\"icon icon-link\"></span></a>remark 和 rehype</h1>\n<gpt model=\"GPT-4o\"><p><code>remark</code> 和 <code>rehype</code> 是两个用于处理和转换 Markdown 和 HTML 内容的工具链。它们通常结合在一起使用，以便将 Markdown 转换为 HTML，或在处理 Markdown 和 HTML 时进行一些额外的操作。以下是对它们的介绍：</p><h3 id=\"remark\"><a aria-hidden=\"true\" tabindex=\"-1\" href=\"#remark\"><span class=\"icon icon-link\"></span></a>remark</h3><p><code>remark</code> 是一个基于 AST（抽象语法树）的 Markdown 解析器和转换器。它提供了一系列的插件来解析、转换和格式化 Markdown 文本。<code>remark</code> 的核心库是 <code>remark</code>，而它的生态系统包含许多插件，用于不同的转换和操作。以下是一些常见的 <code>remark</code> 插件：</p><ul>\n<li><code>remark-parse</code>：解析 Markdown 文本为 AST。</li>\n<li><code>remark-stringify</code>：将 AST 转换回 Markdown 文本。</li>\n<li><code>remark-lint</code>：对 Markdown 内容进行语法检查。</li>\n<li><code>remark-html</code>：将 Markdown 转换为 HTML。</li>\n<li><code>remark-rehype</code>：将 Markdown 转换为 rehype 的节点树。</li>\n</ul><h3 id=\"rehype\"><a aria-hidden=\"true\" tabindex=\"-1\" href=\"#rehype\"><span class=\"icon icon-link\"></span></a>rehype</h3><p><code>rehype</code> 是一个基于 AST 的 HTML 解析器和转换器。它可以解析 HTML，将其转换为 AST，进行各种转换操作，然后再将 AST 转换回 HTML。<code>rehype</code> 也有许多插件来处理和转换 HTML。以下是一些常见的 <code>rehype</code> 插件：</p><ul>\n<li><code>rehype-parse</code>：解析 HTML 为 AST。</li>\n<li><code>rehype-stringify</code>：将 AST 转换为 HTML。</li>\n<li><code>rehype-minify</code>：压缩 HTML 内容。</li>\n<li><code>rehype-highlight</code>：对代码块进行语法高亮。</li>\n</ul><h3 id=\"remark-和-rehype-的结合使用\"><a aria-hidden=\"true\" tabindex=\"-1\" href=\"#remark-和-rehype-的结合使用\"><span class=\"icon icon-link\"></span></a>remark 和 rehype 的结合使用</h3><p><code>remark</code> 和 <code>rehype</code> 通常结合使用来处理和转换 Markdown 和 HTML。例如，可以先使用 <code>remark</code> 解析和转换 Markdown 内容，然后使用 <code>rehype</code> 进一步处理生成的 HTML。一个常见的用例是将 Markdown 转换为 HTML，同时对代码块进行语法高亮。</p><p>以下是一个示例代码，展示了如何将 Markdown 转换为 HTML 并对代码块进行语法高亮：</p><pre><code class=\"language-javascript\">const remark = require('remark');\nconst remarkHtml = require('remark-html');\nconst rehype = require('rehype');\nconst rehypeHighlight = require('rehype-highlight');\n\nremark()\n  .use(remarkHtml)\n  .process('# Hello world!', (err, file) => {\n    if (err) throw err;\n    rehype()\n      .data('settings', { fragment: true })\n      .use(rehypeHighlight)\n      .process(file.contents, (err, file) => {\n        if (err) throw err;\n        console.log(String(file));\n      });\n  });\n</code></pre><p>在这个示例中，<code>remark</code> 用于解析 Markdown 并转换为 HTML，然后 <code>rehype</code> 用于对生成的 HTML 进行语法高亮处理。</p></gpt>\n<p>我使用 <code>Velite</code> 定义 Markdown 文档的组织结构和转换逻辑，<code>Velite</code> 使用的 <code>remark</code> 和 <code>rehype</code> 插件可以如下定义：</p>\n<pre><code class=\"language-javascript\">const blogMarkdown = s.markdown({\n  gfm: true,\n  removeComments: false,\n  copyLinkedFiles: true,\n  remarkPlugins: [\n    remarkParse,\n    remarkBreaks,\n    remarkFrontmatter,\n    remarkGfm,\n    remarkMath,\n    remarkEmoji,\n    remarkDirective,\n    remarkDirectiveRehype,\n  ],\n  rehypePlugins: [rehypeSlug, rehypeAutolinkHeadings, rehypeKatex, rehypeStringify],\n});\n</code></pre>\n<p>一般地，使用将 Markdown 转换为 HTML 字符串的方法如下：</p>\n<pre><code class=\"language-bash\">npm install remark remark-parse rehype rehype-stringify unified\n</code></pre>\n<pre><code class=\"language-typescript\">import { unified } from 'unified';\nimport remarkParse from 'remark-parse';\nimport remarkRehype from 'remark-rehype';\nimport rehypeStringify from 'rehype-stringify';\n\nasync function convertMarkdownToHtml(markdown: string): Promise&#x3C;string> {\n    const file = await unified()\n        .use(remarkParse) // 使用 remark 解析 Markdown\n        .use(remarkRehype) // 将 Markdown 转换为 rehype 的节点树\n        .use(rehypeStringify) // 将 rehype 的节点树转换为 HTML\n        .process(markdown); // 处理输入的 Markdown 字符串\n\n    return String(file); // 返回 HTML 字符串\n}\n</code></pre>\n<h1 id=\"代码实现\"><a aria-hidden=\"true\" tabindex=\"-1\" href=\"#代码实现\"><span class=\"icon icon-link\"></span></a>代码实现</h1>\n<p>主要使用 <a href=\"https://github.com/remarkjs/remark-directive\">remarkDirective</a>、 <a href=\"https://github.com/IGassmann/remark-directive-rehype\">remarkDirectiveRehype</a> 和 <a href=\"https://github.com/rehypejs/rehype-react\">rehype-react</a> 这三个插件。</p>\n<gpt model=\"GPT-4o\"><p><code>remark-directive</code> 是一个用于处理自定义指令的 <code>remark</code> 插件。自定义指令是一种扩展 Markdown 语法的方式，可以插入特定的 HTML 元素或属性，适用于需要在 Markdown 文档中添加自定义内容或样式的场景。</p><p>主要功能包括：</p><ol>\n<li><strong>解析自定义指令</strong>：识别并解析 Markdown 文档中的自定义指令。</li>\n<li><strong>生成抽象语法树（AST）节点</strong>：将解析后的指令转换为 <code>remark</code> 的抽象语法树（AST）节点，便于进一步处理。</li>\n</ol><p><code>remark-directive-rehype</code> 是一个插件，允许你在使用 <code>remark</code> 和 <code>rehype</code> 处理 Markdown 时，处理自定义指令。这个项目在你希望由 <code>remark-directive</code> 解析的指令在使用 <code>remark-rehype</code> 时被解析为 HTML（hast 节点）时非常有用。这特别适用于将 Markdown 指令转换为 HTML 标签，并通过 <code>react-markdown</code> 输出为组件的场景。</p><p>这个插件的主要功能包括：</p><ol>\n<li><strong>解析自定义指令</strong>：它能够识别并解析 Markdown 中的自定义指令语法。</li>\n<li><strong>转换为 rehype 兼容的节点</strong>：将解析后的自定义指令转换为 rehype 兼容的节点，使其可以进一步处理和转换为 HTML。</li>\n</ol><p>这个插件的使用场景包括需要在 Markdown 中插入复杂的 HTML 元素，或者希望通过 Markdown 语法实现某些特殊功能，如插入图表、视频、特殊样式的文本等。</p><p>你可以在 <code>remark</code> 和 <code>rehype</code> 的处理管道中使用这个插件，结合其他插件，实现复杂的 Markdown 转换和处理。</p><p><code>rehype-react</code> 是一个用于将 HTML（hast）语法树转换为 React 组件的插件。它适用于希望在 React 应用中渲染经过处理的 HTML 内容的场景。</p><p>主要功能和特点包括：</p><ol>\n<li><strong>将 HTML 转换为 React 组件</strong>：<code>rehype-react</code> 能够将经过 <code>rehype</code> 处理的 HTML 语法树（hast）转换为 React 组件，从而使得在 React 应用中可以方便地使用和渲染这些内容。</li>\n<li><strong>支持自定义组件</strong>：在转换过程中，你可以定义和使用自定义的 React 组件，替代标准的 HTML 元素。这使得你可以在渲染过程中插入自定义逻辑或样式。</li>\n<li><strong>集成性强</strong>：<code>rehype-react</code> 可以与 <code>unified</code> 生态系统中的其他插件结合使用，如 <code>remark</code> 和 <code>rehype</code>，以创建强大且灵活的内容处理管道。</li>\n</ol></gpt>\n<p>直接上代码，这里从 HTML 解析回 AST，然后使用 <code>rehype-react</code> 处理 <code>&#x3C;gpt></code> 标签，将其转换为自定义格式：</p>\n<pre><code class=\"language-tsx\">const BlogHtmlRenderer: React.FC&#x3C;{ html: string }> = ({ html }) => {\n  const production = { Fragment: prod.Fragment, jsx: prod.jsx, jsxs: prod.jsxs };\n  const processor = unified()\n    .use(rehypeParse, { fragment: true }) // Parse the HTML as fragment\n    // @ts-ignore\n    .use(rehypeReact, {\n      passNode: true, // pass the node as argument to get properties\n      components: {\n        gpt: ({ node, children }: any) => {\n          const { properties } = node;\n          return &#x3C;div className={`gpt`}>{children}&#x3C;/div>;\n        },\n      },\n      ...production,\n    });\n\n  const ContentComponents = processor.processSync(html).result;\n\n  return (\n    &#x3C;>\n      {ContentComponents}\n    &#x3C;/>\n  );\n};\n</code></pre>",
+    "raw": "# 什么是自定义指令\n\nMarkdown 自定义指令的格式可以参考[讨论帖](https://talk.commonmark.org/t/generic-directives-plugins-syntax/444)。通过自定义指令，可以扩展 Markdown 基础语法，增加一些个性化的功能（当然，需要渲染器/编辑器支持）。我在博客中希望能有一些基于 Markdown 编写的外链嵌入、图表视频、特殊样式文本等，丰富文章内容。使用自定义指令主要是希望替代部分 MDX 的功能，因为 MDX 的语法与 Markdown 不完全兼容，会造成旧数据迁移困难、复制粘贴文章内容编译报错等很多困扰。\n\n:::gpt{model=\"GPT-4o\"}\n\n根据该网页，Directive有以下几种格式：\n\n1. **Inline Directives**：以一个冒号开头，格式为`:name[content]{key=val}`，用于内联元素。\n2. **Leaf Block Directives**：以两个冒号开头，格式为`::name [content] {key=val}`，用于独立的块元素。\n3. **Container Block Directives**：以三个或更多冒号开头，格式为`:::name [inline-content] {key=val} contents :::`，用于包含其他块元素的容器。\n\n更多详细信息和示例可以在网页上找到：[Generic directives/plugins syntax](https://talk.commonmark.org/t/generic-directives-plugins-syntax/444)\n\n:::\n\n# remark 和 rehype\n\n:::gpt{model=\"GPT-4o\"}\n\n`remark` 和 `rehype` 是两个用于处理和转换 Markdown 和 HTML 内容的工具链。它们通常结合在一起使用，以便将 Markdown 转换为 HTML，或在处理 Markdown 和 HTML 时进行一些额外的操作。以下是对它们的介绍：\n\n### remark\n`remark` 是一个基于 AST（抽象语法树）的 Markdown 解析器和转换器。它提供了一系列的插件来解析、转换和格式化 Markdown 文本。`remark` 的核心库是 `remark`，而它的生态系统包含许多插件，用于不同的转换和操作。以下是一些常见的 `remark` 插件：\n\n- `remark-parse`：解析 Markdown 文本为 AST。\n- `remark-stringify`：将 AST 转换回 Markdown 文本。\n- `remark-lint`：对 Markdown 内容进行语法检查。\n- `remark-html`：将 Markdown 转换为 HTML。\n- `remark-rehype`：将 Markdown 转换为 rehype 的节点树。\n\n### rehype\n`rehype` 是一个基于 AST 的 HTML 解析器和转换器。它可以解析 HTML，将其转换为 AST，进行各种转换操作，然后再将 AST 转换回 HTML。`rehype` 也有许多插件来处理和转换 HTML。以下是一些常见的 `rehype` 插件：\n\n- `rehype-parse`：解析 HTML 为 AST。\n- `rehype-stringify`：将 AST 转换为 HTML。\n- `rehype-minify`：压缩 HTML 内容。\n- `rehype-highlight`：对代码块进行语法高亮。\n\n### remark 和 rehype 的结合使用\n`remark` 和 `rehype` 通常结合使用来处理和转换 Markdown 和 HTML。例如，可以先使用 `remark` 解析和转换 Markdown 内容，然后使用 `rehype` 进一步处理生成的 HTML。一个常见的用例是将 Markdown 转换为 HTML，同时对代码块进行语法高亮。\n\n以下是一个示例代码，展示了如何将 Markdown 转换为 HTML 并对代码块进行语法高亮：\n\n```javascript\nconst remark = require('remark');\nconst remarkHtml = require('remark-html');\nconst rehype = require('rehype');\nconst rehypeHighlight = require('rehype-highlight');\n\nremark()\n  .use(remarkHtml)\n  .process('# Hello world!', (err, file) => {\n    if (err) throw err;\n    rehype()\n      .data('settings', { fragment: true })\n      .use(rehypeHighlight)\n      .process(file.contents, (err, file) => {\n        if (err) throw err;\n        console.log(String(file));\n      });\n  });\n```\n\n在这个示例中，`remark` 用于解析 Markdown 并转换为 HTML，然后 `rehype` 用于对生成的 HTML 进行语法高亮处理。\n\n:::\n\n我使用 `Velite` 定义 Markdown 文档的组织结构和转换逻辑，`Velite` 使用的 `remark` 和 `rehype` 插件可以如下定义：\n\n```javascript\nconst blogMarkdown = s.markdown({\n  gfm: true,\n  removeComments: false,\n  copyLinkedFiles: true,\n  remarkPlugins: [\n    remarkParse,\n    remarkBreaks,\n    remarkFrontmatter,\n    remarkGfm,\n    remarkMath,\n    remarkEmoji,\n    remarkDirective,\n    remarkDirectiveRehype,\n  ],\n  rehypePlugins: [rehypeSlug, rehypeAutolinkHeadings, rehypeKatex, rehypeStringify],\n});\n```\n\n一般地，使用将 Markdown 转换为 HTML 字符串的方法如下：\n\n```bash\nnpm install remark remark-parse rehype rehype-stringify unified\n```\n\n```typescript\nimport { unified } from 'unified';\nimport remarkParse from 'remark-parse';\nimport remarkRehype from 'remark-rehype';\nimport rehypeStringify from 'rehype-stringify';\n\nasync function convertMarkdownToHtml(markdown: string): Promise<string> {\n    const file = await unified()\n        .use(remarkParse) // 使用 remark 解析 Markdown\n        .use(remarkRehype) // 将 Markdown 转换为 rehype 的节点树\n        .use(rehypeStringify) // 将 rehype 的节点树转换为 HTML\n        .process(markdown); // 处理输入的 Markdown 字符串\n\n    return String(file); // 返回 HTML 字符串\n}\n```\n\n# 代码实现\n\n主要使用 [remarkDirective](https://github.com/remarkjs/remark-directive)、 [remarkDirectiveRehype](https://github.com/IGassmann/remark-directive-rehype) 和 [rehype-react](https://github.com/rehypejs/rehype-react) 这三个插件。\n\n:::gpt{model=\"GPT-4o\"}\n\n`remark-directive` 是一个用于处理自定义指令的 `remark` 插件。自定义指令是一种扩展 Markdown 语法的方式，可以插入特定的 HTML 元素或属性，适用于需要在 Markdown 文档中添加自定义内容或样式的场景。\n\n主要功能包括：\n\n1. **解析自定义指令**：识别并解析 Markdown 文档中的自定义指令。\n2. **生成抽象语法树（AST）节点**：将解析后的指令转换为 `remark` 的抽象语法树（AST）节点，便于进一步处理。\n\n\n\n`remark-directive-rehype` 是一个插件，允许你在使用 `remark` 和 `rehype` 处理 Markdown 时，处理自定义指令。这个项目在你希望由 `remark-directive` 解析的指令在使用 `remark-rehype` 时被解析为 HTML（hast 节点）时非常有用。这特别适用于将 Markdown 指令转换为 HTML 标签，并通过 `react-markdown` 输出为组件的场景。\n\n这个插件的主要功能包括：\n\n1. **解析自定义指令**：它能够识别并解析 Markdown 中的自定义指令语法。\n2. **转换为 rehype 兼容的节点**：将解析后的自定义指令转换为 rehype 兼容的节点，使其可以进一步处理和转换为 HTML。\n\n这个插件的使用场景包括需要在 Markdown 中插入复杂的 HTML 元素，或者希望通过 Markdown 语法实现某些特殊功能，如插入图表、视频、特殊样式的文本等。\n\n你可以在 `remark` 和 `rehype` 的处理管道中使用这个插件，结合其他插件，实现复杂的 Markdown 转换和处理。\n\n\n\n`rehype-react` 是一个用于将 HTML（hast）语法树转换为 React 组件的插件。它适用于希望在 React 应用中渲染经过处理的 HTML 内容的场景。\n\n主要功能和特点包括：\n\n1. **将 HTML 转换为 React 组件**：`rehype-react` 能够将经过 `rehype` 处理的 HTML 语法树（hast）转换为 React 组件，从而使得在 React 应用中可以方便地使用和渲染这些内容。\n2. **支持自定义组件**：在转换过程中，你可以定义和使用自定义的 React 组件，替代标准的 HTML 元素。这使得你可以在渲染过程中插入自定义逻辑或样式。\n3. **集成性强**：`rehype-react` 可以与 `unified` 生态系统中的其他插件结合使用，如 `remark` 和 `rehype`，以创建强大且灵活的内容处理管道。\n\n:::\n\n直接上代码，这里从 HTML 解析回 AST，然后使用 `rehype-react` 处理 `<gpt>` 标签，将其转换为自定义格式：\n\n```tsx\nconst BlogHtmlRenderer: React.FC<{ html: string }> = ({ html }) => {\n  const production = { Fragment: prod.Fragment, jsx: prod.jsx, jsxs: prod.jsxs };\n  const processor = unified()\n    .use(rehypeParse, { fragment: true }) // Parse the HTML as fragment\n    // @ts-ignore\n    .use(rehypeReact, {\n      passNode: true, // pass the node as argument to get properties\n      components: {\n        gpt: ({ node, children }: any) => {\n          const { properties } = node;\n          return <div className={`gpt`}>{children}</div>;\n        },\n      },\n      ...production,\n    });\n\n  const ContentComponents = processor.processSync(html).result;\n\n  return (\n    <>\n      {ContentComponents}\n    </>\n  );\n};\n```",
+    "path": "posts/use-custom-directives-in-markdown-render-as-react-components",
+    "excerpt": "<p>自定义指令是扩展Markdown基础语法的一种方式，允许用户增加个性化功能，如外链嵌入、图表视频和特殊样式文本等。通过自定义指令，可以避免使用MDX时遇到的语法兼容性问题和数据迁移困难。自定义指令的格式包括内联指令、叶块指令和容器块指令，每种格式都有特定的语法规则。<code>remark</code>和<code>rehype</code>是处理和转换Markdown和HTML内容的工具链，它们通常结合使用，以便将Markdown转换为HTML或进行其他操作。<code>remark</code>基于AST解析和转换Markdown文本，而<code>rehype</code>则处理HTML。结合使用<code>remark-directive</code>、<code>remark-directive-rehype</code>和<code>rehype-react</code>插件，可以实现Markdown文档的自定义指令解析和转换为React组件，从而在React应用中渲染复杂内容。</p>",
+    "toc": [
+      {
+        "title": "什么是自定义指令",
+        "url": "#什么是自定义指令",
+        "items": []
+      },
+      {
+        "title": "remark 和 rehype",
+        "url": "#remark-和-rehype",
+        "items": []
+      },
+      {
+        "title": "代码实现",
+        "url": "#代码实现",
+        "items": []
+      }
+    ],
+    "metadata": {
+      "readingTime": 4,
+      "wordCount": 1121.4
+    },
+    "author": "ridd",
+    "columns": [
+      "blog"
+    ],
+    "categories": [
+      "coding"
+    ],
+    "tags": [
+      "Markdown",
+      "React",
+      "Next.js",
+      "Unified",
+      "remark",
+      "rehype",
+      "Custom Directives"
+    ],
+    "permalink": "/post/use-custom-directives-in-markdown-render-as-react-components",
+    "images": {}
+  },
+  {
     "title": "BUPT 校园网 OpenWrt 配置 IPv6",
     "slug": "bupt-cernet-openwrt-ipv6-configuration",
     "created": "2023-05-19T04:26:00.000Z",
@@ -132,44 +223,6 @@
         "height": 964
       }
     }
-  },
-  {
-    "title": "Explore Data Science!",
-    "slug": "explore-data-science",
-    "created": "2024-04-10T12:30:00.000Z",
-    "updated": "2024-04-10T12:30:00.000Z",
-    "draft": false,
-    "featured": false,
-    "content": "<h1 id=\"explore-data-science\"><a aria-hidden=\"true\" tabindex=\"-1\" href=\"#explore-data-science\"><span class=\"icon icon-link\"></span></a>Explore Data Science!</h1>\n<p>This is the first post in the data science series. Here, we will explore the basics of data science and how it can be applied to real-world problems.</p>",
-    "raw": "# Explore Data Science!\n\nThis is the first post in the data science series. Here, we will explore the basics of data science and how it can be applied to real-world problems.",
-    "path": "posts/data-science",
-    "excerpt": "<p>在本系列的第一篇文章中，我们将深入探讨数据科学的基础知识及其在解决现实世界问题中的应用。文章旨在介绍数据科学的概念，并展示如何运用数据科学技术来分析和解决实际问题，为读者提供一个关于数据科学应用的初步了解。</p>",
-    "toc": [
-      {
-        "title": "Explore Data Science!",
-        "url": "#explore-data-science",
-        "items": []
-      }
-    ],
-    "metadata": {
-      "readingTime": 1,
-      "wordCount": 32
-    },
-    "author": "ridd",
-    "columns": [
-      "data-science-basics",
-      "column2"
-    ],
-    "categories": [
-      "data analysis",
-      "category4"
-    ],
-    "tags": [
-      "data science",
-      "explore"
-    ],
-    "permalink": "/post/explore-data-science",
-    "images": {}
   },
   {
     "title": "使用 GitHub Actions 部署 Next.js 项目到 VPS",
@@ -316,6 +369,82 @@
     }
   },
   {
+    "title": "Explore Data Science!",
+    "slug": "explore-data-science",
+    "created": "2024-04-10T12:30:00.000Z",
+    "updated": "2024-04-10T12:30:00.000Z",
+    "draft": false,
+    "featured": false,
+    "content": "<h1 id=\"explore-data-science\"><a aria-hidden=\"true\" tabindex=\"-1\" href=\"#explore-data-science\"><span class=\"icon icon-link\"></span></a>Explore Data Science!</h1>\n<p>This is the first post in the data science series. Here, we will explore the basics of data science and how it can be applied to real-world problems.</p>",
+    "raw": "# Explore Data Science!\n\nThis is the first post in the data science series. Here, we will explore the basics of data science and how it can be applied to real-world problems.",
+    "path": "posts/data-science",
+    "excerpt": "<p>在本系列的第一篇文章中，我们将深入探讨数据科学的基础知识及其在解决现实世界问题中的应用。文章旨在介绍数据科学的概念，并展示如何运用数据科学技术来分析和解决实际问题，为读者提供一个关于数据科学应用的初步了解。</p>",
+    "toc": [
+      {
+        "title": "Explore Data Science!",
+        "url": "#explore-data-science",
+        "items": []
+      }
+    ],
+    "metadata": {
+      "readingTime": 1,
+      "wordCount": 32
+    },
+    "author": "ridd",
+    "columns": [
+      "data-science-basics",
+      "column2"
+    ],
+    "categories": [
+      "data analysis",
+      "category4"
+    ],
+    "tags": [
+      "data science",
+      "explore"
+    ],
+    "permalink": "/post/explore-data-science",
+    "images": {}
+  },
+  {
+    "title": "Discover JavaScript!",
+    "slug": "discover-javascript",
+    "created": "2024-04-10T12:15:00.000Z",
+    "updated": "2024-04-10T12:15:00.000Z",
+    "draft": false,
+    "featured": false,
+    "content": "<h1 id=\"discover-javascript\"><a aria-hidden=\"true\" tabindex=\"-1\" href=\"#discover-javascript\"><span class=\"icon icon-link\"></span></a>Discover JavaScript!</h1>\n<p>JavaScript is a popular programming language used for building interactive web applications, mobile applications, and more. In this article, we will explore the basics of JavaScript and learn how to use it to build web applications.</p>",
+    "raw": "# Discover JavaScript!\n\nJavaScript is a popular programming language used for building interactive web applications, mobile applications, and more. In this article, we will explore the basics of JavaScript and learn how to use it to build web applications.",
+    "path": "posts/javascript",
+    "excerpt": "<p>在本篇文章中，我们深入探讨了JavaScript这一广泛应用于构建交互式网页应用和移动应用的流行编程语言。文章从JavaScript的基础知识入手，逐步引导读者了解如何运用这一语言来开发网页应用。通过本文的学习，读者将能够掌握JavaScript的核心概念，并开始自己的编程之旅。</p>",
+    "toc": [
+      {
+        "title": "Discover JavaScript!",
+        "url": "#discover-javascript",
+        "items": []
+      }
+    ],
+    "metadata": {
+      "readingTime": 1,
+      "wordCount": 38
+    },
+    "author": "ridd",
+    "columns": [
+      "javascript-development",
+      "column2"
+    ],
+    "categories": [
+      "web development",
+      "category3"
+    ],
+    "tags": [
+      "javascript",
+      "discovery"
+    ],
+    "permalink": "/post/discover-javascript",
+    "images": {}
+  },
+  {
     "title": "Greetings from Python!",
     "slug": "greetings-from-python",
     "created": "2024-04-10T12:00:00.000Z",
@@ -426,135 +555,6 @@
       "world"
     ],
     "permalink": "/post/hello-world",
-    "images": {}
-  },
-  {
-    "title": "Discover JavaScript!",
-    "slug": "discover-javascript",
-    "created": "2024-04-10T12:15:00.000Z",
-    "updated": "2024-04-10T12:15:00.000Z",
-    "draft": false,
-    "featured": false,
-    "content": "<h1 id=\"discover-javascript\"><a aria-hidden=\"true\" tabindex=\"-1\" href=\"#discover-javascript\"><span class=\"icon icon-link\"></span></a>Discover JavaScript!</h1>\n<p>JavaScript is a popular programming language used for building interactive web applications, mobile applications, and more. In this article, we will explore the basics of JavaScript and learn how to use it to build web applications.</p>",
-    "raw": "# Discover JavaScript!\n\nJavaScript is a popular programming language used for building interactive web applications, mobile applications, and more. In this article, we will explore the basics of JavaScript and learn how to use it to build web applications.",
-    "path": "posts/javascript",
-    "excerpt": "<p>在本篇文章中，我们深入探讨了JavaScript这一广泛应用于构建交互式网页应用和移动应用的流行编程语言。文章从JavaScript的基础知识入手，逐步引导读者了解如何运用这一语言来开发网页应用。通过本文的学习，读者将能够掌握JavaScript的核心概念，并开始自己的编程之旅。</p>",
-    "toc": [
-      {
-        "title": "Discover JavaScript!",
-        "url": "#discover-javascript",
-        "items": []
-      }
-    ],
-    "metadata": {
-      "readingTime": 1,
-      "wordCount": 38
-    },
-    "author": "ridd",
-    "columns": [
-      "javascript-development",
-      "column2"
-    ],
-    "categories": [
-      "web development",
-      "category3"
-    ],
-    "tags": [
-      "javascript",
-      "discovery"
-    ],
-    "permalink": "/post/discover-javascript",
-    "images": {}
-  },
-  {
-    "title": "在 Windows 浏览器中实现 macOS 风格的滚动条",
-    "slug": "macos-like-scrollbar-in-windows-browser",
-    "created": "2024-05-15T22:58:52.000Z",
-    "updated": "2024-05-15T22:58:52.000Z",
-    "draft": false,
-    "featured": false,
-    "content": "<p><a href=\"https://www.zhangxinxu.com/wordpress/2022/01/css-scrollbar-gutter/\">https://www.zhangxinxu.com/wordpress/2022/01/css-scrollbar-gutter/</a></p>\n<p><a href=\"https://www.zhangxinxu.com/wordpress/2015/01/css-page-scrollbar-toggle-center-no-jumping/\">https://www.zhangxinxu.com/wordpress/2015/01/css-page-scrollbar-toggle-center-no-jumping/</a></p>\n<p><a href=\"https://developer.mozilla.org/en-US/docs/Web/CSS/scrollbar-gutter\">https://developer.mozilla.org/en-US/docs/Web/CSS/scrollbar-gutter</a></p>\n<p><a href=\"https://gist.github.com/spemer/a0e218bbb45433bd611e68446523a00b\">https://gist.github.com/spemer/a0e218bbb45433bd611e68446523a00b</a></p>",
-    "raw": "https://www.zhangxinxu.com/wordpress/2022/01/css-scrollbar-gutter/\n\nhttps://www.zhangxinxu.com/wordpress/2015/01/css-page-scrollbar-toggle-center-no-jumping/\n\nhttps://developer.mozilla.org/en-US/docs/Web/CSS/scrollbar-gutter\n\nhttps://gist.github.com/spemer/a0e218bbb45433bd611e68446523a00b",
-    "path": "posts/macos-like-scrollbar",
-    "excerpt": "<p>本文深入探讨了CSS中滚动条槽（scrollbar gutter）的概念及其在网页设计中的应用。滚动条槽是指浏览器窗口中滚动条占据的空间，它对于确保页面内容在滚动条出现或消失时保持稳定布局至关重要。文章首先介绍了如何使用CSS属性<code>scrollbar-gutter</code>来预留滚动条空间，从而避免内容跳动，提升用户体验。接着，文章通过实例展示了如何利用这一属性在不同浏览器中实现页面滚动条的自适应布局，确保页面在各种设备和浏览器环境下都能保持一致的视觉效果。此外，文章还提供了来自Mozilla开发者网络（MDN）和GitHub的资源链接，供读者进一步学习和探索CSS滚动条槽的高级用法和最佳实践。通过这些内容，读者可以更好地理解并掌握滚动条槽在现代网页设计中的重要性，以及如何有效地运用它来优化页面布局。</p>",
-    "toc": [],
-    "metadata": {
-      "readingTime": 1,
-      "wordCount": 43
-    },
-    "author": "ridd",
-    "columns": [
-      "blog"
-    ],
-    "categories": [
-      "coding"
-    ],
-    "tags": [
-      "React",
-      "Next.js",
-      "HTML",
-      "CSS"
-    ],
-    "permalink": "/post/macos-like-scrollbar-in-windows-browser",
-    "images": {}
-  },
-  {
-    "title": "在 Markdown 中使用自定义指令，并渲染为 React 组件",
-    "slug": "use-custom-directives-in-markdown-render-as-react-components",
-    "created": "2024-05-14T17:27:13.000Z",
-    "updated": "2024-05-14T17:42:13.000Z",
-    "draft": false,
-    "featured": false,
-    "cover": {
-      "src": "/static/image-20240515014148084-6424e032.png",
-      "height": 596,
-      "width": 1692,
-      "blurDataURL": "data:image/webp;base64,UklGRiYAAABXRUJQVlA4IBoAAAAwAQCdASoIAAMADMDOJZwAA3AA/unsMcAAAA==",
-      "blurWidth": 8,
-      "blurHeight": 3
-    },
-    "content": "<h1 id=\"什么是自定义指令\"><a aria-hidden=\"true\" tabindex=\"-1\" href=\"#什么是自定义指令\"><span class=\"icon icon-link\"></span></a>什么是自定义指令</h1>\n<p>Markdown 自定义指令的格式可以参考<a href=\"https://talk.commonmark.org/t/generic-directives-plugins-syntax/444\">讨论帖</a>。通过自定义指令，可以扩展 Markdown 基础语法，增加一些个性化的功能（当然，需要渲染器/编辑器支持）。我在博客中希望能有一些基于 Markdown 编写的外链嵌入、图表视频、特殊样式文本等，丰富文章内容。使用自定义指令主要是希望替代部分 MDX 的功能，因为 MDX 的语法与 Markdown 不完全兼容，会造成旧数据迁移困难、复制粘贴文章内容编译报错等很多困扰。</p>\n<gpt model=\"GPT-4o\"><p>根据该网页，Directive有以下几种格式：</p><ol>\n<li><strong>Inline Directives</strong>：以一个冒号开头，格式为<code>:name[content]{key=val}</code>，用于内联元素。</li>\n<li><strong>Leaf Block Directives</strong>：以两个冒号开头，格式为<code>::name [content] {key=val}</code>，用于独立的块元素。</li>\n<li><strong>Container Block Directives</strong>：以三个或更多冒号开头，格式为<code>:::name [inline-content] {key=val} contents :::</code>，用于包含其他块元素的容器。</li>\n</ol><p>更多详细信息和示例可以在网页上找到：<a href=\"https://talk.commonmark.org/t/generic-directives-plugins-syntax/444\">Generic directives/plugins syntax</a></p></gpt>\n<h1 id=\"remark-和-rehype\"><a aria-hidden=\"true\" tabindex=\"-1\" href=\"#remark-和-rehype\"><span class=\"icon icon-link\"></span></a>remark 和 rehype</h1>\n<gpt model=\"GPT-4o\"><p><code>remark</code> 和 <code>rehype</code> 是两个用于处理和转换 Markdown 和 HTML 内容的工具链。它们通常结合在一起使用，以便将 Markdown 转换为 HTML，或在处理 Markdown 和 HTML 时进行一些额外的操作。以下是对它们的介绍：</p><h3 id=\"remark\"><a aria-hidden=\"true\" tabindex=\"-1\" href=\"#remark\"><span class=\"icon icon-link\"></span></a>remark</h3><p><code>remark</code> 是一个基于 AST（抽象语法树）的 Markdown 解析器和转换器。它提供了一系列的插件来解析、转换和格式化 Markdown 文本。<code>remark</code> 的核心库是 <code>remark</code>，而它的生态系统包含许多插件，用于不同的转换和操作。以下是一些常见的 <code>remark</code> 插件：</p><ul>\n<li><code>remark-parse</code>：解析 Markdown 文本为 AST。</li>\n<li><code>remark-stringify</code>：将 AST 转换回 Markdown 文本。</li>\n<li><code>remark-lint</code>：对 Markdown 内容进行语法检查。</li>\n<li><code>remark-html</code>：将 Markdown 转换为 HTML。</li>\n<li><code>remark-rehype</code>：将 Markdown 转换为 rehype 的节点树。</li>\n</ul><h3 id=\"rehype\"><a aria-hidden=\"true\" tabindex=\"-1\" href=\"#rehype\"><span class=\"icon icon-link\"></span></a>rehype</h3><p><code>rehype</code> 是一个基于 AST 的 HTML 解析器和转换器。它可以解析 HTML，将其转换为 AST，进行各种转换操作，然后再将 AST 转换回 HTML。<code>rehype</code> 也有许多插件来处理和转换 HTML。以下是一些常见的 <code>rehype</code> 插件：</p><ul>\n<li><code>rehype-parse</code>：解析 HTML 为 AST。</li>\n<li><code>rehype-stringify</code>：将 AST 转换为 HTML。</li>\n<li><code>rehype-minify</code>：压缩 HTML 内容。</li>\n<li><code>rehype-highlight</code>：对代码块进行语法高亮。</li>\n</ul><h3 id=\"remark-和-rehype-的结合使用\"><a aria-hidden=\"true\" tabindex=\"-1\" href=\"#remark-和-rehype-的结合使用\"><span class=\"icon icon-link\"></span></a>remark 和 rehype 的结合使用</h3><p><code>remark</code> 和 <code>rehype</code> 通常结合使用来处理和转换 Markdown 和 HTML。例如，可以先使用 <code>remark</code> 解析和转换 Markdown 内容，然后使用 <code>rehype</code> 进一步处理生成的 HTML。一个常见的用例是将 Markdown 转换为 HTML，同时对代码块进行语法高亮。</p><p>以下是一个示例代码，展示了如何将 Markdown 转换为 HTML 并对代码块进行语法高亮：</p><pre><code class=\"language-javascript\">const remark = require('remark');\nconst remarkHtml = require('remark-html');\nconst rehype = require('rehype');\nconst rehypeHighlight = require('rehype-highlight');\n\nremark()\n  .use(remarkHtml)\n  .process('# Hello world!', (err, file) => {\n    if (err) throw err;\n    rehype()\n      .data('settings', { fragment: true })\n      .use(rehypeHighlight)\n      .process(file.contents, (err, file) => {\n        if (err) throw err;\n        console.log(String(file));\n      });\n  });\n</code></pre><p>在这个示例中，<code>remark</code> 用于解析 Markdown 并转换为 HTML，然后 <code>rehype</code> 用于对生成的 HTML 进行语法高亮处理。</p></gpt>\n<p>我使用 <code>Velite</code> 定义 Markdown 文档的组织结构和转换逻辑，<code>Velite</code> 使用的 <code>remark</code> 和 <code>rehype</code> 插件可以如下定义：</p>\n<pre><code class=\"language-javascript\">const blogMarkdown = s.markdown({\n  gfm: true,\n  removeComments: false,\n  copyLinkedFiles: true,\n  remarkPlugins: [\n    remarkParse,\n    remarkBreaks,\n    remarkFrontmatter,\n    remarkGfm,\n    remarkMath,\n    remarkEmoji,\n    remarkDirective,\n    remarkDirectiveRehype,\n  ],\n  rehypePlugins: [rehypeSlug, rehypeAutolinkHeadings, rehypeKatex, rehypeStringify],\n});\n</code></pre>\n<p>一般地，使用将 Markdown 转换为 HTML 字符串的方法如下：</p>\n<pre><code class=\"language-bash\">npm install remark remark-parse rehype rehype-stringify unified\n</code></pre>\n<pre><code class=\"language-typescript\">import { unified } from 'unified';\nimport remarkParse from 'remark-parse';\nimport remarkRehype from 'remark-rehype';\nimport rehypeStringify from 'rehype-stringify';\n\nasync function convertMarkdownToHtml(markdown: string): Promise&#x3C;string> {\n    const file = await unified()\n        .use(remarkParse) // 使用 remark 解析 Markdown\n        .use(remarkRehype) // 将 Markdown 转换为 rehype 的节点树\n        .use(rehypeStringify) // 将 rehype 的节点树转换为 HTML\n        .process(markdown); // 处理输入的 Markdown 字符串\n\n    return String(file); // 返回 HTML 字符串\n}\n</code></pre>\n<h1 id=\"代码实现\"><a aria-hidden=\"true\" tabindex=\"-1\" href=\"#代码实现\"><span class=\"icon icon-link\"></span></a>代码实现</h1>\n<p>主要使用 <a href=\"https://github.com/remarkjs/remark-directive\">remarkDirective</a>、 <a href=\"https://github.com/IGassmann/remark-directive-rehype\">remarkDirectiveRehype</a> 和 <a href=\"https://github.com/rehypejs/rehype-react\">rehype-react</a> 这三个插件。</p>\n<gpt model=\"GPT-4o\"><p><code>remark-directive</code> 是一个用于处理自定义指令的 <code>remark</code> 插件。自定义指令是一种扩展 Markdown 语法的方式，可以插入特定的 HTML 元素或属性，适用于需要在 Markdown 文档中添加自定义内容或样式的场景。</p><p>主要功能包括：</p><ol>\n<li><strong>解析自定义指令</strong>：识别并解析 Markdown 文档中的自定义指令。</li>\n<li><strong>生成抽象语法树（AST）节点</strong>：将解析后的指令转换为 <code>remark</code> 的抽象语法树（AST）节点，便于进一步处理。</li>\n</ol><p><code>remark-directive-rehype</code> 是一个插件，允许你在使用 <code>remark</code> 和 <code>rehype</code> 处理 Markdown 时，处理自定义指令。这个项目在你希望由 <code>remark-directive</code> 解析的指令在使用 <code>remark-rehype</code> 时被解析为 HTML（hast 节点）时非常有用。这特别适用于将 Markdown 指令转换为 HTML 标签，并通过 <code>react-markdown</code> 输出为组件的场景。</p><p>这个插件的主要功能包括：</p><ol>\n<li><strong>解析自定义指令</strong>：它能够识别并解析 Markdown 中的自定义指令语法。</li>\n<li><strong>转换为 rehype 兼容的节点</strong>：将解析后的自定义指令转换为 rehype 兼容的节点，使其可以进一步处理和转换为 HTML。</li>\n</ol><p>这个插件的使用场景包括需要在 Markdown 中插入复杂的 HTML 元素，或者希望通过 Markdown 语法实现某些特殊功能，如插入图表、视频、特殊样式的文本等。</p><p>你可以在 <code>remark</code> 和 <code>rehype</code> 的处理管道中使用这个插件，结合其他插件，实现复杂的 Markdown 转换和处理。</p><p><code>rehype-react</code> 是一个用于将 HTML（hast）语法树转换为 React 组件的插件。它适用于希望在 React 应用中渲染经过处理的 HTML 内容的场景。</p><p>主要功能和特点包括：</p><ol>\n<li><strong>将 HTML 转换为 React 组件</strong>：<code>rehype-react</code> 能够将经过 <code>rehype</code> 处理的 HTML 语法树（hast）转换为 React 组件，从而使得在 React 应用中可以方便地使用和渲染这些内容。</li>\n<li><strong>支持自定义组件</strong>：在转换过程中，你可以定义和使用自定义的 React 组件，替代标准的 HTML 元素。这使得你可以在渲染过程中插入自定义逻辑或样式。</li>\n<li><strong>集成性强</strong>：<code>rehype-react</code> 可以与 <code>unified</code> 生态系统中的其他插件结合使用，如 <code>remark</code> 和 <code>rehype</code>，以创建强大且灵活的内容处理管道。</li>\n</ol></gpt>\n<p>直接上代码，这里从 HTML 解析回 AST，然后使用 <code>rehype-react</code> 处理 <code>&#x3C;gpt></code> 标签，将其转换为自定义格式：</p>\n<pre><code class=\"language-tsx\">const BlogHtmlRenderer: React.FC&#x3C;{ html: string }> = ({ html }) => {\n  const production = { Fragment: prod.Fragment, jsx: prod.jsx, jsxs: prod.jsxs };\n  const processor = unified()\n    .use(rehypeParse, { fragment: true }) // Parse the HTML as fragment\n    // @ts-ignore\n    .use(rehypeReact, {\n      passNode: true, // pass the node as argument to get properties\n      components: {\n        gpt: ({ node, children }: any) => {\n          const { properties } = node;\n          return &#x3C;div className={`gpt`}>{children}&#x3C;/div>;\n        },\n      },\n      ...production,\n    });\n\n  const ContentComponents = processor.processSync(html).result;\n\n  return (\n    &#x3C;>\n      {ContentComponents}\n    &#x3C;/>\n  );\n};\n</code></pre>",
-    "raw": "# 什么是自定义指令\n\nMarkdown 自定义指令的格式可以参考[讨论帖](https://talk.commonmark.org/t/generic-directives-plugins-syntax/444)。通过自定义指令，可以扩展 Markdown 基础语法，增加一些个性化的功能（当然，需要渲染器/编辑器支持）。我在博客中希望能有一些基于 Markdown 编写的外链嵌入、图表视频、特殊样式文本等，丰富文章内容。使用自定义指令主要是希望替代部分 MDX 的功能，因为 MDX 的语法与 Markdown 不完全兼容，会造成旧数据迁移困难、复制粘贴文章内容编译报错等很多困扰。\n\n:::gpt{model=\"GPT-4o\"}\n\n根据该网页，Directive有以下几种格式：\n\n1. **Inline Directives**：以一个冒号开头，格式为`:name[content]{key=val}`，用于内联元素。\n2. **Leaf Block Directives**：以两个冒号开头，格式为`::name [content] {key=val}`，用于独立的块元素。\n3. **Container Block Directives**：以三个或更多冒号开头，格式为`:::name [inline-content] {key=val} contents :::`，用于包含其他块元素的容器。\n\n更多详细信息和示例可以在网页上找到：[Generic directives/plugins syntax](https://talk.commonmark.org/t/generic-directives-plugins-syntax/444)\n\n:::\n\n# remark 和 rehype\n\n:::gpt{model=\"GPT-4o\"}\n\n`remark` 和 `rehype` 是两个用于处理和转换 Markdown 和 HTML 内容的工具链。它们通常结合在一起使用，以便将 Markdown 转换为 HTML，或在处理 Markdown 和 HTML 时进行一些额外的操作。以下是对它们的介绍：\n\n### remark\n`remark` 是一个基于 AST（抽象语法树）的 Markdown 解析器和转换器。它提供了一系列的插件来解析、转换和格式化 Markdown 文本。`remark` 的核心库是 `remark`，而它的生态系统包含许多插件，用于不同的转换和操作。以下是一些常见的 `remark` 插件：\n\n- `remark-parse`：解析 Markdown 文本为 AST。\n- `remark-stringify`：将 AST 转换回 Markdown 文本。\n- `remark-lint`：对 Markdown 内容进行语法检查。\n- `remark-html`：将 Markdown 转换为 HTML。\n- `remark-rehype`：将 Markdown 转换为 rehype 的节点树。\n\n### rehype\n`rehype` 是一个基于 AST 的 HTML 解析器和转换器。它可以解析 HTML，将其转换为 AST，进行各种转换操作，然后再将 AST 转换回 HTML。`rehype` 也有许多插件来处理和转换 HTML。以下是一些常见的 `rehype` 插件：\n\n- `rehype-parse`：解析 HTML 为 AST。\n- `rehype-stringify`：将 AST 转换为 HTML。\n- `rehype-minify`：压缩 HTML 内容。\n- `rehype-highlight`：对代码块进行语法高亮。\n\n### remark 和 rehype 的结合使用\n`remark` 和 `rehype` 通常结合使用来处理和转换 Markdown 和 HTML。例如，可以先使用 `remark` 解析和转换 Markdown 内容，然后使用 `rehype` 进一步处理生成的 HTML。一个常见的用例是将 Markdown 转换为 HTML，同时对代码块进行语法高亮。\n\n以下是一个示例代码，展示了如何将 Markdown 转换为 HTML 并对代码块进行语法高亮：\n\n```javascript\nconst remark = require('remark');\nconst remarkHtml = require('remark-html');\nconst rehype = require('rehype');\nconst rehypeHighlight = require('rehype-highlight');\n\nremark()\n  .use(remarkHtml)\n  .process('# Hello world!', (err, file) => {\n    if (err) throw err;\n    rehype()\n      .data('settings', { fragment: true })\n      .use(rehypeHighlight)\n      .process(file.contents, (err, file) => {\n        if (err) throw err;\n        console.log(String(file));\n      });\n  });\n```\n\n在这个示例中，`remark` 用于解析 Markdown 并转换为 HTML，然后 `rehype` 用于对生成的 HTML 进行语法高亮处理。\n\n:::\n\n我使用 `Velite` 定义 Markdown 文档的组织结构和转换逻辑，`Velite` 使用的 `remark` 和 `rehype` 插件可以如下定义：\n\n```javascript\nconst blogMarkdown = s.markdown({\n  gfm: true,\n  removeComments: false,\n  copyLinkedFiles: true,\n  remarkPlugins: [\n    remarkParse,\n    remarkBreaks,\n    remarkFrontmatter,\n    remarkGfm,\n    remarkMath,\n    remarkEmoji,\n    remarkDirective,\n    remarkDirectiveRehype,\n  ],\n  rehypePlugins: [rehypeSlug, rehypeAutolinkHeadings, rehypeKatex, rehypeStringify],\n});\n```\n\n一般地，使用将 Markdown 转换为 HTML 字符串的方法如下：\n\n```bash\nnpm install remark remark-parse rehype rehype-stringify unified\n```\n\n```typescript\nimport { unified } from 'unified';\nimport remarkParse from 'remark-parse';\nimport remarkRehype from 'remark-rehype';\nimport rehypeStringify from 'rehype-stringify';\n\nasync function convertMarkdownToHtml(markdown: string): Promise<string> {\n    const file = await unified()\n        .use(remarkParse) // 使用 remark 解析 Markdown\n        .use(remarkRehype) // 将 Markdown 转换为 rehype 的节点树\n        .use(rehypeStringify) // 将 rehype 的节点树转换为 HTML\n        .process(markdown); // 处理输入的 Markdown 字符串\n\n    return String(file); // 返回 HTML 字符串\n}\n```\n\n# 代码实现\n\n主要使用 [remarkDirective](https://github.com/remarkjs/remark-directive)、 [remarkDirectiveRehype](https://github.com/IGassmann/remark-directive-rehype) 和 [rehype-react](https://github.com/rehypejs/rehype-react) 这三个插件。\n\n:::gpt{model=\"GPT-4o\"}\n\n`remark-directive` 是一个用于处理自定义指令的 `remark` 插件。自定义指令是一种扩展 Markdown 语法的方式，可以插入特定的 HTML 元素或属性，适用于需要在 Markdown 文档中添加自定义内容或样式的场景。\n\n主要功能包括：\n\n1. **解析自定义指令**：识别并解析 Markdown 文档中的自定义指令。\n2. **生成抽象语法树（AST）节点**：将解析后的指令转换为 `remark` 的抽象语法树（AST）节点，便于进一步处理。\n\n\n\n`remark-directive-rehype` 是一个插件，允许你在使用 `remark` 和 `rehype` 处理 Markdown 时，处理自定义指令。这个项目在你希望由 `remark-directive` 解析的指令在使用 `remark-rehype` 时被解析为 HTML（hast 节点）时非常有用。这特别适用于将 Markdown 指令转换为 HTML 标签，并通过 `react-markdown` 输出为组件的场景。\n\n这个插件的主要功能包括：\n\n1. **解析自定义指令**：它能够识别并解析 Markdown 中的自定义指令语法。\n2. **转换为 rehype 兼容的节点**：将解析后的自定义指令转换为 rehype 兼容的节点，使其可以进一步处理和转换为 HTML。\n\n这个插件的使用场景包括需要在 Markdown 中插入复杂的 HTML 元素，或者希望通过 Markdown 语法实现某些特殊功能，如插入图表、视频、特殊样式的文本等。\n\n你可以在 `remark` 和 `rehype` 的处理管道中使用这个插件，结合其他插件，实现复杂的 Markdown 转换和处理。\n\n\n\n`rehype-react` 是一个用于将 HTML（hast）语法树转换为 React 组件的插件。它适用于希望在 React 应用中渲染经过处理的 HTML 内容的场景。\n\n主要功能和特点包括：\n\n1. **将 HTML 转换为 React 组件**：`rehype-react` 能够将经过 `rehype` 处理的 HTML 语法树（hast）转换为 React 组件，从而使得在 React 应用中可以方便地使用和渲染这些内容。\n2. **支持自定义组件**：在转换过程中，你可以定义和使用自定义的 React 组件，替代标准的 HTML 元素。这使得你可以在渲染过程中插入自定义逻辑或样式。\n3. **集成性强**：`rehype-react` 可以与 `unified` 生态系统中的其他插件结合使用，如 `remark` 和 `rehype`，以创建强大且灵活的内容处理管道。\n\n:::\n\n直接上代码，这里从 HTML 解析回 AST，然后使用 `rehype-react` 处理 `<gpt>` 标签，将其转换为自定义格式：\n\n```tsx\nconst BlogHtmlRenderer: React.FC<{ html: string }> = ({ html }) => {\n  const production = { Fragment: prod.Fragment, jsx: prod.jsx, jsxs: prod.jsxs };\n  const processor = unified()\n    .use(rehypeParse, { fragment: true }) // Parse the HTML as fragment\n    // @ts-ignore\n    .use(rehypeReact, {\n      passNode: true, // pass the node as argument to get properties\n      components: {\n        gpt: ({ node, children }: any) => {\n          const { properties } = node;\n          return <div className={`gpt`}>{children}</div>;\n        },\n      },\n      ...production,\n    });\n\n  const ContentComponents = processor.processSync(html).result;\n\n  return (\n    <>\n      {ContentComponents}\n    </>\n  );\n};\n```",
-    "path": "posts/use-custom-directives-in-markdown-render-as-react-components",
-    "excerpt": "<p>自定义指令是扩展Markdown基础语法的一种方式，允许用户增加个性化功能，如外链嵌入、图表视频和特殊样式文本等。通过自定义指令，可以避免使用MDX时遇到的语法兼容性问题和数据迁移困难。自定义指令的格式包括内联指令、叶块指令和容器块指令，每种格式都有特定的语法规则。<code>remark</code>和<code>rehype</code>是处理和转换Markdown和HTML内容的工具链，它们通常结合使用，以便将Markdown转换为HTML或进行其他操作。<code>remark</code>基于AST解析和转换Markdown文本，而<code>rehype</code>则处理HTML。结合使用<code>remark-directive</code>、<code>remark-directive-rehype</code>和<code>rehype-react</code>插件，可以实现Markdown文档的自定义指令解析和转换为React组件，从而在React应用中渲染复杂内容。</p>",
-    "toc": [
-      {
-        "title": "什么是自定义指令",
-        "url": "#什么是自定义指令",
-        "items": []
-      },
-      {
-        "title": "remark 和 rehype",
-        "url": "#remark-和-rehype",
-        "items": []
-      },
-      {
-        "title": "代码实现",
-        "url": "#代码实现",
-        "items": []
-      }
-    ],
-    "metadata": {
-      "readingTime": 4,
-      "wordCount": 1121.4
-    },
-    "author": "ridd",
-    "columns": [
-      "blog"
-    ],
-    "categories": [
-      "coding"
-    ],
-    "tags": [
-      "Markdown",
-      "React",
-      "Next.js",
-      "Unified",
-      "remark",
-      "rehype",
-      "Custom Directives"
-    ],
-    "permalink": "/post/use-custom-directives-in-markdown-render-as-react-components",
     "images": {}
   }
 ]

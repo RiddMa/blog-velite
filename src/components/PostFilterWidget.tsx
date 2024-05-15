@@ -1,20 +1,18 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
-import { useParams, usePathname, useRouter, useSearchParams } from "next/navigation";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { Selection } from "@nextui-org/react";
 import { Select, SelectItem } from "@nextui-org/select";
 import { categories, columns, tags } from "@/.velite";
-import { Button } from "@nextui-org/button";
 import { debounce } from "lodash";
-import { usePageStateStore } from "@/src/store/store";
-import { useShallow } from "zustand/react/shallow";
 
-const PostFilterWidget: React.FC<{ useColumn?: string; useCategory?: string; useTag?: string }> = ({
-  useColumn,
-  useCategory,
-  useTag,
-}) => {
+const PostFilterWidget: React.FC<{
+  useQuerySubPath?: boolean;
+  useColumn?: string;
+  useCategory?: string;
+  useTag?: string;
+}> = ({ useQuerySubPath = false, useColumn, useCategory, useTag }) => {
   const router = useRouter();
   const pathname = usePathname();
   const searchParams = useSearchParams();
@@ -32,38 +30,34 @@ const PostFilterWidget: React.FC<{ useColumn?: string; useCategory?: string; use
   const onFilter = () => {
     const params = new URLSearchParams();
 
-    if (selectedColumns !== "all" && selectedColumns.size > 0) {
+    if (!useColumn && selectedColumns !== "all" && selectedColumns.size > 0) {
       params.set("column", Array.from(selectedColumns).join(","));
     }
-    if (selectedCategories !== "all" && selectedCategories.size > 0) {
+    if (!useCategory && selectedCategories !== "all" && selectedCategories.size > 0) {
       params.set("category", Array.from(selectedCategories).join(","));
     }
-    if (selectedTags !== "all" && selectedTags.size > 0) {
+    if (!useTag && selectedTags !== "all" && selectedTags.size > 0) {
       params.set("tag", Array.from(selectedTags).join(","));
     }
 
     const search = params.toString();
     const query = search ? `?${search}` : "";
-    router.push(`${pathname}${query}`);
+    let newPathname = pathname;
+    if (useQuerySubPath) {
+      if (query === "") {
+        newPathname = pathname.endsWith("/query") ? pathname.replace(/\/query$/, "") : pathname;
+      } else {
+        newPathname = pathname.endsWith("/query") ? pathname : `${pathname}/query`;
+      }
+    }
+    router.push(`${newPathname}${query}`);
   };
 
-  const debouncedFilter = debounce(onFilter, 300); // Adjust the debounce delay as needed
+  const debouncedFilter = debounce(onFilter, 500); // Adjust the debounce delay as needed
 
   useEffect(() => {
     debouncedFilter();
   }, [selectedColumns, selectedCategories, selectedTags, debouncedFilter]);
-
-  const [disableScroll, setDisableScroll] = usePageStateStore(
-    useShallow((state) => [state.disableScroll, state.setDisableScroll]),
-  );
-
-  const handleOpenChange = (open: boolean) => {
-    if (open) {
-      // document.body.classList.add("disable-scroll");
-    } else {
-      // document.body.classList.remove("disable-scroll");
-    }
-  };
 
   return (
     <aside className={`flex flex-col gap-4 px-0`}>
@@ -102,10 +96,8 @@ const PostFilterWidget: React.FC<{ useColumn?: string; useCategory?: string; use
         label="标签"
         selectionMode="multiple"
         placeholder="筛选标签"
-        showScrollIndicators={true}
         selectedKeys={selectedTags}
         onSelectionChange={setSelectedTags}
-        onOpenChange={handleOpenChange}
       >
         {tags.map((tag) => (
           <SelectItem key={tag.slug} value={tag.slug}>

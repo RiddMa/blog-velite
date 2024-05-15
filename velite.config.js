@@ -195,6 +195,9 @@ export default defineConfig({
     pages,
   },
   prepare: async (data) => {
+    // Sort the posts array by the updated date in descending order
+    data.posts.sort((a, b) => new Date(b.updated).getTime() - new Date(a.updated).getTime());
+
     try {
       const tagsFromPosts = mergePostsTags(data.posts);
       const filteredTags = tagsFromPosts.filter((tag) => !(tag in data.tagDict));

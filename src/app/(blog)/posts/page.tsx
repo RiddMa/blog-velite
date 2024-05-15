@@ -1,25 +1,10 @@
-import { Post, posts } from "@/.velite";
+import { posts } from "@/.velite";
 import WaterfallGrid from "@/src/components/WaterfallGrid";
 import Link from "next/link";
 import PostCard from "@/src/components/PostCard";
-import { filterPosts } from "@/src/util/util";
 
-interface PostListProps {
-  params: {
-    slug: string;
-  };
-  searchParams: {
-    column?: string;
-    category?: string;
-    tag?: string;
-  };
-}
-
-export default function PostListPage({ params, searchParams }: PostListProps) {
-  const displayedPosts = filterPosts(posts, searchParams);
-
-  // Sort the posts array by the updated date in descending order
-  displayedPosts.sort((a, b) => new Date(b.updated).getTime() - new Date(a.updated).getTime());
+export default function PostListPage() {
+  const displayedPosts = posts;
 
   return (
     <>

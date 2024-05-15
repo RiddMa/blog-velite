@@ -4,6 +4,42 @@
     "slug": "hello"
   },
   {
+    "name": "React",
+    "slug": "react"
+  },
+  {
+    "name": "Next.js",
+    "slug": "next-js"
+  },
+  {
+    "name": "HTML",
+    "slug": "html"
+  },
+  {
+    "name": "CSS",
+    "slug": "css"
+  },
+  {
+    "name": "Markdown",
+    "slug": "markdown"
+  },
+  {
+    "name": "Unified",
+    "slug": "unified"
+  },
+  {
+    "name": "remark",
+    "slug": "remark"
+  },
+  {
+    "name": "rehype",
+    "slug": "rehype"
+  },
+  {
+    "name": "Custom Directives",
+    "slug": "custom-directives"
+  },
+  {
     "name": "北邮",
     "slug": "bupt"
   },
@@ -40,20 +76,8 @@
     "slug": "openclash"
   },
   {
-    "name": "data science",
-    "slug": "data-science"
-  },
-  {
-    "name": "explore",
-    "slug": "explore"
-  },
-  {
     "name": "GitHub Actions",
     "slug": "github-actions"
-  },
-  {
-    "name": "Next.js",
-    "slug": "next-js"
   },
   {
     "name": "VPS",
@@ -72,16 +96,12 @@
     "slug": "ssh"
   },
   {
-    "name": "python",
-    "slug": "python"
+    "name": "data science",
+    "slug": "data-science"
   },
   {
-    "name": "greetings",
-    "slug": "greetings"
-  },
-  {
-    "name": "world",
-    "slug": "world"
+    "name": "explore",
+    "slug": "explore"
   },
   {
     "name": "javascript",
@@ -92,35 +112,15 @@
     "slug": "discovery"
   },
   {
-    "name": "React",
-    "slug": "react"
+    "name": "python",
+    "slug": "python"
   },
   {
-    "name": "HTML",
-    "slug": "html"
+    "name": "greetings",
+    "slug": "greetings"
   },
   {
-    "name": "CSS",
-    "slug": "css"
-  },
-  {
-    "name": "Markdown",
-    "slug": "markdown"
-  },
-  {
-    "name": "Unified",
-    "slug": "unified"
-  },
-  {
-    "name": "remark",
-    "slug": "remark"
-  },
-  {
-    "name": "rehype",
-    "slug": "rehype"
-  },
-  {
-    "name": "Custom Directives",
-    "slug": "custom-directives"
+    "name": "world",
+    "slug": "world"
   }
 ]
