@@ -10,20 +10,17 @@ import { globals } from "@/.velite";
 import { Button } from "@nextui-org/button";
 
 const NavList: React.FC = () => {
+  const [setTopNav] = usePageStateStore(useShallow((state) => [state.setTopNav]));
+
   return (
     <>
       <ul className="my-4 flex h-full w-full flex-col justify-center gap-2 text-lg xl:m-0 xl:flex-row xl:gap-1">
         {globals.topNavItems.map(({ label, href, icon }, key) => (
           <Link key={label} href={href} className="w-full">
-            <Button
-              variant={`light`}
-              aria-label={label}
-              startContent={<Icon icon={icon} className="text-lg" />}
-              className={`transition-apple text-white/80 hover:text-white`}
-              fullWidth={true}
-            >
-              <span className={`whitespace-nowrap inline-block`}>{label}</span>
-            </Button>
+            <button data-theme="dark" onClick={() => setTopNav(false)} className={`top-navbar-btn`}>
+              <Icon icon={icon} className="text-lg" />
+              {label}
+            </button>
           </Link>
         ))}
       </ul>
@@ -97,9 +94,14 @@ const TopNavbar: React.FC<TopNavbarProps> = ({ className = "" }) => {
               />
             </Button>
             <Link href="/" className="transition-apple text-xl text-white/80 hover:text-white xl:-ml-2">
-              <Button variant={`light`} aria-label="Homepage" className="top-navbar-btn">
-                {"Ridd Blog"}
-              </Button>
+              <button
+                data-theme="dark"
+                aria-label="Homepage"
+                onClick={() => setTopNav(false)}
+                className={`top-navbar-btn`}
+              >
+                {globals.siteName}
+              </button>
             </Link>
             <div className={`hidden xl:block xl:grow`}>
               <span></span>

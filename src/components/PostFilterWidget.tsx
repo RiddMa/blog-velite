@@ -7,6 +7,8 @@ import { Select, SelectItem } from "@nextui-org/select";
 import { categories, columns, tags } from "@/.velite";
 import { Button } from "@nextui-org/button";
 import { debounce } from "lodash";
+import { usePageStateStore } from "@/src/store/store";
+import { useShallow } from "zustand/react/shallow";
 
 const PostFilterWidget: React.FC<{ useColumn?: string; useCategory?: string; useTag?: string }> = ({
   useColumn,
@@ -51,6 +53,18 @@ const PostFilterWidget: React.FC<{ useColumn?: string; useCategory?: string; use
     debouncedFilter();
   }, [selectedColumns, selectedCategories, selectedTags, debouncedFilter]);
 
+  const [disableScroll, setDisableScroll] = usePageStateStore(
+    useShallow((state) => [state.disableScroll, state.setDisableScroll]),
+  );
+
+  const handleOpenChange = (open: boolean) => {
+    if (open) {
+      // document.body.classList.add("disable-scroll");
+    } else {
+      // document.body.classList.remove("disable-scroll");
+    }
+  };
+
   return (
     <aside className={`flex flex-col gap-4 px-0`}>
       {/*<pre>{JSON.stringify(params, null, 2)}</pre>*/}
@@ -88,8 +102,10 @@ const PostFilterWidget: React.FC<{ useColumn?: string; useCategory?: string; use
         label="标签"
         selectionMode="multiple"
         placeholder="筛选标签"
+        showScrollIndicators={true}
         selectedKeys={selectedTags}
         onSelectionChange={setSelectedTags}
+        onOpenChange={handleOpenChange}
       >
         {tags.map((tag) => (
           <SelectItem key={tag.slug} value={tag.slug}>

@@ -14,6 +14,8 @@ interface PageState {
   setDarkMode: (value: boolean) => void;
   isMobile: boolean;
   setIsMobile: (value: boolean) => void;
+  disableScroll: boolean;
+  setDisableScroll: (value: boolean) => void;
 }
 
 export const getDarkMode = () => {
@@ -54,4 +56,6 @@ export const usePageStateStore = create<PageState>((set) => ({
     }),
   isMobile: getIsMobile(),
   setIsMobile: (value) => set(() => ({ isMobile: value })),
+  disableScroll: false,
+  setDisableScroll: (value) => set(() => ({ disableScroll: value })),
 }));

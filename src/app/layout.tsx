@@ -4,6 +4,7 @@ import "../styles/typography.css";
 import "../styles/scrollbar.css";
 import React from "react";
 import Providers from "./providers";
+import { WebVitals } from "@/src/components/WebVitals";
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -23,6 +24,7 @@ export default function RootLayout({
   return (
     <html lang="en" className="dark">
       <body className={`overflow-x-clip min-h-[calc(100dvh)]`}>
+        <WebVitals />
         <Providers>{children}</Providers>
       </body>
     </html>

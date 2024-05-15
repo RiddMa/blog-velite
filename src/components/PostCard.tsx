@@ -65,6 +65,7 @@ export const PostCard: React.FC<IPostCardProps> = ({ item: post, imgWidth }) => 
             {excerpt && (
               <motion.div
                 className={`absolute overflow-y-auto`}
+                initial={{ maxHeight: 0 }}
                 animate={{
                   maxHeight: isHovered ? -hoverOffset : 0,
                   opacity: isHovered ? 1 : 0,
@@ -73,7 +74,7 @@ export const PostCard: React.FC<IPostCardProps> = ({ item: post, imgWidth }) => 
                 transition={transitionApple}
               >
                 <p>{excerpt}</p>
-                <TableOfContents toc={toc} urlPrefix={permalink} useNextLink={true} className={`prose-article-card`} />
+                {/*<TableOfContents toc={toc} urlPrefix={permalink} useNextLink={true} className={`prose-article-card`} />*/}
               </motion.div>
             )}
           </motion.div>

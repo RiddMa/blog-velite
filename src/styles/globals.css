@@ -6,7 +6,8 @@
 /*  outline: 1px solid tomato;*/
 /*}*/
 
-html {
+:root {
+  scrollbar-gutter: stable;
   scroll-behavior: smooth;
 }
 
@@ -85,7 +86,7 @@ body.dark {
 }
 
 .top-navbar-btn {
-  @apply relative text-lg flex items-center text-white/80 hover:text-white;
+  @apply btn btn-sm btn-ghost text-base font-normal text-white/80 hover:text-white outline-transparent border-none;
 }
 
 /*.side-navbar{*/
