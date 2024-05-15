@@ -201,7 +201,7 @@ export function mergeTags<T>(...arrays: T[][]): T[] {
 }
 
 export async function parseMarkdown(markdown: string): Promise<string> {
-  console.log("Parsing markdown...", markdown);
+  // console.log("Parsing markdown...", markdown);
   const file = await unified()
     .use(remarkParse)
     .use(remarkBreaks)
@@ -218,6 +218,6 @@ export async function parseMarkdown(markdown: string): Promise<string> {
     .use(rehypeKatex)
     .use(rehypeStringify)
     .process(markdown);
-  console.log("Parsed markdown...", String(file));
+  // console.log("Parsed markdown...", String(file));
   return String(file);
 }
