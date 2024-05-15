@@ -23,7 +23,7 @@ const TOCItem: React.FC<TOCRecursiveProps> = ({ items, urlPrefix = "", useNextLi
       {items.map((item, index) => (
         <li key={index}>
           {useNextLink && <Link href={`${urlPrefix}${item.url}`}>{item.title}</Link>}
-          {!useNextLink && <a href={`${urlPrefix}${item.url}`}>{item.title}</a>}
+          {!useNextLink && <span>{item.title}</span>}
           {item.items && item.items.length > 0 && (
             <TOCItem items={item.items} urlPrefix={urlPrefix} useNextLink={useNextLink} plain={plain} />
           )}

@@ -13,7 +13,7 @@ import rehypeStringify from "rehype-stringify";
 import rehypeKatex from "rehype-katex";
 import rehypeAutolinkHeadings from "rehype-autolink-headings";
 import rehypeSlug from "rehype-slug";
-import { listFiles, mergePostsTags, mergeTags, postProcessMarkdownImages } from "@/src/util/util";
+import { listFiles, mergePostsTags, mergeTags, parseMarkdown, postProcessMarkdownImages } from "@/src/util/util";
 import path from "node:path";
 import { projectRootPath, staticBasePath } from "@/base-path";
 import { generateExcerptForPost, generateSlugForTags } from "@/src/util/llm";
@@ -234,6 +234,12 @@ export default defineConfig({
             const updatedContent = matter.stringify(content, frontmatter); // Stringify the updated content
             await fs.writeFile(filePath, updatedContent); // Write the updated content back to the file
           }
+        }),
+      );
+
+      await Promise.all(
+        data.posts.map(async (post, index) => {
+          data.posts[index].excerpt = await parseMarkdown(post.excerpt);
         }),
       );
     } catch (error) {

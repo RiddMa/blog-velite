@@ -92,12 +92,20 @@
     "slug": "discovery"
   },
   {
-    "name": "Markdown",
-    "slug": "markdown"
-  },
-  {
     "name": "React",
     "slug": "react"
+  },
+  {
+    "name": "HTML",
+    "slug": "html"
+  },
+  {
+    "name": "CSS",
+    "slug": "css"
+  },
+  {
+    "name": "Markdown",
+    "slug": "markdown"
   },
   {
     "name": "Unified",

@@ -3,13 +3,13 @@
 import React, { useState } from "react";
 import Image from "next/image";
 import { Card } from "@nextui-org/card";
-import { Image as NextUIImage } from "@nextui-org/image";
 import { motion } from "framer-motion";
 import { transitionApple } from "@/src/styles/framer-motion";
-import TableOfContents from "@/src/components/TableOfContents";
 import { formatDate } from "@/src/store/day";
 import { Post } from "@/.velite";
 import Link from "next/link";
+import { parseMarkdown } from "@/src/util/util";
+import BlogHtmlRenderer from "@/src/components/BlogHtmlRenderer";
 
 interface IPostCardProps {
   item: Post;
@@ -44,14 +44,23 @@ export const PostCard: React.FC<IPostCardProps> = ({ item: post, imgWidth }) => 
               }}
               transition={transitionApple}
             >
-              <NextUIImage
-                as={Image}
+              {/*<NextUIImage*/}
+              {/*  as={Image}*/}
+              {/*  src={cover.src}*/}
+              {/*  alt={"cover image"}*/}
+              {/*  removeWrapper*/}
+              {/*  className="card"*/}
+              {/*  width={imgWidth}*/}
+              {/*  height={imgHeight}*/}
+              {/*  style={{ margin: 0 }}*/}
+              {/*/>*/}
+              <Image
                 src={cover.src}
-                alt={"cover image"}
-                removeWrapper
-                className="card"
+                alt={`cover image`}
+                className="rounded-2xl"
                 width={imgWidth}
                 height={imgHeight}
+                blurDataURL={cover.blurDataURL}
                 style={{ margin: 0 }}
               />
             </motion.div>
@@ -73,8 +82,8 @@ export const PostCard: React.FC<IPostCardProps> = ({ item: post, imgWidth }) => 
                 }}
                 transition={transitionApple}
               >
-                <p>{excerpt}</p>
-                {/*<TableOfContents toc={toc} urlPrefix={permalink} useNextLink={true} className={`prose-article-card`} />*/}
+                {/*<p>{excerpt}</p>*/}
+                <BlogHtmlRenderer html={excerpt} />
               </motion.div>
             )}
           </motion.div>
@@ -89,7 +98,6 @@ export const PostCard: React.FC<IPostCardProps> = ({ item: post, imgWidth }) => 
             <span className="text-body text-color-caption inline-block text-nowrap ml-4">{formatDate(updated)}</span>
           </div>
         </Card>
-        {/*</Link>*/}
       </motion.div>
     </Link>
   );

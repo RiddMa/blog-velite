@@ -47,5 +47,9 @@
   "remark": "remark",
   "rehype": "rehype",
   "Custom Directives": "custom-directives",
-  "custom-directives": "Custom Directives"
+  "custom-directives": "Custom Directives",
+  "HTML": "html",
+  "html": "HTML",
+  "CSS": "css",
+  "css": "CSS"
 }

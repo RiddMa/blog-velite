@@ -8,6 +8,18 @@ import fs from "fs/promises";
 import sharp from "sharp";
 import { Post, Tag, tagDict } from "@/.velite";
 import remarkParse from "remark-parse";
+import remarkBreaks from "remark-breaks";
+import remarkFrontmatter from "remark-frontmatter";
+import remarkGfm from "remark-gfm";
+import remarkMath from "remark-math";
+import remarkEmoji from "remark-emoji";
+import remarkDirective from "remark-directive";
+import remarkDirectiveRehype from "remark-directive-rehype";
+import rehypeSlug from "rehype-slug";
+import rehypeAutolinkHeadings from "rehype-autolink-headings";
+import rehypeKatex from "rehype-katex";
+import remarkRehype from "remark-rehype";
+import rehypeRaw from "rehype-raw";
 
 export function isDefined<T>(value: T | undefined): value is T {
   return value !== undefined;
@@ -186,4 +198,26 @@ export function mergeTags<T>(...arrays: T[][]): T[] {
     });
     return Array.from(tagSet) as T[];
   }
+}
+
+export async function parseMarkdown(markdown: string): Promise<string> {
+  console.log("Parsing markdown...", markdown);
+  const file = await unified()
+    .use(remarkParse)
+    .use(remarkBreaks)
+    .use(remarkFrontmatter)
+    .use(remarkGfm)
+    .use(remarkMath)
+    .use(remarkEmoji)
+    .use(remarkDirective)
+    .use(remarkDirectiveRehype)
+    .use(remarkRehype, { allowDangerousHtml: true })
+    .use(rehypeRaw)
+    .use(rehypeSlug)
+    .use(rehypeAutolinkHeadings)
+    .use(rehypeKatex)
+    .use(rehypeStringify)
+    .process(markdown);
+  console.log("Parsed markdown...", String(file));
+  return String(file);
 }
