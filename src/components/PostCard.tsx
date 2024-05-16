@@ -9,6 +9,8 @@ import { formatDate } from "@/src/store/day";
 import { Post } from "@/.velite";
 import Link from "next/link";
 import BlogHtmlRenderer from "@/src/components/BlogHtmlRenderer";
+import { MotionDiv } from "@/src/components/transition/MotionDiv";
+import { MotionH1 } from "@/src/app/(blog)/post/[slug]/MotionH1";
 
 interface IPostCardProps {
   item: Post;
@@ -30,7 +32,20 @@ export const PostCard: React.FC<IPostCardProps> = ({ item: post, imgWidth }) => 
 
   return (
     <Link href={permalink}>
-      <motion.div onHoverStart={() => setIsHovered(true)} onHoverEnd={() => setIsHovered(false)}>
+      <motion.div
+        key={`card-container-${permalink}`}
+        layoutId={`card-container-${permalink}`}
+        // initial="hidden"
+        // animate="enter"
+        // exit="exit"
+        // variants={{
+        //   hidden: { opacity: 0, scale: 0 },
+        //   enter: { opacity: 1, scale: 1 },
+        //   exit: { opacity: 0, scale: 5 },
+        // }}
+        onHoverStart={() => setIsHovered(true)}
+        onHoverEnd={() => setIsHovered(false)}
+      >
         <Card
           className={`group transition-apple card drop-shadow-lg hover:drop-shadow-2xl prose-article-card gap-4 p-4`}
         >
@@ -43,25 +58,17 @@ export const PostCard: React.FC<IPostCardProps> = ({ item: post, imgWidth }) => 
               }}
               transition={transitionApple}
             >
-              {/*<NextUIImage*/}
-              {/*  as={Image}*/}
-              {/*  src={cover.src}*/}
-              {/*  alt={"cover image"}*/}
-              {/*  removeWrapper*/}
-              {/*  className="card"*/}
-              {/*  width={imgWidth}*/}
-              {/*  height={imgHeight}*/}
-              {/*  style={{ margin: 0 }}*/}
-              {/*/>*/}
-              <Image
-                src={cover.src}
-                alt={`cover image`}
-                className="rounded-2xl"
-                width={imgWidth}
-                height={imgHeight}
-                blurDataURL={cover.blurDataURL}
-                style={{ margin: 0 }}
-              />
+              <MotionDiv keyName={`post-cover-${permalink}`}>
+                <Image
+                  src={cover.src}
+                  alt={`cover image`}
+                  className="rounded-2xl"
+                  width={imgWidth}
+                  height={imgHeight}
+                  blurDataURL={cover.blurDataURL}
+                  style={{ margin: 0 }}
+                />
+              </MotionDiv>
             </motion.div>
           )}
           <motion.div
@@ -69,7 +76,9 @@ export const PostCard: React.FC<IPostCardProps> = ({ item: post, imgWidth }) => 
             transition={transitionApple}
             className={`relative h-full z-[2]`}
           >
-            <h1 className="not-prose line-clamp-2 overflow-ellipsis text-h2">{title}</h1>
+            <MotionH1 keyName={`post-title-${permalink}`} className="not-prose line-clamp-2 overflow-ellipsis text-h2">
+              {title}
+            </MotionH1>
             {excerpt && (
               <motion.div
                 className={`absolute overflow-y-auto`}
@@ -81,7 +90,6 @@ export const PostCard: React.FC<IPostCardProps> = ({ item: post, imgWidth }) => 
                 }}
                 transition={transitionApple}
               >
-                {/*<p>{excerpt}</p>*/}
                 <BlogHtmlRenderer html={excerpt} />
               </motion.div>
             )}

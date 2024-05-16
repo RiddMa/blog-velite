@@ -34,7 +34,7 @@ const PostRelationPanel: React.FC<{
                       {article.title}
                     </span>
                     {/*<span className={`text-caption text-color-caption line-clamp-3`}>{article.excerpt}</span>*/}
-                    <caption className={`text-right`}>{formatDate(article.updated!)}</caption>
+                    <span className={`text-right text-caption`}>{formatDate(article.updated!)}</span>
                   </Card>
                 </Link>
               ))}

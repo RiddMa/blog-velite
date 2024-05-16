@@ -4,46 +4,6 @@
     "slug": "hello"
   },
   {
-    "name": "React",
-    "slug": "react"
-  },
-  {
-    "name": "Next.js",
-    "slug": "next-js"
-  },
-  {
-    "name": "HTML",
-    "slug": "html"
-  },
-  {
-    "name": "CSS",
-    "slug": "css"
-  },
-  {
-    "name": "Framer Motion",
-    "slug": "framer-motion"
-  },
-  {
-    "name": "Markdown",
-    "slug": "markdown"
-  },
-  {
-    "name": "Unified",
-    "slug": "unified"
-  },
-  {
-    "name": "remark",
-    "slug": "remark"
-  },
-  {
-    "name": "rehype",
-    "slug": "rehype"
-  },
-  {
-    "name": "Custom Directives",
-    "slug": "custom-directives"
-  },
-  {
     "name": "北邮",
     "slug": "bupt"
   },
@@ -80,8 +40,20 @@
     "slug": "openclash"
   },
   {
+    "name": "data science",
+    "slug": "data-science"
+  },
+  {
+    "name": "explore",
+    "slug": "explore"
+  },
+  {
     "name": "GitHub Actions",
     "slug": "github-actions"
+  },
+  {
+    "name": "Next.js",
+    "slug": "next-js"
   },
   {
     "name": "VPS",
@@ -100,22 +72,6 @@
     "slug": "ssh"
   },
   {
-    "name": "data science",
-    "slug": "data-science"
-  },
-  {
-    "name": "explore",
-    "slug": "explore"
-  },
-  {
-    "name": "javascript",
-    "slug": "javascript"
-  },
-  {
-    "name": "discovery",
-    "slug": "discovery"
-  },
-  {
     "name": "python",
     "slug": "python"
   },
@@ -126,5 +82,49 @@
   {
     "name": "world",
     "slug": "world"
+  },
+  {
+    "name": "javascript",
+    "slug": "javascript"
+  },
+  {
+    "name": "discovery",
+    "slug": "discovery"
+  },
+  {
+    "name": "React",
+    "slug": "react"
+  },
+  {
+    "name": "HTML",
+    "slug": "html"
+  },
+  {
+    "name": "CSS",
+    "slug": "css"
+  },
+  {
+    "name": "Framer Motion",
+    "slug": "framer-motion"
+  },
+  {
+    "name": "Markdown",
+    "slug": "markdown"
+  },
+  {
+    "name": "Unified",
+    "slug": "unified"
+  },
+  {
+    "name": "remark",
+    "slug": "remark"
+  },
+  {
+    "name": "rehype",
+    "slug": "rehype"
+  },
+  {
+    "name": "Custom Directives",
+    "slug": "custom-directives"
   }
 ]
