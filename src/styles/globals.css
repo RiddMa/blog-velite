@@ -2,9 +2,9 @@
 @tailwind components;
 @tailwind utilities;
 
-* {
-  outline: 1px solid tomato;
-}
+/** {*/
+/*  outline: 1px solid tomato;*/
+/*}*/
 
 :root {
   scrollbar-gutter: stable both-edges;
