@@ -51,5 +51,7 @@
   "HTML": "html",
   "html": "HTML",
   "CSS": "css",
-  "css": "CSS"
+  "css": "CSS",
+  "Framer Motion": "framer-motion",
+  "framer-motion": "Framer Motion"
 }

@@ -8,7 +8,6 @@ import { transitionApple } from "@/src/styles/framer-motion";
 import { formatDate } from "@/src/store/day";
 import { Post } from "@/.velite";
 import Link from "next/link";
-import { parseMarkdown } from "@/src/util/util";
 import BlogHtmlRenderer from "@/src/components/BlogHtmlRenderer";
 
 interface IPostCardProps {
@@ -17,7 +16,7 @@ interface IPostCardProps {
 }
 
 export const PostCard: React.FC<IPostCardProps> = ({ item: post, imgWidth }) => {
-  const { permalink, cover, title, excerpt, toc, tags, updated } = post;
+  const { permalink, cover, title, excerpt, tags, updated } = post;
   const cardGap = 16;
   let imgHeight = 0;
   let hoverOffset = 0;
@@ -95,7 +94,7 @@ export const PostCard: React.FC<IPostCardProps> = ({ item: post, imgWidth }) => 
               ))}
             </div>
             <div className="grow"></div>
-            <span className="text-body text-color-caption inline-block text-nowrap ml-4">{formatDate(updated)}</span>
+            <span className="text-body text-color-caption inline-block text-nowrap ml-4">{formatDate(updated!)}</span>
           </div>
         </Card>
       </motion.div>
