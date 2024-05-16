@@ -2,7 +2,6 @@
 title: 关于本站
 slug: about
 author: ridd
-excerpt: ""
 created: 2024-05-07T19:20:29+08:00
 updated: 2024-05-14T22:57:35+08:00
 ---

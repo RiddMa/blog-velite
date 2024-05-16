@@ -20,6 +20,10 @@
     "slug": "css"
   },
   {
+    "name": "Framer Motion",
+    "slug": "framer-motion"
+  },
+  {
     "name": "Markdown",
     "slug": "markdown"
   },

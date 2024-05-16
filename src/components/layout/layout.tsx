@@ -14,10 +14,9 @@ const BlogLayout: React.FC<BlogLayoutProps> = ({ children, leftNavbar, rightNavb
   return (
     <div className="flex flex-col inset-0 min-h-[calc(100dvh)]">
       <TopNavbar />
-      <div className={`h-[96px]`}></div>
       <div className="flex flex-row flex-1 p-0 m-0 justify-center">
         <LeftNavbarClient>{leftNavbar}</LeftNavbarClient>
-        <MainContainer className="flex-grow w-full xl:max-w-[calc(1024px+4rem)] px-content">{children}</MainContainer>
+        <MainContainer className="main-container">{children}</MainContainer>
         <RightNavbarClient>{rightNavbar}</RightNavbarClient>
       </div>
     </div>

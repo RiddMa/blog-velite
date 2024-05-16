@@ -16,8 +16,8 @@ tags:
   - remark
   - rehype
   - Custom Directives
-created: 2024-05-14T17:27:13.000Z
-updated: 2024-05-14T17:42:13.000Z
+created: 2024-05-14T17:27:13+08:00
+updated: 2024-05-14T17:42:13+08:00
 excerpt: ' 自定义指令是扩展Markdown基础语法的一种方式，允许用户增加个性化功能，如外链嵌入、图表视频和特殊样式文本等。通过自定义指令，可以避免使用MDX时遇到的语法兼容性问题和数据迁移困难。自定义指令的格式包括内联指令、叶块指令和容器块指令，每种格式都有特定的语法规则。`remark`和`rehype`是处理和转换Markdown和HTML内容的工具链，它们通常结合使用，以便将Markdown转换为HTML或进行其他操作。`remark`基于AST解析和转换Markdown文本，而`rehype`则处理HTML。结合使用`remark-directive`、`remark-directive-rehype`和`rehype-react`插件，可以实现Markdown文档的自定义指令解析和转换为React组件，从而在React应用中渲染复杂内容。'
 ---
 

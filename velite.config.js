@@ -4,21 +4,21 @@ import remarkGfm from "remark-gfm";
 import remarkFrontmatter from "remark-frontmatter";
 import remarkBreaks from "remark-breaks";
 import remarkMath from "remark-math";
-import remarkEmoji from "remark-emoji";
-import remarkParse from "remark-parse";
 import remarkDirectiveRehype from "remark-directive-rehype";
 import remarkDirective from "remark-directive";
-
+import remarkParse from "remark-parse";
+import remarkEmoji from "remark-emoji";
 import rehypeStringify from "rehype-stringify";
 import rehypeKatex from "rehype-katex";
 import rehypeAutolinkHeadings from "rehype-autolink-headings";
 import rehypeSlug from "rehype-slug";
-import { listFiles, mergePostsTags, mergeTags, parseMarkdown, postProcessMarkdownImages } from "@/src/util/util";
 import path from "node:path";
 import { projectRootPath, staticBasePath } from "@/base-path";
 import { generateExcerptForPost, generateSlugForTags } from "@/src/util/llm";
 import fs from "fs/promises";
 import matter from "gray-matter";
+import dayjs from "dayjs";
+import { listFiles, mergePostsTags, mergeTags, parseMarkdown, postProcessMarkdownImages } from "@/src/util/veliteUtils";
 
 const blogMarkdown = s.markdown({
   gfm: true,
@@ -60,21 +60,21 @@ const posts = defineCollection({
     .object({
       title: s.string(), // Zod primitive type
       slug: s.slug("posts"), // validate format, unique in posts collection
-      created: s.isodate(), // input Date-like string, output ISO Date string.
-      updated: s.isodate(),
+      created: s.isodate().optional(), // input Date-like string, output ISO Date string.
+      updated: s.isodate().optional(),
       draft: s.boolean().default(false),
       featured: s.boolean().default(false),
       cover: s.image().optional(), // input image relative path, output image object with blurImage.
+      excerpt: s.string().default(""),
+      author: s.string().default(""),
+      columns: s.array(s.string()).default([]),
+      categories: s.array(s.string()).default([]),
+      tags: s.array(s.string()).default([]),
       content: blogMarkdown,
       raw: s.raw(),
       path: s.path(),
-      excerpt: s.string().default(""),
       toc: s.toc(), // table of contents of markdown content
       metadata: s.metadata(), // extract markdown reading-time, word-count, etc.
-      author: s.string(),
-      columns: s.array(s.string()),
-      categories: s.array(s.string()),
-      tags: s.array(s.string()).default([]),
     })
     .transform(async (data) => ({
       ...data,
@@ -134,7 +134,7 @@ const tags = defineCollection({
   }),
 });
 
-const tagDictName = "tagDict.json";
+const tagDictName = "tags/tag-dict.json";
 const tagDict = defineCollection({
   name: "TagDict",
   pattern: tagDictName,
@@ -195,9 +195,6 @@ export default defineConfig({
     pages,
   },
   prepare: async (data) => {
-    // Sort the posts array by the updated date in descending order
-    data.posts.sort((a, b) => new Date(b.updated).getTime() - new Date(a.updated).getTime());
-
     try {
       const tagsFromPosts = mergePostsTags(data.posts);
       const filteredTags = tagsFromPosts.filter((tag) => !(tag in data.tagDict));
@@ -226,14 +223,29 @@ export default defineConfig({
 
       await Promise.all(
         data.posts.map(async (post, index) => {
+          let modified = false;
+          if (!post.created) {
+            data.posts[index].created = dayjs().format();
+            modified = true;
+          }
+          if (!post.updated) {
+            data.posts[index].updated = dayjs().format();
+            modified = true;
+          }
           if (post.excerpt === "") {
             console.log("Post sent to LLM for excerpt generation:", post.title);
             data.posts[index].excerpt = await generateExcerptForPost(post.raw);
-
+            modified = true;
+          }
+          if (modified) {
             const filePath = path.join(projectRootPath, veliteRoot, `${post.path}.md`);
             const fileContent = await fs.readFile(filePath, "utf8"); // Read the markdown file
             const { content, data: frontmatter } = matter(fileContent); // Parse the frontmatter using gray-matter
+
+            frontmatter.created = data.posts[index].created; // Update the created date in the frontmatter
+            frontmatter.updated = data.posts[index].updated; // Update the updated date in the frontmatter
             frontmatter.excerpt = data.posts[index].excerpt; // Update the excerpt in the frontmatter
+
             const updatedContent = matter.stringify(content, frontmatter); // Stringify the updated content
             await fs.writeFile(filePath, updatedContent); // Write the updated content back to the file
           }
@@ -248,6 +260,9 @@ export default defineConfig({
     } catch (error) {
       console.error("Error:", error);
     }
+
+    // Sort the posts array by the updated date in descending order
+    data.posts.sort((a, b) => new Date(b.updated).getTime() - new Date(a.updated).getTime());
   },
   complete: async (data) => {
     try {

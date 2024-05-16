@@ -5,6 +5,7 @@ import "../styles/scrollbar.css";
 import React from "react";
 import Providers from "./providers";
 import { WebVitals } from "@/src/components/WebVitals";
+import PageTransitionEffect from "@/src/components/PageTransitionEffect";
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -22,10 +23,12 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className="dark">
+    <html lang="en" className="dark" style={{ overflow: "auto", scrollbarGutter: "stable" }}>
       <body className={`overflow-x-clip min-h-[calc(100dvh)]`}>
         <WebVitals />
-        <Providers>{children}</Providers>
+        <Providers>
+          <PageTransitionEffect>{children}</PageTransitionEffect>
+        </Providers>
       </body>
     </html>
   );
