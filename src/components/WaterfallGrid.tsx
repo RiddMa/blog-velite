@@ -34,13 +34,13 @@ const WaterfallGrid: React.FC<WaterfallGridProps> = ({ items, CardComponent }) =
           x: minHeightIndex * columnWidth,
           y: newColumnHeights[minHeightIndex],
         };
-        newColumnHeights[minHeightIndex] += ref.current.clientHeight + cardGap;
+        newColumnHeights[minHeightIndex] += ref.current.clientHeight;
       }
     });
 
     setColumnHeights(newColumnHeights);
     setPositions(newPositions);
-  }, [columnCount, cardGap]);
+  }, [columnCount]);
 
   useEffect(() => {
     computeLayout();
@@ -69,6 +69,16 @@ const WaterfallGrid: React.FC<WaterfallGridProps> = ({ items, CardComponent }) =
     }
   }, [imgWidthCalculation]);
 
+  const [isClient, setIsClient] = useState(false);
+
+  useEffect(() => {
+    setIsClient(true);
+  }, []);
+
+  if (!isClient) {
+    return <div>Loading...</div>;
+  }
+
   const renderColumns = () =>
     items.map((item, index) => (
       <div
@@ -87,7 +97,7 @@ const WaterfallGrid: React.FC<WaterfallGridProps> = ({ items, CardComponent }) =
 
   const renderMobile = () =>
     items.map((item, index) => (
-      <div key={item.slug} className="flex flex-col relative gap-8">
+      <div key={item.slug} ref={itemRefs.current[index]} className="flex flex-col py-4">
         <CardComponent item={item} imgWidth={imgWidth} />
       </div>
     ));

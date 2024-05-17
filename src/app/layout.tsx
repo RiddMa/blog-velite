@@ -7,6 +7,7 @@ import Providers from "./providers";
 import { WebVitals } from "@/src/components/WebVitals";
 import PageTransitionEffect from "@/src/components/transition/PageTransitionEffect";
 import { globals } from "@/.velite";
+import BackgroundImage from "@/src/components/BackgroundImage";
 
 export const metadata: Metadata = {
   title: globals.metadata.title,
@@ -31,7 +32,10 @@ export default function RootLayout({
       <body className={`overflow-x-clip min-h-[calc(100dvh)]`}>
         <WebVitals />
         <Providers>
-          <PageTransitionEffect>{children}</PageTransitionEffect>
+          <PageTransitionEffect>
+            <BackgroundImage />
+            {children}
+          </PageTransitionEffect>
           {/*{children}*/}
         </Providers>
       </body>

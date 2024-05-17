@@ -1,5 +1,5 @@
 import Image from "next/image";
-import TopNavbar from "@/src/components/layout/TopNavbar.client";
+import TopNavbar from "@/src/components/layout/TopNavbar";
 import React from "react";
 
 export default function Home() {

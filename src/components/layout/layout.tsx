@@ -1,5 +1,5 @@
 import React from "react";
-import TopNavbar from "@/src/components/layout/TopNavbar.client";
+import TopNavbar from "@/src/components/layout/TopNavbar";
 import LeftNavbarClient from "@/src/components/layout/LeftNavbar.client";
 import RightNavbarClient from "@/src/components/layout/RightNavbar.client";
 import MainContainer from "@/src/components/layout/MainContainer";

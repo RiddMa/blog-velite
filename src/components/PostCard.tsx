@@ -34,6 +34,7 @@ export const PostCard: React.FC<IPostCardProps> = ({ item: post, imgWidth }) => 
     <Link href={permalink} className={`card`}>
       <motion.div
         key={`card-container-${permalink}`}
+        layout={true}
         layoutId={`card-container-${permalink}`}
         onHoverStart={() => setIsHovered(true)}
         onHoverEnd={() => setIsHovered(false)}
@@ -41,7 +42,7 @@ export const PostCard: React.FC<IPostCardProps> = ({ item: post, imgWidth }) => 
       >
         {cover && (
           <motion.div
-            className={`relative mt-0 mx-0 p-0 z-[1] mb-4`}
+            className={`relative mt-0 mx-0 p-0 z-[1] mb-2 xl:mb-4`}
             animate={{
               opacity: isHovered ? 0.1 : 1,
               filter: isHovered ? "blur(20px) saturate(1.5)" : "none",
@@ -55,12 +56,6 @@ export const PostCard: React.FC<IPostCardProps> = ({ item: post, imgWidth }) => 
                 className="rounded-2xl"
                 width={imgWidth}
                 height={imgHeight}
-                // sizes="100vw"
-                // style={{
-                //   margin: 0,
-                //   width: "100%",
-                //   height: "auto",
-                // }}
                 placeholder="blur"
                 blurDataURL={cover.blurDataURL}
                 priority={true}
@@ -73,7 +68,7 @@ export const PostCard: React.FC<IPostCardProps> = ({ item: post, imgWidth }) => 
         <motion.div
           animate={{ translateY: isHovered ? hoverOffset : 0 }}
           transition={transitionApple}
-          className={`relative h-full z-[2] mb-4`}
+          className={`relative h-full z-[2] mb-2 xl:mb-4`}
         >
           <MotionH1 keyName={`post-title-${permalink}`} className="not-prose line-clamp-2 overflow-ellipsis text-h2">
             {title}
