@@ -19,32 +19,32 @@ function generateCombinations<T>(array: T[]): (T | undefined)[] {
   return [undefined, ...array];
 }
 
-export const generateStaticParams = () => {
-  const columnCombinations = generateCombinations(columns);
-  const categoryCombinations = generateCombinations(categories);
-  const tagCombinations = generateCombinations(tags);
-
-  const paths = [];
-
-  for (const column of columnCombinations) {
-    for (const category of categoryCombinations) {
-      for (const tag of tagCombinations) {
-        paths.push({
-          params: {
-            query: "query",
-          },
-          searchParams: {
-            column,
-            category,
-            tag,
-          },
-        });
-      }
-    }
-  }
-
-  return paths;
-};
+// export const generateStaticParams = () => {
+//   const columnCombinations = generateCombinations(columns);
+//   const categoryCombinations = generateCombinations(categories);
+//   const tagCombinations = generateCombinations(tags);
+//
+//   const paths = [];
+//
+//   for (const column of columnCombinations) {
+//     for (const category of categoryCombinations) {
+//       for (const tag of tagCombinations) {
+//         paths.push({
+//           params: {
+//             query: "query",
+//           },
+//           searchParams: {
+//             column,
+//             category,
+//             tag,
+//           },
+//         });
+//       }
+//     }
+//   }
+//
+//   return paths;
+// };
 
 export default function PostListPage({ searchParams }: PostListProps) {
   const displayedPosts = filterPosts(posts, searchParams);

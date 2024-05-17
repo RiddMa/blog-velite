@@ -41,22 +41,24 @@ export default function PostPage({ params }: PostProps) {
       {cover && (
         <>
           <MotionDiv keyName={`post-cover-${permalink}`}>
-            {/*<Image*/}
-            {/*  src={cover.src}*/}
-            {/*  alt={`cover image`}*/}
-            {/*  className="rounded-2xl"*/}
-            {/*  width={cover.width}*/}
-            {/*  height={cover.height}*/}
-            {/*  blurDataURL={cover.blurDataURL}*/}
-            {/*  style={{ margin: 0 }}*/}
-            {/*/>*/}
-            <ImageAwesome
+            <Image
               src={cover.src}
-              alt={title}
-              blurDataURL={cover.blurDataURL}
+              alt={`cover image`}
+              className="rounded-2xl"
               width={cover.width}
               height={cover.height}
+              placeholder="blur"
+              blurDataURL={cover.blurDataURL}
+              priority={true}
+              style={{ margin: 0 }}
             />
+            {/*<ImageAwesome*/}
+            {/*  src={cover.src}*/}
+            {/*  alt={title}*/}
+            {/*  blurDataURL={cover.blurDataURL}*/}
+            {/*  width={cover.width}*/}
+            {/*  height={cover.height}*/}
+            {/*/>*/}
           </MotionDiv>
         </>
       )}

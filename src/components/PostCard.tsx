@@ -65,7 +65,10 @@ export const PostCard: React.FC<IPostCardProps> = ({ item: post, imgWidth }) => 
                   className="rounded-2xl"
                   width={imgWidth}
                   height={imgHeight}
+                  placeholder="blur"
                   blurDataURL={cover.blurDataURL}
+                  priority={true}
+                  quality={50}
                   style={{ margin: 0 }}
                 />
               </MotionDiv>
