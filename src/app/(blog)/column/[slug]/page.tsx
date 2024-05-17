@@ -8,6 +8,8 @@ import WaterfallGrid from "@/src/components/WaterfallGrid";
 import PostCard from "@/src/components/PostCard";
 import BlogHtmlRenderer from "@/src/components/BlogHtmlRenderer";
 import { filterPosts } from "@/src/util/util";
+import { MotionH1 } from "@/src/app/(blog)/post/[slug]/MotionH1";
+import { MotionDiv } from "@/src/components/transition/MotionDiv";
 
 interface ColumnProps {
   params: {
@@ -67,8 +69,10 @@ export default function ColumnPage({ params, searchParams }: ColumnProps) {
         </Link>
       </nav>
       <div className={`prose-article`}>
-        <h1>{column.name}</h1>
-        <BlogHtmlRenderer html={column.description} />
+        <MotionH1 keyName={`column-title-${column.permalink}`}>{column.name}</MotionH1>
+        <MotionDiv keyName={`column-description-${column.permalink}`}>
+          <BlogHtmlRenderer html={column.description} />
+        </MotionDiv>
         <p className="text-end opacity-80">{displayedPosts.length}篇文章</p>
       </div>
       {/*// @ts-ignore // TS cannot infer the type of CardComponent*/}

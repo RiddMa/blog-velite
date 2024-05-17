@@ -7,6 +7,9 @@ import WaterfallGrid from "@/src/components/WaterfallGrid";
 import PostCard from "@/src/components/PostCard";
 import BlogHtmlRenderer from "@/src/components/BlogHtmlRenderer";
 import { filterPosts } from "@/src/util/util";
+import { motion } from "framer-motion";
+import { MotionDiv } from "@/src/components/transition/MotionDiv";
+import { MotionH1 } from "@/src/app/(blog)/post/[slug]/MotionH1";
 
 export function generateMetadata({ params }: CategoryProps): Metadata {
   const category = getCategoryBySlug(params.slug);
@@ -66,8 +69,10 @@ export default function CategoryPage({ params, searchParams }: CategoryProps) {
         </Link>
       </nav>
       <div className={`prose-article`}>
-        <h1>{category.name}</h1>
-        <BlogHtmlRenderer html={category.description} />
+        <MotionH1 keyName={`category-title-${category.permalink}`}>{category.name}</MotionH1>
+        <MotionDiv keyName={`category-description-${category.permalink}`}>
+          <BlogHtmlRenderer html={category.description} />
+        </MotionDiv>
         <p className="text-end opacity-80">{displayedPosts.length}篇文章</p>
       </div>
       {/*// @ts-ignore // TS cannot infer the type of CardComponent*/}

@@ -73,6 +73,7 @@ const TopNavbar: React.FC<TopNavbarProps> = ({ className = "" }) => {
     <>
       <div
         className={`${topNavOpen ? "opacity-100 h-full" : "opacity-0 h-0"} xl:hidden blur-mask transition-apple fixed inset-0 z-[99] bg-black/50`}
+        onClick={() => setTopNav(false)}
       />
 
       <div className={`top-navbar-wrapper ${className}`}>
