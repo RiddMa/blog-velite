@@ -1,8 +1,7 @@
 import { notFound } from "next/navigation";
-import { posts } from "@/.velite";
+import { globals, posts } from "@/.velite";
 import type { Metadata } from "next";
 import { getPostBySlug } from "@/src/store/velite";
-import { ImageAwesome } from "@/src/components/ImageAwesome";
 import PostComment from "@/src/components/PostComment";
 import BlogHtmlRenderer from "@/src/components/BlogHtmlRenderer";
 import React from "react";
@@ -18,8 +17,21 @@ interface PostProps {
 
 export function generateMetadata({ params }: PostProps): Metadata {
   const post = getPostBySlug(params.slug);
-  if (post == null) return {};
-  return { title: post.title, description: post.excerpt };
+  if (post == null) {
+    return {
+      title: `错误：找不到文章`,
+      description: `错误：找不到文章。 | ${globals.metadata.description}`,
+      openGraph: {
+        title: `错误：找不到文章`,
+        description: `错误：找不到文章。 | ${globals.metadata.description}`,
+      },
+    };
+  }
+  return {
+    title: post.title,
+    description: `${post.excerpt} | ${globals.metadata.description}`,
+    openGraph: { title: post.title, description: `${post.excerpt} | ${globals.metadata.description}` },
+  };
 }
 
 export function generateStaticParams(): PostProps["params"][] {

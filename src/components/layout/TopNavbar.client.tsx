@@ -100,7 +100,7 @@ const TopNavbar: React.FC<TopNavbarProps> = ({ className = "" }) => {
                 onClick={() => setTopNav(false)}
                 className={`top-navbar-btn`}
               >
-                {globals.siteName}
+                {globals.metadata.title.default}
               </button>
             </Link>
             <div className={`hidden xl:block xl:grow`}>

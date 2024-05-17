@@ -1,6 +1,6 @@
 import Image from "next/image";
 import { notFound } from "next/navigation";
-import { columns, posts } from "@/.velite";
+import { columns, globals, posts } from "@/.velite";
 import type { Metadata } from "next";
 import { getColumnBySlug } from "@/src/store/velite";
 import Link from "next/link";
@@ -21,8 +21,24 @@ interface ColumnProps {
 
 export function generateMetadata({ params }: ColumnProps): Metadata {
   const column = getColumnBySlug(params.slug);
-  if (column == null) return {};
-  return { title: column.name, description: column.description };
+  if (column == null) {
+    return {
+      title: `错误：找不到专栏`,
+      description: `错误：找不到专栏。 | ${globals.metadata.description}`,
+      openGraph: {
+        title: `错误：找不到专栏`,
+        description: `错误：找不到专栏。 | ${globals.metadata.description}`,
+      },
+    };
+  }
+  return {
+    title: `${column.name} | 专栏`,
+    description: `探索博客专栏“${column.name}”的文章。| ${globals.metadata.description}`,
+    openGraph: {
+      title: `${column.name} | 专栏`,
+      description: `探索博客专栏“${column.name}”的文章。| ${globals.metadata.description}`,
+    },
+  };
 }
 
 export function generateStaticParams(): ColumnProps["params"][] {

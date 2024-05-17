@@ -1,5 +1,5 @@
 import { notFound } from "next/navigation";
-import { categories, posts } from "@/.velite";
+import { categories, globals, posts } from "@/.velite";
 import type { Metadata } from "next";
 import { getCategoryBySlug } from "@/src/store/velite";
 import Link from "next/link";
@@ -7,6 +7,28 @@ import WaterfallGrid from "@/src/components/WaterfallGrid";
 import PostCard from "@/src/components/PostCard";
 import BlogHtmlRenderer from "@/src/components/BlogHtmlRenderer";
 import { filterPosts } from "@/src/util/util";
+
+export function generateMetadata({ params }: CategoryProps): Metadata {
+  const category = getCategoryBySlug(params.slug);
+  if (category == null) {
+    return {
+      title: `错误：找不到分类`,
+      description: `错误：找不到分类。 | ${globals.metadata.description}`,
+      openGraph: {
+        title: `错误：找不到分类`,
+        description: `错误：找不到分类。 | ${globals.metadata.description}`,
+      },
+    };
+  }
+  return {
+    title: `${category.name} | 分类`,
+    description: `探索博客分类“${category.name}”的文章。| ${globals.metadata.description}`,
+    openGraph: {
+      title: `${category.name} | 分类`,
+      description: `探索博客分类“${category.name}”的文章。| ${globals.metadata.description}`,
+    },
+  };
+}
 
 interface CategoryProps {
   params: {
@@ -16,12 +38,6 @@ interface CategoryProps {
     column?: string;
     tag?: string;
   };
-}
-
-export function generateMetadata({ params }: CategoryProps): Metadata {
-  const category = getCategoryBySlug(params.slug);
-  if (category == null) return {};
-  return { title: category.name, description: category.description };
 }
 
 export function generateStaticParams(): CategoryProps["params"][] {

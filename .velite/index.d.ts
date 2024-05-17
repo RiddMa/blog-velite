@@ -7,6 +7,9 @@ type Collections = typeof config.collections
 export type Global = Collections['globals']['schema']['_output']
 export declare const globals: Global
 
+export type Page = Collections['pages']['schema']['_output']
+export declare const pages: Page[]
+
 export type Post = Collections['posts']['schema']['_output']
 export declare const posts: Post[]
 
@@ -24,6 +27,3 @@ export declare const tags: Tag[]
 
 export type TagDict = Collections['tagDict']['schema']['_output']
 export declare const tagDict: TagDict
-
-export type Page = Collections['pages']['schema']['_output']
-export declare const pages: Page[]

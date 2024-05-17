@@ -1,6 +1,37 @@
 {
-  "siteName": "Ridd Blog",
-  "siteNameDescription": "Connect the dots.",
+  "metadata": {
+    "title": {
+      "default": "Ridd's Blog",
+      "template": "%s | Ridd's Blog"
+    },
+    "description": "Ridd 的博客，探索最新的技术趋势与编程技巧，也分享生活经历与摄影作品。",
+    "authors": [{ "name": "Ridd Ma", "url": "https://riddma.com" }],
+    "keywords": [
+      "技术",
+      "编程",
+      "摄影",
+      "博客"
+    ],
+    "openGraph": {
+      "title": {
+        "default": "Ridd's Blog",
+        "template": "%s | Ridd's Blog"
+      },
+      "description": "Ridd 的博客，探索最新的技术趋势与编程技巧，也分享生活经历与摄影作品。",
+      "url": "https://riddma.com",
+      "siteName": "Ridd's Blog",
+      "images": [
+        {
+          "url": "https://riddma.com/images/blog-cover.jpg",
+          "width": 1200,
+          "height": 630,
+          "alt": "Ridd's Blog 封面图片"
+        }
+      ],
+      "locale": "zh_CN",
+      "type": "website"
+    }
+  },
   "social": {
     "github": "https://github.com/RiddMa"
   },

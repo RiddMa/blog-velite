@@ -43,7 +43,7 @@ export const generateSlugForTags = async (tags: string[]): Promise<string[]> => 
   return JSON.parse(response);
 };
 
-export const generateExcerptForPost = async (markdown: string): Promise<string> => {
+export const generateExcerptForMarkdown = async (markdown: string): Promise<string> => {
   const response = await completeChat([
     {
       content:
