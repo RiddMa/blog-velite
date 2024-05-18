@@ -12,7 +12,7 @@ export const getWidthState = (): "mobile" | "tablet" | "desktop" => {
       return "desktop";
     }
   }
-  return "mobile"; // Default to "desktop" if window is not defined
+  return "desktop"; // Default to "desktop" if window is not defined
 };
 
 const useWindowWidthState = (): "mobile" | "tablet" | "desktop" => {

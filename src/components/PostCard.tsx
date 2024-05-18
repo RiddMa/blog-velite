@@ -30,17 +30,19 @@ export const PostCard: React.FC<IPostCardProps> = ({ item: post, imgWidth }) => 
   const [isHovered, setIsHovered] = useState(false);
 
   return (
-    <Link href={permalink} className={`card`}>
-      <motion.div
-        key={`card-container-${permalink}`}
-        layout={true}
-        layoutId={`card-container-${permalink}`}
-        onHoverStart={() => setIsHovered(true)}
-        onHoverEnd={() => setIsHovered(false)}
-        className={`group prose-article-card flex flex-col p-4`}
-      >
+    <motion.div
+      key={`card-container-${permalink}`}
+      // layout={false}
+      // layoutId={`card-container-${permalink}`}
+      onHoverStart={() => setIsHovered(true)}
+      onHoverEnd={() => setIsHovered(false)}
+      className={``}
+    >
+      <Link href={permalink} className={`card group prose-article-card flex flex-col p-4`}>
         {cover && (
           <motion.div
+            // layout={"preserve-aspect"}
+            layoutId={`post-cover-${permalink}`}
             className={`relative mt-0 mx-0 p-0 z-[1] mb-2 xl:mb-4`}
             animate={{
               opacity: isHovered ? 0.1 : 1,
@@ -48,20 +50,18 @@ export const PostCard: React.FC<IPostCardProps> = ({ item: post, imgWidth }) => 
             }}
             transition={transitionApple}
           >
-            <MotionDiv keyName={`post-cover-${permalink}`}>
-              <Image
-                src={cover.src}
-                alt={`cover image`}
-                className="rounded-2xl"
-                width={imgWidth}
-                height={imgHeight}
-                placeholder="blur"
-                blurDataURL={cover.blurDataURL}
-                priority={true}
-                quality={40}
-                style={{ margin: 0 }}
-              />
-            </MotionDiv>
+            <Image
+              src={cover.src}
+              alt={`cover image`}
+              className="rounded-2xl"
+              width={imgWidth}
+              height={imgHeight}
+              placeholder="blur"
+              blurDataURL={cover.blurDataURL}
+              priority={true}
+              quality={40}
+              style={{ margin: 0 }}
+            />
           </motion.div>
         )}
         <motion.div
@@ -69,9 +69,9 @@ export const PostCard: React.FC<IPostCardProps> = ({ item: post, imgWidth }) => 
           transition={transitionApple}
           className={`relative h-full z-[2] mb-2 xl:mb-4`}
         >
-          <MotionH1 keyName={`post-title-${permalink}`} className="not-prose line-clamp-2 overflow-ellipsis text-h2">
+          <motion.h1 layoutId={`post-title-${permalink}`} className="not-prose line-clamp-2 overflow-ellipsis text-h2">
             {title}
-          </MotionH1>
+          </motion.h1>
           {excerpt && (
             <motion.div
               className={`absolute overflow-y-auto`}
@@ -97,8 +97,8 @@ export const PostCard: React.FC<IPostCardProps> = ({ item: post, imgWidth }) => 
           <div className="grow"></div>
           <span className="text-body text-color-caption inline-block text-nowrap ml-4">{formatDate(updated!)}</span>
         </div>
-      </motion.div>
-    </Link>
+      </Link>
+    </motion.div>
   );
 };
 
