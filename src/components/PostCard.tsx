@@ -2,7 +2,6 @@
 
 import React, { useState } from "react";
 import Image from "next/image";
-import { Card } from "@nextui-org/card";
 import { motion } from "framer-motion";
 import { transitionApple } from "@/src/styles/framer-motion";
 import { formatDate } from "@/src/store/day";

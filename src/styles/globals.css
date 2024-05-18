@@ -55,7 +55,7 @@ body.dark {
 }
 
 .bg-image{
-  @apply fixed object-cover blur-3xl -z-50 w-screen h-screen;
+  @apply fixed inset-0 object-cover blur-3xl -z-50 w-screen h-screen;
 }
 
 .color-body {
@@ -102,7 +102,7 @@ body.dark {
 .side-navbar {
   @apply fixed z-[90] w-screen h-[calc(100dvh)] overflow-y-auto overflow-x-clip flex flex-col transition-apple;
   @apply px-4 pb-4 pt-[72px] xl:sticky xl:top-[64px] xl:h-[calc(100vh-64px)] xl:max-w-[240px] xl:pt-[20px];
-  @apply xl:backdrop-blur-none bg-white/75 dark:bg-black/75 xl:bg-transparent dark:xl:bg-transparent;
+  @apply backdrop-blur-bg xl:backdrop-blur-none bg-white/75 dark:bg-black/75 xl:bg-transparent dark:xl:bg-transparent;
   @apply xl:opacity-70 xl:hover:opacity-100;
 }
 
@@ -115,14 +115,6 @@ body.dark {
   @apply outline outline-2 outline-black/5 hover:outline-black/10 dark:outline-white/10 dark:hover:outline-white/20;
   @apply rounded-3xl transition-apple drop-shadow-lg hover:drop-shadow-2xl;
   /*box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);*/
-}
-
-.gpt {
-  @apply rounded-3xl bg-cyan-900 p-4;
-  @apply prose-p:leading-normal prose-p:m-0;
-}
-.gpt p {
-  @apply leading-normal m-0;
 }
 
 .black-corner-top-left {

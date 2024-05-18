@@ -167,7 +167,6 @@ import { Icon } from "@iconify-icon/react";
 import Link from "next/link";
 import { globals } from "@/.velite";
 import { Button } from "@nextui-org/button";
-import { motion } from "framer-motion";
 
 const NavList: React.FC = React.memo(() => {
   const [setTopNav] = usePageStateStore(useShallow((state) => [state.setTopNav]));
@@ -179,7 +178,7 @@ const NavList: React.FC = React.memo(() => {
           <button
             data-theme="dark"
             onClick={() => setTopNav(false)}
-            className="top-navbar-btn"
+            className="top-navbar-btn w-full xl:w-fit"
             aria-label={`Navigate to ${label}`}
           >
             <Icon icon={icon} className="text-lg" />
@@ -239,7 +238,7 @@ const TopNavbar: React.FC<TopNavbarProps> = ({ className = "" }) => {
   return (
     <>
       <div
-        className={`${topNavOpen ? "opacity-100 h-full" : "opacity-0 h-0"} xl:hidden blur-mask transition-apple fixed inset-0 z-[99] bg-black/50`}
+        className={`${topNavOpen ? "opacity-100 h-full" : "opacity-0 h-0"} xl:hidden backdrop-blur-bg transition-apple fixed inset-0 z-[99] bg-black/50`}
         onClick={() => setTopNav(false)}
         aria-hidden={topNavOpen ? "false" : "true"}
       />

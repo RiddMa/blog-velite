@@ -6,10 +6,10 @@ import bgImageLight from "@/content/globals/background/pawel-czerwinski-nyJY9UZn
 // import bgImageLight from "@/content/globals/background/pawel-czerwinski-SoB70WFVWGU-unsplash.jpg";
 import { usePageStateStore } from "@/src/store/store";
 import { useShallow } from "zustand/react/shallow";
-import { AnimatePresence, motion } from "framer-motion";
+import { AnimatePresence } from "framer-motion";
 
 export default function BackgroundImage() {
-  const [darkMode, setDarkMode] = usePageStateStore(useShallow((state) => [state.darkMode, state.setDarkMode]));
+  const [darkMode] = usePageStateStore(useShallow((state) => [state.darkMode, state.setDarkMode]));
 
   return (
     <AnimatePresence>
@@ -19,6 +19,7 @@ export default function BackgroundImage() {
           src={bgImageDark}
           placeholder="blur"
           quality={10}
+          priority={true}
           sizes="100vw"
           className="bg-image brightness-75 contrast-125"
         />
@@ -28,8 +29,10 @@ export default function BackgroundImage() {
           src={bgImageLight}
           placeholder="blur"
           quality={10}
+          priority={true}
           sizes="100vw"
-          className="bg-image brightness-125 contrast-100 saturate-75"
+          className="bg-image brightness-[1.5] contrast-[1] saturate-[0.2]"
+          // className="bg-image brightness-[1.4] contrast-[1] saturate-[0.5]"
         />
       )}
     </AnimatePresence>

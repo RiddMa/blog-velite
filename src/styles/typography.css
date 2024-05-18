@@ -6,6 +6,7 @@
   @apply prose-h3:text-xl prose-h3:font-semibold prose-h3:text-slate-900 prose-h3:dark:text-white;
   @apply prose-h4:text-lg prose-h4:font-semibold prose-h4:text-slate-900 prose-h4:dark:text-white;
   @apply prose-pre:m-0 prose-pre:p-0 prose-pre:font-mono prose-pre:leading-tight prose-pre:text-slate-700 prose-pre:dark:text-slate-300 prose-code:m-0 prose-code:font-mono prose-code:leading-tight prose-code:text-slate-700 prose-code:dark:text-slate-300;
+  @apply prose-code:bg-neutral-400/20 dark:prose-code:bg-neutral-400/20;
   /*@apply prose-a: prose-a:duration-300 prose-a:ease-apple prose-a:no-underline prose-a:text-slate-700 dark:prose-a:text-slate-300 prose-a:font-normal hover:prose-a:underline hover:prose-a:text-sky-700 dark:hover:prose-a:text-sky-400;*/
   word-break: break-word;
   word-wrap: break-word;
@@ -122,6 +123,8 @@
   @apply text-sky-800 hover:text-sky-600 dark:text-sky-300 dark:opacity-80 dark:hover:opacity-100;
 }
 
-/*.hover-text-color-href {*/
-/*    @apply text-sky-800 hover:text-sky-600 dark:text-sky-300 dark:hover:text-sky-300;*/
-/*}*/
+.gpt {
+  @apply rounded-3xl bg-sky-100/60 dark:bg-cyan-950/70 p-4 drop-shadow-lg leading-normal;
+  /*@apply rounded-3xl bg-sky-200 dark:bg-slate-900 p-4;*/
+  @apply prose-p:my-2 prose-ol:my-2 prose-ul:my-2 prose-li:my-2 prose-code:my-2 prose-pre:my-2 prose-blockquote:my-2 prose-hr:my-2 prose-img:my-2 prose-a:my-2;
+}

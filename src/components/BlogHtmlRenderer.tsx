@@ -2,11 +2,10 @@ import React from "react";
 import { unified } from "unified";
 import rehypeParse from "rehype-parse";
 import rehypeReact from "rehype-react";
-import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
-import { oneDark } from "react-syntax-highlighter/dist/cjs/styles/prism";
 import Copy2Clipboard from "@/src/components/Copy2Clipboard";
 import { ImageAwesome } from "@/src/components/ImageAwesome";
 import * as prod from "react/jsx-runtime";
+import { RdSyntaxHighlighter } from "@/src/components/RdSyntaxHighlighter";
 
 interface HtmlProcessorProps {
   html: string;
@@ -34,27 +33,13 @@ const BlogHtmlRenderer: React.FC<HtmlProcessorProps> = ({ html, imgMap = {} }) =
           const language = match?.[1] ? match[1] : "";
           return language ? (
             <div className={`group`}>
-              <Copy2Clipboard>{String(children).replace(/\n$/, "")}</Copy2Clipboard>
-              <SyntaxHighlighter
-                wrapLines={false}
-                wrapLongLines={false}
-                style={oneDark}
-                language={language}
-                showLineNumbers={true}
-                PreTag="div"
-                customStyle={{
-                  margin: "1rem 0",
-                  padding: "0.75rem 0.5rem",
-                  borderRadius: "1rem",
-                }}
-              >
+              <Copy2Clipboard className={`absolute right-2 top-6 opacity-0 group-hover:opacity-100`}>
                 {String(children).replace(/\n$/, "")}
-              </SyntaxHighlighter>
+              </Copy2Clipboard>
+              <RdSyntaxHighlighter language={language} value={children} />
             </div>
           ) : (
-            <code {...props} className={`${className}`}>
-              {children}
-            </code>
+            <code className={className}>{children}</code>
           );
         },
         img: ({ src, alt }) => {
@@ -71,12 +56,7 @@ const BlogHtmlRenderer: React.FC<HtmlProcessorProps> = ({ html, imgMap = {} }) =
 
   const ContentComponents = processor.processSync(html).result;
 
-  return (
-    <>
-      {/*<pre className={`text-wrap`}>{html}</pre>*/}
-      {ContentComponents}
-    </>
-  );
+  return <>{ContentComponents}</>;
 };
 
 export default BlogHtmlRenderer;

@@ -5,22 +5,23 @@ import React from "react";
 
 interface Copy2ClipboardProps {
   children: string;
+  className?: string;
 }
 
-const Copy2Clipboard: React.FC<Copy2ClipboardProps> = ({ children }) => {
+const Copy2Clipboard: React.FC<Copy2ClipboardProps> = ({ children, className }) => {
   const [copied, setCopied] = React.useState(false);
   return (
-    <CopyToClipboard
-      text={children}
-      onCopy={() => {
-        setCopied(true);
-        setTimeout(() => setCopied(false), 2000);
-      }}
-    >
-      <button className={`absolute right-4 top-7 opacity-0 group-hover:opacity-100`}>
-        {copied ? <span>OK!</span> : <span>Copy</span>}
-      </button>
-    </CopyToClipboard>
+    <div className={`${className}`}>
+      <CopyToClipboard
+        text={children}
+        onCopy={() => {
+          setCopied(true);
+          setTimeout(() => setCopied(false), 2000);
+        }}
+      >
+        <button className={`btn btn-sm rounded-xl font-normal`}>{copied ? <span>OK!</span> : <span>Copy</span>}</button>
+      </CopyToClipboard>
+    </div>
   );
 };
 
