@@ -14,6 +14,8 @@ const WaterfallGrid: React.FC<WaterfallGridProps> = ({ items, CardComponent }) =
   const itemRefs = useRef(items.map(() => React.createRef<HTMLDivElement>()));
   const [imgWidth, setImgWidth] = useState<number>(0);
   const [columnWidth, setColumnWidth] = useState<number>(0);
+  const widthState = useWindowWidthState();
+  // const cardPadding = widthState === "mobile" ? 8 : 16;
   const cardPadding = 16;
   const columnCount = useColumnCount();
 
@@ -83,7 +85,7 @@ const WaterfallGrid: React.FC<WaterfallGridProps> = ({ items, CardComponent }) =
   return (
     <div ref={containerRef} className={`relative`}>
       {items.map((item, index) => (
-        <div key={item.slug} ref={itemRefs.current[index]} className={columnCount === 1 ? "py-4" : "p-4"}>
+        <div key={item.slug} ref={itemRefs.current[index]} className={columnCount === 1 ? "py-2" : "p-2"}>
           <CardComponent item={item} imgWidth={imgWidth} />
         </div>
       ))}

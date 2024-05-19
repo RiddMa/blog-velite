@@ -2,6 +2,8 @@ import { Column, columns } from "@/.velite";
 import WaterfallGrid from "@/src/components/WaterfallGrid";
 import Link from "next/link";
 import ColumnCard from "@/src/components/ColumnCard";
+import BlogIndexNav from "@/src/components/layout/BlogIndexNav";
+import React from "react";
 
 interface ColumnListProps {
   params: {
@@ -12,19 +14,9 @@ interface ColumnListProps {
 export default function ColumnListPage({ params }: ColumnListProps) {
   return (
     <>
-      <div className="flex flex-col gap-4">
-        <nav className="flex flex-row gap-4 items-baseline">
-          <Link href={`/posts`} className={`text-h2 text-href`}>
-            文章
-          </Link>
-          <Link href={`/categories`} className={`text-h2 text-href`}>
-            分类
-          </Link>
-          <Link href={`/columns`} className={`text-h0 text-href`}>
-            专栏
-          </Link>
-        </nav>
-        <div className={`prose-article`}>
+      <div className="flex flex-col">
+        <BlogIndexNav path={`/columns`} />
+        <div className={`prose-article px-content`}>
           <p className="text-end opacity-80">{columns.length}个专栏</p>
         </div>
         {/*// @ts-ignore // TS cannot infer the type of CardComponent*/}

@@ -105,9 +105,6 @@ const PostFilterWidget: React.FC<{
           </SelectItem>
         ))}
       </Select>
-      {/*<Button onPress={onFilter} variant={"flat"}>*/}
-      {/*  应用*/}
-      {/*</Button>*/}
     </aside>
   );
 };

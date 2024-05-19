@@ -10,6 +10,8 @@ import BlogHtmlRenderer from "@/src/components/BlogHtmlRenderer";
 import { filterPosts } from "@/src/util/util";
 import { MotionH1 } from "@/src/app/(blog)/post/[slug]/MotionH1";
 import { MotionDiv } from "@/src/components/transition/MotionDiv";
+import BlogIndexNav from "@/src/components/layout/BlogIndexNav";
+import React from "react";
 
 interface ColumnProps {
   params: {
@@ -56,19 +58,9 @@ export default function ColumnPage({ params, searchParams }: ColumnProps) {
   const displayedPosts = filterPosts(posts, { column: params.slug, ...searchParams });
 
   return (
-    <div className="flex flex-col gap-4">
-      <nav className="flex flex-row gap-4 items-baseline">
-        <Link href={`/posts`} className={`text-h2 text-href`}>
-          文章
-        </Link>
-        <Link href={`/categories`} className={`text-h2 text-href`}>
-          分类
-        </Link>
-        <Link href={`/columns`} className={`text-h0 text-href`}>
-          专栏
-        </Link>
-      </nav>
-      <div className={`prose-article`}>
+    <div className="flex flex-col">
+      <BlogIndexNav path={`/columns`} />
+      <div className={`prose-article px-content`}>
         <MotionH1 keyName={`column-title-${column.permalink}`}>{column.name}</MotionH1>
         <MotionDiv keyName={`column-description-${column.permalink}`}>
           <BlogHtmlRenderer html={column.description} />

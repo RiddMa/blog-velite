@@ -10,6 +10,8 @@ import { filterPosts } from "@/src/util/util";
 import { motion } from "framer-motion";
 import { MotionDiv } from "@/src/components/transition/MotionDiv";
 import { MotionH1 } from "@/src/app/(blog)/post/[slug]/MotionH1";
+import React from "react";
+import BlogIndexNav from "@/src/components/layout/BlogIndexNav";
 
 export function generateMetadata({ params }: CategoryProps): Metadata {
   const category = getCategoryBySlug(params.slug);
@@ -56,19 +58,9 @@ export default function CategoryPage({ params, searchParams }: CategoryProps) {
   const displayedPosts = filterPosts(posts, { category: params.slug, ...searchParams });
 
   return (
-    <div className="flex flex-col gap-4">
-      <nav className="flex flex-row gap-4 items-baseline">
-        <Link href={`/posts`} className={`text-h2 text-href`}>
-          文章
-        </Link>
-        <Link href={`/categories`} className={`text-h0 text-href`}>
-          分类
-        </Link>
-        <Link href={`/columns`} className={`text-h2 text-href`}>
-          专栏
-        </Link>
-      </nav>
-      <div className={`prose-article`}>
+    <div className="flex flex-col">
+      <BlogIndexNav path={`/categories`} />
+      <div className={`prose-article px-content`}>
         <MotionH1 keyName={`category-title-${category.permalink}`}>{category.name}</MotionH1>
         <MotionDiv keyName={`category-description-${category.permalink}`}>
           <BlogHtmlRenderer html={category.description} />

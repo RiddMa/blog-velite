@@ -24,16 +24,16 @@ export default function BackgroundImage() {
           className="bg-image brightness-75 contrast-125"
         />
       ) : (
-        <Image
-          alt="Abstract background"
-          src={bgImageLight}
-          placeholder="blur"
-          quality={10}
-          priority={true}
-          sizes="100vw"
-          className="bg-image brightness-[1.5] contrast-[1] saturate-[0.2]"
-          // className="bg-image brightness-[1.4] contrast-[1] saturate-[0.5]"
-        />
+        <></>
+        // <Image
+        //   alt="Abstract background"
+        //   src={bgImageLight}
+        //   placeholder="blur"
+        //   quality={10}
+        //   priority={true}
+        //   sizes="100vw"
+        //   className="bg-image brightness-[1.5] contrast-[1] saturate-[0.2]"
+        // />
       )}
     </AnimatePresence>
   );

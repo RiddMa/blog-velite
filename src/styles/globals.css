@@ -71,11 +71,12 @@ body.dark {
 }
 
 .backdrop-blur-bg {
-  backdrop-filter: saturate(180%) blur(20px);
+  /*@apply backdrop-blur-xl backdrop-saturate-[1.8];*/
+  backdrop-filter: saturate(180%) blur(24px);
 }
 
 .backdrop-blur-mask {
-  backdrop-filter: saturate(150%) blur(5px);
+  backdrop-filter: saturate(150%) blur(10px);
 }
 
 .transition-apple {
@@ -96,18 +97,18 @@ body.dark {
 
 .main-container {
   /*@apply flex-grow w-full xl:max-w-[calc(1024px+4rem)] px-content pt-[80px];*/
-  @apply flex-grow w-full xl:max-w-[1024px] px-content;
+  @apply flex-grow w-full xl:max-w-[768px] fhd:max-w-[1024px] px-content;
 }
 
 .side-navbar {
-  @apply fixed z-[90] w-screen h-[calc(100dvh)] overflow-y-auto overflow-x-clip flex flex-col transition-apple;
-  @apply px-4 pb-4 pt-[72px] xl:sticky xl:top-[64px] xl:h-[calc(100vh-64px)] xl:max-w-[240px] xl:pt-[20px];
-  @apply backdrop-blur-bg xl:backdrop-blur-none bg-white/75 dark:bg-black/75 xl:bg-transparent dark:xl:bg-transparent;
+  @apply fixed z-[90] w-screen h-screen pb-[calc(100vh-100dvh)] overflow-y-auto overflow-x-clip flex flex-col transition-apple;
+  @apply px-8 xl:px-4 pb-4 pt-[72px] xl:sticky xl:top-[64px] xl:h-[calc(100vh-64px)] xl:max-w-[240px] xl:pt-[20px];
+  @apply backdrop-blur-bg xl:backdrop-blur-none bg-white/50 dark:bg-black/50 xl:bg-transparent dark:xl:bg-transparent;
   @apply xl:opacity-70 xl:hover:opacity-100;
 }
 
 .px-content {
-  @apply px-4 pb-4 xl:px-0 xl:pb-8;
+  @apply px-4 xl:px-0 py-0;
 }
 
 .card {

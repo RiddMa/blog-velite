@@ -8,8 +8,6 @@ import { formatDate } from "@/src/store/day";
 import { Post } from "@/.velite";
 import Link from "next/link";
 import BlogHtmlRenderer from "@/src/components/BlogHtmlRenderer";
-import { MotionDiv } from "@/src/components/transition/MotionDiv";
-import { MotionH1 } from "@/src/app/(blog)/post/[slug]/MotionH1";
 
 interface IPostCardProps {
   item: Post;
@@ -18,7 +16,7 @@ interface IPostCardProps {
 
 export const PostCard: React.FC<IPostCardProps> = ({ item: post, imgWidth }) => {
   const { permalink, cover, title, excerpt, tags, updated } = post;
-  const cardGap = 16;
+  const cardGap = 8;
   let imgHeight = 0;
   let hoverOffset = 0;
   if (cover) {
@@ -43,7 +41,7 @@ export const PostCard: React.FC<IPostCardProps> = ({ item: post, imgWidth }) => 
           <motion.div
             // layout={"preserve-aspect"}
             layoutId={`post-cover-${permalink}`}
-            className={`relative mt-0 mx-0 p-0 z-[1] mb-2 xl:mb-4`}
+            className={`relative z-[1] m-0 p-0`}
             animate={{
               opacity: isHovered ? 0.1 : 1,
               filter: isHovered ? "blur(20px) saturate(1.5)" : "none",
@@ -67,9 +65,9 @@ export const PostCard: React.FC<IPostCardProps> = ({ item: post, imgWidth }) => 
         <motion.div
           animate={{ translateY: isHovered ? hoverOffset : 0 }}
           transition={transitionApple}
-          className={`relative h-full z-[2] mb-2 xl:mb-4`}
+          className={`relative h-full z-[2] m-0 p-0`}
         >
-          <motion.h1 layoutId={`post-title-${permalink}`} className="not-prose line-clamp-2 overflow-ellipsis text-h2">
+          <motion.h1 layoutId={`post-title-${permalink}`} className="line-clamp-2 overflow-ellipsis">
             {title}
           </motion.h1>
           {excerpt && (
@@ -88,14 +86,14 @@ export const PostCard: React.FC<IPostCardProps> = ({ item: post, imgWidth }) => 
           )}
         </motion.div>
 
-        <div className="flex flex-row m-0 opacity-80 w-full relative">
-          <div className="my-0 p-0 text-body text-color-caption line-clamp-1 overflow-ellipsis break-after-all">
+        <div className="text-caption flex flex-row m-0 opacity-80 w-full relative">
+          <div className="my-0 p-0 line-clamp-1 overflow-ellipsis break-after-all">
             {tags.map((tag, index) => (
               <span key={index}>{tag} &nbsp;</span>
             ))}
           </div>
           <div className="grow"></div>
-          <span className="text-body text-color-caption inline-block text-nowrap ml-4">{formatDate(updated!)}</span>
+          <span className="inline-block text-nowrap ml-4">{formatDate(updated!)}</span>
         </div>
       </Link>
     </motion.div>

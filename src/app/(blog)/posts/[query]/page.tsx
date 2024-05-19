@@ -20,7 +20,7 @@ export default function PostListPage({ searchParams }: PostListProps) {
 
   return (
     <>
-      <div className="flex flex-col gap-4">
+      <div className="flex flex-col">
         <nav className="flex flex-row gap-4 items-baseline">
           <Link href={`/posts`} className={`text-h0 text-href`}>
             文章
@@ -32,7 +32,7 @@ export default function PostListPage({ searchParams }: PostListProps) {
             专栏
           </Link>
         </nav>
-        <div className={`prose-article`}>
+        <div className={`prose-article px-content`}>
           <p className="text-end opacity-80">{displayedPosts.length}篇文章</p>
         </div>
         {/*// @ts-ignore // TS cannot infer the type of CardComponent*/}
