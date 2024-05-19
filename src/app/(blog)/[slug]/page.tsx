@@ -1,10 +1,10 @@
 import React from "react";
 import type { Metadata } from "next";
-import BlogHtmlRenderer from "@/src/components/BlogHtmlRenderer";
+import BlogHtmlRenderer from "@/src/components/markdown/BlogHtmlRenderer";
 import { getPageBySlug } from "@/src/store/velite";
 import { globals, pages, posts } from "@/.velite";
 import { notFound } from "next/navigation";
-import { MotionH1 } from "@/src/app/(blog)/post/[slug]/MotionH1";
+import { MotionH1 } from "@/src/components/transition/MotionH1";
 import { MotionDiv } from "@/src/components/transition/MotionDiv";
 import Image from "next/image";
 import PostComment from "@/src/components/PostComment";

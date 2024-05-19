@@ -4,7 +4,14 @@ import { throttle } from "lodash";
 
 // Function to determine the current width state
 const getColumnCount = (widthState: "mobile" | "tablet" | "desktop"): number => {
-  return widthState === "mobile" ? 1 : 2;
+  if (widthState === "mobile") {
+    return 1;
+  } else if (widthState === "desktop") {
+    return 3;
+  } else {
+    return 2;
+  }
+  // return widthState === "mobile" ? 1 : 2;
 };
 
 const useColumnCount = (): number => {

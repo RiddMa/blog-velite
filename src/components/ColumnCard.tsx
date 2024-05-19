@@ -6,8 +6,8 @@ import { motion } from "framer-motion";
 import { Column } from "@/.velite";
 import Link from "next/link";
 import { getPostsByColumn } from "@/src/store/velite";
-import BlogHtmlRenderer from "@/src/components/BlogHtmlRenderer";
-import { MotionH1 } from "@/src/app/(blog)/post/[slug]/MotionH1";
+import BlogHtmlRenderer from "@/src/components/markdown/BlogHtmlRenderer";
+import { MotionH1 } from "@/src/components/transition/MotionH1";
 import { MotionDiv } from "@/src/components/transition/MotionDiv";
 
 interface IColumnCardProps {

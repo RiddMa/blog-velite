@@ -1,7 +1,7 @@
 import React from "react";
 import { getCategoryBySlug, getColumnBySlug, getPostBySlug, getTagBySlug } from "@/src/store/velite";
 import { formatDate } from "@/src/store/day";
-import TableOfContents from "@/src/components/TableOfContents";
+import TableOfContents from "@/src/components/markdown/TableOfContents";
 import Link from "next/link";
 import { isDefined } from "@/src/util/util";
 

@@ -6,9 +6,9 @@ import { getColumnBySlug } from "@/src/store/velite";
 import Link from "next/link";
 import WaterfallGrid from "@/src/components/WaterfallGrid";
 import PostCard from "@/src/components/PostCard";
-import BlogHtmlRenderer from "@/src/components/BlogHtmlRenderer";
+import BlogHtmlRenderer from "@/src/components/markdown/BlogHtmlRenderer";
 import { filterPosts } from "@/src/util/util";
-import { MotionH1 } from "@/src/app/(blog)/post/[slug]/MotionH1";
+import { MotionH1 } from "@/src/components/transition/MotionH1";
 import { MotionDiv } from "@/src/components/transition/MotionDiv";
 import BlogIndexNav from "@/src/components/layout/BlogIndexNav";
 import React from "react";
@@ -60,7 +60,7 @@ export default function ColumnPage({ params, searchParams }: ColumnProps) {
   return (
     <div className="flex flex-col">
       <BlogIndexNav path={`/columns`} />
-      <div className={`prose-article px-content`}>
+      <div className="prose-article px-content">
         <MotionH1 keyName={`column-title-${column.permalink}`}>{column.name}</MotionH1>
         <MotionDiv keyName={`column-description-${column.permalink}`}>
           <BlogHtmlRenderer html={column.description} />

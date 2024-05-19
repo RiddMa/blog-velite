@@ -16,7 +16,7 @@ export default function ColumnListPage({ params }: ColumnListProps) {
     <>
       <div className="flex flex-col">
         <BlogIndexNav path={`/columns`} />
-        <div className={`prose-article px-content`}>
+        <div className="prose-article px-content">
           <p className="text-end opacity-80">{columns.length}个专栏</p>
         </div>
         {/*// @ts-ignore // TS cannot infer the type of CardComponent*/}

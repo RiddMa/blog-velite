@@ -108,7 +108,11 @@ body.dark {
 }
 
 .px-content {
-  @apply px-4 xl:px-0 py-0;
+  @apply px-4;
+}
+
+.-mx-content {
+  @apply -mx-4;
 }
 
 .card {
@@ -169,7 +173,7 @@ body {
 }
 
 .gradient-bar {
-  @apply pointer-events-none absolute top-0 left-0 w-full h-full rounded-2xl -z-10;
+  @apply pointer-events-none absolute top-0 left-0 w-full h-full rounded-2xl -z-10 will-change-scroll;
   /*background: linear-gradient(to right, rgba(0, 0, 0, 0.7), rgba(82, 82, 82, 0.8), rgba(0, 0, 0, 0.7));*/
   /*background: linear-gradient(*/
   /*  to right,*/

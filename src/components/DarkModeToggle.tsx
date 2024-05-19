@@ -10,7 +10,7 @@ interface DarkModeToggleProps {
   className?: string; // Make className optional
 }
 
-const DarkModeToggleClient: React.FC<DarkModeToggleProps> = ({ className = "" }) => {
+const DarkModeToggle: React.FC<DarkModeToggleProps> = ({ className = "" }) => {
   const [darkMode, setDarkMode] = usePageStateStore(useShallow((state) => [state.darkMode, state.setDarkMode]));
 
   useEffect(() => {
@@ -44,4 +44,4 @@ const DarkModeToggleClient: React.FC<DarkModeToggleProps> = ({ className = "" })
   );
 };
 
-export default DarkModeToggleClient;
+export default DarkModeToggle;

@@ -3,11 +3,12 @@ import { globals, posts } from "@/.velite";
 import type { Metadata } from "next";
 import { getPostBySlug } from "@/src/store/velite";
 import PostComment from "@/src/components/PostComment";
-import BlogHtmlRenderer from "@/src/components/BlogHtmlRenderer";
+import BlogHtmlRenderer from "@/src/components/markdown/BlogHtmlRenderer";
 import React from "react";
-import { MotionH1 } from "@/src/app/(blog)/post/[slug]/MotionH1";
+import { MotionH1 } from "@/src/components/transition/MotionH1";
 import { MotionDiv } from "@/src/components/transition/MotionDiv";
 import Image from "next/image";
+import Link from "next/link";
 
 interface PostProps {
   params: {
@@ -47,6 +48,7 @@ export default function PostPage({ params }: PostProps) {
 
   return (
     <article className="prose-article">
+      <Link href="/posts">返回文章列表</Link>
       <MotionH1 keyName={`post-title-${permalink}`} className={`text-center`}>
         {title}
       </MotionH1>

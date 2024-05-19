@@ -5,11 +5,11 @@ import { getCategoryBySlug } from "@/src/store/velite";
 import Link from "next/link";
 import WaterfallGrid from "@/src/components/WaterfallGrid";
 import PostCard from "@/src/components/PostCard";
-import BlogHtmlRenderer from "@/src/components/BlogHtmlRenderer";
+import BlogHtmlRenderer from "@/src/components/markdown/BlogHtmlRenderer";
 import { filterPosts } from "@/src/util/util";
 import { motion } from "framer-motion";
 import { MotionDiv } from "@/src/components/transition/MotionDiv";
-import { MotionH1 } from "@/src/app/(blog)/post/[slug]/MotionH1";
+import { MotionH1 } from "@/src/components/transition/MotionH1";
 import React from "react";
 import BlogIndexNav from "@/src/components/layout/BlogIndexNav";
 
@@ -60,7 +60,7 @@ export default function CategoryPage({ params, searchParams }: CategoryProps) {
   return (
     <div className="flex flex-col">
       <BlogIndexNav path={`/categories`} />
-      <div className={`prose-article px-content`}>
+      <div className="prose-article px-content">
         <MotionH1 keyName={`category-title-${category.permalink}`}>{category.name}</MotionH1>
         <MotionDiv keyName={`category-description-${category.permalink}`}>
           <BlogHtmlRenderer html={category.description} />

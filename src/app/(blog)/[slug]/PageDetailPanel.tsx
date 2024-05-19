@@ -1,7 +1,7 @@
 import React from "react";
 import { getPageBySlug } from "@/src/store/velite";
 import { formatDate } from "@/src/store/day";
-import TableOfContents from "@/src/components/TableOfContents";
+import TableOfContents from "@/src/components/markdown/TableOfContents";
 
 const PageDetailPanel: React.FC<{
   slug: string;

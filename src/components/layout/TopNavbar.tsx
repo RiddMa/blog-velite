@@ -3,7 +3,7 @@
 import React, { useEffect, useCallback } from "react";
 import { usePageStateStore } from "@/src/store/store";
 import { useShallow } from "zustand/react/shallow";
-import DarkModeToggleClient from "@/src/components/dark-mode-toggle.client";
+import DarkModeToggle from "@/src/components/DarkModeToggle";
 import { Icon } from "@iconify-icon/react";
 import Link from "next/link";
 import { globals } from "@/.velite";
@@ -63,9 +63,6 @@ const TopNavbar: React.FC<TopNavbarProps> = ({ className = "" }) => {
     ]),
   );
 
-  const { scrollYProgress } = useScroll();
-  console.log(scrollYProgress.get());
-
   const updateScrollPercentage = useCallback(() => {
     const scrolled = document.documentElement.scrollTop;
     const maxHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
@@ -104,12 +101,12 @@ const TopNavbar: React.FC<TopNavbarProps> = ({ className = "" }) => {
         <div className="top-navbar">
           <motion.div
             className="gradient-bar"
-            animate={{ background: backgroundGradient }}
-            transition={{
-              duration: 0.03333,
-              ease: [0.25, 0.1, 0.25, 1.0], // Cubic bezier values
-            }}
-            // style={{ background: backgroundGradient }}
+            // animate={{ background: backgroundGradient }}
+            // transition={{
+            //   duration: 0.03333,
+            //   ease: [0.25, 0.1, 0.25, 1.0], // Cubic bezier values
+            // }}
+            style={{ background: backgroundGradient }}
           />
           <div className="flex w-full flex-row gap-0 px-1 xl:px-4 py-2 align-center items-center">
             <Button
@@ -144,7 +141,7 @@ const TopNavbar: React.FC<TopNavbarProps> = ({ className = "" }) => {
               <NavList />
             </div>
             <div className="grow xl:hidden"></div>
-            <DarkModeToggleClient className="top-navbar-btn xl:-mr-2" />
+            <DarkModeToggle className="top-navbar-btn xl:-mr-2" />
             <Button
               isIconOnly
               variant="light"

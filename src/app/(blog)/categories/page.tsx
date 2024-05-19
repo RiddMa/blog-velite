@@ -15,7 +15,7 @@ export default function CategoryListPage({ params }: CategoryListProps) {
     <>
       <main className="flex flex-col">
         <BlogIndexNav path={`/categories`} />
-        <div className={`prose-article px-content`}>
+        <div className="prose-article px-content">
           <p className="text-end opacity-80">{categories.length}个分类</p>
         </div>
         {/*// @ts-ignore // TS cannot infer the type of CardComponent*/}

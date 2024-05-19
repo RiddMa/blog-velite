@@ -12,7 +12,7 @@ export default function PostListPage() {
     <>
       <div className="flex flex-col">
         <BlogIndexNav path={`/posts`} />
-        <div className={`prose-article px-content`}>
+        <div className="prose-article px-content">
           <p className="text-end opacity-80">{displayedPosts.length}篇文章</p>
         </div>
         {/*// @ts-ignore // TS cannot infer the type of CardComponent*/}
