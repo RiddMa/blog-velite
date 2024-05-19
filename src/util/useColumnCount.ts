@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import useWindowWidthState from "@/src/util/useWindowWidthState";
+import { throttle } from "lodash";
 
 // Function to determine the current width state
 const getColumnCount = (widthState: "mobile" | "tablet" | "desktop"): number => {
@@ -15,12 +16,18 @@ const useColumnCount = (): number => {
       // Set initial state
       setColumnCount(getColumnCount(widthState));
 
+      // Throttle the resize handler
+      const throttledResizeHandler = throttle(() => {
+        setColumnCount(getColumnCount(widthState));
+      }, 16.67); // 16.67ms throttle delay
+
       // Attach the debounced resize handler
-      window.addEventListener("resize", () => setColumnCount(getColumnCount(widthState)));
+      window.addEventListener("resize", throttledResizeHandler);
 
       // Cleanup event listener on component unmount
       return () => {
-        window.removeEventListener("resize", () => setColumnCount(getColumnCount(widthState)));
+        window.removeEventListener("resize", throttledResizeHandler);
+        throttledResizeHandler.cancel();
       };
     }
   }, [widthState]);

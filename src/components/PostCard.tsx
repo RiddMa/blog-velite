@@ -30,8 +30,7 @@ export const PostCard: React.FC<IPostCardProps> = ({ item: post, imgWidth }) => 
   return (
     <motion.div
       key={`card-container-${permalink}`}
-      // layout={false}
-      // layoutId={`card-container-${permalink}`}
+      layoutId={`card-container-${permalink}`}
       onHoverStart={() => setIsHovered(true)}
       onHoverEnd={() => setIsHovered(false)}
       className={``}
@@ -42,6 +41,7 @@ export const PostCard: React.FC<IPostCardProps> = ({ item: post, imgWidth }) => 
             // layout={"preserve-aspect"}
             layoutId={`post-cover-${permalink}`}
             className={`relative z-[1] m-0 p-0`}
+            initial={{ opacity: 1 }}
             animate={{
               opacity: isHovered ? 0.1 : 1,
               filter: isHovered ? "blur(20px) saturate(1.5)" : "none",
@@ -63,6 +63,7 @@ export const PostCard: React.FC<IPostCardProps> = ({ item: post, imgWidth }) => 
           </motion.div>
         )}
         <motion.div
+          initial={{ translateY: 0 }}
           animate={{ translateY: isHovered ? hoverOffset : 0 }}
           transition={transitionApple}
           className={`relative h-full z-[2] m-0 p-0`}

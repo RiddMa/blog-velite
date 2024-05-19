@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { debounce } from "lodash";
+import { throttle } from "lodash";
 
 // Function to determine the current width state
 export const getWidthState = (): "mobile" | "tablet" | "desktop" => {
@@ -23,18 +23,18 @@ const useWindowWidthState = (): "mobile" | "tablet" | "desktop" => {
       // Set initial state
       setWidthState(getWidthState());
 
-      // Debounce the resize handler
-      const debouncedResizeHandler = debounce(() => {
+      // Throttle the resize handler
+      const throttledResizeHandler = throttle(() => {
         setWidthState(getWidthState());
-      }, 150); // 150ms debounce delay
+      }, 16.67); // 16.67ms throttle delay
 
-      // Attach the debounced resize handler
-      window.addEventListener("resize", debouncedResizeHandler);
+      // Attach the throttled resize handler
+      window.addEventListener("resize", throttledResizeHandler);
 
       // Cleanup event listener on component unmount
       return () => {
-        window.removeEventListener("resize", debouncedResizeHandler);
-        debouncedResizeHandler.cancel();
+        window.removeEventListener("resize", throttledResizeHandler);
+        throttledResizeHandler.cancel();
       };
     }
   }, []);

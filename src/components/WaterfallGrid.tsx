@@ -3,6 +3,7 @@
 import React, { useCallback, useEffect, useRef, useState } from "react";
 import useWindowWidthState, { getWidthState } from "@/src/util/useWindowWidthState";
 import useColumnCount from "@/src/util/useColumnCount";
+import { throttle } from "lodash";
 
 export interface WaterfallGridProps {
   items: { slug: string; [key: string]: any }[];
@@ -39,6 +40,10 @@ const WaterfallGrid: React.FC<WaterfallGridProps> = ({ items, CardComponent }) =
     }
   }, [columnWidth, cardPadding]);
 
+  const throttledComputeLayout = throttle(() => {
+    computeLayout();
+  }, 16.67);
+
   const computeLayout = useCallback(() => {
     if (!containerRef.current) {
       return;
@@ -68,19 +73,19 @@ const WaterfallGrid: React.FC<WaterfallGridProps> = ({ items, CardComponent }) =
   }, [columnCount, columnWidth]);
 
   useEffect(() => {
-    computeLayout();
-  }, [items, computeLayout, columnCount, imgWidth]);
+    throttledComputeLayout();
+  }, [items, computeLayout, columnCount, imgWidth, throttledComputeLayout]);
 
   useEffect(() => {
     const observer = new ResizeObserver(() => {
       computeColumnWidth();
-      computeLayout();
+      throttledComputeLayout();
     });
     if (containerRef.current) {
       observer.observe(containerRef.current);
     }
     return () => observer.disconnect();
-  }, [computeColumnWidth, computeLayout]);
+  }, [computeColumnWidth, computeLayout, throttledComputeLayout]);
 
   return (
     <div ref={containerRef} className={`relative`}>

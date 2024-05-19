@@ -8,6 +8,9 @@ import { Icon } from "@iconify-icon/react";
 import Link from "next/link";
 import { globals } from "@/.velite";
 import { Button } from "@nextui-org/button";
+import { motion, useScroll } from "framer-motion";
+import { throttle } from "lodash";
+import { transitionApple } from "@/src/styles/framer-motion";
 
 const NavList: React.FC = React.memo(() => {
   const [setTopNav] = usePageStateStore(useShallow((state) => [state.setTopNav]));
@@ -60,32 +63,54 @@ const TopNavbar: React.FC<TopNavbarProps> = ({ className = "" }) => {
     ]),
   );
 
+  const { scrollYProgress } = useScroll();
+  console.log(scrollYProgress.get());
+
   const updateScrollPercentage = useCallback(() => {
     const scrolled = document.documentElement.scrollTop;
     const maxHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
     setScrollPercentage((scrolled / maxHeight) * 100);
+    document.body.style.setProperty("--scroll-percentage", `${(scrolled / maxHeight) * 100}%`);
   }, [setScrollPercentage]);
+
+  const throttledUpdate = throttle(updateScrollPercentage, 16.67);
 
   useEffect(() => {
     updateScrollPercentage();
-    window.addEventListener("scroll", updateScrollPercentage);
+    window.addEventListener("scroll", throttledUpdate);
     return () => {
-      window.removeEventListener("scroll", updateScrollPercentage);
+      window.removeEventListener("scroll", throttledUpdate);
+      throttledUpdate.cancel();
     };
-  }, [updateScrollPercentage]);
+  }, [throttledUpdate, updateScrollPercentage]);
 
   const backgroundGradient = `linear-gradient(to right, rgba(0, 0, 0, 0.7) ${scrollPercentage * 0.75 - 10}%, rgba(82, 82, 82, 0.8) ${scrollPercentage}%, rgba(0, 0, 0, 0.7) ${scrollPercentage}%)`;
 
+  // const backgroundGradient = `linear-gradient(to right, rgba(0, 0, 0, 0.7) ${scrollYProgress.get() * 0.75 - 10}%, rgba(82, 82, 82, 0.8) ${scrollYProgress.get()}%, rgba(0, 0, 0, 0.7) ${scrollYProgress.get()}%)`;
+
   return (
     <>
-      <div
-        className={`${topNavOpen ? "opacity-100 h-full" : "opacity-0 h-0"} xl:hidden backdrop-blur-bg transition-apple fixed inset-0 z-[99] bg-black/50`}
+      <motion.div
+        initial={{ opacity: 0, height: 0 }}
+        animate={{
+          height: topNavOpen ? "100vh" : 0,
+          opacity: topNavOpen ? 1 : 0,
+        }}
+        transition={transitionApple}
+        className={`xl:hidden backdrop-blur-bg fixed inset-0 z-[99] bg-black/50`}
         onClick={() => setTopNav(false)}
-        aria-hidden={topNavOpen ? "false" : "true"}
       />
-      {/*<motion.div key="top-navbar" layout={true} layoutId="top-navbar" className={`top-navbar-wrapper ${className}`}>*/}
       <div className={`top-navbar-wrapper ${className}`}>
-        <div className="top-navbar" style={{ background: backgroundGradient }}>
+        <div className="top-navbar">
+          <motion.div
+            className="gradient-bar"
+            animate={{ background: backgroundGradient }}
+            transition={{
+              duration: 0.03333,
+              ease: [0.25, 0.1, 0.25, 1.0], // Cubic bezier values
+            }}
+            // style={{ background: backgroundGradient }}
+          />
           <div className="flex w-full flex-row gap-0 px-1 xl:px-4 py-2 align-center items-center">
             <Button
               isIconOnly

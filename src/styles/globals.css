@@ -54,7 +54,7 @@ body.dark {
   }
 }
 
-.bg-image{
+.bg-image {
   @apply fixed inset-0 object-cover blur-3xl -z-50 w-screen h-screen;
 }
 
@@ -88,7 +88,7 @@ body.dark {
 }
 
 .top-navbar {
-  @apply flex flex-col items-center align-middle backdrop-blur-bg m-auto max-w-[1024px] min-h-[48px] rounded-2xl p-0 drop-shadow-2xl transition-apple will-change-scroll;
+  @apply flex flex-col items-center align-middle backdrop-blur-bg m-auto max-w-[1024px] min-h-[48px] rounded-2xl p-0 drop-shadow-2xl;
 }
 
 .top-navbar-btn {
@@ -162,4 +162,19 @@ body.dark {
   width: 3rem;
   height: 3rem;
   background: radial-gradient(circle at calc(100% - 3.1rem) calc(100% - 3.1rem), transparent 3rem, black 3.1rem);
+}
+
+body {
+  --scroll-percentage: 0%;
+}
+
+.gradient-bar {
+  @apply pointer-events-none absolute top-0 left-0 w-full h-full rounded-2xl -z-10;
+  /*background: linear-gradient(to right, rgba(0, 0, 0, 0.7), rgba(82, 82, 82, 0.8), rgba(0, 0, 0, 0.7));*/
+  /*background: linear-gradient(*/
+  /*  to right,*/
+  /*  rgba(0, 0, 0, 0.7) calc(var(--scroll-percentage) * 0.75 - 10%),*/
+  /*  rgba(82, 82, 82, 0.8) var(--scroll-percentage),*/
+  /*  rgba(0, 0, 0, 0.7) var(--scroll-percentage)*/
+  /*);*/
 }
