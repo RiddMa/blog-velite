@@ -173,6 +173,7 @@ const columns = defineCollection({
       name: s.string(),
       slug: s.slug("columns"),
       description: blogMarkdown,
+      featured: s.boolean().default(false),
     })
     .transform((data) => ({ ...data, permalink: `/column/${data.slug}` })),
 });
@@ -185,6 +186,7 @@ const categories = defineCollection({
       name: s.string(),
       slug: s.slug("categories"),
       description: s.string(),
+      index: s.number().default(9999),
     })
     .transform((data) => ({ ...data, permalink: `/category/${data.slug}` })),
 });
@@ -334,8 +336,9 @@ export default defineConfig({
       console.error("Error:", error);
     }
 
-    // Sort the posts array by the updated date in descending order
-    data.posts.sort((a, b) => new Date(b.updated).getTime() - new Date(a.updated).getTime());
+    data.categories.sort((a, b) => a.index - b.index);
+    // data.columns.sort((a, b) => a.index - b.index);
+    data.posts.sort((a, b) => new Date(b.updated).getTime() - new Date(a.updated).getTime()); // Sort the posts array by the updated date in descending order
   },
   complete: async (data) => {
     try {

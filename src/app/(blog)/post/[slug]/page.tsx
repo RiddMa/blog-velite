@@ -49,13 +49,9 @@ export default function PostPage({ params }: PostProps) {
 
   return (
     <article className="prose-article">
-      {/*<Link href={"/posts"} className="flex items-center">*/}
-      {/*  <Icon className="text-lg" icon="heroicons:chevron-left" inline />*/}
-      {/*  返回文章列表*/}
-      {/*</Link>*/}
       <Link href={"/posts"} className="w-full">
-        <button data-theme="dark" className="top-navbar-btn">
-          <Icon className="text-lg" icon="heroicons:chevron-left" inline />
+        <button className="btn btn-sm btn-ghost pl-0 pr-2 m-0 rounded-xl text-body outline-transparent border-none">
+          <Icon className="text-lg " icon="heroicons:chevron-left" inline />
           返回文章列表
         </button>
       </Link>
