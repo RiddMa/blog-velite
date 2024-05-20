@@ -89,6 +89,7 @@ const WaterfallGrid: React.FC<WaterfallGridProps> = ({ items, CardComponent }) =
 
   return (
     <div ref={containerRef} className={`relative`}>
+      cols: {columnCount}
       {items.map((item, index) => (
         <div key={item.slug} ref={itemRefs.current[index]} className={columnCount === 1 ? "py-2" : "p-2"}>
           <CardComponent item={item} imgWidth={imgWidth} />

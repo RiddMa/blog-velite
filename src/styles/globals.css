@@ -97,7 +97,7 @@ body.dark {
 
 .main-container {
   /*@apply flex-grow w-full xl:max-w-[calc(1024px+4rem)] px-content pt-[80px];*/
-  @apply flex-grow w-full xl:max-w-[768px] fhd:max-w-[1024px] px-content;
+  @apply flex-grow w-full xl:max-w-[1024px] fhd:max-w-[1280px] px-content;
 }
 
 .side-navbar {
