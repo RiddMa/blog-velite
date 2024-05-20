@@ -1,4 +1,4 @@
-import BlogLayout from "@/src/components/layout/layout";
+import BlogLayout from "@/src/components/layout/BlogLayout";
 import React from "react";
 
 type LayoutProps = {

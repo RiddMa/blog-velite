@@ -3,7 +3,7 @@ import Link from "next/link";
 
 const BlogIndexNav: React.FC<{ path: string }> = ({ path }) => {
   return (
-    <nav className="flex flex-row gap-4 items-baseline px-content">
+    <nav className="flex flex-row gap-4 items-baseline">
       <Link href={`/posts`} className={`${path === "/posts" ? "text-h0" : "text-h2"} text-href`}>
         文章
       </Link>

@@ -16,6 +16,24 @@ interface PageState {
   setIsMobile: (value: boolean) => void;
   disableScroll: boolean;
   setDisableScroll: (value: boolean) => void;
+  waterfall: {
+    [key: string]: {
+      imgWidth: number;
+      columnHeights: number[];
+      cardPositions: { x: number; y: number }[];
+    };
+  };
+  setWaterfall: (
+    key: string,
+    data: {
+      imgWidth: number;
+      columnHeights: number[];
+      cardPositions: { x: number; y: number }[];
+    },
+  ) => void;
+  setImgWidth: (key: string, value: number) => void;
+  setColumnHeights: (key: string, value: number[]) => void;
+  setCardPositions: (key: string, value: { x: number; y: number }[]) => void;
 }
 
 export const getDarkMode = () => {
@@ -58,4 +76,42 @@ export const usePageStateStore = create<PageState>((set) => ({
   setIsMobile: (value) => set(() => ({ isMobile: value })),
   disableScroll: false,
   setDisableScroll: (value) => set(() => ({ disableScroll: value })),
+  waterfall: {},
+  setWaterfall: (key, data) =>
+    set((state) => ({
+      waterfall: {
+        ...state.waterfall,
+        [key]: data,
+      },
+    })),
+  setImgWidth: (key, value) =>
+    set((state) => ({
+      waterfall: {
+        ...state.waterfall,
+        [key]: {
+          ...state.waterfall[key],
+          imgWidth: value,
+        },
+      },
+    })),
+  setColumnHeights: (key, value) =>
+    set((state) => ({
+      waterfall: {
+        ...state.waterfall,
+        [key]: {
+          ...state.waterfall[key],
+          columnHeights: value,
+        },
+      },
+    })),
+  setCardPositions: (key, value) =>
+    set((state) => ({
+      waterfall: {
+        ...state.waterfall,
+        [key]: {
+          ...state.waterfall[key],
+          cardPositions: value,
+        },
+      },
+    })),
 }));

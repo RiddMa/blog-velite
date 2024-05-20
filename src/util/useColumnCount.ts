@@ -1,32 +1,19 @@
-import { useState, useEffect } from "react";
-import useWindowWidthState from "@/src/util/useWindowWidthState";
+import React, { useState, useEffect } from "react";
 import { throttle } from "lodash";
-import { useWindowSize } from "usehooks-ts";
 
-// Function to determine the current width state
-// const getColumnCount = (widthState: "mobile" | "tablet" | "desktop"): number => {
-//   if (widthState === "mobile") {
-//     return 1;
-//   } else if (widthState === "desktop") {
-//     return 3;
-//   } else {
-//     return 2;
-//   }
-// };
 const getColumnCount = (width: number): number => {
-  if (width <= 768) {
+  if (width < 720) {
     return 1;
-  } else if (width <= 1920) {
+  } else if (width < 1080) {
     return 2;
   } else {
     return 3;
   }
 };
 
-const useColumnCount = (): number => {
+const useColumnCount = (ref: React.RefObject<HTMLDivElement>): number => {
   const [columnCount, setColumnCount] = useState<number>(1);
-  const widthState = useWindowWidthState();
-  const { width = 0 } = useWindowSize();
+  const width = ref.current?.clientWidth || 0;
 
   useEffect(() => {
     if (typeof window !== "undefined") {
@@ -47,7 +34,7 @@ const useColumnCount = (): number => {
         throttledResizeHandler.cancel();
       };
     }
-  }, [widthState]);
+  }, [width]);
 
   return columnCount;
 };

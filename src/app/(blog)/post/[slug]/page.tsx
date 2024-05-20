@@ -9,6 +9,7 @@ import { MotionH1 } from "@/src/components/transition/MotionH1";
 import { MotionDiv } from "@/src/components/transition/MotionDiv";
 import Image from "next/image";
 import Link from "next/link";
+import { Icon } from "@iconify-icon/react";
 
 interface PostProps {
   params: {
@@ -48,7 +49,16 @@ export default function PostPage({ params }: PostProps) {
 
   return (
     <article className="prose-article">
-      <Link href="/posts">返回文章列表</Link>
+      {/*<Link href={"/posts"} className="flex items-center">*/}
+      {/*  <Icon className="text-lg" icon="heroicons:chevron-left" inline />*/}
+      {/*  返回文章列表*/}
+      {/*</Link>*/}
+      <Link href={"/posts"} className="w-full">
+        <button data-theme="dark" className="top-navbar-btn">
+          <Icon className="text-lg" icon="heroicons:chevron-left" inline />
+          返回文章列表
+        </button>
+      </Link>
       <MotionH1 keyName={`post-title-${permalink}`} className={`text-center`}>
         {title}
       </MotionH1>

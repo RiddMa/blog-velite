@@ -1,11 +1,12 @@
-import TopNavbar from "@/src/components/layout/TopNavbar";
 import React from "react";
+import BlogLayout from "@/src/components/layout/BlogLayout";
 
 export default function Home() {
   return (
     <>
-      <TopNavbar />
-      <main className="min-h-[100dvh]">The React Framework for the Web</main>
+      <BlogLayout className="flex flex-col">
+        <h1>Welcome to my blog!</h1>
+      </BlogLayout>
     </>
   );
 }

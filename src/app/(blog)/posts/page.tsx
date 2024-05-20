@@ -12,9 +12,7 @@ export default function PostListPage() {
     <>
       <div className="flex flex-col">
         <BlogIndexNav path={`/posts`} />
-        <div className="prose-article px-content">
-          <p className="text-end opacity-80">{displayedPosts.length}篇文章</p>
-        </div>
+        <p className="prose-article text-end opacity-80">{displayedPosts.length}篇文章</p>
         {/*// @ts-ignore // TS cannot infer the type of CardComponent*/}
         <WaterfallGrid items={displayedPosts} CardComponent={PostCard} />
       </div>

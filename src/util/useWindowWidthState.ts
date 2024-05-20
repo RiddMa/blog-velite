@@ -11,6 +11,13 @@ export const getWidthState = (): "mobile" | "tablet" | "desktop" => {
     } else {
       return "desktop";
     }
+    // if (window.innerWidth < 1280) {
+    //   return "mobile";
+    // } else if (window.innerWidth < 1280) {
+    //   return "tablet";
+    // } else {
+    //   return "desktop";
+    // }
   }
   return "desktop"; // Default to "desktop" if window is not defined
 };

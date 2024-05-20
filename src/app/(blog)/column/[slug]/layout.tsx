@@ -1,4 +1,4 @@
-import BlogLayout from "@/src/components/layout/layout";
+import BlogLayout from "@/src/components/layout/BlogLayout";
 import React, { Suspense } from "react";
 import PostFilterWidget from "@/src/components/PostFilterWidget";
 

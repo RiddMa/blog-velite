@@ -1,4 +1,4 @@
-import BlogLayout from "@/src/components/layout/layout";
+import BlogLayout from "@/src/components/layout/BlogLayout";
 import React, { Suspense } from "react";
 import PostDetailPanel from "@/src/app/(blog)/post/[slug]/PostDetailPanel";
 import PostRelationPanel from "@/src/app/(blog)/post/[slug]/PostRelationPanel";

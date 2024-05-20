@@ -41,6 +41,7 @@ const globals = {
   pattern: "globals/*.json",
   single: true,
   schema: s.object({
+    heroTitle: s.string().default("Welcome to my blog."),
     metadata: s.object({
       title: s
         .object({ default: s.string(), template: s.string() })
