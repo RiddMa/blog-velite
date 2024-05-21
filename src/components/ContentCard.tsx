@@ -1,75 +1,59 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useMemo, useRef, useState } from "react";
 import { Image as VeliteImage } from "velite";
 import Image from "next/image";
 import { Card } from "@nextui-org/card";
 import { Image as NextUIImage } from "@nextui-org/image";
 import { motion } from "framer-motion";
 import { transitionApple } from "@/src/styles/framer-motion";
+import { getPostsByCategory } from "@/src/store/velite";
+import Link from "next/link";
+import { clsname } from "@/src/util/clsname";
 
 interface IContentCardProps {
   cover?: VeliteImage;
   title?: React.ReactNode;
   excerpt?: React.ReactNode;
   caption?: React.ReactNode;
-  imgWidth: number;
 }
 
-export const ContentCard: React.FC<IContentCardProps> = ({ cover, title, excerpt, caption, imgWidth }) => {
-  const cardGap = 16;
-  let imgHeight = 0;
-  if (cover) {
-    const aspectRatio = cover.width / cover.height;
-    imgHeight = imgWidth ? imgWidth / aspectRatio : cover.height;
-  }
-
-  const [isHovered, setIsHovered] = useState(false);
+export const ContentCard: React.FC<IContentCardProps> = ({ cover, title, excerpt, caption }) => {
+  const cardRef = useRef<HTMLDivElement>(null);
 
   return (
-    <motion.div onHoverStart={() => setIsHovered(true)} onHoverEnd={() => setIsHovered(false)}>
-      <Card className={`group transition-apple drop-shadow-lg hover:drop-shadow-2xl prose-article-card gap-4 p-4`}>
-        {cover && (
-          <motion.div
-            className={`relative m-0 p-0 block`}
-            animate={{ opacity: isHovered ? 0 : 1 }}
-            transition={transitionApple}
-          >
-            <NextUIImage
-              as={Image}
-              src={cover.src}
-              alt={"cover image"}
-              removeWrapper
-              className="card"
-              width={imgWidth}
-              height={imgHeight}
-              sizes="(max-width: 1280px) 100vw, 250px"
-              style={{ margin: 0 }}
-            />
-          </motion.div>
-        )}
-        <motion.div
-          animate={{ translateY: isHovered ? -imgHeight - cardGap : 0 }}
-          transition={transitionApple}
-          className={`relative`}
+    <div ref={cardRef} key={`card-container-${title}`} className={clsname(`card prose-article-card flex flex-col p-4`)}>
+      {cover && (
+        <div className="relative">
+          <Image
+            src={cover.src}
+            alt={`cover image`}
+            className="rounded-2xl"
+            width={cover.width}
+            height={cover.height}
+            placeholder="blur"
+            blurDataURL={cover.blurDataURL}
+            priority={true}
+            quality={40}
+            style={{ margin: 0 }}
+          />
+        </div>
+      )}
+      <div className="relative">
+        <h1
+          key={`content-title-${title}`}
+          data-flip-id={`content-title-${title}`}
+          className="line-clamp-2 overflow-ellipsis"
         >
           {title}
-          {excerpt && (
-            <motion.div
-              className={`absolute`}
-              animate={{
-                opacity: isHovered ? 1 : 0,
-                display: isHovered ? "block" : "hidden",
-              }}
-              transition={transitionApple}
-            >
-              {excerpt}
-            </motion.div>
-          )}
-        </motion.div>
-        {caption && <>{caption}</>}
-      </Card>
-    </motion.div>
+        </h1>
+        {excerpt}
+      </div>
+      <div className="text-caption flex flex-row m-0 opacity-80 w-full relative">
+        <div className="grow"></div>
+        <span className="inline-block text-nowrap ml-4">{caption}</span>
+      </div>
+    </div>
   );
 };
 

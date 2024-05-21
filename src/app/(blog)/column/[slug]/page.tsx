@@ -65,7 +65,7 @@ export default function ColumnPage({ params, searchParams }: ColumnProps) {
         <MotionDiv keyName={`column-description-${column.permalink}`}>
           <BlogHtmlRenderer html={column.description} />
         </MotionDiv>
-        <span className="text-end opacity-80">{displayedPosts.length}篇文章</span>
+        <div className="text-end opacity-80">{displayedPosts.length}篇文章</div>
       </div>
       {/*// @ts-ignore // TS cannot infer the type of CardComponent*/}
       <WaterfallGrid items={displayedPosts} CardComponent={PostCard} />

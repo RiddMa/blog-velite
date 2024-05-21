@@ -181,3 +181,7 @@ body {
   /*  rgba(0, 0, 0, 0.7) var(--scroll-percentage)*/
   /*);*/
 }
+
+.hero-title{
+  @apply text-[3rem] sm:text-[4rem] md:text-[7rem] lg:text-[8rem] leading-none transition-apple opacity-80 hover:opacity-100;
+}

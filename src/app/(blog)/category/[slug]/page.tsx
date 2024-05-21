@@ -60,12 +60,12 @@ export default function CategoryPage({ params, searchParams }: CategoryProps) {
   return (
     <div className="flex flex-col">
       <BlogIndexNav path={`/categories`} />
-      <div className="prose-article px-content">
+      <div className="prose-article">
         <MotionH1 keyName={`category-title-${category.permalink}`}>{category.name}</MotionH1>
         <MotionDiv keyName={`category-description-${category.permalink}`}>
           <BlogHtmlRenderer html={category.description} />
         </MotionDiv>
-        <span className="inline-block text-end opacity-80">{displayedPosts.length}篇文章</span>
+        <div className="text-end opacity-80">{displayedPosts.length}篇文章</div>
       </div>
       {/*// @ts-ignore // TS cannot infer the type of CardComponent*/}
       <WaterfallGrid items={displayedPosts} CardComponent={PostCard} />
