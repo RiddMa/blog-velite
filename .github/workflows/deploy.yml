@@ -88,13 +88,11 @@ jobs:
             NODE_OPTIONS="--max-old-space-size=1536" yarn install
             NODE_OPTIONS="--max-old-space-size=1536" yarn add sharp --ignore-engines
 
-      - name: Set Environment Variables
-        run: |
-          echo DATABASE_URL=${{ secrets.DATABASE_URL }} >> $GITHUB_ENV
-          echo API_KEY=${{ secrets.API_KEY }} >> $GITHUB_ENV
-
       - name: Run Prisma Migrations on Server
         uses: appleboy/ssh-action@master
+        env:
+          DATABASE_URL: ${{ secrets.DATABASE_URL }}
+          API_KEY: ${{ secrets.API_KEY }}
         with:
           host: ${{ secrets.SSH_HOST }}
           username: ${{ secrets.SSH_USERNAME }}
@@ -102,12 +100,15 @@ jobs:
           port: ${{ secrets.SSH_PORT }}
           script: |
             cd ${{ secrets.PROJECT_DIRECTORY }}
-            export NVM_DIR=~/.nvm
+            export NVM_DIR=~/.nvm 
             source ~/.nvm/nvm.sh
             npx prisma migrate deploy
 
       - name: Restart Server
         uses: appleboy/ssh-action@master
+        env:
+          DATABASE_URL: ${{ secrets.DATABASE_URL }}
+          API_KEY: ${{ secrets.API_KEY }}
         with:
           host: ${{ secrets.SSH_HOST }}
           username: ${{ secrets.SSH_USERNAME }}
