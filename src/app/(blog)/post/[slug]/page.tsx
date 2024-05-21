@@ -55,9 +55,12 @@ export default function PostPage({ params }: PostProps) {
           返回文章列表
         </button>
       </Link>
-      <MotionH1 keyName={`post-title-${permalink}`} className={`text-center`}>
+      {/*<MotionH1 keyName={`post-title-${permalink}`} className={`text-center`}>*/}
+      {/*  {title}*/}
+      {/*</MotionH1>*/}
+      <h1 className="text-center" data-flip-id={`post-title-${permalink}`}>
         {title}
-      </MotionH1>
+      </h1>
       {cover && (
         <>
           <MotionDiv keyName={`post-cover-${permalink}`}>

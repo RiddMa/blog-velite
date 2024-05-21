@@ -4,7 +4,7 @@ import type { Metadata } from "next";
 import { getCategoryBySlug } from "@/src/store/velite";
 import Link from "next/link";
 import WaterfallGrid from "@/src/components/WaterfallGrid";
-import PostCard from "@/src/components/PostCard";
+import PostCard from "@/src/app/(blog)/post/[slug]/PostCard";
 import BlogHtmlRenderer from "@/src/components/markdown/BlogHtmlRenderer";
 import { filterPosts } from "@/src/util/util";
 import { motion } from "framer-motion";

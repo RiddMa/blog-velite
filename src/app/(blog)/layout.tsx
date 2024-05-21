@@ -1,8 +1,7 @@
-import PageTransitionEffect from "@/src/components/transition/PageTransitionEffect";
+import React from "react";
 
-const PageTransitionLayout = ({ children }: { children: React.ReactNode }) => {
-  // return <PageTransitionEffect>{children}</PageTransitionEffect>;
+const Layout = ({ children }: { children: React.ReactNode }) => {
   return children;
 };
 
-export default PageTransitionLayout;
+export default Layout;

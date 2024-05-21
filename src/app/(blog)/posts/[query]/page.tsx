@@ -1,7 +1,7 @@
 import { posts } from "@/.velite";
 import WaterfallGrid from "@/src/components/WaterfallGrid";
 import Link from "next/link";
-import PostCard from "@/src/components/PostCard";
+import PostCard from "@/src/app/(blog)/post/[slug]/PostCard";
 import { filterPosts } from "@/src/util/util";
 
 interface PostListProps {

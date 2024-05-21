@@ -3,6 +3,7 @@ import TopNavbar from "@/src/components/layout/TopNavbar";
 import LeftNavbarClient from "@/src/components/layout/LeftNavbar.client";
 import RightNavbarClient from "@/src/components/layout/RightNavbar.client";
 import MainContainer from "@/src/components/layout/MainContainer";
+import { clsname } from "@/src/util/clsname";
 
 interface BlogLayoutProps {
   children?: React.ReactNode;
@@ -17,7 +18,7 @@ const BlogLayout: React.FC<BlogLayoutProps> = ({ children, className, leftNavbar
       <TopNavbar />
       <div className="flex flex-row flex-1 p-0 m-0 justify-center">
         <LeftNavbarClient>{leftNavbar}</LeftNavbarClient>
-        <MainContainer className={className}>{children}</MainContainer>
+        <MainContainer className={clsname("flip-main-container", className)}>{children}</MainContainer>
         <RightNavbarClient>{rightNavbar}</RightNavbarClient>
       </div>
     </div>

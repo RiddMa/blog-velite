@@ -1,13 +1,13 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import Image from "next/image";
-import { motion } from "framer-motion";
-import { transitionApple } from "@/src/styles/framer-motion";
 import { formatDate } from "@/src/store/day";
 import { Post } from "@/.velite";
 import Link from "next/link";
 import BlogHtmlRenderer from "@/src/components/markdown/BlogHtmlRenderer";
+import { gsap, useGSAP } from "@/src/util/gsap";
+import { clsname } from "@/src/util/clsname";
 
 interface IPostCardProps {
   item: Post;
@@ -15,40 +15,42 @@ interface IPostCardProps {
 }
 
 export const PostCard: React.FC<IPostCardProps> = ({ item: post, imgWidth }) => {
+  const titleRef = useRef<HTMLHeadingElement>(null);
+  const imgRef = useRef<HTMLImageElement>(null);
+  const excerptRef = useRef<HTMLDivElement>(null);
   const { permalink, cover, title, excerpt, tags, updated } = post;
-  const cardGap = 8;
   let imgHeight = 0;
-  let hoverOffset = 0;
+  // let hoverOffset = 0;
   if (cover) {
     const aspectRatio = cover.width / cover.height;
     imgHeight = imgWidth ? imgWidth / aspectRatio : cover.height;
-    hoverOffset = -imgHeight - cardGap;
   }
 
   const [isHovered, setIsHovered] = useState(false);
 
+  useGSAP(() => {
+    const hoverOffset = imgRef.current?.clientHeight || 0;
+    if (isHovered) {
+      gsap.to(titleRef.current, { translateY: -hoverOffset });
+      gsap.to(excerptRef.current, { translateY: -hoverOffset, maxHeight: hoverOffset, opacity: 1, display: "block" });
+    } else {
+      gsap.to(titleRef.current, { translateY: 0 });
+      gsap.to(excerptRef.current, { translateY: 0, maxHeight: 0, opacity: 0, display: "none" });
+    }
+  }, [isHovered]);
+
   return (
-    <motion.div
+    <div
       key={`card-container-${permalink}`}
-      layoutId={`card-container-${permalink}`}
-      onHoverStart={() => setIsHovered(true)}
-      onHoverEnd={() => setIsHovered(false)}
-      className={``}
+      className={`group`}
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={() => setIsHovered(false)}
     >
       <Link href={permalink} className={`card group prose-article-card flex flex-col p-4`}>
         {cover && (
-          <motion.div
-            // layout={"preserve-aspect"}
-            layoutId={`post-cover-${permalink}`}
-            className={`relative z-[1] m-0 p-0`}
-            initial={{ opacity: 1 }}
-            animate={{
-              opacity: isHovered ? 0.1 : 1,
-              filter: isHovered ? "blur(20px) saturate(1.5)" : "none",
-            }}
-            transition={transitionApple}
-          >
+          <div className="relative z-[1] transition-apple group-hover:opacity-0.1 group-hover:blur-xl group-hover:saturate-150">
             <Image
+              ref={imgRef}
               src={cover.src}
               alt={`cover image`}
               className="rounded-2xl"
@@ -60,32 +62,23 @@ export const PostCard: React.FC<IPostCardProps> = ({ item: post, imgWidth }) => 
               quality={40}
               style={{ margin: 0 }}
             />
-          </motion.div>
+          </div>
         )}
-        <motion.div
-          initial={{ translateY: 0 }}
-          animate={{ translateY: isHovered ? hoverOffset : 0 }}
-          transition={transitionApple}
-          className={`relative h-full z-[2] m-0 p-0`}
-        >
-          <motion.h1 layoutId={`post-title-${permalink}`} className="line-clamp-2 overflow-ellipsis">
+        <div className="relative z-[2]">
+          <h1
+            ref={titleRef}
+            key={`post-title-${permalink}`}
+            data-flip-id={`post-title-${permalink}`}
+            className="line-clamp-2 overflow-ellipsis"
+          >
             {title}
-          </motion.h1>
+          </h1>
           {excerpt && (
-            <motion.div
-              className={`absolute overflow-y-auto`}
-              initial={{ maxHeight: 0 }}
-              animate={{
-                maxHeight: isHovered ? -hoverOffset : 0,
-                opacity: isHovered ? 1 : 0,
-                display: isHovered ? "block" : "hidden",
-              }}
-              transition={transitionApple}
-            >
+            <div ref={excerptRef} className={`absolute overflow-y-auto`}>
               <BlogHtmlRenderer html={excerpt} />
-            </motion.div>
+            </div>
           )}
-        </motion.div>
+        </div>
 
         <div className="text-caption flex flex-row m-0 opacity-80 w-full relative">
           <div className="my-0 p-0 line-clamp-1 overflow-ellipsis break-after-all">
@@ -97,7 +90,7 @@ export const PostCard: React.FC<IPostCardProps> = ({ item: post, imgWidth }) => 
           <span className="inline-block text-nowrap ml-4">{formatDate(updated!)}</span>
         </div>
       </Link>
-    </motion.div>
+    </div>
   );
 };
 

@@ -1,9 +1,9 @@
 import { posts } from "@/.velite";
 import WaterfallGrid from "@/src/components/WaterfallGrid";
-import PostCard from "@/src/components/PostCard";
+import PostCard from "@/src/app/(blog)/post/[slug]/PostCard";
 import BlogIndexNav from "@/src/components/layout/BlogIndexNav";
 import React from "react";
-import PostCardLite from "@/src/components/PostCardLite";
+import PostCardLite from "@/src/app/(blog)/post/[slug]/PostCardLite";
 
 export default function PostListPage() {
   const displayedPosts = posts;

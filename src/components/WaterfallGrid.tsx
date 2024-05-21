@@ -392,6 +392,9 @@ const WaterfallGrid: React.FC<WaterfallGridProps> = ({ items, CardComponent }) =
   const columnCount = useColumnCount(containerRef);
 
   const computeColumnWidth = useCallback(() => {
+    if (!containerRef.current) {
+      return;
+    }
     const width = containerRef.current!.clientWidth / columnCount;
     setColumnWidth(width);
   }, [columnCount]);
@@ -430,9 +433,9 @@ const WaterfallGrid: React.FC<WaterfallGridProps> = ({ items, CardComponent }) =
     return () => observer.disconnect();
   }, [computeLayout, computeColumnWidth]);
 
-  useGSAP(() => {
-    gsap.from(containerRef.current, { scale: 0 });
-  });
+  // useGSAP(() => {
+  //   gsap.from(containerRef.current, { scale: 0 });
+  // });
 
   const renderMobile = () => {
     return (

@@ -1,5 +1,5 @@
 import React from "react";
-import { cn } from "@/src/util/my-classnames";
+import { clsname } from "@/src/util/clsname";
 
 interface MainContainerProps {
   children?: React.ReactNode;
@@ -7,7 +7,7 @@ interface MainContainerProps {
 }
 
 const MainContainer: React.FC<MainContainerProps> = ({ children, className }) => {
-  return <main className={cn("main-container", className)}>{children}</main>;
+  return <main className={clsname("main-container", className)}>{children}</main>;
 };
 
 export default MainContainer;
