@@ -4,6 +4,7 @@ import { formatDate } from "@/src/store/day";
 import TableOfContents from "@/src/components/markdown/TableOfContents";
 import Link from "next/link";
 import { isDefined } from "@/src/util/util";
+import VisitCountDisplay from "@/src/components/VisitCountDisplay";
 
 const PostDetailPanel: React.FC<{
   slug: string;
@@ -20,6 +21,9 @@ const PostDetailPanel: React.FC<{
       <aside className={`prose-article-card flex flex-col`}>
         <span className={``}>发布于 {formatDate(post.created!)}</span>
         <span className={``}>更新于 {formatDate(post.updated!)}</span>
+        <span className={``}>
+          浏览量 <VisitCountDisplay />
+        </span>
         <div className={`h-4`}></div>
         <h1 className={`not-prose text-h2`}>目录</h1>
         <TableOfContents className={`not-prose`} toc={post.toc} />

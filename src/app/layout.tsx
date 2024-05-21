@@ -10,6 +10,7 @@ import { globals } from "@/.velite";
 import BackgroundImage from "@/src/components/BackgroundImage";
 import PageTransition from "@/src/components/transition/RdPageTransition";
 import TopNavbar from "@/src/components/layout/TopNavbar";
+import VisitCounter from "@/src/components/VisitCounter";
 
 export const metadata: Metadata = {
   title: globals.metadata.title,
@@ -34,6 +35,7 @@ export default function RootLayout({
       <body className={`min-h-[calc(100dvh)]`}>
         {/*<WebVitals />*/}
         <Providers>
+          <VisitCounter />
           <BackgroundImage />
           <TopNavbar />
           <PageTransitionEffect>{children}</PageTransitionEffect>

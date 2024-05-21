@@ -145,17 +145,23 @@ const PostCard: React.FC<IPostCardProps> = ({ item: post, imgWidth, isMobile = f
     const hoverOffset = imgRef.current?.clientHeight || 0;
     const tl = gsap.timeline();
     if (isHovered) {
-      tl.to(imgRef.current, { opacity: 0.1, filter: "blur(16px) saturate(150%)" })
-        .to(titleRef.current, { translateY: -hoverOffset }, "<")
-        .to(
-          excerptRef.current,
-          { translateY: -hoverOffset, maxHeight: hoverOffset, opacity: 1, display: "block" },
-          "<",
-        );
+      if (imgRef.current) {
+        tl.to(imgRef.current, { opacity: 0.1, filter: "blur(16px) saturate(150%)" });
+      }
+      tl.to(titleRef.current, { translateY: -hoverOffset }, "<").to(
+        excerptRef.current,
+        { translateY: -hoverOffset, maxHeight: hoverOffset, opacity: 1, display: "block" },
+        "<",
+      );
     } else {
-      tl.to(imgRef.current, { opacity: 1, filter: "none" })
-        .to(titleRef.current, { translateY: 0 }, "<")
-        .to(excerptRef.current, { translateY: 0, maxHeight: 0, opacity: 0, display: "none" }, "<");
+      if (imgRef.current) {
+        tl.to(imgRef.current, { opacity: 1, filter: "none" });
+      }
+      tl.to(titleRef.current, { translateY: 0 }, "<").to(
+        excerptRef.current,
+        { translateY: 0, maxHeight: 0, opacity: 0, display: "none" },
+        "<",
+      );
     }
   }, [isHovered]);
 
