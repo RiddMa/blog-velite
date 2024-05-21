@@ -56,7 +56,8 @@ const PostFilterWidget: React.FC<{
   const debouncedFilter = debounce(onFilter, 500); // Adjust the debounce delay as needed
 
   useEffect(() => {
-    debouncedFilter();
+    // debouncedFilter();
+    // onFilter();
   }, [selectedColumns, selectedCategories, selectedTags, debouncedFilter]);
 
   return (

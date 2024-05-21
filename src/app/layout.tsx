@@ -8,6 +8,8 @@ import { WebVitals } from "@/src/components/WebVitals";
 import PageTransitionEffect from "@/src/components/transition/PageTransitionEffect";
 import { globals } from "@/.velite";
 import BackgroundImage from "@/src/components/BackgroundImage";
+import PageTransition from "@/src/components/transition/RdPageTransition";
+import TopNavbar from "@/src/components/layout/TopNavbar";
 
 export const metadata: Metadata = {
   title: globals.metadata.title,
@@ -28,15 +30,14 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className="dark" style={{ overflow: "auto", scrollbarGutter: "stable" }}>
-      <body className={`overflow-x-clip min-h-[calc(100dvh)]`}>
-        <WebVitals />
+    <html lang="en" className="dark">
+      <body className={`min-h-[calc(100dvh)]`}>
+        {/*<WebVitals />*/}
         <Providers>
-          <PageTransitionEffect>
-            <BackgroundImage />
-            {children}
-          </PageTransitionEffect>
-          {/*{children}*/}
+          <BackgroundImage />
+          <TopNavbar />
+          <PageTransitionEffect>{children}</PageTransitionEffect>
+          {/*<PageTransition>{children}</PageTransition>*/}
         </Providers>
       </body>
     </html>

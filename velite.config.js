@@ -185,6 +185,7 @@ const categories = defineCollection({
     .object({
       name: s.string(),
       slug: s.slug("categories"),
+      cover: s.image().optional(),
       description: s.string(),
       index: s.number().default(9999),
     })

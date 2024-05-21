@@ -2,29 +2,53 @@
   {
     "name": "编程",
     "slug": "coding",
+    "cover": {
+      "src": "/static/tianyi-ma-WiONHd_zYI4-unsplash-673fdfa3.jpg",
+      "height": 2895,
+      "width": 4380,
+      "blurDataURL": "data:image/webp;base64,UklGRiwAAABXRUJQVlA4ICAAAACwAQCdASoIAAUADMDOJZwAAuptMPTAAP68QhdRAAAAAA==",
+      "blurWidth": 8,
+      "blurHeight": 5
+    },
     "description": "Code the world!",
-    "index": 9999,
+    "index": 1,
     "permalink": "/category/coding"
-  },
-  {
-    "name": "随感",
-    "slug": "feeling",
-    "description": "记录杂七杂八心事。",
-    "index": 9999,
-    "permalink": "/category/feeling"
   },
   {
     "name": "MAGN",
     "slug": "magn",
+    "cover": {
+      "src": "/static/magn-poster-25274343.jpeg",
+      "height": 1518,
+      "width": 2322,
+      "blurDataURL": "data:image/webp;base64,UklGRiQAAABXRUJQVlA4IBgAAAAwAQCdASoIAAUADMDOJaQAA3AA/uuuAAA=",
+      "blurWidth": 8,
+      "blurHeight": 5
+    },
     "description": "MAGN 是 Movie Anime Game Network 的缩写，读作“马 GN”。这个分类主要记录对于影视、动漫、游戏的讨论。",
-    "index": 9999,
+    "index": 2,
     "permalink": "/category/magn"
   },
   {
     "name": "科技数码",
     "slug": "tech",
+    "cover": {
+      "src": "/static/lorenzo-herrera-p0j-mE6mGo4-unsplash-58d525fe.jpg",
+      "height": 4032,
+      "width": 6048,
+      "blurDataURL": "data:image/webp;base64,UklGRjIAAABXRUJQVlA4ICYAAACwAQCdASoIAAUADMDOJbACdADze7UQAP6pm5LeVpyz6fG3tgAAAA==",
+      "blurWidth": 8,
+      "blurHeight": 5
+    },
     "description": "油腻中年男什么的，那种事情不要啊！",
-    "index": 9999,
+    "index": 3,
     "permalink": "/category/tech"
+  },
+  {
+    "name": "随感",
+    "slug": "feeling",
+    "description": "记录杂七杂八的想法。",
+    "index": 9999,
+    "permalink": "/category/feeling"
   }
 ]

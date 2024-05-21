@@ -4,7 +4,7 @@ import type { Metadata } from "next";
 import { getCategoryBySlug } from "@/src/store/velite";
 import Link from "next/link";
 import WaterfallGrid from "@/src/components/WaterfallGrid";
-import PostCard from "@/src/app/(blog)/post/[slug]/PostCard";
+import PostCard from "@/src/app/(blog)/posts/PostCard";
 import BlogHtmlRenderer from "@/src/components/markdown/BlogHtmlRenderer";
 import { filterPosts } from "@/src/util/util";
 import { motion } from "framer-motion";
@@ -65,7 +65,7 @@ export default function CategoryPage({ params, searchParams }: CategoryProps) {
         <MotionDiv keyName={`category-description-${category.permalink}`}>
           <BlogHtmlRenderer html={category.description} />
         </MotionDiv>
-        <p className="text-end opacity-80">{displayedPosts.length}篇文章</p>
+        <span className="inline-block text-end opacity-80">{displayedPosts.length}篇文章</span>
       </div>
       {/*// @ts-ignore // TS cannot infer the type of CardComponent*/}
       <WaterfallGrid items={displayedPosts} CardComponent={PostCard} />

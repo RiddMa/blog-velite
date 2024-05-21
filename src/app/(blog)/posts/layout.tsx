@@ -19,7 +19,7 @@ const Layout: React.FC<{ children: React.ReactNode; params: { slug: string } }> 
   return (
     <BlogLayout
       leftNavbar={
-        <Suspense>
+        <Suspense fallback={null}>
           <PostFilterWidget useQuerySubPath={true} />
         </Suspense>
       }

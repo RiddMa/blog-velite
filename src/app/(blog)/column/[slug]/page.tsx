@@ -5,7 +5,7 @@ import type { Metadata } from "next";
 import { getColumnBySlug } from "@/src/store/velite";
 import Link from "next/link";
 import WaterfallGrid from "@/src/components/WaterfallGrid";
-import PostCard from "@/src/app/(blog)/post/[slug]/PostCard";
+import PostCard from "@/src/app/(blog)/posts/PostCard";
 import BlogHtmlRenderer from "@/src/components/markdown/BlogHtmlRenderer";
 import { filterPosts } from "@/src/util/util";
 import { MotionH1 } from "@/src/components/transition/MotionH1";
@@ -60,12 +60,12 @@ export default function ColumnPage({ params, searchParams }: ColumnProps) {
   return (
     <div className="flex flex-col">
       <BlogIndexNav path={`/columns`} />
-      <div className="prose-article px-content">
+      <div className="prose-article">
         <MotionH1 keyName={`column-title-${column.permalink}`}>{column.name}</MotionH1>
         <MotionDiv keyName={`column-description-${column.permalink}`}>
           <BlogHtmlRenderer html={column.description} />
         </MotionDiv>
-        <p className="text-end opacity-80">{displayedPosts.length}篇文章</p>
+        <span className="text-end opacity-80">{displayedPosts.length}篇文章</span>
       </div>
       {/*// @ts-ignore // TS cannot infer the type of CardComponent*/}
       <WaterfallGrid items={displayedPosts} CardComponent={PostCard} />

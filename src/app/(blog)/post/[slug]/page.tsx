@@ -5,11 +5,9 @@ import { getPostBySlug } from "@/src/store/velite";
 import PostComment from "@/src/components/PostComment";
 import BlogHtmlRenderer from "@/src/components/markdown/BlogHtmlRenderer";
 import React from "react";
-import { MotionH1 } from "@/src/components/transition/MotionH1";
 import { MotionDiv } from "@/src/components/transition/MotionDiv";
 import Image from "next/image";
-import Link from "next/link";
-import { Icon } from "@iconify-icon/react";
+import { BackButton } from "@/src/components/BackButton";
 
 interface PostProps {
   params: {
@@ -49,12 +47,7 @@ export default function PostPage({ params }: PostProps) {
 
   return (
     <article className="prose-article">
-      <Link href={"/posts"} className="w-full">
-        <button className="btn btn-sm btn-ghost pl-0 pr-2 m-0 rounded-xl text-body outline-transparent border-none">
-          <Icon className="text-lg " icon="heroicons:chevron-left" inline />
-          返回文章列表
-        </button>
-      </Link>
+      <BackButton />
       {/*<MotionH1 keyName={`post-title-${permalink}`} className={`text-center`}>*/}
       {/*  {title}*/}
       {/*</MotionH1>*/}
@@ -75,13 +68,6 @@ export default function PostPage({ params }: PostProps) {
               priority={true}
               style={{ margin: 0 }}
             />
-            {/*<ImageAwesome*/}
-            {/*  src={cover.src}*/}
-            {/*  alt={title}*/}
-            {/*  blurDataURL={cover.blurDataURL}*/}
-            {/*  width={cover.width}*/}
-            {/*  height={cover.height}*/}
-            {/*/>*/}
           </MotionDiv>
         </>
       )}
