@@ -209,8 +209,12 @@ const tagDict = defineCollection({
   schema: s.record(s.string()),
 });
 
-const veliteRoot = "content";
+// const localImages = defineCollection({
+//   name: "LocalImages",
+//   pattern: ["gallery/**/*.jpg", "gallery/**/*.jpeg", "gallery/**/*.png", "gallery/**/*.webp", "gallery/**/*.avif"],
+// });
 
+const veliteRoot = "content";
 // `s` is extended from Zod with some custom schemas,
 // you can also import re-exported `z` from `velite` if you don't need these extension schemas.
 export default defineConfig({
