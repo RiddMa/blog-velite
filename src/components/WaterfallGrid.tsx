@@ -97,8 +97,6 @@ const WaterfallGrid: React.FC<WaterfallGridProps> = ({ items, CardComponent }) =
     );
   };
 
-  console.log("WaterfallGrid render");
-
   return <>{columnCount === 1 ? renderMobile() : renderColumns()}</>;
 };
 

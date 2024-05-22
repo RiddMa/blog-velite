@@ -13,7 +13,12 @@ export default function Home() {
         <div className={"flex flex-col gap-4"}>
           <h1 className="hero-title">Connect</h1>
           <ContentCard
-            title={<>博客</>}
+            title={
+              <>
+                博客
+                <Icon icon="ooui:articles-ltr" inline />
+              </>
+            }
             excerpt={
               <Link href="/posts" className="flex items-center not-prose">
                 <button className="btn btn-sm btn-ghost -ml-2 px-2 rounded-xl text-body outline-transparent border-none">
