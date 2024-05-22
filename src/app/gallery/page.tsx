@@ -2,14 +2,19 @@
 
 import { NextPage } from "next";
 import WaterfallGrid from "@/src/components/WaterfallGrid";
+import PhotoGallery from "@/src/app/gallery/_components/PhotoGallery";
+import React from "react";
+import { galleries } from "@/.velite";
 
 const EmptyPage: NextPage = () => {
+  const gallery = { ...galleries[0], images: galleries[0].images.concat(galleries[1].images) };
+
   return (
     <>
       {/*<WaterfallGrid items={} CardComponent={}/>*/}
       <div>
-        <h1>Welcome to the Empty Page</h1>
-        <p>This is an example of an empty page component in Next.js 14.</p>
+        <h1>Welcome to the Gallery</h1>
+        <PhotoGallery gallery={gallery} />
       </div>
     </>
   );

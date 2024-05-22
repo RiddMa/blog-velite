@@ -27,3 +27,6 @@ export declare const tags: Tag[]
 
 export type TagDict = Collections['tagDict']['schema']['_output']
 export declare const tagDict: TagDict
+
+export type Gallery = Collections['galleries']['schema']['_output']
+export declare const galleries: Gallery[]

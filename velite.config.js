@@ -1,4 +1,4 @@
-import { defineCollection, defineConfig, s } from "velite";
+import { defineCollection, defineConfig, defineSchema, s } from "velite";
 import remarkGfm from "remark-gfm";
 import remarkFrontmatter from "remark-frontmatter";
 import remarkBreaks from "remark-breaks";
@@ -17,7 +17,14 @@ import { generateExcerptForMarkdown, generateSlugForTags } from "@/src/util/llm"
 import fs from "fs/promises";
 import matter from "gray-matter";
 import dayjs from "dayjs";
-import { listFiles, mergePostsTags, mergeTags, parseMarkdown, postProcessMarkdownImages } from "@/src/util/veliteUtils";
+import {
+  convertImagesToWebP,
+  listFiles,
+  mergePostsTags,
+  mergeTags,
+  parseMarkdown,
+  postProcessMarkdownImages,
+} from "@/src/util/veliteUtils";
 
 const blogMarkdown = s.markdown({
   gfm: true,
@@ -209,10 +216,28 @@ const tagDict = defineCollection({
   schema: s.record(s.string()),
 });
 
-// const localImages = defineCollection({
-//   name: "LocalImages",
-//   pattern: ["gallery/**/*.jpg", "gallery/**/*.jpeg", "gallery/**/*.png", "gallery/**/*.webp", "gallery/**/*.avif"],
-// });
+const galleries = defineCollection({
+  name: "Gallery",
+  pattern: ["gallery/**/*.md"],
+  schema: s
+    .object({
+      name: s.string(),
+      slug: s.slug("gallery"),
+      cover: s.image().optional(),
+      created: s.isodate().optional(),
+      updated: s.isodate().optional(),
+      location: s.string().optional(),
+      path: s.path(),
+    })
+    .transform(async (data) => ({
+      ...data,
+      permalink: `/gallery/${data.slug}`,
+      images: await convertImagesToWebP(
+        path.join(projectRootPath, veliteRoot, data.path, "../"),
+        path.join(staticBasePath, "gallery"),
+      ),
+    })),
+});
 
 const veliteRoot = "content";
 // `s` is extended from Zod with some custom schemas,
@@ -228,6 +253,7 @@ export default defineConfig({
     categories,
     tags,
     tagDict,
+    galleries,
   },
   prepare: async (data) => {
     try {

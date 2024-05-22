@@ -18,6 +18,8 @@ import path from "node:path";
 import rehypeParse from "rehype-parse";
 import { visit } from "unist-util-visit";
 import sharp from "sharp";
+import ExifReader from "exifreader";
+import { staticBasePath } from "@/base-path";
 
 export async function listFiles(dirPath: string): Promise<string[]> {
   try {
@@ -144,3 +146,88 @@ export async function parseMarkdown(markdown: string): Promise<string> {
   // console.log("Parsed markdown...", String(file));
   return String(file);
 }
+
+// Supported image formats
+const supportedFormats = ["jpg", "jpeg", "png", "avif", "webp", "heif"];
+
+// Function to get all image files in the directory
+const getImageFiles = async (dir: string): Promise<string[]> => {
+  const files = await fs.readdir(dir);
+  return files.filter((file) => supportedFormats.includes(path.extname(file).toLowerCase().slice(1)));
+};
+
+// Function to check if a file exists
+const fileExists = async (filePath: string): Promise<boolean> => {
+  try {
+    await fs.access(filePath);
+    return true;
+  } catch {
+    return false;
+  }
+};
+const blurWidth = 20;
+
+// Function to generate blurDataUrl
+const generateBlurDataUrl = async (sharpedImage: sharp.Sharp): Promise<string> => {
+  const buffer = await sharpedImage
+    .clone()
+    .resize(blurWidth) // Resize to a small size
+    .blur() // Apply blur
+    .toBuffer();
+
+  return `data:image/webp;base64,${buffer.toString("base64")}`;
+};
+
+// Function to convert images to WebP and read EXIF data
+export const convertImagesToWebP = async (inputPath: string, outputPath: string) => {
+  const imageFiles = await getImageFiles(inputPath);
+  const images: {
+    filename: string;
+    src: string;
+    width: number;
+    height: number;
+    blurDataUrl: string;
+    blurWidth: number;
+    blurHeight: number;
+    exif: ExifReader.ExpandedTags;
+  }[] = [];
+
+  // Ensure the output directory exists
+  await fs.mkdir(outputPath, { recursive: true });
+
+  for (const file of imageFiles) {
+    const filePath = path.join(inputPath, file);
+    const outputFilePath = path.join(outputPath, `${path.basename(file, path.extname(file))}.webp`);
+
+    try {
+      // Read EXIF data
+      const fileBuffer = await fs.readFile(filePath);
+      const sharpedImage = sharp(fileBuffer);
+      const metadata = await sharpedImage.metadata();
+      const exifData = await ExifReader.load(fileBuffer, { async: true, expanded: true });
+
+      images.push({
+        filename: file,
+        src: `/${path.relative(staticBasePath, outputFilePath)}`,
+        width: metadata.width!,
+        height: metadata.height!,
+        blurDataUrl: await generateBlurDataUrl(sharpedImage),
+        blurWidth: blurWidth,
+        blurHeight: Math.round((blurWidth / metadata.width!) * metadata.height!),
+        exif: exifData,
+      });
+
+      // Check if the output file already exists
+      if (!(await fileExists(outputFilePath))) {
+        // Convert image to WebP
+        await sharpedImage.webp({ quality: 80 }).toFile(outputFilePath);
+        console.log(`Converted and saved: ${file} -> ${outputFilePath}`);
+      }
+      console.log(`Processed image: ${filePath}`);
+    } catch (error) {
+      console.error(`Error processing file ${file}:`, error);
+    }
+  }
+
+  return images;
+};
