@@ -208,7 +208,7 @@ export const convertImagesToWebP = async (inputPath: string, outputPath: string)
 
       images.push({
         filename: file,
-        src: `/${path.relative(staticBasePath, outputFilePath)}`,
+        src: `/${path.posix.format(path.parse(path.relative(staticBasePath, outputFilePath)))}`,
         width: metadata.width!,
         height: metadata.height!,
         blurDataUrl: await generateBlurDataUrl(sharpedImage),
