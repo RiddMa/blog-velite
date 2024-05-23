@@ -111,7 +111,7 @@ body.dark {
 }
 
 .-mx-content {
-  @apply -mx-4;
+  @apply -mx-8 xl:-mx-4;
 }
 
 .card {
@@ -199,4 +199,8 @@ body {
   100% {
     transform: rotate(1turn);
   }
+}
+
+.text-btn{
+  @apply btn btn-ghost -ml-2 px-2 rounded-xl text-base font-normal leading-normal outline-transparent border-none;
 }

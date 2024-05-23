@@ -18,11 +18,17 @@ export const PhotoGallery: React.FC<{ gallery: Gallery }> = ({ gallery }) => {
   return (
     <PhotoAlbum
       layout="rows"
-      targetRowHeight={300}
+      targetRowHeight={350}
+      // layout="masonry"
+      // columns={(containerWidth) => {
+      //   if (containerWidth < 768) return 2;
+      //   if (containerWidth < 1280) return 3;
+      //   return 4;
+      // }}
       photos={photos}
       renderPhoto={NextJsImage}
       defaultContainerWidth={1280}
-      sizes={{ size: "calc(100vw - 240px)" }}
+      sizes={{ size: "calc(1280px)" }}
     />
   );
 };

@@ -21,7 +21,7 @@ export default function Home() {
             }
             excerpt={
               <Link href="/posts" className="flex items-center not-prose">
-                <button className="btn btn-sm btn-ghost -ml-2 px-2 rounded-xl text-body outline-transparent border-none">
+                <button className="text-btn">
                   浏览文章
                   <Icon className="" icon="heroicons:chevron-right" inline />
                 </button>
@@ -37,7 +37,7 @@ export default function Home() {
             }
             excerpt={
               <Link href="/gallery" className="flex items-center not-prose">
-                <button className="btn btn-sm btn-ghost -ml-2 px-2 rounded-xl text-body outline-transparent border-none">
+                <button className="text-btn">
                   浏览图片
                   <Icon className="" icon="heroicons:chevron-right" inline />
                 </button>

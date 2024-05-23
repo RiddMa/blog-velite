@@ -24,7 +24,9 @@ import {
   mergeTags,
   parseMarkdown,
   postProcessMarkdownImages,
+  setFeaturedImages,
 } from "@/src/util/veliteUtils";
+import ExifReader from "exifreader";
 
 const blogMarkdown = s.markdown({
   gfm: true,
@@ -227,14 +229,18 @@ const galleries = defineCollection({
       created: s.isodate().optional(),
       updated: s.isodate().optional(),
       location: s.string().optional(),
+      featured: s.array(s.string()).default([]),
       path: s.path(),
     })
     .transform(async (data) => ({
       ...data,
       permalink: `/gallery/${data.slug}`,
-      images: await convertImagesToWebP(
-        path.join(projectRootPath, veliteRoot, data.path, "../"),
-        path.join(staticBasePath, "gallery"),
+      images: setFeaturedImages(
+        data.featured,
+        await convertImagesToWebP(
+          path.join(projectRootPath, veliteRoot, data.path, "../"),
+          path.join(staticBasePath, "gallery"),
+        ),
       ),
     })),
 });

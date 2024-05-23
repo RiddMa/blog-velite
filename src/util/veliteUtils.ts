@@ -178,19 +178,23 @@ const generateBlurDataUrl = async (sharpedImage: sharp.Sharp): Promise<string> =
   return `data:image/webp;base64,${buffer.toString("base64")}`;
 };
 
+export type RdPhoto = {
+  filename: string;
+  src: string;
+  slug: string; // this is required
+  featured: boolean;
+  width: number;
+  height: number;
+  blurDataURL: string;
+  blurWidth: number;
+  blurHeight: number;
+  exif: ExifReader.ExpandedTags;
+};
+
 // Function to convert images to WebP and read EXIF data
 export const convertImagesToWebP = async (inputPath: string, outputPath: string) => {
   const imageFiles = await getImageFiles(inputPath);
-  const images: {
-    filename: string;
-    src: string;
-    width: number;
-    height: number;
-    blurDataURL: string;
-    blurWidth: number;
-    blurHeight: number;
-    exif: ExifReader.ExpandedTags;
-  }[] = [];
+  const images: RdPhoto[] = [];
 
   // Ensure the output directory exists
   await fs.mkdir(outputPath, { recursive: true });
@@ -206,9 +210,12 @@ export const convertImagesToWebP = async (inputPath: string, outputPath: string)
       const metadata = await sharpedImage.metadata();
       const exifData = await ExifReader.load(fileBuffer, { async: true, expanded: true });
 
+      const src = `/${path.posix.format(path.parse(path.relative(staticBasePath, outputFilePath)))}`;
       images.push({
         filename: file,
-        src: `/${path.posix.format(path.parse(path.relative(staticBasePath, outputFilePath)))}`,
+        src: src,
+        slug: src,
+        featured: false,
         width: metadata.width!,
         height: metadata.height!,
         blurDataURL: await generateBlurDataUrl(sharpedImage),
@@ -220,7 +227,16 @@ export const convertImagesToWebP = async (inputPath: string, outputPath: string)
       // Check if the output file already exists
       if (!(await fileExists(outputFilePath))) {
         // Convert image to WebP
-        await sharpedImage.webp({ quality: 80 }).toFile(outputFilePath);
+        const { width, height } = metadata;
+        let resizeOptions = {};
+        // Maximum edge size
+        const maxEdge = 3840;
+        if (width! > height!) {
+          resizeOptions = { width: maxEdge };
+        } else {
+          resizeOptions = { height: maxEdge };
+        }
+        await sharpedImage.resize(resizeOptions).webp({ quality: 80 }).toFile(outputFilePath);
         console.log(`Converted and saved: ${file} -> ${outputFilePath}`);
       }
       console.log(`Processed image: ${filePath}`);
@@ -230,4 +246,8 @@ export const convertImagesToWebP = async (inputPath: string, outputPath: string)
   }
 
   return images;
+};
+
+export const setFeaturedImages = (featuredSlugs: string[], images: RdPhoto[]): RdPhoto[] => {
+  return images.map((image) => ({ ...image, featured: featuredSlugs.includes(image.filename.split(".")[0]) }));
 };

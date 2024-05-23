@@ -1,0 +1,3 @@
+.react-photo-album--photo {
+    @apply rounded-2xl;
+}
