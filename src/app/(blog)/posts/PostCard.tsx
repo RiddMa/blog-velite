@@ -136,43 +136,28 @@ const PostCard: React.FC<IPostCardProps> = ({ item: post, imgWidth, isMobile = f
   // const [isClicked, setIsClicked] = useState(false);
 
   useGSAP(() => {
-    gsap.set(excerptRef.current, { opacity: 0, maxHeight: 0, display: "none" });
+    if (excerptRef.current) gsap.set(excerptRef.current, { opacity: 0, maxHeight: 0, display: "none" });
   }, []);
   useGSAP(() => {
     const hoverOffset = imgRef.current?.clientHeight || 0;
     const tl = gsap.timeline();
     if (isHovered) {
-      if (imgRef.current) {
-        tl.to(imgRef.current, { opacity: 0.1, filter: "blur(16px) saturate(150%)" });
-      }
-      tl.to(titleRef.current, { translateY: -hoverOffset }, "<").to(
-        excerptRef.current,
-        { translateY: -hoverOffset, maxHeight: hoverOffset, opacity: 1, display: "block" },
-        "<",
-      );
+      if (imgRef.current) tl.to(imgRef.current, { opacity: 0.1, filter: "blur(16px) saturate(150%)" });
+      if (titleRef.current) tl.to(titleRef.current, { translateY: -hoverOffset }, "<");
+      if (excerptRef.current)
+        tl.to(
+          excerptRef.current,
+          { translateY: -hoverOffset, maxHeight: hoverOffset, opacity: 1, display: "block" },
+          "<",
+        );
     } else {
-      if (imgRef.current) {
-        tl.to(imgRef.current, { opacity: 1, filter: "none" });
-      }
-      tl.to(titleRef.current, { translateY: 0 }, "<").to(
-        excerptRef.current,
-        { translateY: 0, maxHeight: 0, opacity: 0, display: "none" },
-        "<",
-      );
+      if (imgRef.current) tl.to(imgRef.current, { opacity: 1, filter: "none" });
+
+      if (titleRef.current) tl.to(titleRef.current, { translateY: 0 }, "<");
+      if (excerptRef.current)
+        tl.to(excerptRef.current, { translateY: 0, maxHeight: 0, opacity: 0, display: "none" }, "<");
     }
   }, [isHovered]);
-  // useGSAP(() => {
-  //   const tl = gsap.timeline();
-  //   if (isClicked) {
-  //     tl.to(cardRef.current, {
-  //       position: "fixed",
-  //       top: "1rem",
-  //       left: "1rem",
-  //       width: "calc(100vw-2rem)",
-  //       height: "calc(100dvh-2rem)",
-  //     });
-  //   }
-  // }, [isClicked]);
 
   if (draft) {
     return (
