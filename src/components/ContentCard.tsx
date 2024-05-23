@@ -8,7 +8,7 @@ import { Image as NextUIImage } from "@nextui-org/image";
 import { motion } from "framer-motion";
 import { transitionApple } from "@/src/styles/framer-motion";
 import { getPostsByCategory } from "@/src/store/velite";
-import Link from "next/link";
+import { Link } from "@/src/components/transition/react-transition-progress/next";
 import { clsname } from "@/src/util/clsname";
 
 interface IContentCardProps {

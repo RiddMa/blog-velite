@@ -3,7 +3,7 @@
 import React, { useMemo, useRef } from "react";
 import { motion } from "framer-motion";
 import { Category } from "@/.velite";
-import Link from "next/link";
+import { Link } from "@/src/components/transition/react-transition-progress/next";
 import { getPostsByCategory } from "@/src/store/velite";
 import BlogHtmlRenderer from "@/src/components/markdown/BlogHtmlRenderer";
 import { clsname } from "@/src/util/clsname";

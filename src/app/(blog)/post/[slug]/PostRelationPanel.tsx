@@ -1,6 +1,6 @@
 import React from "react";
 import { getColumnBySlug, getPostBySlug, getPostsByColumn } from "@/src/store/velite";
-import Link from "next/link";
+import { Link } from "@/src/components/transition/react-transition-progress/next";
 import { Card } from "@nextui-org/card";
 import { formatDate } from "@/src/store/day";
 import { isDefined } from "@/src/util/util";

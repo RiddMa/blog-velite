@@ -1,5 +1,5 @@
 import React from "react";
-import Link from "next/link";
+import { Link } from "@/src/components/transition/react-transition-progress/next";
 import { MotionDiv } from "@/src/components/transition/MotionDiv";
 
 const BlogIndexNav: React.FC<{ path: string }> = ({ path }) => {

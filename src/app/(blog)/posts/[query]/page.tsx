@@ -1,6 +1,6 @@
 import { posts } from "@/.velite";
 import WaterfallGrid from "@/src/components/WaterfallGrid";
-import Link from "next/link";
+import { Link } from "@/src/components/transition/react-transition-progress/next";
 import PostCard from "@/src/app/(blog)/posts/PostCard";
 import { filterPosts } from "@/src/util/util";
 

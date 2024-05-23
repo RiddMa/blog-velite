@@ -5,12 +5,16 @@ import { usePageStateStore } from "@/src/store/store";
 import { useShallow } from "zustand/react/shallow";
 import DarkModeToggle from "@/src/components/DarkModeToggle";
 import { Icon } from "@iconify-icon/react";
-import Link from "next/link";
+import { Link } from "@/src/components/transition/react-transition-progress/next";
 import { globals } from "@/.velite";
 import { Button } from "@nextui-org/button";
-import { motion, useScroll } from "framer-motion";
+import { AnimatePresence, motion, useScroll } from "framer-motion";
 import { throttle } from "lodash";
 import { transitionApple } from "@/src/styles/framer-motion";
+import { ProgressBar, ProgressBarProvider } from "@/src/components/transition/react-transition-progress";
+import LoadingSpinner from "@/src/components/LoadingSpinner";
+import { useProgressBarContext } from "@/src/components/transition/react-transition-progress";
+import loadingSpinner from "@/src/components/LoadingSpinner";
 
 const NavList: React.FC = React.memo(() => {
   const [setTopNav] = usePageStateStore(useShallow((state) => [state.setTopNav]));
@@ -62,6 +66,8 @@ const TopNavbar: React.FC<TopNavbarProps> = ({ className = "" }) => {
       state.setScrollPercentage,
     ]),
   );
+
+  const { loading } = useProgressBarContext();
 
   const updateScrollPercentage = useCallback(() => {
     const scrolled = document.documentElement.scrollTop;
@@ -134,6 +140,7 @@ const TopNavbar: React.FC<TopNavbarProps> = ({ className = "" }) => {
                 {globals.metadata.title.default}
               </button>
             </Link>
+            <LoadingSpinner show={loading} />
             <div className="hidden xl:block xl:grow">
               <span></span>
             </div>

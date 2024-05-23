@@ -4,7 +4,7 @@ import React, { useRef, useState, useMemo } from "react";
 import Image from "next/image";
 import { formatDate } from "@/src/store/day";
 import { Post } from "@/.velite";
-import Link from "next/link";
+import { Link } from "@/src/components/transition/react-transition-progress/next";
 import BlogHtmlRenderer from "@/src/components/markdown/BlogHtmlRenderer";
 import { gsap, useGSAP } from "@/src/util/gsap";
 import { clsname } from "@/src/util/clsname";

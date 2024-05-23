@@ -1,12 +1,15 @@
 // app/providers.tsx
 
+import { ProgressBarProvider } from "@/src/components/transition/react-transition-progress";
 import { NextUIProvider } from "@/src/components/MyUIProvider";
 import React from "react";
 
 export default function Providers({ children }: { children: React.ReactNode }) {
   return (
     <>
-      <NextUIProvider>{children}</NextUIProvider>
+      <ProgressBarProvider>
+        <NextUIProvider>{children}</NextUIProvider>
+      </ProgressBarProvider>
     </>
   );
 }

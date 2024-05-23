@@ -182,6 +182,21 @@ body {
   /*);*/
 }
 
-.hero-title{
+.hero-title {
   @apply text-[3rem] sm:text-[4rem] md:text-[7rem] lg:text-[8rem] leading-none transition-apple opacity-80 hover:opacity-100;
+}
+
+.spinner {
+  border-radius: 50%;
+  background:
+    radial-gradient(farthest-side, #ffffff 94%, #0000) top/3.5px 3.5px no-repeat,
+    conic-gradient(#0000 30%, #ffffff);
+  -webkit-mask: radial-gradient(farthest-side, #0000 calc(100% - 3.5px), #000 0);
+  animation: spinner-c7wet2 1s infinite linear;
+}
+
+@keyframes spinner-c7wet2 {
+  100% {
+    transform: rotate(1turn);
+  }
 }

@@ -2,7 +2,7 @@
 
 import React from "react";
 import { Pagination, PaginationItemType, PaginationItemRenderProps } from "@nextui-org/pagination";
-import Link from "next/link";
+import { Link } from "@/src/components/transition/react-transition-progress/next";
 import { Icon } from "@iconify-icon/react";
 import { cn } from "@nextui-org/system";
 import { Button } from "@nextui-org/button";

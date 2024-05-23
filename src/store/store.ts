@@ -34,6 +34,8 @@ interface PageState {
   setImgWidth: (key: string, value: number) => void;
   setColumnHeights: (key: string, value: number[]) => void;
   setCardPositions: (key: string, value: { x: number; y: number }[]) => void;
+  pageLoading: boolean;
+  setPageLoading: (value: boolean) => void;
 }
 
 export const getDarkMode = () => {
@@ -114,6 +116,8 @@ export const usePageStateStore = create<PageState>((set) => ({
         },
       },
     })),
+  pageLoading: false,
+  setPageLoading: (value) => set(() => ({ pageLoading: value })),
 }));
 
 interface State {

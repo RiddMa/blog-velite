@@ -3,7 +3,7 @@
 import React, { useRef } from "react";
 import { motion } from "framer-motion";
 import { Column } from "@/.velite";
-import Link from "next/link";
+import { Link } from "@/src/components/transition/react-transition-progress/next";
 import { getPostsByColumn } from "@/src/store/velite";
 import BlogHtmlRenderer from "@/src/components/markdown/BlogHtmlRenderer";
 import { MotionH1 } from "@/src/components/transition/MotionH1";

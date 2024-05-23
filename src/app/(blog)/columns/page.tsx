@@ -1,6 +1,6 @@
 import { Column, columns } from "@/.velite";
 import WaterfallGrid from "@/src/components/WaterfallGrid";
-import Link from "next/link";
+import { Link } from "@/src/components/transition/react-transition-progress/next";
 import ColumnCard from "@/src/app/(blog)/columns/ColumnCard";
 import BlogIndexNav from "@/src/components/layout/BlogIndexNav";
 import React from "react";

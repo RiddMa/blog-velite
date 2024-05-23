@@ -6,7 +6,7 @@ import { motion } from "framer-motion";
 import { transitionApple } from "@/src/styles/framer-motion";
 import { formatDate } from "@/src/store/day";
 import { Post } from "@/.velite";
-import Link from "next/link";
+import { Link } from "@/src/components/transition/react-transition-progress/next";
 import BlogHtmlRenderer from "@/src/components/markdown/BlogHtmlRenderer";
 
 interface IPostCardProps {

@@ -3,7 +3,7 @@ import BlogLayout from "@/src/components/layout/BlogLayout";
 import { globals } from "@/.velite";
 import ContentCard from "@/src/components/ContentCard";
 import { Icon } from "@iconify-icon/react";
-import Link from "next/link";
+import { Link } from "@/src/components/transition/react-transition-progress/next";
 
 export default function Home() {
   const { heroTitle } = globals;

@@ -2,7 +2,7 @@ import React from "react";
 import { getCategoryBySlug, getColumnBySlug, getPostBySlug, getTagBySlug } from "@/src/store/velite";
 import { formatDate } from "@/src/store/day";
 import TableOfContents from "@/src/components/markdown/TableOfContents";
-import Link from "next/link";
+import { Link } from "@/src/components/transition/react-transition-progress/next";
 import { isDefined } from "@/src/util/util";
 import VisitCountDisplay from "@/src/components/VisitCountDisplay";
 

@@ -1,5 +1,5 @@
 import React from "react";
-import Link from "next/link";
+import { Link } from "@/src/components/transition/react-transition-progress/next";
 import { clsname } from "@/src/util/clsname";
 
 // 定义 TOC 项的接口

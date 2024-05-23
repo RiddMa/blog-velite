@@ -2,7 +2,7 @@ import { notFound } from "next/navigation";
 import { categories, globals, posts } from "@/.velite";
 import type { Metadata } from "next";
 import { getCategoryBySlug } from "@/src/store/velite";
-import Link from "next/link";
+import { Link } from "@/src/components/transition/react-transition-progress/next";
 import WaterfallGrid from "@/src/components/WaterfallGrid";
 import PostCard from "@/src/app/(blog)/posts/PostCard";
 import BlogHtmlRenderer from "@/src/components/markdown/BlogHtmlRenderer";
