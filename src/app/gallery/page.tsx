@@ -1,7 +1,7 @@
 import { NextPage } from "next";
 import WaterfallGrid from "@/src/components/WaterfallGrid";
 import PhotoGallery from "@/src/app/gallery/_components/PhotoGallery";
-import React from "react";
+import React, { useState } from "react";
 import { galleries } from "@/.velite";
 import PhotoCard from "@/src/components/PhotoCard";
 import { RdPhoto } from "@/src/util/veliteUtils";
@@ -16,30 +16,28 @@ const EmptyPage: NextPage = () => {
     return acc.concat(gallery.images.filter((image) => image.featured));
   }, [] as RdPhoto[]);
 
-  const OPTIONS: EmblaOptionsType = { loop: true };
-
   return (
     <>
       <div className="prose-article flex flex-col gap-4">
         <h1>精选照片</h1>
         <div className="-mx-content">
-          <EmblaCarousel images={featuredImages} options={OPTIONS}></EmblaCarousel>
+          {/*<EmblaCarousel images={featuredImages} options={OPTIONS}></EmblaCarousel>*/}
           <MySwiper images={featuredImages} autoplay={true}></MySwiper>
-          {/*{galleries.map((gallery) => (*/}
-          {/*  <section key={gallery.slug}>*/}
-          {/*    <Link href={`gallery/${gallery.slug}`} className="flex items-center not-prose">*/}
-          {/*      <button className="text-btn btn-lg text-h1">*/}
-          {/*        <h1>{gallery.name}</h1>*/}
-          {/*        <Icon*/}
-          {/*          className="text-h1 transition-apple hover:translate-x-1/3"*/}
-          {/*          icon="heroicons:chevron-right"*/}
-          {/*          inline*/}
-          {/*        />*/}
-          {/*      </button>*/}
-          {/*    </Link>*/}
-          {/*    <MySwiper images={gallery.images}></MySwiper>*/}
-          {/*  </section>*/}
-          {/*))}*/}
+          {galleries.map((gallery) => (
+            <section key={gallery.slug}>
+              <Link href={`gallery/${gallery.slug}`} className="flex items-center not-prose px-content">
+                <button className="text-btn btn-lg text-h1">
+                  <h1>{gallery.name}</h1>
+                  <Icon
+                    className="text-h1 transition-apple hover:translate-x-1/3"
+                    icon="heroicons:chevron-right"
+                    inline
+                  />
+                </button>
+              </Link>
+              <MySwiper images={gallery.images} maxHeight={160}></MySwiper>
+            </section>
+          ))}
           {/*<WaterfallGrid items={gallery.images} CardComponent={PhotoCard} />*/}
         </div>
       </div>

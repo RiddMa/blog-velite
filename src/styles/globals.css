@@ -201,6 +201,26 @@ body {
   }
 }
 
-.text-btn{
+.text-btn {
   @apply btn btn-ghost -ml-2 px-2 rounded-xl text-base font-normal leading-normal outline-transparent border-none;
+}
+
+@screen xl {
+  .my-swiper {
+    @apply rounded-2xl;
+    /*mask-image: linear-gradient(*/
+    /*  to right,*/
+    /*  rgba(0, 0, 0, 0),*/
+    /*  rgba(0, 0, 0, 1) 48px,*/
+    /*  rgba(0, 0, 0, 1) calc(100% - 48px),*/
+    /*  rgba(0, 0, 0, 0)*/
+    /*);*/
+    /*-webkit-mask-image: linear-gradient(*/
+    /*  to right,*/
+    /*  rgba(0, 0, 0, 0),*/
+    /*  rgba(0, 0, 0, 1) 48px,*/
+    /*  rgba(0, 0, 0, 1) calc(100% - 48px),*/
+    /*  rgba(0, 0, 0, 0)*/
+    /*);*/
+  }
 }

@@ -18,7 +18,8 @@ type PropType = {
 
 const EmblaCarousel: React.FC<PropType> = (props) => {
   const { images, options } = props;
-  const [emblaRef, emblaApi] = useEmblaCarousel(options, [Autoplay()]);
+  // const [emblaRef, emblaApi] = useEmblaCarousel(options, [Autoplay()]);
+  const [emblaRef, emblaApi] = useEmblaCarousel(options);
 
   const onNavButtonClick = useCallback((emblaApi: EmblaCarouselType) => {
     const autoplay = emblaApi.plugins().autoplay;
@@ -40,12 +41,10 @@ const EmblaCarousel: React.FC<PropType> = (props) => {
 
   return (
     <section className="embla">
-      <div className="embla__viewport" ref={emblaRef}>
+      <div className="overflow-hidden" ref={emblaRef}>
         <div className="embla__container">
           {images.map((image, index) => (
-            <div className="embla__slide" key={image.slug}>
-              <PhotoCard item={image} imgHeight={300} className="carousel-item" />
-            </div>
+            <PhotoCard key={image.slug} item={image} maxHeight={300} className="embla__slide" />
           ))}
         </div>
       </div>

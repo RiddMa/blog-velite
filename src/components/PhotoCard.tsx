@@ -2,76 +2,72 @@
 
 import React, { useRef, useState, useMemo } from "react";
 import Image from "next/image";
-import { formatDate } from "@/src/store/day";
-import { Post } from "@/.velite";
-import { Link } from "@/src/components/transition/react-transition-progress/next";
-import BlogHtmlRenderer from "@/src/components/markdown/BlogHtmlRenderer";
-import { gsap, useGSAP } from "@/src/util/gsap";
-import { clsname } from "@/src/util/clsname";
-import useWindowWidthState from "@/src/util/useWindowWidthState";
-import useColumnCount from "@/src/util/useColumnCount";
 import { RdPhoto } from "@/src/util/veliteUtils";
+import { useWindowSize } from "usehooks-ts";
 
 interface IPhotoCardProps {
   item: RdPhoto;
-  imgWidth?: number;
-  imgHeight?: number;
+  maxWidth?: number;
+  maxHeight?: number;
   isMobile?: boolean;
   className?: string;
 }
 
-const PhotoCard: React.FC<IPhotoCardProps> = ({ item: photo, imgWidth, imgHeight, isMobile = false, className }) => {
+const PhotoCard: React.FC<IPhotoCardProps> = ({ item: photo, maxWidth, maxHeight, isMobile = false, className }) => {
   const { src, slug, width, height, blurDataURL, exif } = photo;
 
   const cardRef = useRef<HTMLDivElement>(null);
   const imgRef = useRef<HTMLImageElement>(null);
 
-  const displayedWidth = useMemo(() => {
-    if (imgWidth) {
-      return imgWidth;
-    }
-    if (imgHeight) {
-      return (imgHeight * width) / height;
-    }
-    return width;
-  }, [imgWidth, imgHeight, width, height]);
+  const { width: windowWidth, height: windowHeight } = useWindowSize();
 
-  const displayedHeight = useMemo(() => {
-    if (imgHeight) {
-      return imgHeight;
-    }
-    if (imgWidth) {
-      return (imgWidth * height) / width;
-    }
-    return height;
-  }, [imgHeight, imgWidth, width, height]);
+  const { displayedWidth, displayedHeight } = useMemo(() => {
+    return calculateDisplayedDimensions(width, height, maxWidth ?? windowWidth, maxHeight ?? windowHeight);
+  }, [width, height, maxWidth, windowWidth, maxHeight, windowHeight]);
 
   return (
     <div ref={cardRef} key={`photo-container-${slug}`} className={className}>
-      {/*<Link href={permalink} className={clsname(`card prose-article-card flex flex-col p-4`)}>*/}
-      <div className="relative">
-        <Image
-          ref={imgRef}
-          src={src}
-          alt={`cover image`}
-          className="rounded-2xl"
-          width={displayedWidth}
-          height={displayedHeight}
-          placeholder="blur"
-          blurDataURL={blurDataURL}
-          quality={80}
-          sizes="720px"
-          style={{
-            margin: 0,
-            height: "auto",
-            width: "auto",
-            maxWidth: "calc(100% - 64px)",
-          }}
-        />
-      </div>
-      {/*</Link>*/}
+      <Image
+        ref={imgRef}
+        src={src}
+        alt={`cover image`}
+        className="rounded-2xl"
+        width={displayedWidth}
+        height={displayedHeight}
+        placeholder="blur"
+        blurDataURL={blurDataURL}
+        quality={80}
+        sizes="(max-width: 768px) calc(100vw - 64px), (max-width: 1280px) 720px, 960px"
+        style={{
+          margin: 0,
+          width: displayedWidth,
+          height: displayedHeight,
+        }}
+      />
     </div>
   );
 };
 
 export default React.memo(PhotoCard);
+
+function calculateDisplayedDimensions(
+  imageWidth: number,
+  imageHeight: number,
+  maxWidth: number,
+  maxHeight: number,
+): { displayedWidth: number; displayedHeight: number } {
+  const aspectRatio = imageWidth / imageHeight;
+
+  let displayedWidth = maxWidth;
+  let displayedHeight = maxWidth / aspectRatio;
+
+  if (displayedHeight > maxHeight) {
+    displayedHeight = maxHeight;
+    displayedWidth = maxHeight * aspectRatio;
+  }
+
+  return {
+    displayedWidth: displayedWidth,
+    displayedHeight: displayedHeight,
+  };
+}
