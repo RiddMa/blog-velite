@@ -11,6 +11,7 @@ export const PhotoGallery: React.FC<{ gallery: Gallery }> = ({ gallery }) => {
       src: img.src,
       width: img.width,
       height: img.height,
+      blurDataURL: img.blurDataURL,
     };
   });
 

@@ -186,7 +186,7 @@ export const convertImagesToWebP = async (inputPath: string, outputPath: string)
     src: string;
     width: number;
     height: number;
-    blurDataUrl: string;
+    blurDataURL: string;
     blurWidth: number;
     blurHeight: number;
     exif: ExifReader.ExpandedTags;
@@ -211,7 +211,7 @@ export const convertImagesToWebP = async (inputPath: string, outputPath: string)
         src: `/${path.posix.format(path.parse(path.relative(staticBasePath, outputFilePath)))}`,
         width: metadata.width!,
         height: metadata.height!,
-        blurDataUrl: await generateBlurDataUrl(sharpedImage),
+        blurDataURL: await generateBlurDataUrl(sharpedImage),
         blurWidth: blurWidth,
         blurHeight: Math.round((blurWidth / metadata.width!) * metadata.height!),
         exif: exifData,
