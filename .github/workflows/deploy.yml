@@ -24,6 +24,9 @@ jobs:
         run: npm install
 
       - name: Build Project
+        env:
+          DATABASE_URL: ${{ secrets.DATABASE_URL }}
+          API_KEY: ${{ secrets.API_KEY }}
         run: |
           npx prisma migrate dev --name init
           npm run build
