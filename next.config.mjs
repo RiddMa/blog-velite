@@ -3,7 +3,7 @@ import { build } from "velite";
 /** @type {import("next").NextConfig} */
 const nextConfig = {
   images: {
-    formats: ["image/avif", "image/webp"],
+    // formats: ["image/avif", "image/webp"], // Disable avif for less server CPU stress
     deviceSizes: [162, 322, 482, 642, 1082, 1282, 1922, 3842],
   },
   webpack: (config) => {

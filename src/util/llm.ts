@@ -56,5 +56,5 @@ export const generateExcerptForMarkdown = async (markdown: string): Promise<stri
     },
   ]);
   console.log("LLM response:", response);
-  return response;
+  return response.trim();
 };
