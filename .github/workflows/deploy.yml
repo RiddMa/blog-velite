@@ -46,6 +46,7 @@ jobs:
             package.json
             prisma
             node_modules/.prisma
+            next.config.mjs
 
   deploy:
     needs: build
@@ -65,7 +66,7 @@ jobs:
           port: ${{ secrets.SSH_PORT }}
           script: |
             cd ${{ secrets.PROJECT_DIRECTORY }}
-            rm -rf .next .velite public package.json node_modules/.prisma next.config.mjs
+            rm -rf .next .velite public package.json prisma/migrations prisma/schema.prisma node_modules/.prisma next.config.mjs
             find prisma -type f ! -name 'prod.db' -delete
 
       - name: Deploy to Server
@@ -75,7 +76,7 @@ jobs:
           username: ${{ secrets.SSH_USERNAME }}
           key: ${{ secrets.SSH_KEY }}
           port: ${{ secrets.SSH_PORT }}
-          source: ".next, .velite, public, package.json, prisma, node_modules/.prisma, next.config.mjs"
+          source: ".next, .velite, public, package.json, prisma/migrations, prisma/schema.prisma, node_modules/.prisma, next.config.mjs"
           target: ${{ secrets.PROJECT_DIRECTORY }}
 
       - name: Install Dependencies on Server

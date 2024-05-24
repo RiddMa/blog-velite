@@ -39,6 +39,8 @@ const SwiperLightbox: React.FC<{ images: RdPhoto[]; autoplay?: boolean; maxHeigh
     let lightbox = new PhotoSwipeLightbox({
       gallery: galleryRef.current,
       children: ".swiper-slide a",
+      loop: true,
+
       pswpModule: () => import("photoswipe"),
     });
     lightbox.on("destroy", () => {
@@ -54,9 +56,9 @@ const SwiperLightbox: React.FC<{ images: RdPhoto[]; autoplay?: boolean; maxHeigh
   const setSwiperAutoplay = (to: boolean) => {
     if (!swiperRef.current) return;
     if (to) {
-      swiperRef.current.swiper.autoplay.resume();
+      swiperRef.current.swiper.autoplay.start();
     } else {
-      swiperRef.current.swiper.autoplay.pause();
+      swiperRef.current.swiper.autoplay.stop();
     }
   };
 
