@@ -55,13 +55,14 @@ const SwiperLightbox: React.FC<{ images: RdPhoto[]; autoplay?: boolean; maxHeigh
     });
     lightbox.on("contentActivate", ({ content }) => {
       setActiveIndex(content.index);
-      swiperRef.current!.swiper.slideToLoop(content.index, 0);
+      swiperRef.current!.swiper.slideToLoop(content.index, 300);
       setShowExif(true);
     });
     lightbox.on("contentResize", ({ content, width, height }) => {
       // console.log("contentResize", content, width, height);
     });
     lightbox.on("close", () => {
+      swiperRef.current!.swiper.slideToLoop(activeIndex, 0);
       setShowExif(false);
     });
     lightbox.on("destroy", () => {
