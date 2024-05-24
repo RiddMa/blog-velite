@@ -25,6 +25,7 @@ const SwiperLightbox: React.FC<{ images: RdPhoto[]; autoplay?: boolean; maxHeigh
   const [maxWidth, setMaxWidth] = useState<number>(0);
   const [maxH, setMaxH] = useState<number>(0);
   const [isMobile, setIsMobile] = useState<boolean>(true);
+  const [showExif, setShowExif] = useState<boolean>(false);
 
   useEffect(() => {
     if (!swiperRef.current) return;
@@ -40,10 +41,27 @@ const SwiperLightbox: React.FC<{ images: RdPhoto[]; autoplay?: boolean; maxHeigh
       gallery: galleryRef.current,
       children: ".swiper-slide a",
       loop: true,
-
+      bgOpacity: 1,
+      closeTitle: "关闭 (Esc)",
+      zoomTitle: "放大 (单击图片)",
+      arrowPrevTitle: "上一张(左方向键)",
+      arrowNextTitle: "下一张(右方向键)",
+      errorMsg: "发生错误：无法加载图片",
       pswpModule: () => import("photoswipe"),
     });
+    lightbox.on("contentActivate", ({ content }) => {
+      setShowExif(true);
+      // content becomes active (the current slide)
+      // can be default prevented
+      console.log("contentActivate", content);
+    });
+    lightbox.on("contentResize", ({ content, width, height }) => {
+      // content will be resized
+      // can be default prevented
+      console.log("contentResize", content, width, height);
+    });
     lightbox.on("destroy", () => {
+      setShowExif(false);
       setSwiperAutoplay(autoplay);
     });
     lightbox.init();
@@ -51,7 +69,7 @@ const SwiperLightbox: React.FC<{ images: RdPhoto[]; autoplay?: boolean; maxHeigh
     return () => {
       lightbox.destroy();
     };
-  }, []);
+  }, [autoplay]);
 
   const setSwiperAutoplay = (to: boolean) => {
     if (!swiperRef.current) return;
@@ -64,6 +82,9 @@ const SwiperLightbox: React.FC<{ images: RdPhoto[]; autoplay?: boolean; maxHeigh
 
   return (
     <div ref={galleryRef}>
+      <div className="card fixed top-1/2 right-0">
+        <pre>{JSON.stringify(images, null, 2)}</pre>
+      </div>
       <Swiper
         ref={swiperRef}
         className="my-swiper"
