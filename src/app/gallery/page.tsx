@@ -46,7 +46,7 @@ const EmptyPage: NextPage = () => {
         <h1>精选照片</h1>
         <div className="-mx-content">
           {/*<EmblaCarousel images={featuredImages} options={OPTIONS}></EmblaCarousel>*/}
-          <MySwiper images={featuredImages} autoplay={true}></MySwiper>
+          <MySwiper images={featuredImages} autoplay={true} featured={true}></MySwiper>
           {galleries.map((gallery) => (
             <section key={gallery.slug}>
               <Link href={`gallery/${gallery.slug}`} className="flex items-center not-prose px-content">

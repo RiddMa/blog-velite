@@ -12,10 +12,11 @@ import PhotoCard from "@/src/components/PhotoCard";
 import { RdPhoto } from "@/src/util/veliteUtils";
 import { min } from "lodash";
 
-export const MySwiper: React.FC<{ images: RdPhoto[]; autoplay?: boolean; maxHeight?: number }> = ({
+export const MySwiper: React.FC<{ images: RdPhoto[]; autoplay?: boolean; maxHeight?: number; featured?: boolean }> = ({
   images,
-  autoplay,
+  autoplay = false,
   maxHeight = 360,
+  featured = false,
 }) => {
   const swiperRef = useRef<SwiperRef>(null);
   const [maxWidth, setMaxWidth] = useState<number>(0);
@@ -59,7 +60,14 @@ export const MySwiper: React.FC<{ images: RdPhoto[]; autoplay?: boolean; maxHeig
       {images.map((image, index) => (
         <SwiperSlide key={image.slug} style={{ width: "auto" }}>
           {/*<div className="opacity-0 absolute">Image</div>*/}
-          <PhotoCard key={image.slug} item={image} maxWidth={maxWidth} maxHeight={maxH} className="carousel-item" />
+          <PhotoCard
+            key={image.slug}
+            item={image}
+            maxWidth={maxWidth}
+            maxHeight={maxH}
+            priority={featured}
+            className="carousel-item"
+          />
         </SwiperSlide>
       ))}
     </Swiper>

@@ -67,7 +67,6 @@ jobs:
             cd ${{ secrets.PROJECT_DIRECTORY }}
             rm -rf .next .velite public package.json node_modules/.prisma next.config.mjs
             find prisma -type f ! -name 'prod.db' -delete
-            rm -rf node_modules/.prisma
 
       - name: Deploy to Server
         uses: appleboy/scp-action@master
