@@ -1,7 +1,7 @@
 import { NextPage } from "next";
 import WaterfallGrid from "@/src/components/WaterfallGrid";
 import PhotoGallery from "@/src/app/gallery/_components/PhotoGallery";
-import React, { useState } from "react";
+import React from "react";
 import { galleries } from "@/.velite";
 import PhotoCard from "@/src/components/PhotoCard";
 import { RdPhoto } from "@/src/util/veliteUtils";
@@ -10,6 +10,7 @@ import EmblaCarousel from "@/src/components/embla-carousel/EmblaCarousel";
 import { Link } from "@/src/components/transition/react-transition-progress/next";
 import { Icon } from "@iconify-icon/react";
 import { EmblaOptionsType } from "embla-carousel";
+import SimpleGallery from "@/src/components/photoswipe/SimpleGallery";
 
 const EmptyPage: NextPage = () => {
   const featuredImages = galleries.reduce((acc, gallery) => {
@@ -19,6 +20,29 @@ const EmptyPage: NextPage = () => {
   return (
     <>
       <div className="prose-article flex flex-col gap-4">
+        <SimpleGallery
+          galleryID="my-test-gallery"
+          images={[
+            {
+              largeURL: "https://cdn.photoswipe.com/photoswipe-demo-images/photos/1/img-2500.jpg",
+              thumbnailURL: "https://cdn.photoswipe.com/photoswipe-demo-images/photos/1/img-200.jpg",
+              width: 1875,
+              height: 2500,
+            },
+            {
+              largeURL: "https://cdn.photoswipe.com/photoswipe-demo-images/photos/2/img-2500.jpg",
+              thumbnailURL: "https://cdn.photoswipe.com/photoswipe-demo-images/photos/2/img-200.jpg",
+              width: 1669,
+              height: 2500,
+            },
+            {
+              largeURL: "https://cdn.photoswipe.com/photoswipe-demo-images/photos/3/img-2500.jpg",
+              thumbnailURL: "https://cdn.photoswipe.com/photoswipe-demo-images/photos/3/img-200.jpg",
+              width: 2500,
+              height: 1666,
+            },
+          ]}
+        />
         <h1>精选照片</h1>
         <div className="-mx-content">
           {/*<EmblaCarousel images={featuredImages} options={OPTIONS}></EmblaCarousel>*/}
