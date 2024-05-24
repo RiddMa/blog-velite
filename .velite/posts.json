@@ -20,13 +20,13 @@
       "HTML",
       "CSS"
     ],
-    "content": "<p><a href=\"https://nextjs.org/docs/app/api-reference/components/image#devicesizes\">https://nextjs.org/docs/app/api-reference/components/image#devicesizes</a></p>\n<p><a href=\"https://github.com/vercel/next.js/issues/18413#issuecomment-775591999\">https://github.com/vercel/next.js/issues/18413#issuecomment-775591999</a></p>",
-    "raw": "https://nextjs.org/docs/app/api-reference/components/image#devicesizes\n\nhttps://github.com/vercel/next.js/issues/18413#issuecomment-775591999",
+    "content": "<p>Image Optimization:</p>\n<p><a href=\"https://nextjs.org/docs/app/api-reference/components/image#devicesizes\">https://nextjs.org/docs/app/api-reference/components/image#devicesizes</a></p>\n<p><a href=\"https://github.com/vercel/next.js/issues/18413#issuecomment-775591999\">https://github.com/vercel/next.js/issues/18413#issuecomment-775591999</a></p>\n<p><a href=\"https://stackoverflow.com/questions/67693355/400-bad-request-from-next-image\">https://stackoverflow.com/questions/67693355/400-bad-request-from-next-image</a></p>",
+    "raw": "Image Optimization:\n\nhttps://nextjs.org/docs/app/api-reference/components/image#devicesizes\n\nhttps://github.com/vercel/next.js/issues/18413#issuecomment-775591999\n\nhttps://stackoverflow.com/questions/67693355/400-bad-request-from-next-image",
     "path": "posts/next-js-photo-gallery-implementation-optimization",
     "toc": [],
     "metadata": {
       "readingTime": 1,
-      "wordCount": 18
+      "wordCount": 29
     },
     "permalink": "/post/next-js-photo-gallery-implementation-optimization",
     "images": {},

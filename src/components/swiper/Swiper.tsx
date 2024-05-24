@@ -55,8 +55,8 @@ export const MySwiper: React.FC<{ images: RdPhoto[]; autoplay?: boolean; maxHeig
       parallax={true}
       modules={[Autoplay, Pagination, Keyboard]}
     >
-      <div className="absolute top-0 bottom-0 left-0 w-16 pointer-events-none gradient-mask-left"></div>
-      <div className="absolute top-0 bottom-0 right-0 w-16 pointer-events-none gradient-mask-right"></div>
+      {/*<div className="absolute top-0 bottom-0 left-0 w-16 pointer-events-none gradient-mask-left"></div>*/}
+      {/*<div className="absolute top-0 bottom-0 right-0 w-16 pointer-events-none gradient-mask-right"></div>*/}
       {images.map((image, index) => (
         <SwiperSlide key={image.slug} style={{ width: "auto" }}>
           {/*<div className="opacity-0 absolute">Image</div>*/}

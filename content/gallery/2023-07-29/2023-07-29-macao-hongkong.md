@@ -1,5 +1,5 @@
 ---
-name: 2023 夏 - 澳门香港
+name: 2023 夏 - 澳门·香港
 slug: 2023-07-29-macao-hongkong
 featured:
   - 20230729183402-_RID0220
