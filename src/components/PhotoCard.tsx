@@ -36,8 +36,9 @@ const PhotoCard: React.FC<IPhotoCardProps> = ({ item: photo, maxWidth, maxHeight
         height={displayedHeight}
         placeholder="blur"
         blurDataURL={blurDataURL}
-        quality={80}
-        sizes="(max-width: 768px) calc(100vw - 64px), (max-width: 1280px) 720px, 960px"
+        quality={70}
+        // sizes="(max-width: 768px) 100vw, (max-width: 1280px) 720px, 960px"
+        // sizes={`${displayedWidth}px`}
         style={{
           margin: 0,
           width: displayedWidth,
