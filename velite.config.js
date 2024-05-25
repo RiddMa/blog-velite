@@ -376,6 +376,7 @@ export default defineConfig({
     data.categories.sort((a, b) => a.index - b.index);
     // data.posts = data.posts.filter((post) => !post.draft);
     data.posts.sort((a, b) => new Date(b.updated).getTime() - new Date(a.updated).getTime()); // Sort the posts array by the updated date in descending order
+    data.galleries.sort((a, b) => b.slug.localeCompare(a.slug));
   },
   complete: async (data) => {
     try {

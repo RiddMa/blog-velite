@@ -19,7 +19,7 @@ const PhotoCard: React.FC<IPhotoCardProps> = ({
   maxWidth,
   maxHeight,
   isMobile = false,
-  priority = false,
+  priority = true,
   className,
 }) => {
   const { src, slug, width, height, blurDataURL, exif } = photo;
@@ -46,8 +46,6 @@ const PhotoCard: React.FC<IPhotoCardProps> = ({
         blurDataURL={blurDataURL}
         quality={70}
         priority={priority}
-        // sizes="(max-width: 768px) 100vw, (max-width: 1280px) 720px, 960px"
-        // sizes={`${displayedWidth}px`}
         style={{
           margin: 0,
           width: displayedWidth,

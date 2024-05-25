@@ -15,6 +15,68 @@ import { min } from "lodash";
 import { motion, AnimatePresence } from "framer-motion";
 import { transitionApple } from "@/src/styles/framer-motion";
 import { Icon } from "@iconify-icon/react";
+import { clsname } from "@/src/util/clsname";
+import dayjs from "dayjs";
+import customParseFormat from "dayjs/plugin/customParseFormat";
+import { formatDateTime } from "@/src/store/day";
+
+function ExifPanel(props: { showExif: boolean; rdPhoto: RdPhoto }) {
+  dayjs.extend(customParseFormat);
+  const format = "YYYY:MM:DD HH:mm:ss";
+  let photoDateTime = "未知拍摄时间";
+  if (props.rdPhoto?.exif?.exif?.DateTimeOriginal?.description) {
+    photoDateTime = formatDateTime(props.rdPhoto.exif?.exif?.DateTimeOriginal?.description, format);
+  }
+  let photoTimeZone = "未知时区";
+  if (props.rdPhoto?.exif?.exif?.OffsetTimeOriginal?.description) {
+    const match = props.rdPhoto.exif?.exif?.OffsetTimeOriginal?.description.match(/^([+-])(\d{2}):(\d{2})$/);
+    photoTimeZone = `UTC${match![1]}${match![2]}`;
+  }
+
+  return (
+    <div
+      className={clsname(
+        "card fixed top-[60px] right-0 max-w-[300px] max-h-[calc(100vh-120px)] z-[999999] p-4 flex flex-col gap-4 transition-apple",
+        props.showExif ? "" : "translate-x-[105%]",
+      )}
+    >
+      <div className="flex flex-row gap-2 items-center">
+        <Icon className="text-xl" icon="formkit:datetime" />
+        {photoDateTime}, {photoTimeZone}
+      </div>
+      <div className="flex flex-row gap-2 items-center">
+        <Icon className="text-xl" icon="fluent:slide-size-24-regular" />
+        {props.rdPhoto?.width} x {props.rdPhoto?.height}
+      </div>
+      <div className="flex flex-row gap-2 items-center">
+        <Icon className="text-xl" icon="heroicons:camera" />
+        {props.rdPhoto?.exif?.exif?.Make?.description ?? "未知制造商"}
+        {`, `}
+        {props.rdPhoto?.exif?.exif?.Model?.description ?? "未知型号"}
+      </div>
+      <div className="flex flex-row gap-2 items-center">
+        <Icon className="text-xl" icon="iconoir:lens" />
+        {props.rdPhoto?.exif?.exif?.LensModel?.description ?? "未知镜头"}
+      </div>
+      <div className="flex flex-row gap-2 items-center">
+        <Icon className="text-xl" icon="system-uicons:ruler" />
+        {props.rdPhoto?.exif?.exif?.FocalLength?.description ?? "未知焦距"}
+      </div>
+      <div className="flex flex-row gap-2 items-center">
+        <Icon className="text-xl" icon="material-symbols:shutter-speed-rounded" />
+        {`${props.rdPhoto?.exif?.exif?.ExposureTime?.description} s` ?? "未知曝光时间"}
+      </div>
+      <div className="flex flex-row gap-2 items-center">
+        <Icon className="text-xl" icon="carbon:aperture" />
+        {props.rdPhoto?.exif?.exif?.FNumber?.description ?? "未知光圈"}
+      </div>
+      <div className="flex flex-row gap-2 items-center">
+        <Icon className="text-xl" icon="carbon:iso" />
+        {props.rdPhoto?.exif?.exif?.ISOSpeedRatings?.description ?? "未知 ISO"}
+      </div>
+    </div>
+  );
+}
 
 const SwiperLightbox: React.FC<{ images: RdPhoto[]; autoplay?: boolean; maxHeight?: number; featured?: boolean }> = ({
   images,
@@ -27,6 +89,7 @@ const SwiperLightbox: React.FC<{ images: RdPhoto[]; autoplay?: boolean; maxHeigh
   const [maxWidth, setMaxWidth] = useState<number>(0);
   const [maxH, setMaxH] = useState<number>(0);
   const [isMobile, setIsMobile] = useState<boolean>(true);
+  const [lightboxActive, setLightboxActive] = useState<boolean>(false);
   const [activeIndex, setActiveIndex] = useState<number>(0);
   const [showExif, setShowExif] = useState<boolean>(false);
 
@@ -46,6 +109,8 @@ const SwiperLightbox: React.FC<{ images: RdPhoto[]; autoplay?: boolean; maxHeigh
       children: ".swiper-slide a",
       loop: true,
       bgOpacity: 1,
+      // bgOpacity: 0.1,
+      // initialZoomLevel: 0.05,
       closeTitle: "关闭 (Esc)",
       zoomTitle: "放大 (单击图片)",
       arrowPrevTitle: "上一张(左方向键)",
@@ -54,15 +119,16 @@ const SwiperLightbox: React.FC<{ images: RdPhoto[]; autoplay?: boolean; maxHeigh
       pswpModule: () => import("photoswipe"),
     });
     lightbox.on("contentActivate", ({ content }) => {
+      setLightboxActive(true);
       setActiveIndex(content.index);
       swiperRef.current!.swiper.slideToLoop(content.index, 300);
-      setShowExif(true);
+      // setShowExif(true);
     });
     lightbox.on("contentResize", ({ content, width, height }) => {
       // console.log("contentResize", content, width, height);
     });
     lightbox.on("close", () => {
-      swiperRef.current!.swiper.slideToLoop(activeIndex, 0);
+      setLightboxActive(false);
       setShowExif(false);
     });
     lightbox.on("destroy", () => {
@@ -87,53 +153,25 @@ const SwiperLightbox: React.FC<{ images: RdPhoto[]; autoplay?: boolean; maxHeigh
   return (
     <div ref={galleryRef}>
       <AnimatePresence>
-        {showExif && (
-          <motion.div
+        {lightboxActive && (
+          <motion.button
+            aria-label="显示照片信息"
+            onClick={() => {
+              setShowExif(!showExif);
+            }}
             initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
+            animate={{ opacity: 0.8 }}
+            whileHover={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={transitionApple}
-            className="card fixed top-[60px] right-0 max-w-[300px] max-h-[calc(100vh-120px)] z-[999999] p-4 flex flex-col gap-4"
+            className="fixed top-0 right-[106px] w-[50px] h-[60px] z-[999999] flex flex-col items-center justify-center"
           >
-            {/*<pre>{JSON.stringify(images[activeIndex].exif, null, 2)}</pre>*/}
-            <div className="flex flex-row gap-2 items-center">
-              <Icon className="text-xl" icon="formkit:datetime" />
-              {images[activeIndex].exif.exif?.DateTimeOriginal?.description ?? "未知拍摄时间"}
-              {images[activeIndex].exif.exif?.OffsetTimeOriginal?.description ?? "未知时区"}
-            </div>
-            <div className="flex flex-row gap-2 items-center">
-              <Icon className="text-xl" icon="fluent:slide-size-24-regular" />
-              {images[activeIndex].width} x {images[activeIndex].height}
-            </div>
-            <div className="flex flex-row gap-2 items-center">
-              <Icon className="text-xl" icon="heroicons:camera" />
-              {images[activeIndex].exif.exif?.Make?.description ?? "未知制造商"}
-              {`, `}
-              {images[activeIndex].exif.exif?.Model?.description ?? "未知型号"}
-            </div>
-            <div className="flex flex-row gap-2 items-center">
-              <Icon className="text-xl" icon="bxs:cylinder" />
-              {images[activeIndex].exif.exif?.LensModel?.description ?? "未知镜头"}
-            </div>
-            <div className="flex flex-row gap-2 items-center">
-              <Icon className="text-xl" icon="system-uicons:ruler" />
-              {images[activeIndex].exif.exif?.FocalLength?.description ?? "未知焦距"}
-            </div>
-            <div className="flex flex-row gap-2 items-center">
-              <Icon className="text-xl" icon="material-symbols:shutter-speed-rounded" />
-              {`${images[activeIndex].exif.exif?.ExposureTime?.description} s` ?? "未知曝光时间"}
-            </div>
-            <div className="flex flex-row gap-2 items-center">
-              <Icon className="text-xl" icon="carbon:aperture" />
-              {images[activeIndex].exif.exif?.FNumber?.description ?? "未知光圈"}
-            </div>
-            <div className="flex flex-row gap-2 items-center">
-              <Icon className="text-xl" icon="carbon:iso-filled" />
-              {images[activeIndex].exif.exif?.ISOSpeedRatings?.description ?? "未知 ISO"}
-            </div>
-          </motion.div>
+            <Icon icon="entypo:info-with-circle" width="18" height="18" />
+          </motion.button>
         )}
       </AnimatePresence>
+      <ExifPanel showExif={showExif} rdPhoto={images[activeIndex]} />
+      {/*activeIndex={activeIndex}*/}
       <Swiper
         ref={swiperRef}
         className="my-swiper"
@@ -143,7 +181,6 @@ const SwiperLightbox: React.FC<{ images: RdPhoto[]; autoplay?: boolean; maxHeigh
         grabCursor={true}
         autoplay={autoplay ? { delay: 5000, disableOnInteraction: true, pauseOnMouseEnter: true } : false}
         loop={false}
-        parallax={true}
         modules={[Autoplay, Pagination]}
       >
         {images.map((image, index) => (
@@ -159,7 +196,7 @@ const SwiperLightbox: React.FC<{ images: RdPhoto[]; autoplay?: boolean; maxHeigh
                 item={image}
                 maxWidth={maxWidth}
                 maxHeight={maxH}
-                priority={featured}
+                priority={true}
                 className="carousel-item"
               />
             </a>

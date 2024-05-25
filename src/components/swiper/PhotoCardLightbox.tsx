@@ -19,7 +19,7 @@ const PhotoCardLightbox: React.FC<IPhotoCardProps> = ({
   maxWidth,
   maxHeight,
   isMobile = false,
-  priority = false,
+  priority = true,
   className,
 }) => {
   const { src, slug, width, height, blurDataURL, exif } = photo;

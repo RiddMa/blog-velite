@@ -8,3 +8,7 @@ dayjs.locale("zh-cn"); // 使用本地化语言
 export const formatDate = (date: string) => {
   return dayjs(date).format("YYYY-MM-DD");
 };
+
+export const formatDateTime = (datetime: string, format: string) => {
+  return dayjs(datetime, format).format("YYYY-MM-DD HH:mm");
+};
