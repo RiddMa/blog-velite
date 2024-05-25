@@ -4,14 +4,14 @@ import "../styles/typography.css";
 import "../styles/scrollbar.css";
 import React from "react";
 import Providers from "./providers";
-import { WebVitals } from "@/src/components/WebVitals";
 import PageTransitionEffect from "@/src/components/transition/PageTransitionEffect";
 import { globals } from "@/.velite";
 import BackgroundImage from "@/src/components/BackgroundImage";
-import PageTransition from "@/src/components/transition/RdPageTransition";
 import TopNavbar from "@/src/components/layout/TopNavbar";
 import VisitCounter from "@/src/components/VisitCounter";
 import Footer from "@/src/components/layout/Footer";
+import Script from "next/script";
+import UmamiTrack from "@/src/components/UmamiTrack";
 
 export const metadata: Metadata = {
   title: globals.metadata.title,
@@ -33,15 +33,14 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className="dark">
-      <body className={`min-h-[calc(100dvh)]`}>
-        {/*<WebVitals />*/}
+      <UmamiTrack />
+      <body className={`min-h-[100vh]`}>
         <Providers>
           <VisitCounter />
           <BackgroundImage />
           <TopNavbar />
           <PageTransitionEffect>{children}</PageTransitionEffect>
           <Footer />
-          {/*<PageTransition>{children}</PageTransition>*/}
         </Providers>
       </body>
     </html>

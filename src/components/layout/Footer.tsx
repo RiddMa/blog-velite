@@ -10,7 +10,7 @@ const Footer: React.FC = () => {
           <VisitCountDisplay /> 次浏览
         </span>
         <span>
-          © <a href="https://github.com/RiddMa/blog-velite">Ridd 的博客</a>，始于 2023
+          © <a href="https://github.com/RiddMa/blog-velite">Ridd 的博客</a>，始于 2024
         </span>
         <span className={`whitespace-nowrap`}>
           {`使用 `}
