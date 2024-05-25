@@ -69,7 +69,8 @@
   },
   "devDependencies": {
     "@iconify-icon/react": "^2.1.0",
-    "@iconify/json": "^2.2.202",
+    "@iconify/json": "^2.2.213",
+    "@iconify/tailwind": "^1.1.1",
     "@tailwindcss/line-clamp": "^0.4.4",
     "@tailwindcss/typography": "^0.5.12",
     "@types/is-url": "^1.2.32",

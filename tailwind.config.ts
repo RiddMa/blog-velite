@@ -2,6 +2,7 @@ import { nextui } from "@nextui-org/theme";
 import type { Config } from "tailwindcss";
 import colors from "tailwindcss/colors";
 import defaultTheme from "tailwindcss/defaultTheme";
+import { addDynamicIconSelectors } from "@iconify/tailwind";
 
 const config: Config = {
   content: [
@@ -93,6 +94,6 @@ const config: Config = {
     },
   },
   darkMode: "class",
-  plugins: [require("@tailwindcss/typography"), require("daisyui"), nextui()],
+  plugins: [require("@tailwindcss/typography"), require("daisyui"), nextui(), addDynamicIconSelectors()],
 };
 export default config;

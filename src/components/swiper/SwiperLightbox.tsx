@@ -36,42 +36,42 @@ function ExifPanel(props: { showExif: boolean; rdPhoto: RdPhoto }) {
   return (
     <div
       className={clsname(
-        "card fixed top-[60px] right-0 max-w-[300px] max-h-[calc(100vh-120px)] z-[999999] p-4 flex flex-col gap-4 transition-apple",
-        props.showExif ? "" : "translate-x-[105%]",
+        "card fixed backdrop-blur-bg top-[60px] right-[16px] max-w-[300px] max-h-[calc(100vh-120px)] z-[999999] p-4 flex flex-col gap-4 transition-apple",
+        props.showExif ? "" : "translate-x-[calc(100%+20px)]",
       )}
     >
       <div className="flex flex-row gap-2 items-center">
-        <Icon className="text-xl" icon="formkit:datetime" />
+        <span className="text-lg mx-0.5 icon-[formkit--datetime]" />
         {photoDateTime}, {photoTimeZone}
       </div>
       <div className="flex flex-row gap-2 items-center">
-        <Icon className="text-xl" icon="fluent:slide-size-24-regular" />
+        <span className="text-xl icon-[fluent--slide-size-24-regular]" />
         {props.rdPhoto?.width} x {props.rdPhoto?.height}
       </div>
       <div className="flex flex-row gap-2 items-center">
-        <Icon className="text-xl" icon="heroicons:camera" />
+        <span className="text-xl icon-[heroicons--camera]" />
         {props.rdPhoto?.exif?.exif?.Make?.description ?? "未知制造商"}
         {`, `}
         {props.rdPhoto?.exif?.exif?.Model?.description ?? "未知型号"}
       </div>
       <div className="flex flex-row gap-2 items-center">
-        <Icon className="text-xl" icon="iconoir:lens" />
+        <span className="text-xl icon-[iconoir--lens]" />
         {props.rdPhoto?.exif?.exif?.LensModel?.description ?? "未知镜头"}
       </div>
       <div className="flex flex-row gap-2 items-center">
-        <Icon className="text-xl" icon="system-uicons:ruler" />
+        <span className="text-2xl -mx-0.5 icon-[circum--ruler]" />
         {props.rdPhoto?.exif?.exif?.FocalLength?.description ?? "未知焦距"}
       </div>
       <div className="flex flex-row gap-2 items-center">
-        <Icon className="text-xl" icon="material-symbols:shutter-speed-rounded" />
+        <span className="text-2xl -mx-0.5 icon-[material-symbols-light--shutter-speed-outline-rounded]" />
         {`${props.rdPhoto?.exif?.exif?.ExposureTime?.description} s` ?? "未知曝光时间"}
       </div>
       <div className="flex flex-row gap-2 items-center">
-        <Icon className="text-xl" icon="carbon:aperture" />
+        <span className="text-xl icon-[ph--aperture-light]" />
         {props.rdPhoto?.exif?.exif?.FNumber?.description ?? "未知光圈"}
       </div>
       <div className="flex flex-row gap-2 items-center">
-        <Icon className="text-xl" icon="carbon:iso" />
+        <span className="text-xl icon-[carbon--iso]" />
         {props.rdPhoto?.exif?.exif?.ISOSpeedRatings?.description ?? "未知 ISO"}
       </div>
     </div>
@@ -116,12 +116,21 @@ const SwiperLightbox: React.FC<{ images: RdPhoto[]; autoplay?: boolean; maxHeigh
       arrowPrevTitle: "上一张(左方向键)",
       arrowNextTitle: "下一张(右方向键)",
       errorMsg: "发生错误：无法加载图片",
+      paddingFn: (viewportSize, itemData, index) => {
+        return {
+          top: viewportSize.x < 768 ? 60 : 0,
+          bottom: 0,
+          left: 0,
+          right: 0,
+        };
+      },
       pswpModule: () => import("photoswipe"),
     });
     lightbox.on("contentActivate", ({ content }) => {
       setLightboxActive(true);
       setActiveIndex(content.index);
-      swiperRef.current!.swiper.slideToLoop(content.index, 300);
+      // swiperRef.current!.swiper.slideToLoop(content.index, 300);
+      swiperRef.current!.swiper.slideTo(content.index, 300);
       // setShowExif(true);
     });
     lightbox.on("contentResize", ({ content, width, height }) => {
@@ -155,6 +164,7 @@ const SwiperLightbox: React.FC<{ images: RdPhoto[]; autoplay?: boolean; maxHeigh
       <AnimatePresence>
         {lightboxActive && (
           <motion.button
+            data-theme="dark"
             aria-label="显示照片信息"
             onClick={() => {
               setShowExif(!showExif);
@@ -164,7 +174,7 @@ const SwiperLightbox: React.FC<{ images: RdPhoto[]; autoplay?: boolean; maxHeigh
             whileHover={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={transitionApple}
-            className="fixed top-0 right-[106px] w-[50px] h-[60px] z-[999999] flex flex-col items-center justify-center"
+            className="fixed top-0 right-[106px] w-[50px] h-[60px] z-[999999] flex flex-col items-center justify-center bg-transparent"
           >
             <Icon icon="entypo:info-with-circle" width="18" height="18" />
           </motion.button>
@@ -176,11 +186,11 @@ const SwiperLightbox: React.FC<{ images: RdPhoto[]; autoplay?: boolean; maxHeigh
         ref={swiperRef}
         className="my-swiper"
         spaceBetween={16}
-        slidesPerView="auto"
+        slidesPerView={"auto"}
         centeredSlides={isMobile}
         grabCursor={true}
         autoplay={autoplay ? { delay: 5000, disableOnInteraction: true, pauseOnMouseEnter: true } : false}
-        loop={false}
+        loop={true}
         modules={[Autoplay, Pagination]}
       >
         {images.map((image, index) => (
