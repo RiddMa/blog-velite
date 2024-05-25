@@ -11,6 +11,7 @@ import BackgroundImage from "@/src/components/BackgroundImage";
 import PageTransition from "@/src/components/transition/RdPageTransition";
 import TopNavbar from "@/src/components/layout/TopNavbar";
 import VisitCounter from "@/src/components/VisitCounter";
+import Footer from "@/src/components/layout/Footer";
 
 export const metadata: Metadata = {
   title: globals.metadata.title,
@@ -39,6 +40,7 @@ export default function RootLayout({
           <BackgroundImage />
           <TopNavbar />
           <PageTransitionEffect>{children}</PageTransitionEffect>
+          <Footer />
           {/*<PageTransition>{children}</PageTransition>*/}
         </Providers>
       </body>

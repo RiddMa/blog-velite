@@ -96,7 +96,7 @@ body.dark {
 }
 
 .main-container {
-  @apply flex-grow w-full xl:max-w-[1024px] fhd:max-w-[1280px] px-content mt-[80px];
+  @apply flex-grow w-full xl:max-w-[1024px] fhd:max-w-[1280px] px-content mt-[80px] pb-8;
 }
 
 .side-navbar {

@@ -13,7 +13,7 @@ interface BlogLayoutProps {
 
 const BlogLayout: React.FC<BlogLayoutProps> = ({ children, className, leftNavbar, rightNavbar }) => {
   return (
-    <div className="flex flex-col inset-0 min-h-[calc(100dvh)]">
+    <div className="flex flex-col inset-0">
       <div className="flex flex-row flex-1 p-0 m-0 justify-center">
         <LeftNavbarClient>{leftNavbar}</LeftNavbarClient>
         <MainContainer className={clsname("flip-main-container", className)}>{children}</MainContainer>

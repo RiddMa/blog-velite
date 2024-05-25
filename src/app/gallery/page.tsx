@@ -6,7 +6,7 @@ import { Link } from "@/src/components/transition/react-transition-progress/next
 import { Icon } from "@iconify-icon/react";
 import SwiperLightbox from "@/src/components/swiper/SwiperLightbox";
 
-const EmptyPage: NextPage = () => {
+const GalleryPage: NextPage = () => {
   const featuredImages = galleries.reduce((acc, gallery) => {
     return acc.concat(gallery.images.filter((image) => image.featured));
   }, [] as RdPhoto[]);
@@ -38,4 +38,4 @@ const EmptyPage: NextPage = () => {
   );
 };
 
-export default EmptyPage;
+export default GalleryPage;
