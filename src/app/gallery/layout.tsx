@@ -15,17 +15,7 @@ export function generateMetadata(): Metadata {
 }
 
 const Layout: React.FC<{ children: React.ReactNode; params: { slug: string } }> = ({ children }) => {
-  return (
-    <BlogLayout
-    // leftNavbar={
-    //   <Suspense fallback={null}>
-    //     <PostFilterWidget useQuerySubPath={true} />
-    //   </Suspense>
-    // }
-    >
-      {children}
-    </BlogLayout>
-  );
+  return <BlogLayout>{children}</BlogLayout>;
 };
 
 export default Layout;

@@ -1,8 +1,9 @@
-import { posts } from "@/.velite";
+import { Post, posts } from "@/.velite";
 import WaterfallGrid from "@/src/components/WaterfallGrid";
-import { Link } from "@/src/components/transition/react-transition-progress/next";
 import PostCard from "@/src/app/(blog)/posts/PostCard";
 import { filterPosts } from "@/src/util/util";
+import BlogIndexNav from "@/src/components/layout/BlogIndexNav";
+import React from "react";
 
 interface PostListProps {
   params: {
@@ -17,27 +18,14 @@ interface PostListProps {
 
 export default function PostListPage({ searchParams }: PostListProps) {
   const displayedPosts = filterPosts(posts, searchParams);
+  console.log(displayedPosts.length);
 
   return (
-    <>
-      <div className="flex flex-col">
-        <nav className="flex flex-row gap-4 items-baseline">
-          <Link href={`/posts`} className={`text-h0 text-href`}>
-            文章
-          </Link>
-          <Link href={`/categories`} className={`text-h2 text-href`}>
-            分类
-          </Link>
-          <Link href={`/columns`} className={`text-h2 text-href`}>
-            专栏
-          </Link>
-        </nav>
-        <div className="prose-article px-content">
-          <p className="text-end opacity-80">{displayedPosts.length}篇文章</p>
-        </div>
-        {/*// @ts-ignore // TS cannot infer the type of CardComponent*/}
-        <WaterfallGrid items={displayedPosts} CardComponent={PostCard} />
-      </div>
-    </>
+    <div className="flex flex-col">
+      <BlogIndexNav path={`/posts`} />
+      <p className="prose-article text-end opacity-80">{displayedPosts.length}篇文章</p>
+      {/*// @ts-ignore // TS cannot infer the type of CardComponent*/}
+      <WaterfallGrid items={displayedPosts} CardComponent={PostCard} />
+    </div>
   );
 }

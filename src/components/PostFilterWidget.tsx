@@ -1,19 +1,17 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
-import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import { usePathname, useSearchParams } from "next/navigation";
 import { Selection } from "@nextui-org/react";
 import { Select, SelectItem } from "@nextui-org/select";
 import { categories, columns, tags } from "@/.velite";
 import { debounce } from "lodash";
 
 const PostFilterWidget: React.FC<{
-  useQuerySubPath?: boolean;
   useColumn?: string;
   useCategory?: string;
   useTag?: string;
-}> = ({ useQuerySubPath = false, useColumn, useCategory, useTag }) => {
-  const router = useRouter();
+}> = ({ useColumn, useCategory, useTag }) => {
   const pathname = usePathname();
   const searchParams = useSearchParams();
 
@@ -43,26 +41,22 @@ const PostFilterWidget: React.FC<{
     const search = params.toString();
     const query = search ? `?${search}` : "";
     let newPathname = pathname;
-    if (useQuerySubPath) {
-      if (query === "") {
-        newPathname = pathname.endsWith("/query") ? pathname.replace(/\/query$/, "") : pathname;
-      } else {
-        newPathname = pathname.endsWith("/query") ? pathname : `${pathname}/query`;
-      }
+    if (query === "") {
+      newPathname = pathname.replace(/\/query$/, "");
+    } else {
+      newPathname = pathname.endsWith("/query") ? pathname : `${pathname}/query`;
     }
-    router.push(`${newPathname}${query}`);
+    window.history.pushState(null, "", `${newPathname}${query}`);
   };
 
   const debouncedFilter = debounce(onFilter, 500); // Adjust the debounce delay as needed
 
   useEffect(() => {
-    // debouncedFilter();
-    // onFilter();
+    debouncedFilter();
   }, [selectedColumns, selectedCategories, selectedTags, debouncedFilter]);
 
   return (
     <aside className={`flex flex-col gap-4 px-0`}>
-      {/*<pre>{JSON.stringify(params, null, 2)}</pre>*/}
       <p className={`text-h2`}>过滤器</p>
       <Select
         isDisabled={!!useColumn}
