@@ -30,7 +30,7 @@
     },
     "permalink": "/post/next-js-photo-gallery-implementation-optimization",
     "images": {},
-    "excerptRaw": "1"
+    "excerptRaw": "<p>1</p>"
   },
   {
     "title": "实现 Masonry 布局",
@@ -63,7 +63,7 @@
     },
     "permalink": "/post/masonry-layout",
     "images": {},
-    "excerptRaw": "1"
+    "excerptRaw": "<p>1</p>"
   },
   {
     "title": "在 Next.js 14 App Router 中实现页面切换的动画效果",
@@ -97,7 +97,7 @@
     },
     "permalink": "/post/next-js-app-router-page-transition",
     "images": {},
-    "excerptRaw": " 在Stack Overflow的问答中，用户探讨了在Python中使用`multiprocessing`模块时，如何正确处理`multiprocessing.Queue`对象的生命周期，以避免内存泄漏的问题。作者指出，`multiprocessing.Queue`对象在所有工作进程关闭后，其自身并不会自动清理，因此需要显式地调用`close()`和`join_thread()`方法来确保队列的线程被正确关闭。此外，作者还提到了在Windows系统中，由于进程间通信的特殊性，需要特别注意队列的关闭顺序，以防止出现死锁或资源未释放的情况。通过实例代码，作者演示了如何在主进程中正确管理队列的生命周期，确保资源得到有效释放，从而避免内存泄漏。"
+    "excerptRaw": "<p>在Stack Overflow的问答中，用户探讨了在Python中使用<code>multiprocessing</code>模块时，如何正确处理<code>multiprocessing.Queue</code>对象的生命周期，以避免内存泄漏的问题。作者指出，<code>multiprocessing.Queue</code>对象在所有工作进程关闭后，其自身并不会自动清理，因此需要显式地调用<code>close()</code>和<code>join_thread()</code>方法来确保队列的线程被正确关闭。此外，作者还提到了在Windows系统中，由于进程间通信的特殊性，需要特别注意队列的关闭顺序，以防止出现死锁或资源未释放的情况。通过实例代码，作者演示了如何在主进程中正确管理队列的生命周期，确保资源得到有效释放，从而避免内存泄漏。</p>"
   },
   {
     "title": "在 Windows 浏览器中实现 macOS 风格的滚动条",
@@ -130,7 +130,7 @@
     },
     "permalink": "/post/macos-like-scrollbar-in-windows-browser",
     "images": {},
-    "excerptRaw": " 本文深入探讨了CSS中滚动条槽（scrollbar gutter）的概念及其在网页设计中的应用。滚动条槽是指浏览器窗口中滚动条占据的空间，它对于确保页面内容在滚动条出现或消失时保持稳定布局至关重要。文章首先介绍了如何使用CSS属性`scrollbar-gutter`来预留滚动条空间，从而避免内容跳动，提升用户体验。接着，文章通过实例展示了如何利用这一属性在不同浏览器中实现页面滚动条的自适应布局，确保页面在各种设备和浏览器环境下都能保持一致的视觉效果。此外，文章还提供了来自Mozilla开发者网络（MDN）和GitHub的资源链接，供读者进一步学习和探索CSS滚动条槽的高级用法和最佳实践。通过这些内容，读者可以更好地理解并掌握滚动条槽在现代网页设计中的重要性，以及如何有效地运用它来优化页面布局。"
+    "excerptRaw": "<p>本文深入探讨了CSS中滚动条槽（scrollbar gutter）的概念及其在网页设计中的应用。滚动条槽是指浏览器窗口中滚动条占据的空间，它对于确保页面内容在滚动条出现或消失时保持稳定布局至关重要。文章首先介绍了如何使用CSS属性<code>scrollbar-gutter</code>来预留滚动条空间，从而避免内容跳动，提升用户体验。接着，文章通过实例展示了如何利用这一属性在不同浏览器中实现页面滚动条的自适应布局，确保页面在各种设备和浏览器环境下都能保持一致的视觉效果。此外，文章还提供了来自Mozilla开发者网络（MDN）和GitHub的资源链接，供读者进一步学习和探索CSS滚动条槽的高级用法和最佳实践。通过这些内容，读者可以更好地理解并掌握滚动条槽在现代网页设计中的重要性，以及如何有效地运用它来优化页面布局。</p>"
   },
   {
     "title": "在 Markdown 中使用自定义指令，并渲染为 React 组件",
@@ -190,7 +190,7 @@
     },
     "permalink": "/post/use-custom-directives-in-markdown-render-as-react-components",
     "images": {},
-    "excerptRaw": " 自定义指令是扩展Markdown基础语法的一种方式，允许用户增加个性化功能，如外链嵌入、图表视频和特殊样式文本等。通过自定义指令，可以避免使用MDX时遇到的语法兼容性问题和数据迁移困难。自定义指令的格式包括内联指令、叶块指令和容器块指令，每种格式都有特定的语法规则。`remark`和`rehype`是处理和转换Markdown和HTML内容的工具链，它们通常结合使用，以便将Markdown转换为HTML或进行其他操作。`remark`基于AST解析和转换Markdown文本，而`rehype`则处理HTML。结合使用`remark-directive`、`remark-directive-rehype`和`rehype-react`插件，可以实现Markdown文档的自定义指令解析和转换为React组件，从而在React应用中渲染复杂内容。"
+    "excerptRaw": "<p>自定义指令是扩展Markdown基础语法的一种方式，允许用户增加个性化功能，如外链嵌入、图表视频和特殊样式文本等。通过自定义指令，可以避免使用MDX时遇到的语法兼容性问题和数据迁移困难。自定义指令的格式包括内联指令、叶块指令和容器块指令，每种格式都有特定的语法规则。<code>remark</code>和<code>rehype</code>是处理和转换Markdown和HTML内容的工具链，它们通常结合使用，以便将Markdown转换为HTML或进行其他操作。<code>remark</code>基于AST解析和转换Markdown文本，而<code>rehype</code>则处理HTML。结合使用<code>remark-directive</code>、<code>remark-directive-rehype</code>和<code>rehype-react</code>插件，可以实现Markdown文档的自定义指令解析和转换为React组件，从而在React应用中渲染复杂内容。</p>"
   },
   {
     "title": "BUPT 校园网 OpenWrt 配置 IPv6",
@@ -325,7 +325,7 @@
         "height": 964
       }
     },
-    "excerptRaw": " 本文详细介绍了在BUPT校园网环境下，如何配置OpenWrt路由器实现IPv6地址的NAT转换，以允许多台设备共享单个IPv6地址。文章首先描述了网络环境，包括设备和拓扑结构，并指出校园网默认分配的IPv6地址是128位前缀的，子网大小为1，仅支持单设备使用，因此需要进行NAT6配置。接着，文章参考了相关教程，逐步指导读者如何更改全局网络选项中的IPv6 ULA前缀、LAN接口选项、WAN/WAN6接口选项、DHCP/DNS设置以及防火墙设置，以实现NAT6功能。最后，文章提供了测试IPv6连接和自动配置流量转发路由表的方法，确保所有连接到主路由的设备都能获取到IPv6地址。通过这些步骤，用户可以有效地在校园网环境中实现多设备共享IPv6地址。"
+    "excerptRaw": "<p>本文详细介绍了在BUPT校园网环境下，如何配置OpenWrt路由器实现IPv6地址的NAT转换，以允许多台设备共享单个IPv6地址。文章首先描述了网络环境，包括设备和拓扑结构，并指出校园网默认分配的IPv6地址是128位前缀的，子网大小为1，仅支持单设备使用，因此需要进行NAT6配置。接着，文章参考了相关教程，逐步指导读者如何更改全局网络选项中的IPv6 ULA前缀、LAN接口选项、WAN/WAN6接口选项、DHCP/DNS设置以及防火墙设置，以实现NAT6功能。最后，文章提供了测试IPv6连接和自动配置流量转发路由表的方法，确保所有连接到主路由的设备都能获取到IPv6地址。通过这些步骤，用户可以有效地在校园网环境中实现多设备共享IPv6地址。</p>"
   },
   {
     "title": "使用 GitHub Actions 部署 Next.js 项目到 VPS",
@@ -470,7 +470,7 @@
         "height": 1804
       }
     },
-    "excerptRaw": " 本文详细介绍了如何使用GitHub Actions自动化部署Next.js项目到VPS服务器的流程。首先，配置SSH允许GitHub Actions通过SSH连接到服务器，包括为GitHub Actions创建系统用户、生成SSH密钥并添加到服务器，以及将私钥添加到GitHub仓库。接着，设置GitHub Actions Workflow，包括配置仓库Secrets和创建CI/CD流程。在Workflow中，定义了构建和部署两个主要工作，分别负责项目的构建和部署到服务器。构建工作包括检出代码、设置Node.js环境、安装依赖、构建项目和上传构建产物。部署工作则负责下载构建产物、清理服务器上的旧构建、上传新构建和重启服务器上的服务。此外，还介绍了如何在VPS服务器上预先安装依赖，并通过pm2管理应用。整个流程自动化程度高，提高了部署效率，减少了人工干预。"
+    "excerptRaw": "<p>本文详细介绍了如何使用GitHub Actions自动化部署Next.js项目到VPS服务器的流程。首先，配置SSH允许GitHub Actions通过SSH连接到服务器，包括为GitHub Actions创建系统用户、生成SSH密钥并添加到服务器，以及将私钥添加到GitHub仓库。接着，设置GitHub Actions Workflow，包括配置仓库Secrets和创建CI/CD流程。在Workflow中，定义了构建和部署两个主要工作，分别负责项目的构建和部署到服务器。构建工作包括检出代码、设置Node.js环境、安装依赖、构建项目和上传构建产物。部署工作则负责下载构建产物、清理服务器上的旧构建、上传新构建和重启服务器上的服务。此外，还介绍了如何在VPS服务器上预先安装依赖，并通过pm2管理应用。整个流程自动化程度高，提高了部署效率，减少了人工干预。</p>"
   },
   {
     "title": "Explore Data Science!",
@@ -509,7 +509,7 @@
     },
     "permalink": "/post/explore-data-science",
     "images": {},
-    "excerptRaw": " 在本系列的第一篇文章中，我们将深入探讨数据科学的基础知识及其在解决现实世界问题中的应用。文章旨在介绍数据科学的概念，并展示如何运用数据科学技术来分析和解决实际问题，为读者提供一个关于数据科学应用的初步了解。"
+    "excerptRaw": "<p>在本系列的第一篇文章中，我们将深入探讨数据科学的基础知识及其在解决现实世界问题中的应用。文章旨在介绍数据科学的概念，并展示如何运用数据科学技术来分析和解决实际问题，为读者提供一个关于数据科学应用的初步了解。</p>"
   },
   {
     "title": "Discover JavaScript!",
@@ -548,7 +548,7 @@
     },
     "permalink": "/post/discover-javascript",
     "images": {},
-    "excerptRaw": " 在本篇文章中，我们深入探讨了JavaScript这一广泛应用于构建交互式网页应用和移动应用的流行编程语言。文章从JavaScript的基础知识入手，逐步引导读者了解如何运用这一语言来开发网页应用。通过本文的学习，读者将能够掌握JavaScript的核心概念，并开始自己的编程之旅。"
+    "excerptRaw": "<p>在本篇文章中，我们深入探讨了JavaScript这一广泛应用于构建交互式网页应用和移动应用的流行编程语言。文章从JavaScript的基础知识入手，逐步引导读者了解如何运用这一语言来开发网页应用。通过本文的学习，读者将能够掌握JavaScript的核心概念，并开始自己的编程之旅。</p>"
   },
   {
     "title": "Greetings from Python!",
@@ -595,7 +595,7 @@
     },
     "permalink": "/post/greetings-from-python",
     "images": {},
-    "excerptRaw": " 欢迎来到我的博客！在这里，我将分享关于Python编程的有趣和富有洞察力的内容。无论您是初学者还是经验丰富的开发者，我都希望这些文章能够激发您的兴趣，并为您提供有价值的信息。请继续关注，探索Python的无限可能！"
+    "excerptRaw": "<p>欢迎来到我的博客！在这里，我将分享关于Python编程的有趣和富有洞察力的内容。无论您是初学者还是经验丰富的开发者，我都希望这些文章能够激发您的兴趣，并为您提供有价值的信息。请继续关注，探索Python的无限可能！</p>"
   },
   {
     "title": "Hello, World!",
@@ -663,6 +663,6 @@
     },
     "permalink": "/post/hello-world",
     "images": {},
-    "excerptRaw": " 在鹅城，县长张麻子与恶霸黄四郎展开了一场智谋与勇气的较量。张麻子以剿匪之名，实则为了公平正义，与黄四郎斗智斗勇，揭露了黄四郎贩卖人口、倒卖烟土的罪行。在这场斗争中，张麻子失去了亲人，但他坚持不懈，最终揭露了黄四郎的真面目，赢得了百姓的支持。黄四郎虽然拥有财富和权力，但最终因为失去民心而败北。张麻子用智慧和勇气证明了，没有正义的支撑，任何财富和权力都是空洞的。故事以张麻子的胜利和黄四郎的失败告终，传达了正义必胜、邪恶必败的深刻道理。"
+    "excerptRaw": "<p>在鹅城，县长张麻子与恶霸黄四郎展开了一场智谋与勇气的较量。张麻子以剿匪之名，实则为了公平正义，与黄四郎斗智斗勇，揭露了黄四郎贩卖人口、倒卖烟土的罪行。在这场斗争中，张麻子失去了亲人，但他坚持不懈，最终揭露了黄四郎的真面目，赢得了百姓的支持。黄四郎虽然拥有财富和权力，但最终因为失去民心而败北。张麻子用智慧和勇气证明了，没有正义的支撑，任何财富和权力都是空洞的。故事以张麻子的胜利和黄四郎的失败告终，传达了正义必胜、邪恶必败的深刻道理。</p>"
   }
 ]

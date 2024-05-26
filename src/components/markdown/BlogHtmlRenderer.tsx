@@ -7,6 +7,9 @@ import { ImageAwesome } from "@/src/components/ImageAwesome";
 import * as prod from "react/jsx-runtime";
 import { RdSyntaxHighlighter } from "@/src/components/markdown/RdSyntaxHighlighter";
 import { GptBlock } from "@/src/components/markdown/GptBlock";
+import "./markdown.css";
+import CssIsAwesome from "@/src/components/markdown/CssIsAwesome";
+import { Link } from "@/src/components/transition/react-transition-progress/next";
 
 interface HtmlProcessorProps {
   html: string;
@@ -26,6 +29,15 @@ const BlogHtmlRenderer: React.FC<HtmlProcessorProps> = ({ html, imgMap = {} }) =
     .use(rehypeReact, {
       passNode: true,
       components: {
+        a: (props) => {
+          const { href } = props;
+          if (!href) return <a {...props} />;
+          if (href.startsWith("http")) {
+            return <Link href={href} {...props} target="_blank" rel="noopener noreferrer" />;
+          } else {
+            return <Link href={href} {...props} />;
+          }
+        },
         pre: (props) => {
           return <pre>{props.children}</pre>;
         },
@@ -52,6 +64,9 @@ const BlogHtmlRenderer: React.FC<HtmlProcessorProps> = ({ html, imgMap = {} }) =
         gpt: ({ node, children }: { node: any; children: React.ReactNode }) => {
           const { properties } = node;
           return <GptBlock properties={properties}>{children}</GptBlock>;
+        },
+        "css-is-awesome": () => {
+          return <CssIsAwesome />;
         },
       },
       ...production,

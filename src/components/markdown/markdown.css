@@ -1,0 +1,182 @@
+.css-is-awesome-box{
+    font-size:64px;
+    border:4px solid;
+    width:223px;
+}
+
+/*.coffee-mug {*/
+/*    --color: #358;*/
+/*    font-size: 1vmin;*/
+/*    width: 51.5em;*/
+/*    height: 47.5em;*/
+/*    position: absolute;*/
+/*    top: 50%;*/
+/*    left: 50%;*/
+/*    transform: translate(-50%, -50%);*/
+/*}*/
+
+/*.coffee-mug * {*/
+/*    position: absolute;*/
+/*    box-sizing: border-box;*/
+/*}*/
+
+/*.coffee-mug-cup {*/
+/*    top: 0;*/
+/*    left: 0;*/
+/*    width: 35em;*/
+/*    height: 100%;*/
+/*}*/
+
+/*.coffee-mug-lid {*/
+/*    width: 100%;*/
+/*    height: 1.7em;*/
+/*    background:*/
+/*            radial-gradient(80% 30% at 70% 50%, #fff1, #0000 50%),*/
+/*            #111;*/
+/*    border-radius: 100% 100% 1em 1em / 0.25em 0.25em 1.5em 1.5em;*/
+/*}*/
+
+/*.coffee-mug-metallic {*/
+/*    width: 99.5%;*/
+/*    height: 4.1em;*/
+/*    top: 1.65em;*/
+/*    left: 50%;*/
+/*    transform: translateX(-50%);*/
+/*    border-radius: 0.25em;*/
+/*    background: #666;*/
+/*    background:*/
+/*        !* texture *!*/
+/*            repeating-linear-gradient(transparent 0 13%, #ffffff02 0 calc(13% + 1px), transparent 0) 30% 0% / 40% 100%,*/
+/*            repeating-linear-gradient(transparent 0 7%, #ffffff03 0 calc(7% + 1px), transparent 0) 70% 0% / 33% 100%,*/
+/*            repeating-linear-gradient(transparent 0 11%, #ffffff02 0 calc(11% + 1px), transparent 0) -10% 0% / 35% 100%,*/
+/*            repeating-linear-gradient(transparent 0 17%, #ffffff04 0 calc(17% + 1px), transparent 0) 110% 0% / 27% 100%,*/
+/*            repeating-linear-gradient(transparent 0 13%, #00000002 0 calc(13% + 1px), transparent 0) 60% -10% / 33% 100%,*/
+/*            repeating-linear-gradient(transparent 0 8%, #00000002 0 calc(8% + 1px), transparent 0) 21% 2% / 27% 100%,*/
+/*            repeating-linear-gradient(transparent 0 8%, #00000001 0 calc(8% + 1px), transparent 0) 31% 7% / 19% 100%,*/
+/*                !* /texture *!*/
+/*                !* texture? *!*/
+/*            radial-gradient(farthest-side, #00000011, #0000 60%) 20% 50% / 50% 5%,*/
+/*            radial-gradient(farthest-side, #ffffff08, #0000 60%) 50% 30% / 50% 7%,*/
+/*                !* colors and shadows *!*/
+/*            radial-gradient(100% 10% at 60% 3%, #fff1, #0000 50%),*/
+/*            radial-gradient(100% 10% at 60% 97%, #fff3, #0000 50%),*/
+/*            radial-gradient(150% 10% at 50% 99%, #0009, #0000 50%),*/
+/*            linear-gradient(#fff1, #fff0 15%, #fff1 85%, #fff3),*/
+/*            linear-gradient(#fff2, #fff0 20%, #0000 96%, #0006),*/
+/*            linear-gradient(90deg, #555, #333 10%, #ccc 33%, #666 48% 52%, #fff 66% 75%, #555 90% 95%, #ccc)*/
+/*}*/
+
+/*.coffee-mug-color {*/
+/*    width: 100%;*/
+/*    height: 41.8em;*/
+/*    top: 5.7em;*/
+/*    border-radius: 0.25em 0.25em 25% 25% / 0.5em 0.5em 15% 15%;*/
+/*    border-radius: 0.25em 0.25em 11em 10em / 0.5em 0.5em 7em 8em;*/
+/*    background:*/
+/*        !* texture? *!*/
+
+/*            radial-gradient(20% 100%, #00000007, #0000 80%) 20% 50% / 1% 40%,*/
+/*            radial-gradient(25% 80%, #ffffff11, #0000 90%) 50% 30% / 0.8% 34%,*/
+/*                !* colors and shadows *!*/
+/*            radial-gradient(100% 1% at 60% 0.5%, #fff6, #0000 50%),*/
+/*            radial-gradient(at 70% 30%, #0000 50%, #0006),*/
+/*            linear-gradient(90deg, #0000 50%, #0001 80%, #2002 90% 94%, #00000001),*/
+
+/*                !* colors and shadows *!*/
+/*            linear-gradient(90deg, #0006, #fff1 65%, #fcc2 75%, #0000),*/
+/*            linear-gradient(90deg, #0003 5%, #0002 10%, #0000 20%),*/
+/*            linear-gradient(-100deg, #00000008, #0000 12%),*/
+/*            linear-gradient(#00000007, #0000 10%),*/
+
+/*                !* texture *!*/
+/*            repeating-linear-gradient(90deg, transparent 0 13%, #ffffff02 0 calc(13% + 1px), transparent 0) 30% 0% / 100% 40% ,*/
+/*            repeating-linear-gradient(90deg, transparent 0 7%, #ffffff03 0 calc(7% + 1px), transparent 0) 70% 0% / 100% 33% ,*/
+/*            repeating-linear-gradient(90deg, transparent 0 11%, #ffffff02 0 calc(11% + 1px), transparent 0) -10% 0% / 100% 35% ,*/
+/*            repeating-linear-gradient(90deg, transparent 0 17%, #ffffff04 0 calc(17% + 1px), transparent 0) 110% 0% /  100% 27%,*/
+/*            repeating-linear-gradient(90deg, transparent 0 13%, #00000003 0 calc(13% + 1px), transparent 0) 60% -10% / 100% 33% ,*/
+/*            repeating-linear-gradient(90deg, transparent 0 8%, #00000002 0 calc(8% + 1px), transparent 0) 21% 2% / 100% 27% ,*/
+/*            repeating-linear-gradient(90deg, transparent 0 8%, #00000001 0 calc(8% + 1px), transparent 0) 31% 7% / 100% 19% ,*/
+/*                !* /texture *!*/
+/*            var(--color);*/
+/*    box-shadow:*/
+/*            inset 3em -12.25em 1.5em -12em #0006,*/
+/*            inset 0 -1.5em 2em -1.5em #0004,*/
+/*            inset 1em -1.5em 3em -2em #000b,*/
+/*            inset 0 -8em 2em -5em #0002,*/
+/*            inset 0 -6.5em 3.5em -5em var(--color)*/
+/*;*/
+/*}*/
+
+/*.coffee-mug-handle {*/
+/*    border-radius: 0 100% 100% 0 / 50%;*/
+/*    top: 50%;*/
+/*    right: 0;*/
+/*    width: 16.6em;*/
+/*    height: 27.5em;*/
+/*    transform: translateY(-50%);*/
+/*}*/
+
+/*.coffee-mug-bar {*/
+/*    top: 0;*/
+/*    left: 0;*/
+/*    width: 100%;*/
+/*    height: 100%;*/
+/*    -webkit-mask:*/
+/*            radial-gradient(farthest-side at 0 50%, #0000 79.5%, #f02 80%);*/
+/*    border-radius: 0 100% 100% 0 / 50%;*/
+/*    background:*/
+/*            linear-gradient(90deg, #00000008, #0000),*/
+/*            radial-gradient(farthest-side at 30% 50%, #000, #0000 90%) 50% 50% / 100% 90%,*/
+/*                !*     linear-gradient(90deg, #f02, #f020 15%, #f02c, #f020 70%), *!*/
+/*            linear-gradient(90deg, var(--color), #0000 15%),*/
+/*            radial-gradient(at 60% 70%, var(--color), #0000),*/
+/*            radial-gradient(farthest-side at 0 50%, #0000 90%, #fff5 97%, #fff0 99%),*/
+/*            var(--color);*/
+/*    background-repeat: no-repeat;*/
+/*}*/
+
+/*.coffee-mug-junction {*/
+/*    width: 25%;*/
+/*    aspect-ratio: 1;*/
+/*    background: var(--color);*/
+/*    transform: translate(-77%, -15%);*/
+/*    top: 50%;*/
+/*    left: 50%;*/
+/*    top: 0;*/
+/*    left: 0;*/
+/*    border-radius: 50%;*/
+/*    box-shadow:*/
+/*            inset 0 0 0 100em #00000007,*/
+/*            -0.1em 24.75em #00000007,*/
+/*            -0.1em 24.75em var(--color);*/
+/*}*/
+
+/*.coffee-mug-shadow {*/
+/*    width: 85%;*/
+/*    height: 8%;*/
+/*    border-radius: 50%;*/
+/*    bottom: -2.125%;*/
+/*    left: -15%;*/
+/*    background:*/
+/*            radial-gradient(at 55% 90%, #0005, #0000),*/
+/*            radial-gradient(at 55% 90%, #102c, #0000),*/
+/*            linear-gradient(90deg, #3245, #2135);*/
+/*    filter: blur(0.35em);*/
+/*    box-shadow: 13em 0 0.25em -1.25em #2016*/
+/*}*/
+
+/*.coffee-mug-css {*/
+/*    --c: #fffb;*/
+/*    left: 5.5em;*/
+/*    top: 50%;*/
+/*    color: var(--c);*/
+/*    border: 0.125em solid var(--c);*/
+/*    font-family: Arial, Verdana, sans-serif;*/
+/*    font-size: 3em;*/
+/*    padding: 0.25em;*/
+/*    line-height: 1em;*/
+/*    width: 3.75em;*/
+/*    aspect-ratio: 1;*/
+/*    transform: translate(-50%, -50%);*/
+/*    border-radius: 100% / 1% 1% 2% 2%;*/
+/*}*/

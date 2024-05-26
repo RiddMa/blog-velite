@@ -33,16 +33,19 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className="dark">
-      <UmamiTrack />
-      <body className={`min-h-[100vh]`}>
-        <Providers>
+      <Providers>
+        <UmamiTrack />
+        <body>
+          {/*<body className={`min-h-[100vh]`}>*/}
+
           <VisitCounter />
           <BackgroundImage />
           <TopNavbar />
           <PageTransitionEffect>{children}</PageTransitionEffect>
+
           <Footer />
-        </Providers>
-      </body>
+        </body>
+      </Providers>
     </html>
   );
 }

@@ -17,6 +17,13 @@ body {
     sans-serif;
 }
 
+html, body { height: 100%;}
+
+body > footer {
+  position: sticky;
+  top: 100vh;
+}
+
 pre {
   font-family: -apple-system, BlinkMacSystemFont, "JetBrains Mono", monospace;
 }
