@@ -10,7 +10,6 @@ import BackgroundImage from "@/src/components/BackgroundImage";
 import TopNavbar from "@/src/components/layout/TopNavbar";
 import VisitCounter from "@/src/components/VisitCounter";
 import Footer from "@/src/components/layout/Footer";
-import Script from "next/script";
 import UmamiTrack from "@/src/components/UmamiTrack";
 
 export const metadata: Metadata = {
