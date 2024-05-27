@@ -180,7 +180,7 @@ const SwiperLightbox: React.FC<{ images: RdPhoto[]; autoplay?: boolean; maxHeigh
           </motion.button>
         )}
       </AnimatePresence>
-      <ExifPanel showExif={showExif} rdPhoto={images[activeIndex]} />
+      <ExifPanel showExif={showExif} rdPhoto={images[(activeIndex + 1) % images.length]} />
       {/*activeIndex={activeIndex}*/}
       <Swiper
         ref={swiperRef}

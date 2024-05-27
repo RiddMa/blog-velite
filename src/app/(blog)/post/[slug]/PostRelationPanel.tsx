@@ -1,7 +1,6 @@
 import React from "react";
 import { getColumnBySlug, getPostBySlug, getPostsByColumn } from "@/src/store/velite";
 import { Link } from "@/src/components/transition/react-transition-progress/next";
-import { Card } from "@nextui-org/card";
 import { formatDate } from "@/src/store/day";
 import { isDefined } from "@/src/util/util";
 
@@ -27,7 +26,7 @@ const PostRelationPanel: React.FC<{
             <div className={`not-prose flex flex-col text-left gap-y-4`}>
               {sameColumnPosts[i].map((article) => (
                 <Link href={article.permalink} key={article.slug} className={`group`}>
-                  <Card className={`card drop-shadow-lg hover:drop-shadow-2xl gap-4 p-4`}>
+                  <div className={`card drop-shadow-lg hover:drop-shadow-2xl gap-4 p-4`}>
                     <span
                       className={`line-clamp-2 transition-apple group-hover:text-sky-700 dark:group-hover:text-sky-400`}
                     >
@@ -35,7 +34,7 @@ const PostRelationPanel: React.FC<{
                     </span>
                     {/*<span className={`text-caption text-color-caption line-clamp-3`}>{article.excerpt}</span>*/}
                     <span className={`text-right text-caption`}>{formatDate(article.updated!)}</span>
-                  </Card>
+                  </div>
                 </Link>
               ))}
             </div>

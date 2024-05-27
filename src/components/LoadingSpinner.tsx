@@ -10,6 +10,7 @@ const Spinner: React.FC<{ show?: boolean; className?: string }> = ({ show = true
     <AnimatePresence>
       {show && (
         <motion.div
+          layout={false}
           layoutId="loading-spinner"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}

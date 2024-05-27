@@ -1,5 +1,3 @@
-// app/providers.tsx
-
 import { ProgressBarProvider } from "@/src/components/transition/react-transition-progress";
 import { NextUIProvider } from "@/src/components/MyUIProvider";
 import React from "react";

@@ -9,7 +9,7 @@ interface LeftNavbarProps {
   className?: string;
 }
 
-const LeftNavbarClient: React.FC<LeftNavbarProps> = ({ children, className = "" }) => {
+const LeftNavbar: React.FC<LeftNavbarProps> = ({ children, className = "" }) => {
   const [leftNavOpen] = usePageStateStore(useShallow((state) => [state.leftNavOpen]));
   return (
     <aside
@@ -20,4 +20,4 @@ const LeftNavbarClient: React.FC<LeftNavbarProps> = ({ children, className = "" 
   );
 };
 
-export default LeftNavbarClient;
+export default LeftNavbar;

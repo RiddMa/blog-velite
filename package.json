@@ -10,6 +10,7 @@
     "content": "velite --clean"
   },
   "dependencies": {
+    "@ant-design/nextjs-registry": "^1.0.0",
     "@giscus/react": "^3",
     "@gsap/react": "^2.1.1",
     "@jsdevtools/rehype-toc": "^3",

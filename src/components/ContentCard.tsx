@@ -1,28 +1,27 @@
 "use client";
 
-import React, { useMemo, useRef, useState } from "react";
+import React, { useRef } from "react";
 import { Image as VeliteImage } from "velite";
 import Image from "next/image";
-import { Card } from "@nextui-org/card";
-import { Image as NextUIImage } from "@nextui-org/image";
-import { motion } from "framer-motion";
-import { transitionApple } from "@/src/styles/framer-motion";
-import { getPostsByCategory } from "@/src/store/velite";
-import { Link } from "@/src/components/transition/react-transition-progress/next";
 import { clsname } from "@/src/util/clsname";
 
 interface IContentCardProps {
+  className?: string;
   cover?: VeliteImage;
   title?: React.ReactNode;
   excerpt?: React.ReactNode;
   caption?: React.ReactNode;
 }
 
-export const ContentCard: React.FC<IContentCardProps> = ({ cover, title, excerpt, caption }) => {
+export const ContentCard: React.FC<IContentCardProps> = ({ className, cover, title, excerpt, caption }) => {
   const cardRef = useRef<HTMLDivElement>(null);
 
   return (
-    <div ref={cardRef} key={`card-container-${title}`} className={clsname(`card prose-article-card flex flex-col p-4`)}>
+    <div
+      ref={cardRef}
+      key={`card-container-${title}`}
+      className={clsname(`card prose-article-card flex flex-col p-4`, className)}
+    >
       {cover && (
         <div className="relative">
           <Image

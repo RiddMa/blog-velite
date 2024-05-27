@@ -77,8 +77,13 @@ body.dark {
   @apply bg-white transition-all duration-300 ease-apple dark:bg-slate-800;
 }
 
+@layer utilities {
+  .transition-apple {
+    @apply transform-gpu transition-all duration-300 ease-apple;
+  }
+}
+
 .backdrop-blur-bg {
-  /*@apply backdrop-blur-xl backdrop-saturate-[1.8];*/
   backdrop-filter: saturate(180%) blur(24px);
 }
 
@@ -86,25 +91,25 @@ body.dark {
   backdrop-filter: saturate(150%) blur(10px);
 }
 
-.transition-apple {
-  @apply transform-gpu transition-all duration-300 ease-apple;
-}
-
-.top-navbar-wrapper {
-  @apply pointer-events-none fixed z-[100] w-full pt-2 px-4 xl:px-0 transition-apple;
-}
-
-.top-navbar {
-  @apply pointer-events-auto flex flex-col items-center align-middle backdrop-blur-bg m-auto xl:max-w-[1024px] fhd:max-w-[1280px] min-h-[48px] rounded-2xl p-0 drop-shadow-2xl;
-}
-
-.top-navbar-btn {
-  @apply btn btn-sm btn-ghost rounded-xl text-base font-normal text-white/80 hover:text-white outline-transparent border-none;
-}
-
 .main-container {
   @apply flex-grow w-full xl:max-w-[1024px] fhd:max-w-[1280px] px-content mt-[80px] pb-8;
 }
+
+.top-navbar-wrapper {
+  @apply pointer-events-none fixed z-[100] w-full pt-2 px-4 xl:px-0;
+}
+
+.top-navbar {
+  @apply pointer-events-auto m-auto p-0 flex flex-col items-center align-middle rounded-2xl drop-shadow-2xl;
+  @apply xl:max-w-[1024px] fhd:max-w-[1280px] min-h-[48px];
+  @apply backdrop-blur-xl backdrop-saturate-150;
+}
+
+.top-navbar-btn {
+  @apply btn btn-sm btn-ghost rounded-xl text-base font-normal outline-transparent border-none;
+  @apply transform-gpu transition-all duration-300 ease-apple text-white/80 hover:text-white;
+}
+
 
 .side-navbar {
   @apply fixed z-[90] w-screen h-screen pb-[calc(100vh-100dvh)] overflow-y-auto overflow-x-clip flex flex-col transition-apple;
@@ -230,4 +235,8 @@ body {
     /*  rgba(0, 0, 0, 0)*/
     /*);*/
   }
+}
+
+.homepage-gallery .carousel-item {
+  /* 你的样式规则 */
 }

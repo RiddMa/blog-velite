@@ -7,14 +7,13 @@ import DarkModeToggle from "@/src/components/DarkModeToggle";
 import { Icon } from "@iconify-icon/react";
 import { Link } from "@/src/components/transition/react-transition-progress/next";
 import { globals } from "@/.velite";
-import { Button } from "@nextui-org/button";
-import { AnimatePresence, motion, useScroll } from "framer-motion";
+import { motion } from "framer-motion";
 import { throttle } from "lodash";
 import { transitionApple } from "@/src/styles/framer-motion";
-import { ProgressBar, ProgressBarProvider } from "@/src/components/transition/react-transition-progress";
 import LoadingSpinner from "@/src/components/LoadingSpinner";
 import { useProgressBarContext } from "@/src/components/transition/react-transition-progress";
-import loadingSpinner from "@/src/components/LoadingSpinner";
+import "@/src/styles/layout.css";
+import { Button } from "@nextui-org/button";
 
 const NavList: React.FC = React.memo(() => {
   const [setTopNav] = usePageStateStore(useShallow((state) => [state.setTopNav]));
@@ -100,7 +99,7 @@ const TopNavbar: React.FC<TopNavbarProps> = ({ className = "" }) => {
           opacity: topNavOpen ? 1 : 0,
         }}
         transition={transitionApple}
-        className={`xl:hidden backdrop-blur-bg fixed inset-0 z-[99] bg-black/50`}
+        className={`xl:hidden backdrop-blur-bg fixed inset-0 z-[99]`}
         onClick={() => setTopNav(false)}
       />
       <div className={`top-navbar-wrapper ${className}`}>
@@ -123,7 +122,7 @@ const TopNavbar: React.FC<TopNavbarProps> = ({ className = "" }) => {
                 setRightNav(false);
                 setLeftNav(!leftNavOpen);
               }}
-              className="top-navbar-btn xl:hidden"
+              className="top-navbar-btn bg-transparent xl:hidden"
             >
               <Icon
                 icon="heroicons:chevron-double-right"
@@ -148,13 +147,13 @@ const TopNavbar: React.FC<TopNavbarProps> = ({ className = "" }) => {
               <NavList />
             </div>
             <div className="grow xl:hidden"></div>
-            <DarkModeToggle className="top-navbar-btn xl:-mr-2" />
+            <DarkModeToggle className="top-navbar-btn bg-transparent xl:-mr-2" />
             <Button
               isIconOnly
               variant="light"
               aria-label="Toggle Nav Menu"
               onClick={() => setTopNav(!topNavOpen)}
-              className="top-navbar-btn xl:hidden"
+              className="top-navbar-btn bg-transparent xl:hidden"
             >
               <Icon
                 icon="heroicons:bars-3"
@@ -173,7 +172,7 @@ const TopNavbar: React.FC<TopNavbarProps> = ({ className = "" }) => {
                 setLeftNav(false);
                 setRightNav(!rightNavOpen);
               }}
-              className="top-navbar-btn xl:hidden"
+              className="top-navbar-btn bg-transparent xl:hidden"
             >
               <Icon
                 icon="heroicons:chevron-double-left"

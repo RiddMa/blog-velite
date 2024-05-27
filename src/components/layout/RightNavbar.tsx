@@ -9,7 +9,7 @@ interface RightNavbarProps {
   className?: string;
 }
 
-const RightNavbarClient: React.FC<RightNavbarProps> = ({ children, className = "" }) => {
+const RightNavbar: React.FC<RightNavbarProps> = ({ children, className = "" }) => {
   const [rightNavOpen] = usePageStateStore(useShallow((state) => [state.rightNavOpen]));
   return (
     <aside
@@ -20,4 +20,4 @@ const RightNavbarClient: React.FC<RightNavbarProps> = ({ children, className = "
   );
 };
 
-export default RightNavbarClient;
+export default RightNavbar;
