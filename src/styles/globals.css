@@ -65,7 +65,12 @@ body.dark {
 }
 
 .bg-image {
-  @apply fixed inset-0 object-cover blur-3xl -z-50 w-screen h-screen;
+  @apply fixed inset-0 object-cover blur-3xl -z-[100] w-screen h-screen;
+}
+
+.bg-white-gradient{
+  @apply fixed inset-0 -z-[100] w-screen h-screen;
+  background-image: linear-gradient(to top, #bddeff 0%, #e7f0fd 100%);
 }
 
 .color-body {
@@ -109,7 +114,7 @@ body.dark {
 }
 
 .top-navbar-btn {
-  @apply btn btn-sm btn-ghost rounded-xl text-base font-normal outline-transparent border-none;
+  @apply btn btn-sm btn-ghost rounded-xl text-base font-normal outline-none border-none;
   @apply transform-gpu transition-all duration-300 ease-apple text-white/80 hover:text-white;
 }
 
@@ -243,12 +248,12 @@ body {
   content: "";
   position: absolute;
   inset: 0;
-  backdrop-filter: blur(24px);
+  backdrop-filter: blur(12px);
   border-radius: 24px 0 0 24px;
   /*border: 1px solid white;*/
   -webkit-mask: linear-gradient(90deg, black 75%, transparent);
   mask: linear-gradient(90deg, black 75%, transparent);
-  background-color: rgba(255, 255, 255, 0.6);
+  background-color: rgba(255, 255, 255, 0.7);
   /*background: linear-gradient(90deg, rgba(255, 255, 255, 0.6) 75%, transparent);*/
 }
 

@@ -13,6 +13,7 @@ import { useProgressBarContext } from "@/src/components/transition/react-transit
 import "@/src/styles/layout.css";
 import { Button } from "@nextui-org/button";
 import { gsap, useGSAP } from "@/src/lib/gsap";
+import ScrollToTopButton from "@/src/components/BackToTop";
 
 const NavList: React.FC = React.memo(() => {
   const [setTopNav] = usePageStateStore(useShallow((state) => [state.setTopNav]));
@@ -140,6 +141,7 @@ const TopNavbar: React.FC<TopNavbarProps> = ({ className = "" }) => {
               <NavList />
             </div>
             <div className="grow xl:hidden"></div>
+            <ScrollToTopButton />
             <DarkModeToggle className="top-navbar-btn bg-transparent xl:-mr-2" />
             <Button
               isIconOnly

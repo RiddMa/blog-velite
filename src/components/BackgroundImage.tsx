@@ -20,11 +20,13 @@ export default function BackgroundImage() {
           placeholder="blur"
           quality={10}
           priority={true}
-          sizes="100vw"
+          sizes="(max-width: 768px) 192px, (max-width: 1280px) 320px, (max-width: 1920px) 480px, 960px"
           className="bg-image brightness-75 contrast-125"
         />
       ) : (
-        <></>
+        <>
+          <div className="bg-white-gradient"></div>
+        </>
         // <Image
         //   alt="Abstract background"
         //   src={bgImageLight}
