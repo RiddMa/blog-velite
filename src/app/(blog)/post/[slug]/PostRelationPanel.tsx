@@ -2,7 +2,7 @@ import React from "react";
 import { getColumnBySlug, getPostBySlug, getPostsByColumn } from "@/src/store/velite";
 import { Link } from "@/src/components/transition/react-transition-progress/next";
 import { formatDate } from "@/src/store/day";
-import { isDefined } from "@/src/util/util";
+import { isDefined } from "@/src/lib/util";
 
 const PostRelationPanel: React.FC<{
   slug: string;

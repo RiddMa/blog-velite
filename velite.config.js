@@ -13,7 +13,7 @@ import rehypeAutolinkHeadings from "rehype-autolink-headings";
 import rehypeSlug from "rehype-slug";
 import path from "node:path";
 import { projectRootPath, staticBasePath } from "@/base-path";
-import { generateExcerptForMarkdown, generateSlugForTags } from "@/src/util/llm";
+import { generateExcerptForMarkdown, generateSlugForTags } from "@/src/lib/llm";
 import fs from "fs/promises";
 import matter from "gray-matter";
 import dayjs from "dayjs";
@@ -25,7 +25,7 @@ import {
   parseMarkdown,
   postProcessMarkdownImages,
   setFeaturedImages,
-} from "@/src/util/veliteUtils";
+} from "@/src/lib/veliteUtils";
 import ExifReader from "exifreader";
 
 const blogMarkdown = s.markdown({

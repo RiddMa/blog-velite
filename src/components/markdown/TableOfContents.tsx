@@ -1,6 +1,6 @@
 import React from "react";
 import { Link } from "@/src/components/transition/react-transition-progress/next";
-import { clsname } from "@/src/util/clsname";
+import { cn } from "@/src/lib/cn";
 
 // 定义 TOC 项的接口
 interface TOCItemProps {
@@ -41,7 +41,7 @@ interface TableOfContentsProps {
 
 const TableOfContents: React.FC<TableOfContentsProps> = ({ toc, urlPrefix = "", plain = false, className = "" }) => {
   return (
-    <nav className={clsname(className)}>
+    <nav className={cn(className)}>
       {toc && toc.length > 0 && <TOCItem items={toc} urlPrefix={urlPrefix} plain={plain} />}
     </nav>
   );

@@ -7,13 +7,12 @@ import DarkModeToggle from "@/src/components/DarkModeToggle";
 import { Icon } from "@iconify-icon/react";
 import { Link } from "@/src/components/transition/react-transition-progress/next";
 import { globals } from "@/.velite";
-import { motion } from "framer-motion";
 import { throttle } from "lodash";
-import { transitionApple } from "@/src/styles/framer-motion";
 import LoadingSpinner from "@/src/components/LoadingSpinner";
 import { useProgressBarContext } from "@/src/components/transition/react-transition-progress";
 import "@/src/styles/layout.css";
 import { Button } from "@nextui-org/button";
+import { gsap, useGSAP } from "@/src/lib/gsap";
 
 const NavList: React.FC = React.memo(() => {
   const [setTopNav] = usePageStateStore(useShallow((state) => [state.setTopNav]));
@@ -65,6 +64,7 @@ const TopNavbar: React.FC<TopNavbarProps> = ({ className = "" }) => {
       state.setScrollPercentage,
     ]),
   );
+  const topNavBgRef = React.useRef<HTMLDivElement>(null);
 
   const { loading } = useProgressBarContext();
 
@@ -88,31 +88,24 @@ const TopNavbar: React.FC<TopNavbarProps> = ({ className = "" }) => {
 
   const backgroundGradient = `linear-gradient(to right, rgba(0, 0, 0, 0.7) ${scrollPercentage * 0.75 - 10}%, rgba(82, 82, 82, 0.8) ${scrollPercentage}%, rgba(0, 0, 0, 0.7) ${scrollPercentage}%)`;
 
-  // const backgroundGradient = `linear-gradient(to right, rgba(0, 0, 0, 0.7) ${scrollYProgress.get() * 0.75 - 10}%, rgba(82, 82, 82, 0.8) ${scrollYProgress.get()}%, rgba(0, 0, 0, 0.7) ${scrollYProgress.get()}%)`;
+  useGSAP(() => {
+    if (topNavOpen) {
+      gsap.to(topNavBgRef.current, { translateY: 0, opacity: 1 });
+    } else {
+      gsap.to(topNavBgRef.current, { translateY: "-100vh", opacity: 0 });
+    }
+  }, [topNavOpen]);
 
   return (
     <>
-      <motion.div
-        initial={{ opacity: 0, height: 0 }}
-        animate={{
-          height: topNavOpen ? "100vh" : 0,
-          opacity: topNavOpen ? 1 : 0,
-        }}
-        transition={transitionApple}
-        className={`xl:hidden backdrop-blur-bg fixed inset-0 z-[99]`}
+      <div
+        ref={topNavBgRef}
+        className={`xl:hidden h-screen w-screen backdrop-blur-bg bg-white/5 dark:bg-black/5 fixed inset-0 z-[99]`}
         onClick={() => setTopNav(false)}
       />
       <div className={`top-navbar-wrapper ${className}`}>
         <div className="top-navbar">
-          <motion.div
-            className="gradient-bar"
-            // animate={{ background: backgroundGradient }}
-            // transition={{
-            //   duration: 0.03333,
-            //   ease: [0.25, 0.1, 0.25, 1.0], // Cubic bezier values
-            // }}
-            style={{ background: backgroundGradient }}
-          />
+          <div className="gradient-bar" style={{ background: backgroundGradient }} />
           <div className="flex w-full flex-row gap-0 px-1 xl:px-4 py-2 align-center items-center">
             <Button
               isIconOnly

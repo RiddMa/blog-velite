@@ -8,8 +8,8 @@ import Autoplay from "embla-carousel-autoplay";
 import useEmblaCarousel from "embla-carousel-react";
 import "./embla-carousel.css";
 import PhotoCard from "@/src/components/PhotoCard";
-import { RdPhoto } from "@/src/util/veliteUtils";
-import { clsname } from "@/src/util/clsname";
+import { RdPhoto } from "@/src/lib/veliteUtils";
+import { cn } from "@/src/lib/cn";
 
 type PropType = {
   images: RdPhoto[];
@@ -60,7 +60,7 @@ const EmblaCarousel: React.FC<PropType> = (props) => {
             <DotButton
               key={index}
               onClick={() => onDotButtonClick(index)}
-              className={clsname("transition-apple", index === selectedIndex ? "border-2" : "border-1")}
+              className={cn("transition-apple", index === selectedIndex ? "border-2" : "border-1")}
             />
           ))}
         </div>

@@ -2,7 +2,7 @@
 
 import React, { useRef, useState, useMemo } from "react";
 import Image from "next/image";
-import { RdPhoto } from "@/src/util/veliteUtils";
+import { RdPhoto } from "@/src/lib/veliteUtils";
 import { useWindowSize } from "usehooks-ts";
 
 interface IPhotoCardProps {

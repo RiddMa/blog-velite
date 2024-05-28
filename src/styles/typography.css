@@ -57,6 +57,21 @@
   @apply text-xs md:text-sm text-slate-600 dark:text-slate-400;
 }
 
+.hero-text {
+  @apply my-2 text-2xl xl:text-4xl font-bold leading-tight;
+}
+
+.dark .hero-text {
+  @apply text-transparent bg-clip-text;
+  background-image: linear-gradient(
+    0deg,
+    rgb(128, 128, 128) 0%,
+    rgb(179, 179, 179) 35%,
+    rgb(217, 217, 217) 55%,
+    rgb(255, 255, 255) 100%
+  );
+}
+
 .text-h0 {
   @apply my-2 text-3xl xl:text-4xl font-bold leading-normal;
 }

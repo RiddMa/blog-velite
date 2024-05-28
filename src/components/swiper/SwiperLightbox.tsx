@@ -10,12 +10,12 @@ import "swiper/css/pagination";
 import { Swiper, SwiperRef, SwiperSlide } from "swiper/react";
 import { Autoplay, Pagination, Keyboard } from "swiper/modules";
 import PhotoCard from "@/src/components/PhotoCard";
-import { RdPhoto } from "@/src/util/veliteUtils";
+import { RdPhoto } from "@/src/lib/veliteUtils";
 import { min } from "lodash";
 import { motion, AnimatePresence } from "framer-motion";
 import { transitionApple } from "@/src/styles/framer-motion";
 import { Icon } from "@iconify-icon/react";
-import { clsname } from "@/src/util/clsname";
+import { cn } from "@/src/lib/cn";
 import dayjs from "dayjs";
 import customParseFormat from "dayjs/plugin/customParseFormat";
 import { formatDateTime } from "@/src/store/day";
@@ -35,7 +35,7 @@ function ExifPanel(props: { showExif: boolean; rdPhoto: RdPhoto }) {
 
   return (
     <div
-      className={clsname(
+      className={cn(
         "card fixed backdrop-blur-bg top-[60px] right-[16px] max-w-[300px] max-h-[calc(100vh-120px)] z-[999999] p-4 flex flex-col gap-4 transition-apple",
         props.showExif ? "" : "translate-x-[calc(100%+20px)]",
       )}

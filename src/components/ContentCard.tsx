@@ -3,7 +3,7 @@
 import React, { useRef } from "react";
 import { Image as VeliteImage } from "velite";
 import Image from "next/image";
-import { clsname } from "@/src/util/clsname";
+import { cn } from "@/src/lib/cn";
 
 interface IContentCardProps {
   className?: string;
@@ -20,7 +20,7 @@ export const ContentCard: React.FC<IContentCardProps> = ({ className, cover, tit
     <div
       ref={cardRef}
       key={`card-container-${title}`}
-      className={clsname(`card prose-article-card flex flex-col p-4`, className)}
+      className={cn(`card prose-article-card flex flex-col p-4`, className)}
     >
       {cover && (
         <div className="relative">

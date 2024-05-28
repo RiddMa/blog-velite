@@ -1,7 +1,7 @@
 import { NextPage } from "next";
 import React from "react";
 import { galleries } from "@/.velite";
-import { RdPhoto } from "@/src/util/veliteUtils";
+import { RdPhoto } from "@/src/lib/veliteUtils";
 import { Link } from "@/src/components/transition/react-transition-progress/next";
 import { Icon } from "@iconify-icon/react";
 import SwiperLightbox from "@/src/components/swiper/SwiperLightbox";

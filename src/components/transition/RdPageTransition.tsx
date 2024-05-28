@@ -1,11 +1,11 @@
 "use client";
 
-import { gsap } from "@/src/util/gsap";
+import { gsap } from "@/src/lib/gsap";
 import { usePathname } from "next/navigation";
 import React, { useEffect, useLayoutEffect, useRef, useState } from "react";
-import { clsname } from "@/src/util/clsname";
+import { cn } from "@/src/lib/cn";
 import { useStore } from "@/src/store/store";
-import { useIsFirstRender } from "@/src/util/useIsFirstRender";
+import { useIsFirstRender } from "@/src/lib/useIsFirstRender";
 
 interface Props {
   children: React.ReactNode;
@@ -148,9 +148,9 @@ export default function PageTransition({ children }: Props) {
   }, [isFirstRender, pathname, setIsTransitionActive]);
 
   return (
-    <div className={clsname("content relative", isTransitionActive && "overflow-hidden bg-blue-800")}>
+    <div className={cn("content relative", isTransitionActive && "overflow-hidden bg-blue-800")}>
       {pathname !== currentPath && (
-        <div key={pathname + " temp"} ref={tempRef} className={clsname("temp transition")}>
+        <div key={pathname + " temp"} ref={tempRef} className={cn("temp transition")}>
           <div
             className="origin-center will-change-transform"
             style={{
@@ -160,7 +160,7 @@ export default function PageTransition({ children }: Props) {
         </div>
       )}
 
-      <div key={pathname} ref={currentRef} className={clsname("next transition")}>
+      <div key={pathname} ref={currentRef} className={cn("next transition")}>
         {children}
       </div>
     </div>

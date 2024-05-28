@@ -84,7 +84,7 @@ body.dark {
 }
 
 .backdrop-blur-bg {
-  backdrop-filter: saturate(180%) blur(24px);
+  @apply backdrop-blur-xl backdrop-saturate-150;
 }
 
 .backdrop-blur-mask {
@@ -114,7 +114,7 @@ body.dark {
 .side-navbar {
   @apply fixed z-[90] w-screen h-screen pb-[calc(100vh-100dvh)] overflow-y-auto overflow-x-clip flex flex-col transition-apple;
   @apply px-8 xl:px-4 pb-4 pt-[72px] xl:sticky xl:top-[64px] xl:h-[calc(100vh-64px)] xl:max-w-[240px] xl:pt-[20px];
-  @apply backdrop-blur-bg xl:backdrop-blur-none bg-white/50 dark:bg-black/50 xl:bg-transparent dark:xl:bg-transparent;
+  @apply backdrop-blur-bg xl:backdrop-filter-none bg-white/50 dark:bg-black/50 xl:bg-transparent dark:xl:bg-transparent;
   @apply xl:opacity-70 xl:hover:opacity-100;
 }
 
@@ -214,7 +214,7 @@ body {
 }
 
 .text-btn {
-  @apply btn btn-ghost -ml-2 px-2 rounded-xl text-base font-normal leading-normal outline-transparent border-none;
+  @apply btn btn-ghost -ml-2 px-2 py-0 rounded-xl text-base font-normal leading-tight outline-transparent border-none;
 }
 
 @screen xl {

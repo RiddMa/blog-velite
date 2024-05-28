@@ -7,7 +7,7 @@ import { Link } from "@/src/components/transition/react-transition-progress/next
 import WaterfallGrid from "@/src/components/WaterfallGrid";
 import PostCard from "@/src/app/(blog)/posts/PostCard";
 import BlogHtmlRenderer from "@/src/components/markdown/BlogHtmlRenderer";
-import { filterPosts } from "@/src/util/util";
+import { filterPosts } from "@/src/lib/util";
 import { MotionH1 } from "@/src/components/transition/MotionH1";
 import { MotionDiv } from "@/src/components/transition/MotionDiv";
 import BlogIndexNav from "@/src/components/layout/BlogIndexNav";

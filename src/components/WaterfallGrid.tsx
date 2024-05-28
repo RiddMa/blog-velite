@@ -1,8 +1,8 @@
 "use client";
 
 import React, { useCallback, useEffect, useMemo, useRef, useState } from "react";
-import useColumnCount from "@/src/util/useColumnCount";
-import { gsap, useGSAP } from "@/src/util/gsap";
+import useColumnCount from "@/src/lib/useColumnCount";
+import { gsap, useGSAP } from "@/src/lib/gsap";
 const cardPadding = 16;
 
 export interface WaterfallGridProps {

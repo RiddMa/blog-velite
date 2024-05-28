@@ -9,7 +9,7 @@ import "swiper/css/keyboard";
 import { Swiper, SwiperRef, SwiperSlide } from "swiper/react";
 import { Autoplay, Pagination, Keyboard } from "swiper/modules";
 import PhotoCard from "@/src/components/PhotoCard";
-import { RdPhoto } from "@/src/util/veliteUtils";
+import { RdPhoto } from "@/src/lib/veliteUtils";
 import { min } from "lodash";
 
 export const MySwiper: React.FC<{ images: RdPhoto[]; autoplay?: boolean; maxHeight?: number; featured?: boolean }> = ({

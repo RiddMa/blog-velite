@@ -6,8 +6,8 @@
 // import { Post } from "@/.velite";
 // import { Link } from "@/src/components/transition/react-transition-progress/next";
 // import BlogHtmlRenderer from "@/src/components/markdown/BlogHtmlRenderer";
-// import { gsap, useGSAP } from "@/src/util/gsap";
-// import { clsname } from "@/src/util/clsname";
+// import { gsap, useGSAP } from "@/src/lib/gsap";
+// import { clsname } from "@/src/lib/clsname";
 //
 // interface IPostCardProps {
 //   item: Post;
@@ -107,10 +107,10 @@ import { formatDate } from "@/src/store/day";
 import { Post } from "@/.velite";
 import { Link } from "@/src/components/transition/react-transition-progress/next";
 import BlogHtmlRenderer from "@/src/components/markdown/BlogHtmlRenderer";
-import { gsap, useGSAP } from "@/src/util/gsap";
-import { clsname } from "@/src/util/clsname";
-import useWindowWidthState from "@/src/util/useWindowWidthState";
-import useColumnCount from "@/src/util/useColumnCount";
+import { gsap, useGSAP } from "@/src/lib/gsap";
+import { cn } from "@/src/lib/cn";
+import useWindowWidthState from "@/src/lib/useWindowWidthState";
+import useColumnCount from "@/src/lib/useColumnCount";
 
 interface IPostCardProps {
   item: Post;
@@ -161,7 +161,7 @@ const PostCard: React.FC<IPostCardProps> = ({ item: post, imgWidth, isMobile = f
 
   if (draft) {
     return (
-      <div key={`card-container-${permalink}`} className={clsname(`card prose-article-card flex flex-col p-4`)}>
+      <div key={`card-container-${permalink}`} className={cn(`card prose-article-card flex flex-col p-4`)}>
         <div className="card absolute inset-0 w-full h-full bg-white-50/50 dark:bg-black/50 z-[3] flex items-center justify-center backdrop-blur-[1px]">
           <h1 className="w-fit">填坑中…</h1>
         </div>
@@ -213,7 +213,7 @@ const PostCard: React.FC<IPostCardProps> = ({ item: post, imgWidth, isMobile = f
       onMouseLeave={() => !isMobile && setIsHovered(false)}
       // onClick={() => setIsClicked(true)}
     >
-      <Link href={permalink} className={clsname(`card prose-article-card flex flex-col p-4`)}>
+      <Link href={permalink} className={cn(`card prose-article-card flex flex-col p-4`)}>
         {cover && (
           <div className="relative z-[1]">
             <Image

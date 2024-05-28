@@ -3,7 +3,7 @@ import { getCategoryBySlug, getColumnBySlug, getPostBySlug, getTagBySlug } from 
 import { formatDate } from "@/src/store/day";
 import TableOfContents from "@/src/components/markdown/TableOfContents";
 import { Link } from "@/src/components/transition/react-transition-progress/next";
-import { isDefined } from "@/src/util/util";
+import { isDefined } from "@/src/lib/util";
 import VisitCountDisplay from "@/src/components/VisitCountDisplay";
 
 const PostDetailPanel: React.FC<{

@@ -4,7 +4,7 @@ import React, { useState } from "react";
 import { motion } from "framer-motion";
 import { transitionApple } from "@/src/styles/framer-motion";
 import { Icon } from "@iconify-icon/react";
-import { gsap, useGSAP } from "@/src/util/gsap";
+import { gsap, useGSAP } from "@/src/lib/gsap";
 
 interface GptBlockProps {
   properties?: any; // You can define the type more specifically if needed

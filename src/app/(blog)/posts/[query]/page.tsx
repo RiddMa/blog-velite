@@ -1,7 +1,7 @@
 import { Post, posts } from "@/.velite";
 import WaterfallGrid from "@/src/components/WaterfallGrid";
 import PostCard from "@/src/app/(blog)/posts/PostCard";
-import { filterPosts } from "@/src/util/util";
+import { filterPosts } from "@/src/lib/util";
 import BlogIndexNav from "@/src/components/layout/BlogIndexNav";
 import React from "react";
 

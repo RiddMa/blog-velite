@@ -8,7 +8,7 @@ import { getPostsByColumn } from "@/src/store/velite";
 import BlogHtmlRenderer from "@/src/components/markdown/BlogHtmlRenderer";
 import { MotionH1 } from "@/src/components/transition/MotionH1";
 import { MotionDiv } from "@/src/components/transition/MotionDiv";
-import { clsname } from "@/src/util/clsname";
+import { cn } from "@/src/lib/cn";
 
 interface IColumnCardProps {
   item: Column;
@@ -24,7 +24,7 @@ export const ColumnCard: React.FC<IColumnCardProps> = ({ item: column, imgWidth,
 
   return (
     <div ref={cardRef} key={`card-container-${permalink}`}>
-      <Link href={permalink} className={clsname(`card prose-article-card flex flex-col p-4`)}>
+      <Link href={permalink} className={cn(`card prose-article-card flex flex-col p-4`)}>
         <div className="relative z-[2]">
           <h1
             key={`column-title-${permalink}`}
