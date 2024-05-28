@@ -7,7 +7,7 @@ import "swiper/css/pagination";
 import "swiper/css/keyboard";
 
 import { Swiper, SwiperRef, SwiperSlide } from "swiper/react";
-import { Autoplay, Pagination, Keyboard } from "swiper/modules";
+import { Autoplay } from "swiper/modules";
 import PhotoCard from "@/src/components/PhotoCard";
 import { RdPhoto } from "@/src/lib/veliteUtils";
 import { min } from "lodash";
@@ -16,7 +16,6 @@ export const MySwiper: React.FC<{ images: RdPhoto[]; autoplay?: boolean; maxHeig
   images,
   autoplay = false,
   maxHeight = 360,
-  featured = false,
 }) => {
   const swiperRef = useRef<SwiperRef>(null);
   const [maxWidth, setMaxWidth] = useState<number>(0);
@@ -47,27 +46,15 @@ export const MySwiper: React.FC<{ images: RdPhoto[]; autoplay?: boolean; maxHeig
             }
           : false
       }
-      keyboard={{
-        enabled: true,
-        onlyInViewport: true,
-      }}
       loop={true}
-      parallax={true}
-      modules={[Autoplay, Pagination, Keyboard]}
+      modules={[Autoplay]}
     >
-      {/*<div className="absolute top-0 bottom-0 left-0 w-16 pointer-events-none gradient-mask-left"></div>*/}
-      {/*<div className="absolute top-0 bottom-0 right-0 w-16 pointer-events-none gradient-mask-right"></div>*/}
+      <div className="absolute top-0 bottom-0 left-0 w-16 pointer-events-none gradient-mask-left"></div>
+      <div className="absolute top-0 bottom-0 right-0 w-16 pointer-events-none gradient-mask-right"></div>
       {images.map((image, index) => (
         <SwiperSlide key={image.slug} style={{ width: "auto" }}>
           {/*<div className="opacity-0 absolute">Image</div>*/}
-          <PhotoCard
-            key={image.slug}
-            item={image}
-            maxWidth={maxWidth}
-            maxHeight={maxH}
-            priority={featured}
-            className="carousel-item"
-          />
+          <PhotoCard key={image.slug} item={image} maxWidth={maxWidth} maxHeight={maxH} className="carousel-item" />
         </SwiperSlide>
       ))}
     </Swiper>

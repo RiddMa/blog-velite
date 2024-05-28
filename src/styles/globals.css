@@ -17,7 +17,10 @@ body {
     sans-serif;
 }
 
-html, body { height: 100%;}
+html,
+body {
+  height: 100%;
+}
 
 body > footer {
   position: sticky;
@@ -109,7 +112,6 @@ body.dark {
   @apply btn btn-sm btn-ghost rounded-xl text-base font-normal outline-transparent border-none;
   @apply transform-gpu transition-all duration-300 ease-apple text-white/80 hover:text-white;
 }
-
 
 .side-navbar {
   @apply fixed z-[90] w-screen h-screen pb-[calc(100vh-100dvh)] overflow-y-auto overflow-x-clip flex flex-col transition-apple;
@@ -237,6 +239,20 @@ body {
   }
 }
 
-.homepage-gallery .carousel-item {
-  /* 你的样式规则 */
+.gradient-blur::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  backdrop-filter: blur(24px);
+  border-radius: 24px 0 0 24px;
+  /*border: 1px solid white;*/
+  -webkit-mask: linear-gradient(90deg, black 75%, transparent);
+  mask: linear-gradient(90deg, black 75%, transparent);
+  background-color: rgba(255, 255, 255, 0.6);
+  /*background: linear-gradient(90deg, rgba(255, 255, 255, 0.6) 75%, transparent);*/
+}
+
+.dark .gradient-blur::after {
+  background-color: rgba(0, 0, 0, 0.3);
+  /*background: linear-gradient(90deg, rgba(0, 0, 0, 0.4) 75%, transparent);*/
 }

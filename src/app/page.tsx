@@ -10,6 +10,8 @@ import SwiperLightbox from "@/src/components/swiper/SwiperLightbox";
 import { RdPhoto } from "@/src/lib/veliteUtils";
 import AnimatedPoem from "@/src/components/AnimatedPoem";
 import { NeonGradientCard } from "@/src/components/NeonGradientCard";
+import Marquee from "@/src/components/magicui/Marquee";
+import PhotoCard from "@/src/components/PhotoCard";
 
 export default function Home() {
   const { heroTitle } = globals;
@@ -144,7 +146,8 @@ export default function Home() {
               </button>
             </Link>
           </div>
-          <div key="card-container-gallery" className="card flex flex-col pt-4 px-4 pb-4 -mx-4">
+          <div key="card-container-gallery" className="card flex flex-col pt-4 px-4 pb-3 -mx-4 h-[135px]">
+            <div className="absolute inset-0 gradient-blur h-full w-[200px] -z-40" />
             <Link href="/gallery" className="relative prose-article-card">
               <h1 className="flex flex-row">
                 相册
@@ -155,6 +158,16 @@ export default function Home() {
                 <span className="icon-[heroicons--chevron-right] my-auto" />
               </button>
             </Link>
+            <div className="absolute left-2 top-2 bottom-2 right-0 overflow-clip rounded-2xl -z-50">
+              <div className="relative rounded-2xl">
+                <Marquee className="h-[135px] [--duration:40s]">
+                  {featuredImages.map((image, i) => (
+                    <PhotoCard key={image.slug} item={image} maxWidth={250} maxHeight={119} />
+                  ))}
+                </Marquee>
+              </div>
+            </div>
+
             {/*<section className="-mx-content homepage-carousel">*/}
             {/*  <SwiperLightbox images={featuredImages} autoplay={true} featured={true}></SwiperLightbox>*/}
             {/*</section>*/}
