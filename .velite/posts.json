@@ -1,8 +1,179 @@
 [
   {
+    "title": "使用 GitHub Actions 部署 Next.js 项目到 VPS",
+    "slug": "deploy-next-js-to-vps-using-github-actions",
+    "created": "2024-05-12T19:43:56.000Z",
+    "updated": "2024-05-29T11:12:09.000Z",
+    "draft": false,
+    "featured": false,
+    "cover": {
+      "src": "/static/image-20240514011402733-4983f74b.png",
+      "height": 1708,
+      "width": 3022,
+      "blurDataURL": "data:image/webp;base64,UklGRiQAAABXRUJQVlA4IBgAAAAwAQCdASoIAAUADMDOJZwAA3AA/urHAAA=",
+      "blurWidth": 8,
+      "blurHeight": 5
+    },
+    "excerpt": "<p>本文详细介绍了一个自动化部署Next.js项目到服务器的GitHub Actions配置流程。首先，配置SSH允许GitHub Actions通过SSH连接到服务器，包括为GitHub Actions创建系统用户、生成SSH密钥并添加到服务器授权文件，以及将私钥添加到GitHub仓库。接着，通过在GitHub仓库中设置必要的Secrets（如项目部署路径、SSH私钥、服务器地址等），并在仓库中创建<code>.github/workflows</code>目录下的<code>deploy.yml</code>文件，定义了CI/CD流程。该流程包括构建项目、上传构建产物、清理服务器上的旧构建、部署新构建、安装服务器依赖、运行数据库迁移以及重启应用等步骤。整个配置确保了每次代码推送到<code>master</code>分支时，项目能够自动完成构建和部署。此外，还介绍了如何在VPS服务器上安装依赖并使用pm2管理应用，以确保部署流程的顺利进行。</p>",
+    "author": "ridd",
+    "columns": [
+      "from-zero-to-hero-guide-to-modern-blog"
+    ],
+    "categories": [
+      "coding"
+    ],
+    "tags": [
+      "GitHub Actions",
+      "Next.js",
+      "VPS",
+      "Self-hosted",
+      "PM2",
+      "SSH"
+    ],
+    "content": "<h2 id=\"流程\"><a aria-hidden=\"true\" tabindex=\"-1\" href=\"#流程\"><span class=\"icon icon-link\"></span></a>流程</h2>\n<h3 id=\"配置服务器\"><a aria-hidden=\"true\" tabindex=\"-1\" href=\"#配置服务器\"><span class=\"icon icon-link\"></span></a>配置服务器</h3>\n<p>首先需要配置 SSH 允许 GitHub Actions 通过 SSH 连接到你的服务器：</p>\n<ol>\n<li>为 GitHub Actions 配置一个系统用户。</li>\n<li>生成 SSH 密钥，将公钥添加到服务器的<code>~/.ssh/authorized_keys</code>文件。</li>\n<li>添加私钥到 GitHub 仓库。</li>\n</ol>\n<p>添加用户：</p>\n<pre><code class=\"language-bash\">sudo adduser github\r\nsudo usermod -aG sudo github # 授予 sudo 权限，可选\n</code></pre>\n<p>生成 SSH 密钥：</p>\n<pre><code class=\"language-bash\">ssh-keygen -t rsa -b 4096 -C \"github-actions-node\"\r\nssh-copy-id -i ~/.ssh/keyname.pub username@remote_host # 假设生成的公钥文件是 keyname.pub。Windows 系统没有 ssh-copy-id，需要手动添加。\n</code></pre>\n<p>添加私钥到 GitHub 仓库：</p>\n<p>使用 <code>pbcopy &#x3C; ~/.ssh/github_actions_node</code> 将私钥复制到剪切板（也可手动复制）。</p>\n<p>访问 <code>&#x3C;你的仓库 URL>/settings/secrets/actions</code> （Settings -> Secrets and Variables -> Actions），点击 <code>New repository secret</code> 添加新的 secret，名称 <code>SSH_KEY</code>（与下面 yaml 文件中对应），内容为私钥内容。</p>\n<p>设置 GitHub Actions Workflow：</p>\n<ol>\n<li>配置仓库 Secrets。</li>\n<li>在 GitHub 仓库根目录下创建一个新的<code>.github/workflows</code>目录。</li>\n<li>在这个目录中创建一个 YAML 文件（如 <code>deploy.yml</code>），并定义 CI/CD 流程。</li>\n</ol>\n<p>配置 Secrets：</p>\n<p>访问 <code>&#x3C;你的仓库 URL>/settings/secrets/actions</code> （Settings -> Secrets and Variables -> Actions），点击 <code>New repository secret</code> 新增。共需添加以下几个 secret：</p>\n<ul>\n<li><code>PROJECT_DIRECTORY</code>: 项目部署路径，可以是相对或绝对路径。相对路径相对于登录用户的<code>~</code>路径，绝对路径注意是否有权限。</li>\n<li><code>SSH_KEY</code>：SSH 私钥。[前文](#添加私钥到 GitHub 仓库)已添加。</li>\n<li><code>SSH_HOST</code>：SSH 登录服务器的 IP 地址或域名。</li>\n<li><code>SSH_USERNAME</code>：SSH 登录用户名。</li>\n<li><code>SSH_PORT</code>：SSH 端口，默认为 22。</li>\n</ul>\n<p><img src=\"/static/image-20240514011103747-1b57815c.png\" alt=\"image-20240514011103747\"></p>\n<p>创建 CI/CD 流程：</p>\n<p>在 GitHub 仓库根目录创建一个 <code>.github/workflows/deploy.yml</code> 如下：</p>\n<pre><code class=\"language-yaml\">name: Deploy Next.js Project\r\n\r\non:\r\n  push:\r\n    branches:\r\n      - master\r\n\r\njobs:\r\n  build:\r\n    runs-on: ubuntu-latest\r\n    outputs:\r\n      cache-key: ${{ steps.cache-key.outputs.key }}\r\n    steps:\r\n      - name: Checkout Repository\r\n        uses: actions/checkout@v4\r\n\r\n      - name: Setup Node.js\r\n        uses: actions/setup-node@v4\r\n        with:\r\n          node-version: '18'\r\n          cache: 'npm'\r\n\r\n      - name: Install Dependencies\r\n        run: npm install\r\n\r\n      - name: Build Project\r\n        env:\r\n          DATABASE_URL: ${{ secrets.DATABASE_URL }}\r\n          API_KEY: ${{ secrets.API_KEY }}\r\n        run: |\r\n          npx prisma migrate dev --name init\r\n          npm run build\r\n\r\n      - name: Generate Cache Key\r\n        id: cache-key\r\n        run: echo \"cache_key=$(date +%s)\" >> $GITHUB_OUTPUT\r\n\r\n      - name: Archive Artifacts\r\n        uses: actions/upload-artifact@v4\r\n        with:\r\n          name: built-app\r\n          path: |\r\n            .next\r\n            .velite\r\n            public\r\n            package.json\r\n            prisma\r\n            node_modules/.prisma\r\n            next.config.mjs\r\n\r\n  deploy:\r\n    needs: build\r\n    runs-on: ubuntu-latest\r\n    timeout-minutes: 30\r\n    steps:\r\n      - name: Download Artifacts\r\n        uses: actions/download-artifact@v4\r\n        with:\r\n          name: built-app\r\n\r\n      - name: Clean Previous Build\r\n        uses: appleboy/ssh-action@master\r\n        with:\r\n          host: ${{ secrets.SSH_HOST }}\r\n          username: ${{ secrets.SSH_USERNAME }}\r\n          key: ${{ secrets.SSH_KEY }}\r\n          port: ${{ secrets.SSH_PORT }}\r\n          script: |\r\n            cd ${{ secrets.PROJECT_DIRECTORY }}\r\n            rm -rf .next .velite public package.json prisma/migrations prisma/schema.prisma node_modules/.prisma next.config.mjs\r\n            find prisma -type f ! -name 'prod.db' -delete\r\n\r\n      - name: Deploy to Server\r\n        uses: appleboy/scp-action@master\r\n        with:\r\n          host: ${{ secrets.SSH_HOST }}\r\n          username: ${{ secrets.SSH_USERNAME }}\r\n          key: ${{ secrets.SSH_KEY }}\r\n          port: ${{ secrets.SSH_PORT }}\r\n          source: \".next, .velite, public, package.json, prisma/migrations, prisma/schema.prisma, node_modules/.prisma, next.config.mjs\"\r\n          target: ${{ secrets.PROJECT_DIRECTORY }}\r\n\r\n      - name: Install Dependencies on Server\r\n        uses: appleboy/ssh-action@master\r\n        with:\r\n          host: ${{ secrets.SSH_HOST }}\r\n          username: ${{ secrets.SSH_USERNAME }}\r\n          key: ${{ secrets.SSH_KEY }}\r\n          port: ${{ secrets.SSH_PORT }}\r\n          script: |\r\n            cd ${{ secrets.PROJECT_DIRECTORY }}\r\n            export NVM_DIR=~/.nvm\r\n            source ~/.nvm/nvm.sh\r\n            NODE_OPTIONS=\"--max-old-space-size=1536\" yarn install\r\n            NODE_OPTIONS=\"--max-old-space-size=1536\" yarn add sharp --ignore-engines\r\n\r\n      - name: Run Prisma Migrations on Server\r\n        uses: appleboy/ssh-action@master\r\n        env:\r\n          DATABASE_URL: ${{ secrets.DATABASE_URL }}\r\n          API_KEY: ${{ secrets.API_KEY }}\r\n        with:\r\n          host: ${{ secrets.SSH_HOST }}\r\n          username: ${{ secrets.SSH_USERNAME }}\r\n          key: ${{ secrets.SSH_KEY }}\r\n          port: ${{ secrets.SSH_PORT }}\r\n          envs: DATABASE_URL,API_KEY\r\n          script: |\r\n            cd ${{ secrets.PROJECT_DIRECTORY }}\r\n            export NVM_DIR=~/.nvm \r\n            source ~/.nvm/nvm.sh\r\n            npx prisma migrate deploy\r\n\r\n      - name: Restart Server\r\n        uses: appleboy/ssh-action@master\r\n        env:\r\n          DATABASE_URL: ${{ secrets.DATABASE_URL }}\r\n          API_KEY: ${{ secrets.API_KEY }}\r\n        with:\r\n          host: ${{ secrets.SSH_HOST }}\r\n          username: ${{ secrets.SSH_USERNAME }}\r\n          key: ${{ secrets.SSH_KEY }}\r\n          port: ${{ secrets.SSH_PORT }}\r\n          envs: DATABASE_URL,API_KEY\r\n          script: |\r\n            cd ${{ secrets.PROJECT_DIRECTORY }}\r\n            export NVM_DIR=~/.nvm\r\n            source ~/.nvm/nvm.sh\r\n            pm2 list | grep \"blog-velite\" &#x26;&#x26; pm2 restart \"blog-velite\" || pm2 start yarn --name \"blog-velite\" -- start\r\n            pm2 save\n</code></pre>\n<p>在<code>Restart Server</code>这一步骤中，使用了 yarn 作为部署 VPS 的包管理器。这是因为 yarn 消耗系统资源更少，适合弱鸡 VPS。</p>\n<p><code>NODE_OPTIONS=\"--max-old-space-size=1536\"</code> 增加默认内存限制，否则可能出现类似  <code>FATAL ERROR: Reached heap limit Allocation failed - JavaScript heap out of memory</code> 的 OOM 报错。</p>\n<gpt model=\"GPT-4o\"><p>这个 GitHub Actions 配置文件是用于自动化部署 Next.js 项目的流程。具体配置的解释如下：</p><p>这个配置文件是一个 GitHub Actions 工作流，旨在自动化部署一个 Next.js 项目到服务器。以下是对每个部分的详细解释：</p><h3 id=\"文件结构\"><a aria-hidden=\"true\" tabindex=\"-1\" href=\"#文件结构\"><span class=\"icon icon-link\"></span></a>文件结构</h3><pre><code class=\"language-yaml\">name: Deploy Next.js Project\n</code></pre><ul>\n<li><code>name</code>: 定义工作流的名称，这里是 \"Deploy Next.js Project\"。</li>\n</ul><h3 id=\"触发条件\"><a aria-hidden=\"true\" tabindex=\"-1\" href=\"#触发条件\"><span class=\"icon icon-link\"></span></a>触发条件</h3><pre><code class=\"language-yaml\">on:\r\n  push:\r\n    branches:\r\n      - master\n</code></pre><ul>\n<li><code>on</code>: 指定工作流的触发条件。这里是当代码被推送到 <code>master</code> 分支时触发。</li>\n</ul><h3 id=\"工作任务\"><a aria-hidden=\"true\" tabindex=\"-1\" href=\"#工作任务\"><span class=\"icon icon-link\"></span></a>工作任务</h3><h4 id=\"构建任务\"><a aria-hidden=\"true\" tabindex=\"-1\" href=\"#构建任务\"><span class=\"icon icon-link\"></span></a>构建任务</h4><pre><code class=\"language-yaml\">jobs:\r\n  build:\r\n    runs-on: ubuntu-latest\r\n    outputs:\r\n      cache-key: ${{ steps.cache-key.outputs.key }}\r\n    steps:\n</code></pre><ul>\n<li><code>jobs</code>: 定义工作流中的任务。</li>\n<li><code>build</code>: 定义构建任务。</li>\n<li><code>runs-on</code>: 指定运行环境，这里是 <code>ubuntu-latest</code>。</li>\n<li><code>outputs</code>: 定义输出变量，这里是 <code>cache-key</code>。</li>\n</ul><h5 id=\"步骤1检出代码\"><a aria-hidden=\"true\" tabindex=\"-1\" href=\"#步骤1检出代码\"><span class=\"icon icon-link\"></span></a>步骤1：检出代码</h5><pre><code class=\"language-yaml\">      - name: Checkout Repository\r\n        uses: actions/checkout@v4\n</code></pre><ul>\n<li><code>actions/checkout@v4</code>: 使用 GitHub 官方动作来检出代码库。</li>\n</ul><h5 id=\"步骤2设置-nodejs-环境\"><a aria-hidden=\"true\" tabindex=\"-1\" href=\"#步骤2设置-nodejs-环境\"><span class=\"icon icon-link\"></span></a>步骤2：设置 Node.js 环境</h5><pre><code class=\"language-yaml\">      - name: Setup Node.js\r\n        uses: actions/setup-node@v4\r\n        with:\r\n          node-version: '18'\r\n          cache: 'npm'\n</code></pre><ul>\n<li><code>actions/setup-node@v4</code>: 设置 Node.js 环境，指定使用版本 <code>18</code>，并启用 npm 缓存。</li>\n</ul><h5 id=\"步骤3安装依赖\"><a aria-hidden=\"true\" tabindex=\"-1\" href=\"#步骤3安装依赖\"><span class=\"icon icon-link\"></span></a>步骤3：安装依赖</h5><pre><code class=\"language-yaml\">      - name: Install Dependencies\r\n        run: npm install\n</code></pre><ul>\n<li><code>npm install</code>: 安装项目依赖。</li>\n</ul><h5 id=\"步骤4构建项目\"><a aria-hidden=\"true\" tabindex=\"-1\" href=\"#步骤4构建项目\"><span class=\"icon icon-link\"></span></a>步骤4：构建项目</h5><pre><code class=\"language-yaml\">      - name: Build Project\r\n        env:\r\n          DATABASE_URL: ${{ secrets.DATABASE_URL }}\r\n          API_KEY: ${{ secrets.API_KEY }}\r\n        run: |\r\n          npx prisma migrate dev --name init\r\n          npm run build\n</code></pre><ul>\n<li><code>env</code>: 设置环境变量，包括 <code>DATABASE_URL</code> 和 <code>API_KEY</code>。</li>\n<li><code>npx prisma migrate dev --name init</code>: 运行 Prisma 迁移。</li>\n<li><code>npm run build</code>: 构建项目。</li>\n</ul><h5 id=\"步骤5生成缓存键\"><a aria-hidden=\"true\" tabindex=\"-1\" href=\"#步骤5生成缓存键\"><span class=\"icon icon-link\"></span></a>步骤5：生成缓存键</h5><pre><code class=\"language-yaml\">      - name: Generate Cache Key\r\n        id: cache-key\r\n        run: echo \"cache_key=$(date +%s)\" >> $GITHUB_OUTPUT\n</code></pre><ul>\n<li>生成一个基于当前时间的缓存键并输出。</li>\n</ul><h5 id=\"步骤6存档构建产物\"><a aria-hidden=\"true\" tabindex=\"-1\" href=\"#步骤6存档构建产物\"><span class=\"icon icon-link\"></span></a>步骤6：存档构建产物</h5><pre><code class=\"language-yaml\">      - name: Archive Artifacts\r\n        uses: actions/upload-artifact@v4\r\n        with:\r\n          name: built-app\r\n          path: |\r\n            .next\r\n            .velite\r\n            public\r\n            package.json\r\n            prisma\r\n            node_modules/.prisma\r\n            next.config.mjs\n</code></pre><ul>\n<li><code>actions/upload-artifact@v4</code>: 上传构建产物作为工件。</li>\n</ul><h4 id=\"部署任务\"><a aria-hidden=\"true\" tabindex=\"-1\" href=\"#部署任务\"><span class=\"icon icon-link\"></span></a>部署任务</h4><pre><code class=\"language-yaml\">  deploy:\r\n    needs: build\r\n    runs-on: ubuntu-latest\r\n    timeout-minutes: 30\r\n    steps:\n</code></pre><ul>\n<li><code>deploy</code>: 定义部署任务。</li>\n<li><code>needs: build</code>: 表示此任务依赖于 <code>build</code> 任务的完成。</li>\n<li><code>timeout-minutes</code>: 设置任务超时时间为 30 分钟。</li>\n</ul><h5 id=\"步骤1下载构建产物\"><a aria-hidden=\"true\" tabindex=\"-1\" href=\"#步骤1下载构建产物\"><span class=\"icon icon-link\"></span></a>步骤1：下载构建产物</h5><pre><code class=\"language-yaml\">      - name: Download Artifacts\r\n        uses: actions/download-artifact@v4\r\n        with:\r\n          name: built-app\n</code></pre><ul>\n<li><code>actions/download-artifact@v4</code>: 下载之前上传的构建产物。</li>\n</ul><h5 id=\"步骤2清理之前的构建\"><a aria-hidden=\"true\" tabindex=\"-1\" href=\"#步骤2清理之前的构建\"><span class=\"icon icon-link\"></span></a>步骤2：清理之前的构建</h5><pre><code class=\"language-yaml\">      - name: Clean Previous Build\r\n        uses: appleboy/ssh-action@master\r\n        with:\r\n          host: ${{ secrets.SSH_HOST }}\r\n          username: ${{ secrets.SSH_USERNAME }}\r\n          key: ${{ secrets.SSH_KEY }}\r\n          port: ${{ secrets.SSH_PORT }}\r\n          script: |\r\n            cd ${{ secrets.PROJECT_DIRECTORY }}\r\n            rm -rf .next .velite public package.json prisma/migrations prisma/schema.prisma node_modules/.prisma next.config.mjs\r\n            find prisma -type f ! -name 'prod.db' -delete\n</code></pre><ul>\n<li>使用 <code>appleboy/ssh-action@master</code> 通过 SSH 连接到服务器并清理之前的构建文件。</li>\n</ul><h5 id=\"步骤3部署到服务器\"><a aria-hidden=\"true\" tabindex=\"-1\" href=\"#步骤3部署到服务器\"><span class=\"icon icon-link\"></span></a>步骤3：部署到服务器</h5><pre><code class=\"language-yaml\">      - name: Deploy to Server\r\n        uses: appleboy/scp-action@master\r\n        with:\r\n          host: ${{ secrets.SSH_HOST }}\r\n          username: ${{ secrets.SSH_USERNAME }}\r\n          key: ${{ secrets.SSH_KEY }}\r\n          port: ${{ secrets.SSH_PORT }}\r\n          source: \".next, .velite, public, package.json, prisma/migrations, prisma/schema.prisma, node_modules/.prisma, next.config.mjs\"\r\n          target: ${{ secrets.PROJECT_DIRECTORY }}\n</code></pre><ul>\n<li>使用 <code>appleboy/scp-action@master</code> 通过 SCP 将新的构建文件上传到服务器。</li>\n</ul><h5 id=\"步骤4在服务器上安装依赖\"><a aria-hidden=\"true\" tabindex=\"-1\" href=\"#步骤4在服务器上安装依赖\"><span class=\"icon icon-link\"></span></a>步骤4：在服务器上安装依赖</h5><pre><code class=\"language-yaml\">      - name: Install Dependencies on Server\r\n        uses: appleboy/ssh-action@master\r\n        with:\r\n          host: ${{ secrets.SSH_HOST }}\r\n          username: ${{ secrets.SSH_USERNAME }}\r\n          key: ${{ secrets.SSH_KEY }}\r\n          port: ${{ secrets.SSH_PORT }}\r\n          script: |\r\n            cd ${{ secrets.PROJECT_DIRECTORY }}\r\n            export NVM_DIR=~/.nvm\r\n            source ~/.nvm/nvm.sh\r\n            NODE_OPTIONS=\"--max-old-space-size=1536\" yarn install\r\n            NODE_OPTIONS=\"--max-old-space-size=1536\" yarn add sharp --ignore-engines\n</code></pre><ul>\n<li>在服务器上安装项目依赖，并添加 <code>sharp</code> 依赖。</li>\n</ul><h5 id=\"步骤5在服务器上运行-prisma-迁移\"><a aria-hidden=\"true\" tabindex=\"-1\" href=\"#步骤5在服务器上运行-prisma-迁移\"><span class=\"icon icon-link\"></span></a>步骤5：在服务器上运行 Prisma 迁移</h5><pre><code class=\"language-yaml\">      - name: Run Prisma Migrations on Server\r\n        uses: appleboy/ssh-action@master\r\n        env:\r\n          DATABASE_URL: ${{ secrets.DATABASE_URL }}\r\n          API_KEY: ${{ secrets.API_KEY }}\r\n        with:\r\n          host: ${{ secrets.SSH_HOST }}\r\n          username: ${{ secrets.SSH_USERNAME }}\r\n          key: ${{ secrets.SSH_KEY }}\r\n          port: ${{ secrets.SSH_PORT }}\r\n          envs: DATABASE_URL,API_KEY\r\n          script: |\r\n            cd ${{ secrets.PROJECT_DIRECTORY }}\r\n            export NVM_DIR=~/.nvm \r\n            source ~/.nvm/nvm.sh\r\n            npx prisma migrate deploy\n</code></pre><ul>\n<li>运行 Prisma 的数据库迁移。</li>\n</ul><h5 id=\"步骤6重启服务器上的应用\"><a aria-hidden=\"true\" tabindex=\"-1\" href=\"#步骤6重启服务器上的应用\"><span class=\"icon icon-link\"></span></a>步骤6：重启服务器上的应用</h5><pre><code class=\"language-yaml\">      - name: Restart Server\r\n        uses: appleboy/ssh-action@master\r\n        env:\r\n          DATABASE_URL: ${{ secrets.DATABASE_URL }}\r\n          API_KEY: ${{ secrets.API_KEY }}\r\n        with:\r\n          host: ${{ secrets.SSH_HOST }}\r\n          username: ${{ secrets.SSH_USERNAME }}\r\n          key: ${{ secrets.SSH_KEY }}\r\n          port: ${{ secrets.SSH_PORT }}\r\n          envs: DATABASE_URL,API_KEY\r\n          script: |\r\n            cd ${{ secrets.PROJECT_DIRECTORY }}\r\n            export NVM_DIR=~/.nvm\r\n            source ~/.nvm/nvm.sh\r\n            pm2 list | grep \"blog-velite\" &#x26;&#x26; pm2 restart \"blog-velite\" || pm2 start yarn --name \"blog-velite\" -- start\r\n            pm2 save\n</code></pre><ul>\n<li>使用 <code>pm2</code> 进程管理器重启或启动应用。</li>\n</ul><p>这个配置文件涵盖了从代码检出、环境设置、依赖安装、项目构建、上传构建产物、清理旧构建、部署新构建、安装服务器依赖、运行数据库迁移到重启应用的完整流程。这确保了项目在每次代码推送到 <code>master</code> 分支时都能自动完成构建和部署。</p></gpt>\n<h3 id=\"配置-vps-服务器\"><a aria-hidden=\"true\" tabindex=\"-1\" href=\"#配置-vps-服务器\"><span class=\"icon icon-link\"></span></a>配置 VPS 服务器</h3>\n<p>在首次触发 Actions 部署之前，先安装好依赖：</p>\n<pre><code class=\"language-bash\">cd /path/to/deployment # 与 secrets.PROJECT_DIRECTORY 相同\r\n# 使用 pm2 管理应用\r\nyarn global add pm2\n</code></pre>\n<p>随后向仓库提交更改，检查 Actions 是否运行。</p>\n<h2 id=\"效果\"><a aria-hidden=\"true\" tabindex=\"-1\" href=\"#效果\"><span class=\"icon icon-link\"></span></a>效果</h2>\n<p><img src=\"/static/image-20240514011402733-4983f74b.png\" alt=\"image-20240514011402733\"></p>\n<p><img src=\"/static/image-20240514011427738-3f2b4f0c.png\" alt=\"image-20240514011427738\"></p>\n<p>配置文件使用 <code>yarn start</code> 即<code>next start</code>，默认运行在 3000 端口：</p>\n<p><img src=\"/static/image-20240514011631894-e37e95d4.png\" alt=\"image-20240514011631894\"></p>",
+    "raw": "## 流程\r\n\r\n### 配置服务器\r\n\r\n首先需要配置 SSH 允许 GitHub Actions 通过 SSH 连接到你的服务器：\r\n1. 为 GitHub Actions 配置一个系统用户。\r\n2. 生成 SSH 密钥，将公钥添加到服务器的`~/.ssh/authorized_keys`文件。\r\n3. 添加私钥到 GitHub 仓库。\r\n\r\n添加用户：\r\n\r\n```bash\r\nsudo adduser github\r\nsudo usermod -aG sudo github # 授予 sudo 权限，可选\r\n```\r\n\r\n生成 SSH 密钥：\r\n\r\n```bash\r\nssh-keygen -t rsa -b 4096 -C \"github-actions-node\"\r\nssh-copy-id -i ~/.ssh/keyname.pub username@remote_host # 假设生成的公钥文件是 keyname.pub。Windows 系统没有 ssh-copy-id，需要手动添加。\r\n```\r\n\r\n添加私钥到 GitHub 仓库：\r\n\r\n使用 `pbcopy < ~/.ssh/github_actions_node` 将私钥复制到剪切板（也可手动复制）。\r\n\r\n访问 `<你的仓库 URL>/settings/secrets/actions` （Settings -> Secrets and Variables -> Actions），点击 `New repository secret` 添加新的 secret，名称 `SSH_KEY`（与下面 yaml 文件中对应），内容为私钥内容。\r\n\r\n设置 GitHub Actions Workflow：\r\n\r\n1. 配置仓库 Secrets。\r\n2. 在 GitHub 仓库根目录下创建一个新的`.github/workflows`目录。\r\n3. 在这个目录中创建一个 YAML 文件（如 `deploy.yml`），并定义 CI/CD 流程。\r\n\r\n配置 Secrets：\r\n\r\n访问 `<你的仓库 URL>/settings/secrets/actions` （Settings -> Secrets and Variables -> Actions），点击 `New repository secret` 新增。共需添加以下几个 secret：\r\n\r\n- `PROJECT_DIRECTORY`: 项目部署路径，可以是相对或绝对路径。相对路径相对于登录用户的`~`路径，绝对路径注意是否有权限。\r\n- `SSH_KEY`：SSH 私钥。[前文](#添加私钥到 GitHub 仓库)已添加。\r\n- `SSH_HOST`：SSH 登录服务器的 IP 地址或域名。\r\n- `SSH_USERNAME`：SSH 登录用户名。\r\n- `SSH_PORT`：SSH 端口，默认为 22。\r\n\r\n![image-20240514011103747](deploy-next-js-to-vps-using-github-actions.assets/image-20240514011103747.png)\r\n\r\n创建 CI/CD 流程：\r\n\r\n在 GitHub 仓库根目录创建一个 `.github/workflows/deploy.yml` 如下：\r\n\r\n```yaml\r\nname: Deploy Next.js Project\r\n\r\non:\r\n  push:\r\n    branches:\r\n      - master\r\n\r\njobs:\r\n  build:\r\n    runs-on: ubuntu-latest\r\n    outputs:\r\n      cache-key: ${{ steps.cache-key.outputs.key }}\r\n    steps:\r\n      - name: Checkout Repository\r\n        uses: actions/checkout@v4\r\n\r\n      - name: Setup Node.js\r\n        uses: actions/setup-node@v4\r\n        with:\r\n          node-version: '18'\r\n          cache: 'npm'\r\n\r\n      - name: Install Dependencies\r\n        run: npm install\r\n\r\n      - name: Build Project\r\n        env:\r\n          DATABASE_URL: ${{ secrets.DATABASE_URL }}\r\n          API_KEY: ${{ secrets.API_KEY }}\r\n        run: |\r\n          npx prisma migrate dev --name init\r\n          npm run build\r\n\r\n      - name: Generate Cache Key\r\n        id: cache-key\r\n        run: echo \"cache_key=$(date +%s)\" >> $GITHUB_OUTPUT\r\n\r\n      - name: Archive Artifacts\r\n        uses: actions/upload-artifact@v4\r\n        with:\r\n          name: built-app\r\n          path: |\r\n            .next\r\n            .velite\r\n            public\r\n            package.json\r\n            prisma\r\n            node_modules/.prisma\r\n            next.config.mjs\r\n\r\n  deploy:\r\n    needs: build\r\n    runs-on: ubuntu-latest\r\n    timeout-minutes: 30\r\n    steps:\r\n      - name: Download Artifacts\r\n        uses: actions/download-artifact@v4\r\n        with:\r\n          name: built-app\r\n\r\n      - name: Clean Previous Build\r\n        uses: appleboy/ssh-action@master\r\n        with:\r\n          host: ${{ secrets.SSH_HOST }}\r\n          username: ${{ secrets.SSH_USERNAME }}\r\n          key: ${{ secrets.SSH_KEY }}\r\n          port: ${{ secrets.SSH_PORT }}\r\n          script: |\r\n            cd ${{ secrets.PROJECT_DIRECTORY }}\r\n            rm -rf .next .velite public package.json prisma/migrations prisma/schema.prisma node_modules/.prisma next.config.mjs\r\n            find prisma -type f ! -name 'prod.db' -delete\r\n\r\n      - name: Deploy to Server\r\n        uses: appleboy/scp-action@master\r\n        with:\r\n          host: ${{ secrets.SSH_HOST }}\r\n          username: ${{ secrets.SSH_USERNAME }}\r\n          key: ${{ secrets.SSH_KEY }}\r\n          port: ${{ secrets.SSH_PORT }}\r\n          source: \".next, .velite, public, package.json, prisma/migrations, prisma/schema.prisma, node_modules/.prisma, next.config.mjs\"\r\n          target: ${{ secrets.PROJECT_DIRECTORY }}\r\n\r\n      - name: Install Dependencies on Server\r\n        uses: appleboy/ssh-action@master\r\n        with:\r\n          host: ${{ secrets.SSH_HOST }}\r\n          username: ${{ secrets.SSH_USERNAME }}\r\n          key: ${{ secrets.SSH_KEY }}\r\n          port: ${{ secrets.SSH_PORT }}\r\n          script: |\r\n            cd ${{ secrets.PROJECT_DIRECTORY }}\r\n            export NVM_DIR=~/.nvm\r\n            source ~/.nvm/nvm.sh\r\n            NODE_OPTIONS=\"--max-old-space-size=1536\" yarn install\r\n            NODE_OPTIONS=\"--max-old-space-size=1536\" yarn add sharp --ignore-engines\r\n\r\n      - name: Run Prisma Migrations on Server\r\n        uses: appleboy/ssh-action@master\r\n        env:\r\n          DATABASE_URL: ${{ secrets.DATABASE_URL }}\r\n          API_KEY: ${{ secrets.API_KEY }}\r\n        with:\r\n          host: ${{ secrets.SSH_HOST }}\r\n          username: ${{ secrets.SSH_USERNAME }}\r\n          key: ${{ secrets.SSH_KEY }}\r\n          port: ${{ secrets.SSH_PORT }}\r\n          envs: DATABASE_URL,API_KEY\r\n          script: |\r\n            cd ${{ secrets.PROJECT_DIRECTORY }}\r\n            export NVM_DIR=~/.nvm \r\n            source ~/.nvm/nvm.sh\r\n            npx prisma migrate deploy\r\n\r\n      - name: Restart Server\r\n        uses: appleboy/ssh-action@master\r\n        env:\r\n          DATABASE_URL: ${{ secrets.DATABASE_URL }}\r\n          API_KEY: ${{ secrets.API_KEY }}\r\n        with:\r\n          host: ${{ secrets.SSH_HOST }}\r\n          username: ${{ secrets.SSH_USERNAME }}\r\n          key: ${{ secrets.SSH_KEY }}\r\n          port: ${{ secrets.SSH_PORT }}\r\n          envs: DATABASE_URL,API_KEY\r\n          script: |\r\n            cd ${{ secrets.PROJECT_DIRECTORY }}\r\n            export NVM_DIR=~/.nvm\r\n            source ~/.nvm/nvm.sh\r\n            pm2 list | grep \"blog-velite\" && pm2 restart \"blog-velite\" || pm2 start yarn --name \"blog-velite\" -- start\r\n            pm2 save\r\n```\r\n\r\n在`Restart Server`这一步骤中，使用了 yarn 作为部署 VPS 的包管理器。这是因为 yarn 消耗系统资源更少，适合弱鸡 VPS。\r\n\r\n`NODE_OPTIONS=\"--max-old-space-size=1536\"` 增加默认内存限制，否则可能出现类似  `FATAL ERROR: Reached heap limit Allocation failed - JavaScript heap out of memory` 的 OOM 报错。\r\n\r\n:::gpt{model=\"GPT-4o\"}\r\n这个 GitHub Actions 配置文件是用于自动化部署 Next.js 项目的流程。具体配置的解释如下：\r\n\r\n这个配置文件是一个 GitHub Actions 工作流，旨在自动化部署一个 Next.js 项目到服务器。以下是对每个部分的详细解释：\r\n\r\n### 文件结构\r\n\r\n```yaml\r\nname: Deploy Next.js Project\r\n```\r\n- `name`: 定义工作流的名称，这里是 \"Deploy Next.js Project\"。\r\n\r\n### 触发条件\r\n\r\n```yaml\r\non:\r\n  push:\r\n    branches:\r\n      - master\r\n```\r\n- `on`: 指定工作流的触发条件。这里是当代码被推送到 `master` 分支时触发。\r\n\r\n### 工作任务\r\n\r\n#### 构建任务\r\n\r\n```yaml\r\njobs:\r\n  build:\r\n    runs-on: ubuntu-latest\r\n    outputs:\r\n      cache-key: ${{ steps.cache-key.outputs.key }}\r\n    steps:\r\n```\r\n- `jobs`: 定义工作流中的任务。\r\n- `build`: 定义构建任务。\r\n- `runs-on`: 指定运行环境，这里是 `ubuntu-latest`。\r\n- `outputs`: 定义输出变量，这里是 `cache-key`。\r\n\r\n##### 步骤1：检出代码\r\n\r\n```yaml\r\n      - name: Checkout Repository\r\n        uses: actions/checkout@v4\r\n```\r\n- `actions/checkout@v4`: 使用 GitHub 官方动作来检出代码库。\r\n\r\n##### 步骤2：设置 Node.js 环境\r\n\r\n```yaml\r\n      - name: Setup Node.js\r\n        uses: actions/setup-node@v4\r\n        with:\r\n          node-version: '18'\r\n          cache: 'npm'\r\n```\r\n- `actions/setup-node@v4`: 设置 Node.js 环境，指定使用版本 `18`，并启用 npm 缓存。\r\n\r\n##### 步骤3：安装依赖\r\n\r\n```yaml\r\n      - name: Install Dependencies\r\n        run: npm install\r\n```\r\n- `npm install`: 安装项目依赖。\r\n\r\n##### 步骤4：构建项目\r\n\r\n```yaml\r\n      - name: Build Project\r\n        env:\r\n          DATABASE_URL: ${{ secrets.DATABASE_URL }}\r\n          API_KEY: ${{ secrets.API_KEY }}\r\n        run: |\r\n          npx prisma migrate dev --name init\r\n          npm run build\r\n```\r\n- `env`: 设置环境变量，包括 `DATABASE_URL` 和 `API_KEY`。\r\n- `npx prisma migrate dev --name init`: 运行 Prisma 迁移。\r\n- `npm run build`: 构建项目。\r\n\r\n##### 步骤5：生成缓存键\r\n\r\n```yaml\r\n      - name: Generate Cache Key\r\n        id: cache-key\r\n        run: echo \"cache_key=$(date +%s)\" >> $GITHUB_OUTPUT\r\n```\r\n- 生成一个基于当前时间的缓存键并输出。\r\n\r\n##### 步骤6：存档构建产物\r\n\r\n```yaml\r\n      - name: Archive Artifacts\r\n        uses: actions/upload-artifact@v4\r\n        with:\r\n          name: built-app\r\n          path: |\r\n            .next\r\n            .velite\r\n            public\r\n            package.json\r\n            prisma\r\n            node_modules/.prisma\r\n            next.config.mjs\r\n```\r\n- `actions/upload-artifact@v4`: 上传构建产物作为工件。\r\n\r\n#### 部署任务\r\n\r\n```yaml\r\n  deploy:\r\n    needs: build\r\n    runs-on: ubuntu-latest\r\n    timeout-minutes: 30\r\n    steps:\r\n```\r\n- `deploy`: 定义部署任务。\r\n- `needs: build`: 表示此任务依赖于 `build` 任务的完成。\r\n- `timeout-minutes`: 设置任务超时时间为 30 分钟。\r\n\r\n##### 步骤1：下载构建产物\r\n\r\n```yaml\r\n      - name: Download Artifacts\r\n        uses: actions/download-artifact@v4\r\n        with:\r\n          name: built-app\r\n```\r\n- `actions/download-artifact@v4`: 下载之前上传的构建产物。\r\n\r\n##### 步骤2：清理之前的构建\r\n\r\n```yaml\r\n      - name: Clean Previous Build\r\n        uses: appleboy/ssh-action@master\r\n        with:\r\n          host: ${{ secrets.SSH_HOST }}\r\n          username: ${{ secrets.SSH_USERNAME }}\r\n          key: ${{ secrets.SSH_KEY }}\r\n          port: ${{ secrets.SSH_PORT }}\r\n          script: |\r\n            cd ${{ secrets.PROJECT_DIRECTORY }}\r\n            rm -rf .next .velite public package.json prisma/migrations prisma/schema.prisma node_modules/.prisma next.config.mjs\r\n            find prisma -type f ! -name 'prod.db' -delete\r\n```\r\n- 使用 `appleboy/ssh-action@master` 通过 SSH 连接到服务器并清理之前的构建文件。\r\n\r\n##### 步骤3：部署到服务器\r\n\r\n```yaml\r\n      - name: Deploy to Server\r\n        uses: appleboy/scp-action@master\r\n        with:\r\n          host: ${{ secrets.SSH_HOST }}\r\n          username: ${{ secrets.SSH_USERNAME }}\r\n          key: ${{ secrets.SSH_KEY }}\r\n          port: ${{ secrets.SSH_PORT }}\r\n          source: \".next, .velite, public, package.json, prisma/migrations, prisma/schema.prisma, node_modules/.prisma, next.config.mjs\"\r\n          target: ${{ secrets.PROJECT_DIRECTORY }}\r\n```\r\n- 使用 `appleboy/scp-action@master` 通过 SCP 将新的构建文件上传到服务器。\r\n\r\n##### 步骤4：在服务器上安装依赖\r\n\r\n```yaml\r\n      - name: Install Dependencies on Server\r\n        uses: appleboy/ssh-action@master\r\n        with:\r\n          host: ${{ secrets.SSH_HOST }}\r\n          username: ${{ secrets.SSH_USERNAME }}\r\n          key: ${{ secrets.SSH_KEY }}\r\n          port: ${{ secrets.SSH_PORT }}\r\n          script: |\r\n            cd ${{ secrets.PROJECT_DIRECTORY }}\r\n            export NVM_DIR=~/.nvm\r\n            source ~/.nvm/nvm.sh\r\n            NODE_OPTIONS=\"--max-old-space-size=1536\" yarn install\r\n            NODE_OPTIONS=\"--max-old-space-size=1536\" yarn add sharp --ignore-engines\r\n```\r\n- 在服务器上安装项目依赖，并添加 `sharp` 依赖。\r\n\r\n##### 步骤5：在服务器上运行 Prisma 迁移\r\n\r\n```yaml\r\n      - name: Run Prisma Migrations on Server\r\n        uses: appleboy/ssh-action@master\r\n        env:\r\n          DATABASE_URL: ${{ secrets.DATABASE_URL }}\r\n          API_KEY: ${{ secrets.API_KEY }}\r\n        with:\r\n          host: ${{ secrets.SSH_HOST }}\r\n          username: ${{ secrets.SSH_USERNAME }}\r\n          key: ${{ secrets.SSH_KEY }}\r\n          port: ${{ secrets.SSH_PORT }}\r\n          envs: DATABASE_URL,API_KEY\r\n          script: |\r\n            cd ${{ secrets.PROJECT_DIRECTORY }}\r\n            export NVM_DIR=~/.nvm \r\n            source ~/.nvm/nvm.sh\r\n            npx prisma migrate deploy\r\n```\r\n- 运行 Prisma 的数据库迁移。\r\n\r\n##### 步骤6：重启服务器上的应用\r\n\r\n```yaml\r\n      - name: Restart Server\r\n        uses: appleboy/ssh-action@master\r\n        env:\r\n          DATABASE_URL: ${{ secrets.DATABASE_URL }}\r\n          API_KEY: ${{ secrets.API_KEY }}\r\n        with:\r\n          host: ${{ secrets.SSH_HOST }}\r\n          username: ${{ secrets.SSH_USERNAME }}\r\n          key: ${{ secrets.SSH_KEY }}\r\n          port: ${{ secrets.SSH_PORT }}\r\n          envs: DATABASE_URL,API_KEY\r\n          script: |\r\n            cd ${{ secrets.PROJECT_DIRECTORY }}\r\n            export NVM_DIR=~/.nvm\r\n            source ~/.nvm/nvm.sh\r\n            pm2 list | grep \"blog-velite\" && pm2 restart \"blog-velite\" || pm2 start yarn --name \"blog-velite\" -- start\r\n            pm2 save\r\n```\r\n- 使用 `pm2` 进程管理器重启或启动应用。\r\n\r\n这个配置文件涵盖了从代码检出、环境设置、依赖安装、项目构建、上传构建产物、清理旧构建、部署新构建、安装服务器依赖、运行数据库迁移到重启应用的完整流程。这确保了项目在每次代码推送到 `master` 分支时都能自动完成构建和部署。\r\n:::\r\n\r\n### 配置 VPS 服务器\r\n\r\n在首次触发 Actions 部署之前，先安装好依赖：\r\n\r\n```bash\r\ncd /path/to/deployment # 与 secrets.PROJECT_DIRECTORY 相同\r\n# 使用 pm2 管理应用\r\nyarn global add pm2\r\n```\r\n\r\n随后向仓库提交更改，检查 Actions 是否运行。\r\n\r\n## 效果\r\n\r\n![image-20240514011402733](deploy-next-js-to-vps-using-github-actions.assets/image-20240514011402733.png)\r\n\r\n![image-20240514011427738](deploy-next-js-to-vps-using-github-actions.assets/image-20240514011427738.png)\r\n\r\n配置文件使用 `yarn start` 即`next start`，默认运行在 3000 端口：\r\n\r\n![image-20240514011631894](deploy-next-js-to-vps-using-github-actions.assets/image-20240514011631894.png)",
+    "path": "posts/deploy-next-js-to-vps-using-github-actions",
+    "toc": [
+      {
+        "title": "流程",
+        "url": "#流程",
+        "items": [
+          {
+            "title": "配置服务器",
+            "url": "#配置服务器",
+            "items": []
+          },
+          {
+            "title": "文件结构",
+            "url": "#文件结构",
+            "items": []
+          },
+          {
+            "title": "触发条件",
+            "url": "#触发条件",
+            "items": []
+          },
+          {
+            "title": "工作任务",
+            "url": "#工作任务",
+            "items": [
+              {
+                "title": "构建任务",
+                "url": "#构建任务",
+                "items": [
+                  {
+                    "title": "步骤1：检出代码",
+                    "url": "#步骤1检出代码",
+                    "items": []
+                  },
+                  {
+                    "title": "步骤2：设置 Node.js 环境",
+                    "url": "#步骤2设置-nodejs-环境",
+                    "items": []
+                  },
+                  {
+                    "title": "步骤3：安装依赖",
+                    "url": "#步骤3安装依赖",
+                    "items": []
+                  },
+                  {
+                    "title": "步骤4：构建项目",
+                    "url": "#步骤4构建项目",
+                    "items": []
+                  },
+                  {
+                    "title": "步骤5：生成缓存键",
+                    "url": "#步骤5生成缓存键",
+                    "items": []
+                  },
+                  {
+                    "title": "步骤6：存档构建产物",
+                    "url": "#步骤6存档构建产物",
+                    "items": []
+                  }
+                ]
+              },
+              {
+                "title": "部署任务",
+                "url": "#部署任务",
+                "items": [
+                  {
+                    "title": "步骤1：下载构建产物",
+                    "url": "#步骤1下载构建产物",
+                    "items": []
+                  },
+                  {
+                    "title": "步骤2：清理之前的构建",
+                    "url": "#步骤2清理之前的构建",
+                    "items": []
+                  },
+                  {
+                    "title": "步骤3：部署到服务器",
+                    "url": "#步骤3部署到服务器",
+                    "items": []
+                  },
+                  {
+                    "title": "步骤4：在服务器上安装依赖",
+                    "url": "#步骤4在服务器上安装依赖",
+                    "items": []
+                  },
+                  {
+                    "title": "步骤5：在服务器上运行 Prisma 迁移",
+                    "url": "#步骤5在服务器上运行-prisma-迁移",
+                    "items": []
+                  },
+                  {
+                    "title": "步骤6：重启服务器上的应用",
+                    "url": "#步骤6重启服务器上的应用",
+                    "items": []
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "title": "配置 VPS 服务器",
+            "url": "#配置-vps-服务器",
+            "items": []
+          }
+        ]
+      },
+      {
+        "title": "效果",
+        "url": "#效果",
+        "items": []
+      }
+    ],
+    "metadata": {
+      "readingTime": 6,
+      "wordCount": 1645.44
+    },
+    "permalink": "/post/deploy-next-js-to-vps-using-github-actions",
+    "images": {
+      "/static/image-20240514011103747-1b57815c.png": {
+        "width": 1602,
+        "height": 710
+      },
+      "/static/image-20240514011402733-4983f74b.png": {
+        "width": 3022,
+        "height": 1708
+      },
+      "/static/image-20240514011427738-3f2b4f0c.png": {
+        "width": 3022,
+        "height": 1706
+      },
+      "/static/image-20240514011631894-e37e95d4.png": {
+        "width": 3022,
+        "height": 1804
+      }
+    },
+    "excerptRaw": "<p>本文详细介绍了一个自动化部署Next.js项目到服务器的GitHub Actions配置流程。首先，配置SSH允许GitHub Actions通过SSH连接到服务器，包括为GitHub Actions创建系统用户、生成SSH密钥并添加到服务器授权文件，以及将私钥添加到GitHub仓库。接着，通过在GitHub仓库中设置必要的Secrets（如项目部署路径、SSH私钥、服务器地址等），并在仓库中创建<code>.github/workflows</code>目录下的<code>deploy.yml</code>文件，定义了CI/CD流程。该流程包括构建项目、上传构建产物、清理服务器上的旧构建、部署新构建、安装服务器依赖、运行数据库迁移以及重启应用等步骤。整个配置确保了每次代码推送到<code>master</code>分支时，项目能够自动完成构建和部署。此外，还介绍了如何在VPS服务器上安装依赖并使用pm2管理应用，以确保部署流程的顺利进行。</p>"
+  },
+  {
     "title": "在 Markdown 中使用自定义指令，并渲染为 React 组件",
     "slug": "use-custom-directives-in-markdown-render-as-react-components",
     "created": "2024-05-14T09:27:13.000Z",
+    "updated": "2024-05-29T09:45:24.000Z",
     "draft": false,
     "featured": false,
     "cover": {
@@ -82,8 +253,7 @@
     },
     "permalink": "/post/use-custom-directives-in-markdown-render-as-react-components",
     "images": {},
-    "updated": "2024-05-29T17:45:24+08:00",
-    "excerptRaw": "本文详细介绍了如何通过自定义指令扩展Markdown语法，以实现更丰富的文章内容展示，如外链嵌入、图表视频和特殊样式文本等。文章首先解释了自定义指令的概念和格式，然后介绍了`remark`和`rehype`工具链的使用，这些工具用于处理和转换Markdown和HTML内容。接着，文章展示了如何使用`remark-directive`、`remark-directive-rehype`和`rehype-react`插件来实现Markdown到HTML的转换，并进一步将HTML转换为React组件，以便在React应用中渲染。此外，文章还提供了一个实际的代码示例，展示了如何定义和使用这些插件来处理Markdown内容，并将其转换为可在网页上展示的HTML。通过这些技术，作者能够在不修改代码的情况下，通过Markdown文本编辑器向博客中添加复杂组件和可交互内容。"
+    "excerptRaw": "<p>本文详细介绍了如何通过自定义指令扩展Markdown语法，以实现更丰富的文章内容展示，如外链嵌入、图表视频和特殊样式文本等。文章首先解释了自定义指令的概念和格式，然后介绍了<code>remark</code>和<code>rehype</code>工具链的使用，这些工具用于处理和转换Markdown和HTML内容。接着，文章展示了如何使用<code>remark-directive</code>、<code>remark-directive-rehype</code>和<code>rehype-react</code>插件来实现Markdown到HTML的转换，并进一步将HTML转换为React组件，以便在React应用中渲染。此外，文章还提供了一个实际的代码示例，展示了如何定义和使用这些插件来处理Markdown内容，并将其转换为可在网页上展示的HTML。通过这些技术，作者能够在不修改代码的情况下，通过Markdown文本编辑器向博客中添加复杂组件和可交互内容。</p>"
   },
   {
     "title": "Next.js 14 照片相册的实现与优化",
@@ -116,7 +286,7 @@
     },
     "permalink": "/post/next-js-photo-gallery-implementation-optimization",
     "images": {},
-    "excerptRaw": "1"
+    "excerptRaw": "<p>1</p>"
   },
   {
     "title": "实现 Masonry 布局",
@@ -183,7 +353,7 @@
     },
     "permalink": "/post/next-js-app-router-page-transition",
     "images": {},
-    "excerptRaw": "在Stack Overflow的问答中，用户探讨了在Python中使用`multiprocessing`模块时，如何正确处理`multiprocessing.Queue`对象的生命周期，以避免内存泄漏的问题。作者指出，`multiprocessing.Queue`对象在所有工作进程关闭后，其自身并不会自动清理，因此需要显式地调用`close()`和`join_thread()`方法来确保队列的线程被正确关闭。此外，作者还提到了在Windows系统中，由于进程间通信的特殊性，需要特别注意队列的关闭顺序，以防止出现死锁或资源未释放的情况。通过实例代码，作者演示了如何在主进程中正确管理队列的生命周期，确保资源得到有效释放，从而避免内存泄漏。"
+    "excerptRaw": "<p>在Stack Overflow的问答中，用户探讨了在Python中使用<code>multiprocessing</code>模块时，如何正确处理<code>multiprocessing.Queue</code>对象的生命周期，以避免内存泄漏的问题。作者指出，<code>multiprocessing.Queue</code>对象在所有工作进程关闭后，其自身并不会自动清理，因此需要显式地调用<code>close()</code>和<code>join_thread()</code>方法来确保队列的线程被正确关闭。此外，作者还提到了在Windows系统中，由于进程间通信的特殊性，需要特别注意队列的关闭顺序，以防止出现死锁或资源未释放的情况。通过实例代码，作者演示了如何在主进程中正确管理队列的生命周期，确保资源得到有效释放，从而避免内存泄漏。</p>"
   },
   {
     "title": "在 Windows 浏览器中实现 macOS 风格的滚动条",
@@ -216,7 +386,7 @@
     },
     "permalink": "/post/macos-like-scrollbar-in-windows-browser",
     "images": {},
-    "excerptRaw": "本文深入探讨了CSS中滚动条槽（scrollbar gutter）的概念及其在网页设计中的应用。滚动条槽是指浏览器窗口中滚动条占据的空间，它对于确保页面内容在滚动条出现或消失时保持稳定布局至关重要。文章首先介绍了如何使用CSS属性`scrollbar-gutter`来预留滚动条空间，从而避免内容跳动，提升用户体验。接着，文章通过实例展示了如何利用这一属性在不同浏览器中实现页面滚动条的自适应布局，确保页面在各种设备和浏览器环境下都能保持一致的视觉效果。此外，文章还提供了来自Mozilla开发者网络（MDN）和GitHub的资源链接，供读者进一步学习和探索CSS滚动条槽的高级用法和最佳实践。通过这些内容，读者可以更好地理解并掌握滚动条槽在现代网页设计中的重要性，以及如何有效地运用它来优化页面布局。"
+    "excerptRaw": "<p>本文深入探讨了CSS中滚动条槽（scrollbar gutter）的概念及其在网页设计中的应用。滚动条槽是指浏览器窗口中滚动条占据的空间，它对于确保页面内容在滚动条出现或消失时保持稳定布局至关重要。文章首先介绍了如何使用CSS属性<code>scrollbar-gutter</code>来预留滚动条空间，从而避免内容跳动，提升用户体验。接着，文章通过实例展示了如何利用这一属性在不同浏览器中实现页面滚动条的自适应布局，确保页面在各种设备和浏览器环境下都能保持一致的视觉效果。此外，文章还提供了来自Mozilla开发者网络（MDN）和GitHub的资源链接，供读者进一步学习和探索CSS滚动条槽的高级用法和最佳实践。通过这些内容，读者可以更好地理解并掌握滚动条槽在现代网页设计中的重要性，以及如何有效地运用它来优化页面布局。</p>"
   },
   {
     "title": "BUPT 校园网 OpenWrt 配置 IPv6",
@@ -253,8 +423,8 @@
       "AdGuard Home",
       "OpenClash"
     ],
-    "content": "<h1 id=\"前言\"><a aria-hidden=\"true\" tabindex=\"-1\" href=\"#前言\"><span class=\"icon icon-link\"></span></a>前言</h1>\n<p>首先介绍一下我的网络环境：</p>\n<ul>\n<li>设备：一台双网口 (eth0, eth1) 主板的服务器运行 OpenWrt 虚拟机（称为设备 AIO）、一台红米 AX6S 无线路由器刷 OpenWrt（称为设备 AP）、一台台式机、若干移动设备、三条网线。</li>\n<li>拓扑：墙壁有线校园网接口 &#x3C;-> AIO 的 eth1，AIO 的 eth0 &#x3C;-> AP 的 LAN 口。</li>\n</ul>\n<p>BUPT 校园网默认分配的 v6 地址是 128 位前缀的，子网大小为 1，只能一台设备使用，所以需要 NAT6（方案之一，也许可以用 Relay Mode，但是我没尝试成功）。</p>\n<h1 id=\"配置-nat6\"><a aria-hidden=\"true\" tabindex=\"-1\" href=\"#配置-nat6\"><span class=\"icon icon-link\"></span></a>配置 NAT6</h1>\n<p>该部分参考了 <a href=\"https://sustech.online/service/network/ipv6/\">校内 IPv6 设置教程 | 南科手册</a> 和 <a href=\"https://github.com/tuna/ipv6.tsinghua.edu.cn/blob/master/openwrt.md\">OpenWRT 路由器作为 IPv6 网关的配置</a></p>\n<h2 id=\"更改全局网络选项-ipv6-ula-前缀\"><a aria-hidden=\"true\" tabindex=\"-1\" href=\"#更改全局网络选项-ipv6-ula-前缀\"><span class=\"icon icon-link\"></span></a>更改全局网络选项 IPv6 ULA 前缀</h2>\n<p>点击“网络 Network- 接口 Interfaces”。如果你的界面没有“全局网络选项 Global Network Options”，在<code>/etc/config/network</code> 里加入 <code>config globals 'globals'</code>，刷新页面即可（若仍没有，尝试删除 LuCI 缓存并重启 LuCI 服务）。</p>\n<p><img src=\"/static/20240118222203-2ca29b7c.png\" alt=\"/etc/config/network 配置\"></p>\n<p>在全局网络选项中更改 ULA 前缀，例如 <code>fd34:fe56:7891:2f3a::/64</code>，可以使用 <a href=\"https://www.unique-local-ipv6.com/\">ULA 生成器</a></p>\n<blockquote>\n<p>IPv6 提供一段称为 Unique Local Address（ULA）的地址段 fc00::/7，包含 fc00::/8 和 fd00::/8 两部分：目前 fc00::/8 的使用还没有定义，我们不去管它；fd00::/8 可以被自由使用。fd00::/8 是一个十分巨大的地址段，你可以从中挑选一个/48 的子段分配给你的局域网。RFC 4193 建议使用随机生成的方法，使每个局域网的地址段都不同（这也是 ULA 名字的由来），从而避免局域网合并时地址冲突的麻烦。当然这主要是针对企业而讲的，家庭使用的话随机生成还是挑个好记的自己斟酌。如果要随机生成，Google 一下 ULA generator 有真相。<br>\n——摘自 <a href=\"https://www.v2ex.com/t/488116\">V2EX</a></p>\n</blockquote>\n<p><img src=\"/static/20240118222722-d915746d.png\" alt=\"ULA 前缀设置\"></p>\n<h2 id=\"更改-lan-接口选项\"><a aria-hidden=\"true\" tabindex=\"-1\" href=\"#更改-lan-接口选项\"><span class=\"icon icon-link\"></span></a>更改 LAN 接口选项</h2>\n<p>LAN 接口 DHCP 服务器中，打开“动态 DHCP”和“强制”。</p>\n<p><img src=\"/static/20240118222753-f0c9e7f7.png\" alt=\"更改 DHCP 设置\"></p>\n<p>LAN 接口 IPv6 设置，“路由器通告服务”和“DHCPv6 服务”修改为“服务器模式”，“NDP 代理”设置为“禁用”，“DHCPv6”选择“无状态的 + 有状态的”，并勾选“总是通告默认路由”。记得点击“保存&#x26;应用”。</p>\n<p><img src=\"/static/20240118222818-99caf081.png\" alt=\"更改 DHCP 设置\"></p>\n<h2 id=\"更改-wanwan6-接口选项\"><a aria-hidden=\"true\" tabindex=\"-1\" href=\"#更改-wanwan6-接口选项\"><span class=\"icon icon-link\"></span></a>更改 WAN/WAN6 接口选项</h2>\n<p>WAN 口设置 - 高级设置中，勾选上“使用内置的 IPv6 管理”。</p>\n<p><img src=\"/static/20240118222838-5f517c87.png\" alt=\"WAN 设置\"></p>\n<p>WAN6 口设置 - 基本设置中，将“协议”修改为“DHCPv6 客户端”，“请求 IPv6 地址”为“force”，“请求指定长度的 IPv6 前缀”为“停用（已禁用）”。</p>\n<p><img src=\"/static/20240118222856-3300208e.png\" alt=\"WAN 设置\"></p>\n<p>WAN6 口设置 - 高级设置中，勾选“使用内置的 IPv6 管理”，“强制链路”和“使用默认网关”。</p>\n<p><img src=\"/static/20240118222914-a6043dae.png\" alt=\"WAN 设置\"></p>\n<h2 id=\"更改-dhcpdns-设置\"><a aria-hidden=\"true\" tabindex=\"-1\" href=\"#更改-dhcpdns-设置\"><span class=\"icon icon-link\"></span></a>更改 DHCP/DNS 设置</h2>\n<p>网络 -DHCP/DNS- 高级设置，取消勾选“禁止解析 IPv6 DNS 记录”。</p>\n<p><img src=\"/static/20240118222927-d9e1873c.png\" alt=\"DHCP/DNS 设置\"></p>\n<h2 id=\"更改防火墙设置\"><a aria-hidden=\"true\" tabindex=\"-1\" href=\"#更改防火墙设置\"><span class=\"icon icon-link\"></span></a>更改防火墙设置</h2>\n<p>“基本设置”中，“转发”改为“接受”。</p>\n<p>“区域”设置中，wan 区域均改为“接受”。</p>\n<p><img src=\"/static/20240118222939-38a5dd1f.png\" alt=\"更改防火墙设置\"></p>\n<p>防火墙自定义规则，加入以下几行：</p>\n<pre><code>WAN6=eth1\r\nLAN=br-lan\r\nip6tables -t nat -A POSTROUTING -o $WAN6 -j MASQUERADE\r\nip6tables -A FORWARD -m conntrack --ctstate RELATED,ESTABLISHED -j ACCEPT\r\nip6tables -A FORWARD -i $LAN -j ACCEPT\n</code></pre>\n<p>其中 <code>eth1</code> 和 <code>br-lan</code> 对应“网络 - 接口”界面中 WAN 和 LAN 的设备名。</p>\n<p><img src=\"/static/20240118222956-94cb44f9.png\" alt=\"防火墙自定义规则\"></p>\n<h1 id=\"测试-ipv6\"><a aria-hidden=\"true\" tabindex=\"-1\" href=\"#测试-ipv6\"><span class=\"icon icon-link\"></span></a>测试 IPv6</h1>\n<p>“网络 - 网络诊断”，选择 IPv6，点击 Ping，成功访问（或者在 shell 中 <code>ping -6 openwrt.org</code>）。</p>\n<h1 id=\"自动配置流量转发路由表\"><a aria-hidden=\"true\" tabindex=\"-1\" href=\"#自动配置流量转发路由表\"><span class=\"icon icon-link\"></span></a>自动配置流量转发路由表</h1>\n<p>使用 SSH 或“系统 -TTYD 终端”连接 Shell，输入用户名 root 和密码登录。</p>\n<p>终端中输入 <code>vi /etc/hotplug.d/iface/99-ipv6</code> 新建文件，输入如下内容：</p>\n<pre><code class=\"language-shell\">#!/bin/sh\r\n[ \"$ACTION\" = ifup ] || exit 0\r\niface=wan6\r\n[ -z \"$iface\" -o \"$INTERFACE\" = \"$iface\" ] || exit 0\r\nip -6 route add `ip -6 route show default|sed -e 's/from [^ ]* //'`\r\nlogger -t IPv6 \"Add IPv6 default route.\"\n</code></pre>\n<p>注意 <code>iface=wan6</code> 这行，<code>wan6</code> 需要替换成“网络 - 接口”里看到的 DHCPv6 客户端对应接口名字。</p>\n<p>最后，<code>chmod +x /etc/hotplug.d/iface/99-ipv6</code> 并重启主路由，此时连接到主路由的设备（不包括接入点路由）即可获取到 IPv6 地址。</p>\n<hr>\n<p>完</p>",
-    "raw": "# 前言\r\n\r\n首先介绍一下我的网络环境：\r\n\r\n- 设备：一台双网口 (eth0, eth1) 主板的服务器运行 OpenWrt 虚拟机（称为设备 AIO）、一台红米 AX6S 无线路由器刷 OpenWrt（称为设备 AP）、一台台式机、若干移动设备、三条网线。\r\n- 拓扑：墙壁有线校园网接口 <-> AIO 的 eth1，AIO 的 eth0 <-> AP 的 LAN 口。\r\n\r\nBUPT 校园网默认分配的 v6 地址是 128 位前缀的，子网大小为 1，只能一台设备使用，所以需要 NAT6（方案之一，也许可以用 Relay Mode，但是我没尝试成功）。\r\n\r\n# 配置 NAT6\r\n\r\n该部分参考了 [校内 IPv6 设置教程 | 南科手册](https://sustech.online/service/network/ipv6/) 和 [OpenWRT 路由器作为 IPv6 网关的配置](https://github.com/tuna/ipv6.tsinghua.edu.cn/blob/master/openwrt.md)\r\n\r\n## 更改全局网络选项 IPv6 ULA 前缀\r\n\r\n点击“网络 Network- 接口 Interfaces”。如果你的界面没有“全局网络选项 Global Network Options”，在`/etc/config/network` 里加入 `config globals 'globals'`，刷新页面即可（若仍没有，尝试删除 LuCI 缓存并重启 LuCI 服务）。\r\n\r\n![/etc/config/network 配置](assets/20240118222203.png)\r\n\r\n在全局网络选项中更改 ULA 前缀，例如 `fd34:fe56:7891:2f3a::/64`，可以使用 [ULA 生成器](https://www.unique-local-ipv6.com/)\r\n> IPv6 提供一段称为 Unique Local Address（ULA）的地址段 fc00::/7，包含 fc00::/8 和 fd00::/8 两部分：目前 fc00::/8 的使用还没有定义，我们不去管它；fd00::/8 可以被自由使用。fd00::/8 是一个十分巨大的地址段，你可以从中挑选一个/48 的子段分配给你的局域网。RFC 4193 建议使用随机生成的方法，使每个局域网的地址段都不同（这也是 ULA 名字的由来），从而避免局域网合并时地址冲突的麻烦。当然这主要是针对企业而讲的，家庭使用的话随机生成还是挑个好记的自己斟酌。如果要随机生成，Google 一下 ULA generator 有真相。\r\n> ——摘自 [V2EX](https://www.v2ex.com/t/488116)\r\n\r\n![ULA 前缀设置](assets/20240118222722.png)\r\n\r\n## 更改 LAN 接口选项\r\n\r\nLAN 接口 DHCP 服务器中，打开“动态 DHCP”和“强制”。\r\n\r\n![更改 DHCP 设置](assets/20240118222753.png)\r\n\r\nLAN 接口 IPv6 设置，“路由器通告服务”和“DHCPv6 服务”修改为“服务器模式”，“NDP 代理”设置为“禁用”，“DHCPv6”选择“无状态的 + 有状态的”，并勾选“总是通告默认路由”。记得点击“保存&应用”。\r\n\r\n![更改 DHCP 设置](assets/20240118222818.png)\r\n\r\n## 更改 WAN/WAN6 接口选项\r\n\r\nWAN 口设置 - 高级设置中，勾选上“使用内置的 IPv6 管理”。\r\n\r\n![WAN 设置](assets/20240118222838.png)\r\n\r\nWAN6 口设置 - 基本设置中，将“协议”修改为“DHCPv6 客户端”，“请求 IPv6 地址”为“force”，“请求指定长度的 IPv6 前缀”为“停用（已禁用）”。\r\n\r\n![WAN 设置](assets/20240118222856.png)\r\n\r\nWAN6 口设置 - 高级设置中，勾选“使用内置的 IPv6 管理”，“强制链路”和“使用默认网关”。\r\n\r\n![WAN 设置](assets/20240118222914.png)\r\n\r\n## 更改 DHCP/DNS 设置\r\n\r\n网络 -DHCP/DNS- 高级设置，取消勾选“禁止解析 IPv6 DNS 记录”。\r\n\r\n![DHCP/DNS 设置](assets/20240118222927.png)\r\n\r\n## 更改防火墙设置\r\n\r\n“基本设置”中，“转发”改为“接受”。\r\n\r\n“区域”设置中，wan 区域均改为“接受”。\r\n\r\n![更改防火墙设置](assets/20240118222939.png)\r\n\r\n防火墙自定义规则，加入以下几行：\r\n\r\n```\r\nWAN6=eth1\r\nLAN=br-lan\r\nip6tables -t nat -A POSTROUTING -o $WAN6 -j MASQUERADE\r\nip6tables -A FORWARD -m conntrack --ctstate RELATED,ESTABLISHED -j ACCEPT\r\nip6tables -A FORWARD -i $LAN -j ACCEPT\r\n```\r\n\r\n其中 `eth1` 和 `br-lan` 对应“网络 - 接口”界面中 WAN 和 LAN 的设备名。\r\n\r\n![防火墙自定义规则](assets/20240118222956.png)\r\n\r\n# 测试 IPv6\r\n\r\n“网络 - 网络诊断”，选择 IPv6，点击 Ping，成功访问（或者在 shell 中 `ping -6 openwrt.org`）。\r\n\r\n# 自动配置流量转发路由表\r\n\r\n使用 SSH 或“系统 -TTYD 终端”连接 Shell，输入用户名 root 和密码登录。\r\n\r\n终端中输入 `vi /etc/hotplug.d/iface/99-ipv6` 新建文件，输入如下内容：\r\n\r\n```shell\r\n#!/bin/sh\r\n[ \"$ACTION\" = ifup ] || exit 0\r\niface=wan6\r\n[ -z \"$iface\" -o \"$INTERFACE\" = \"$iface\" ] || exit 0\r\nip -6 route add `ip -6 route show default|sed -e 's/from [^ ]* //'`\r\nlogger -t IPv6 \"Add IPv6 default route.\"\r\n```\r\n\r\n注意 `iface=wan6` 这行，`wan6` 需要替换成“网络 - 接口”里看到的 DHCPv6 客户端对应接口名字。\r\n\r\n最后，`chmod +x /etc/hotplug.d/iface/99-ipv6` 并重启主路由，此时连接到主路由的设备（不包括接入点路由）即可获取到 IPv6 地址。\r\n\r\n---\r\n\r\n完",
+    "content": "<h2 id=\"前言\"><a aria-hidden=\"true\" tabindex=\"-1\" href=\"#前言\"><span class=\"icon icon-link\"></span></a>前言</h2>\n<p>首先介绍一下我的网络环境：</p>\n<ul>\n<li>设备：一台双网口 (eth0, eth1) 主板的服务器运行 OpenWrt 虚拟机（称为设备 AIO）、一台红米 AX6S 无线路由器刷 OpenWrt（称为设备 AP）、一台台式机、若干移动设备、三条网线。</li>\n<li>拓扑：墙壁有线校园网接口 &#x3C;-> AIO 的 eth1，AIO 的 eth0 &#x3C;-> AP 的 LAN 口。</li>\n</ul>\n<p>BUPT 校园网默认分配的 v6 地址是 128 位前缀的，子网大小为 1，只能一台设备使用，所以需要 NAT6（方案之一，也许可以用 Relay Mode，但是我没尝试成功）。</p>\n<h2 id=\"配置-nat6\"><a aria-hidden=\"true\" tabindex=\"-1\" href=\"#配置-nat6\"><span class=\"icon icon-link\"></span></a>配置 NAT6</h2>\n<p>该部分参考了 <a href=\"https://sustech.online/service/network/ipv6/\">校内 IPv6 设置教程 | 南科手册</a> 和 <a href=\"https://github.com/tuna/ipv6.tsinghua.edu.cn/blob/master/openwrt.md\">OpenWRT 路由器作为 IPv6 网关的配置</a></p>\n<h3 id=\"更改全局网络选项-ipv6-ula-前缀\"><a aria-hidden=\"true\" tabindex=\"-1\" href=\"#更改全局网络选项-ipv6-ula-前缀\"><span class=\"icon icon-link\"></span></a>更改全局网络选项 IPv6 ULA 前缀</h3>\n<p>点击“网络 Network- 接口 Interfaces”。如果你的界面没有“全局网络选项 Global Network Options”，在<code>/etc/config/network</code> 里加入 <code>config globals 'globals'</code>，刷新页面即可（若仍没有，尝试删除 LuCI 缓存并重启 LuCI 服务）。</p>\n<p><img src=\"/static/20240118222203-2ca29b7c.png\" alt=\"/etc/config/network 配置\"></p>\n<p>在全局网络选项中更改 ULA 前缀，例如 <code>fd34:fe56:7891:2f3a::/64</code>，可以使用 <a href=\"https://www.unique-local-ipv6.com/\">ULA 生成器</a></p>\n<blockquote>\n<p>IPv6 提供一段称为 Unique Local Address（ULA）的地址段 fc00::/7，包含 fc00::/8 和 fd00::/8 两部分：目前 fc00::/8 的使用还没有定义，我们不去管它；fd00::/8 可以被自由使用。fd00::/8 是一个十分巨大的地址段，你可以从中挑选一个/48 的子段分配给你的局域网。RFC 4193 建议使用随机生成的方法，使每个局域网的地址段都不同（这也是 ULA 名字的由来），从而避免局域网合并时地址冲突的麻烦。当然这主要是针对企业而讲的，家庭使用的话随机生成还是挑个好记的自己斟酌。如果要随机生成，Google 一下 ULA generator 有真相。<br>\n——摘自 <a href=\"https://www.v2ex.com/t/488116\">V2EX</a></p>\n</blockquote>\n<p><img src=\"/static/20240118222722-d915746d.png\" alt=\"ULA 前缀设置\"></p>\n<h3 id=\"更改-lan-接口选项\"><a aria-hidden=\"true\" tabindex=\"-1\" href=\"#更改-lan-接口选项\"><span class=\"icon icon-link\"></span></a>更改 LAN 接口选项</h3>\n<p>LAN 接口 DHCP 服务器中，打开“动态 DHCP”和“强制”。</p>\n<p><img src=\"/static/20240118222753-f0c9e7f7.png\" alt=\"更改 DHCP 设置\"></p>\n<p>LAN 接口 IPv6 设置，“路由器通告服务”和“DHCPv6 服务”修改为“服务器模式”，“NDP 代理”设置为“禁用”，“DHCPv6”选择“无状态的 + 有状态的”，并勾选“总是通告默认路由”。记得点击“保存&#x26;应用”。</p>\n<p><img src=\"/static/20240118222818-99caf081.png\" alt=\"更改 DHCP 设置\"></p>\n<h3 id=\"更改-wanwan6-接口选项\"><a aria-hidden=\"true\" tabindex=\"-1\" href=\"#更改-wanwan6-接口选项\"><span class=\"icon icon-link\"></span></a>更改 WAN/WAN6 接口选项</h3>\n<p>WAN 口设置 - 高级设置中，勾选上“使用内置的 IPv6 管理”。</p>\n<p><img src=\"/static/20240118222838-5f517c87.png\" alt=\"WAN 设置\"></p>\n<p>WAN6 口设置 - 基本设置中，将“协议”修改为“DHCPv6 客户端”，“请求 IPv6 地址”为“force”，“请求指定长度的 IPv6 前缀”为“停用（已禁用）”。</p>\n<p><img src=\"/static/20240118222856-3300208e.png\" alt=\"WAN 设置\"></p>\n<p>WAN6 口设置 - 高级设置中，勾选“使用内置的 IPv6 管理”，“强制链路”和“使用默认网关”。</p>\n<p><img src=\"/static/20240118222914-a6043dae.png\" alt=\"WAN 设置\"></p>\n<h3 id=\"更改-dhcpdns-设置\"><a aria-hidden=\"true\" tabindex=\"-1\" href=\"#更改-dhcpdns-设置\"><span class=\"icon icon-link\"></span></a>更改 DHCP/DNS 设置</h3>\n<p>网络 -DHCP/DNS- 高级设置，取消勾选“禁止解析 IPv6 DNS 记录”。</p>\n<p><img src=\"/static/20240118222927-d9e1873c.png\" alt=\"DHCP/DNS 设置\"></p>\n<h3 id=\"更改防火墙设置\"><a aria-hidden=\"true\" tabindex=\"-1\" href=\"#更改防火墙设置\"><span class=\"icon icon-link\"></span></a>更改防火墙设置</h3>\n<p>“基本设置”中，“转发”改为“接受”。</p>\n<p>“区域”设置中，wan 区域均改为“接受”。</p>\n<p><img src=\"/static/20240118222939-38a5dd1f.png\" alt=\"更改防火墙设置\"></p>\n<p>防火墙自定义规则，加入以下几行：</p>\n<pre><code>WAN6=eth1\r\nLAN=br-lan\r\nip6tables -t nat -A POSTROUTING -o $WAN6 -j MASQUERADE\r\nip6tables -A FORWARD -m conntrack --ctstate RELATED,ESTABLISHED -j ACCEPT\r\nip6tables -A FORWARD -i $LAN -j ACCEPT\n</code></pre>\n<p>其中 <code>eth1</code> 和 <code>br-lan</code> 对应“网络 - 接口”界面中 WAN 和 LAN 的设备名。</p>\n<p><img src=\"/static/20240118222956-94cb44f9.png\" alt=\"防火墙自定义规则\"></p>\n<h2 id=\"测试-ipv6\"><a aria-hidden=\"true\" tabindex=\"-1\" href=\"#测试-ipv6\"><span class=\"icon icon-link\"></span></a>测试 IPv6</h2>\n<p>“网络 - 网络诊断”，选择 IPv6，点击 Ping，成功访问（或者在 shell 中 <code>ping -6 openwrt.org</code>）。</p>\n<h2 id=\"自动配置流量转发路由表\"><a aria-hidden=\"true\" tabindex=\"-1\" href=\"#自动配置流量转发路由表\"><span class=\"icon icon-link\"></span></a>自动配置流量转发路由表</h2>\n<p>使用 SSH 或“系统 -TTYD 终端”连接 Shell，输入用户名 root 和密码登录。</p>\n<p>终端中输入 <code>vi /etc/hotplug.d/iface/99-ipv6</code> 新建文件，输入如下内容：</p>\n<pre><code class=\"language-shell\">#!/bin/sh\r\n[ \"$ACTION\" = ifup ] || exit 0\r\niface=wan6\r\n[ -z \"$iface\" -o \"$INTERFACE\" = \"$iface\" ] || exit 0\r\nip -6 route add `ip -6 route show default|sed -e 's/from [^ ]* //'`\r\nlogger -t IPv6 \"Add IPv6 default route.\"\n</code></pre>\n<p>注意 <code>iface=wan6</code> 这行，<code>wan6</code> 需要替换成“网络 - 接口”里看到的 DHCPv6 客户端对应接口名字。</p>\n<p>最后，<code>chmod +x /etc/hotplug.d/iface/99-ipv6</code> 并重启主路由，此时连接到主路由的设备（不包括接入点路由）即可获取到 IPv6 地址。</p>",
+    "raw": "## 前言\r\n\r\n首先介绍一下我的网络环境：\r\n\r\n- 设备：一台双网口 (eth0, eth1) 主板的服务器运行 OpenWrt 虚拟机（称为设备 AIO）、一台红米 AX6S 无线路由器刷 OpenWrt（称为设备 AP）、一台台式机、若干移动设备、三条网线。\r\n- 拓扑：墙壁有线校园网接口 <-> AIO 的 eth1，AIO 的 eth0 <-> AP 的 LAN 口。\r\n\r\nBUPT 校园网默认分配的 v6 地址是 128 位前缀的，子网大小为 1，只能一台设备使用，所以需要 NAT6（方案之一，也许可以用 Relay Mode，但是我没尝试成功）。\r\n\r\n## 配置 NAT6\r\n\r\n该部分参考了 [校内 IPv6 设置教程 | 南科手册](https://sustech.online/service/network/ipv6/) 和 [OpenWRT 路由器作为 IPv6 网关的配置](https://github.com/tuna/ipv6.tsinghua.edu.cn/blob/master/openwrt.md)\r\n\r\n### 更改全局网络选项 IPv6 ULA 前缀\r\n\r\n点击“网络 Network- 接口 Interfaces”。如果你的界面没有“全局网络选项 Global Network Options”，在`/etc/config/network` 里加入 `config globals 'globals'`，刷新页面即可（若仍没有，尝试删除 LuCI 缓存并重启 LuCI 服务）。\r\n\r\n![/etc/config/network 配置](assets/20240118222203.png)\r\n\r\n在全局网络选项中更改 ULA 前缀，例如 `fd34:fe56:7891:2f3a::/64`，可以使用 [ULA 生成器](https://www.unique-local-ipv6.com/)\r\n> IPv6 提供一段称为 Unique Local Address（ULA）的地址段 fc00::/7，包含 fc00::/8 和 fd00::/8 两部分：目前 fc00::/8 的使用还没有定义，我们不去管它；fd00::/8 可以被自由使用。fd00::/8 是一个十分巨大的地址段，你可以从中挑选一个/48 的子段分配给你的局域网。RFC 4193 建议使用随机生成的方法，使每个局域网的地址段都不同（这也是 ULA 名字的由来），从而避免局域网合并时地址冲突的麻烦。当然这主要是针对企业而讲的，家庭使用的话随机生成还是挑个好记的自己斟酌。如果要随机生成，Google 一下 ULA generator 有真相。\r\n> ——摘自 [V2EX](https://www.v2ex.com/t/488116)\r\n\r\n![ULA 前缀设置](assets/20240118222722.png)\r\n\r\n### 更改 LAN 接口选项\r\n\r\nLAN 接口 DHCP 服务器中，打开“动态 DHCP”和“强制”。\r\n\r\n![更改 DHCP 设置](assets/20240118222753.png)\r\n\r\nLAN 接口 IPv6 设置，“路由器通告服务”和“DHCPv6 服务”修改为“服务器模式”，“NDP 代理”设置为“禁用”，“DHCPv6”选择“无状态的 + 有状态的”，并勾选“总是通告默认路由”。记得点击“保存&应用”。\r\n\r\n![更改 DHCP 设置](assets/20240118222818.png)\r\n\r\n### 更改 WAN/WAN6 接口选项\r\n\r\nWAN 口设置 - 高级设置中，勾选上“使用内置的 IPv6 管理”。\r\n\r\n![WAN 设置](assets/20240118222838.png)\r\n\r\nWAN6 口设置 - 基本设置中，将“协议”修改为“DHCPv6 客户端”，“请求 IPv6 地址”为“force”，“请求指定长度的 IPv6 前缀”为“停用（已禁用）”。\r\n\r\n![WAN 设置](assets/20240118222856.png)\r\n\r\nWAN6 口设置 - 高级设置中，勾选“使用内置的 IPv6 管理”，“强制链路”和“使用默认网关”。\r\n\r\n![WAN 设置](assets/20240118222914.png)\r\n\r\n### 更改 DHCP/DNS 设置\r\n\r\n网络 -DHCP/DNS- 高级设置，取消勾选“禁止解析 IPv6 DNS 记录”。\r\n\r\n![DHCP/DNS 设置](assets/20240118222927.png)\r\n\r\n### 更改防火墙设置\r\n\r\n“基本设置”中，“转发”改为“接受”。\r\n\r\n“区域”设置中，wan 区域均改为“接受”。\r\n\r\n![更改防火墙设置](assets/20240118222939.png)\r\n\r\n防火墙自定义规则，加入以下几行：\r\n\r\n```\r\nWAN6=eth1\r\nLAN=br-lan\r\nip6tables -t nat -A POSTROUTING -o $WAN6 -j MASQUERADE\r\nip6tables -A FORWARD -m conntrack --ctstate RELATED,ESTABLISHED -j ACCEPT\r\nip6tables -A FORWARD -i $LAN -j ACCEPT\r\n```\r\n\r\n其中 `eth1` 和 `br-lan` 对应“网络 - 接口”界面中 WAN 和 LAN 的设备名。\r\n\r\n![防火墙自定义规则](assets/20240118222956.png)\r\n\r\n## 测试 IPv6\r\n\r\n“网络 - 网络诊断”，选择 IPv6，点击 Ping，成功访问（或者在 shell 中 `ping -6 openwrt.org`）。\r\n\r\n## 自动配置流量转发路由表\r\n\r\n使用 SSH 或“系统 -TTYD 终端”连接 Shell，输入用户名 root 和密码登录。\r\n\r\n终端中输入 `vi /etc/hotplug.d/iface/99-ipv6` 新建文件，输入如下内容：\r\n\r\n```shell\r\n#!/bin/sh\r\n[ \"$ACTION\" = ifup ] || exit 0\r\niface=wan6\r\n[ -z \"$iface\" -o \"$INTERFACE\" = \"$iface\" ] || exit 0\r\nip -6 route add `ip -6 route show default|sed -e 's/from [^ ]* //'`\r\nlogger -t IPv6 \"Add IPv6 default route.\"\r\n```\r\n\r\n注意 `iface=wan6` 这行，`wan6` 需要替换成“网络 - 接口”里看到的 DHCPv6 客户端对应接口名字。\r\n\r\n最后，`chmod +x /etc/hotplug.d/iface/99-ipv6` 并重启主路由，此时连接到主路由的设备（不包括接入点路由）即可获取到 IPv6 地址。",
     "path": "posts/bupt-cernet-openwrt-ipv6-configuration",
     "toc": [
       {
@@ -306,7 +476,7 @@
     ],
     "metadata": {
       "readingTime": 2,
-      "wordCount": 621.44
+      "wordCount": 620.8800000000001
     },
     "permalink": "/post/bupt-cernet-openwrt-ipv6-configuration",
     "images": {
@@ -351,152 +521,7 @@
         "height": 964
       }
     },
-    "excerptRaw": "本文详细介绍了在BUPT校园网环境下，如何配置OpenWrt路由器实现IPv6地址的NAT转换，以允许多台设备共享单个IPv6地址。文章首先描述了网络环境，包括设备和拓扑结构，并指出校园网默认分配的IPv6地址是128位前缀的，子网大小为1，仅支持单设备使用，因此需要进行NAT6配置。接着，文章参考了相关教程，逐步指导读者如何更改全局网络选项中的IPv6 ULA前缀、LAN接口选项、WAN/WAN6接口选项、DHCP/DNS设置以及防火墙设置，以实现NAT6功能。最后，文章提供了测试IPv6连接和自动配置流量转发路由表的方法，确保所有连接到主路由的设备都能获取到IPv6地址。通过这些步骤，用户可以有效地在校园网环境中实现多设备共享IPv6地址。"
-  },
-  {
-    "title": "使用 GitHub Actions 部署 Next.js 项目到 VPS",
-    "slug": "deploy-next-js-to-vps-using-github-actions",
-    "created": "2024-05-12T19:43:56.000Z",
-    "updated": "2024-05-14T06:24:13.000Z",
-    "draft": false,
-    "featured": false,
-    "cover": {
-      "src": "/static/image-20240514011402733-4983f74b.png",
-      "height": 1708,
-      "width": 3022,
-      "blurDataURL": "data:image/webp;base64,UklGRiQAAABXRUJQVlA4IBgAAAAwAQCdASoIAAUADMDOJZwAA3AA/urHAAA=",
-      "blurWidth": 8,
-      "blurHeight": 5
-    },
-    "excerpt": "<p>本文详细介绍了如何使用GitHub Actions自动化部署Next.js项目到VPS服务器的流程。首先，配置SSH允许GitHub Actions通过SSH连接到服务器，包括为GitHub Actions创建系统用户、生成SSH密钥并添加到服务器，以及将私钥添加到GitHub仓库。接着，设置GitHub Actions Workflow，包括配置仓库Secrets和创建CI/CD流程。在Workflow中，定义了构建和部署两个主要工作，分别负责项目的构建和部署到服务器。构建工作包括检出代码、设置Node.js环境、安装依赖、构建项目和上传构建产物。部署工作则负责下载构建产物、清理服务器上的旧构建、上传新构建和重启服务器上的服务。此外，还介绍了如何在VPS服务器上预先安装依赖，并通过pm2管理应用。整个流程自动化程度高，提高了部署效率，减少了人工干预。</p>",
-    "author": "ridd",
-    "columns": [
-      "from-zero-to-hero-guide-to-modern-blog"
-    ],
-    "categories": [
-      "coding"
-    ],
-    "tags": [
-      "GitHub Actions",
-      "Next.js",
-      "VPS",
-      "Self-hosted",
-      "PM2",
-      "SSH"
-    ],
-    "content": "<h1 id=\"流程\"><a aria-hidden=\"true\" tabindex=\"-1\" href=\"#流程\"><span class=\"icon icon-link\"></span></a>流程</h1>\n<h2 id=\"配置服务器\"><a aria-hidden=\"true\" tabindex=\"-1\" href=\"#配置服务器\"><span class=\"icon icon-link\"></span></a>配置服务器</h2>\n<p>首先需要配置 SSH 允许 GitHub Actions 通过 SSH 连接到你的服务器：</p>\n<ol>\n<li>为 GitHub Actions 配置一个系统用户。</li>\n<li>生成 SSH 密钥，将公钥添加到服务器的<code>~/.ssh/authorized_keys</code>文件。</li>\n<li>添加私钥到 GitHub 仓库。</li>\n</ol>\n<h3 id=\"添加用户\"><a aria-hidden=\"true\" tabindex=\"-1\" href=\"#添加用户\"><span class=\"icon icon-link\"></span></a>添加用户</h3>\n<pre><code class=\"language-bash\">sudo adduser github\r\nsudo usermod -aG sudo github # 授予 sudo 权限，可选\n</code></pre>\n<h3 id=\"生成-ssh-密钥\"><a aria-hidden=\"true\" tabindex=\"-1\" href=\"#生成-ssh-密钥\"><span class=\"icon icon-link\"></span></a>生成 SSH 密钥</h3>\n<pre><code class=\"language-bash\">ssh-keygen -t rsa -b 4096 -C \"github-actions-node\"\r\nssh-copy-id -i ~/.ssh/keyname.pub username@remote_host # 假设生成的公钥文件是 keyname.pub。Windows 系统没有 ssh-copy-id，需要手动添加。\n</code></pre>\n<h3 id=\"添加私钥到-github-仓库\"><a aria-hidden=\"true\" tabindex=\"-1\" href=\"#添加私钥到-github-仓库\"><span class=\"icon icon-link\"></span></a>添加私钥到 GitHub 仓库</h3>\n<p>使用 <code>pbcopy &#x3C; ~/.ssh/github_actions_node</code> 将私钥复制到剪切板（也可手动复制）。</p>\n<p>访问 <code>&#x3C;你的仓库 URL>/settings/secrets/actions</code> （Settings -> Secrets and Variables -> Actions），点击 <code>New repository secret</code> 添加新的 secret，名称 <code>SSH_KEY</code>（与下面 yaml 文件中对应），内容为私钥内容。</p>\n<h2 id=\"设置-github-actions-workflow\"><a aria-hidden=\"true\" tabindex=\"-1\" href=\"#设置-github-actions-workflow\"><span class=\"icon icon-link\"></span></a>设置 GitHub Actions Workflow</h2>\n<ol>\n<li>配置仓库 Secrets。</li>\n<li>在 GitHub 仓库根目录下创建一个新的<code>.github/workflows</code>目录。</li>\n<li>在这个目录中创建一个 YAML 文件（如 <code>deploy.yml</code>），并定义 CI/CD 流程。</li>\n</ol>\n<h3 id=\"配置-secrets\"><a aria-hidden=\"true\" tabindex=\"-1\" href=\"#配置-secrets\"><span class=\"icon icon-link\"></span></a>配置 Secrets</h3>\n<p>访问 <code>&#x3C;你的仓库 URL>/settings/secrets/actions</code> （Settings -> Secrets and Variables -> Actions），点击 <code>New repository secret</code> 新增。共需添加以下几个 secret：</p>\n<ul>\n<li><code>PROJECT_DIRECTORY</code>: 项目部署路径，可以是相对或绝对路径。相对路径相对于登录用户的<code>~</code>路径，绝对路径注意是否有权限。</li>\n<li><code>SSH_KEY</code>：SSH 私钥。[前文](#添加私钥到 GitHub 仓库)已添加。</li>\n<li><code>SSH_HOST</code>：SSH 登录服务器的 IP 地址或域名。</li>\n<li><code>SSH_USERNAME</code>：SSH 登录用户名。</li>\n<li><code>SSH_PORT</code>：SSH 端口，默认为 22。</li>\n</ul>\n<p><img src=\"/static/image-20240514011103747-1b57815c.png\" alt=\"image-20240514011103747\"></p>\n<h3 id=\"创建-cicd-流程\"><a aria-hidden=\"true\" tabindex=\"-1\" href=\"#创建-cicd-流程\"><span class=\"icon icon-link\"></span></a>创建 CI/CD 流程</h3>\n<p>在 GitHub 仓库根目录创建一个 <code>.github/workflows/deploy.yml</code> 如下：</p>\n<pre><code class=\"language-yaml\"># .github/workflows/deploy.yml\r\n\r\nname: Deploy Next.js Project\r\n\r\non:\r\n  push:\r\n    branches:\r\n      - master\r\n\r\njobs:\r\n  build:\r\n    runs-on: ubuntu-latest\r\n    outputs:\r\n      cache-key: ${{ steps.cache-key.outputs.key }}\r\n    steps:\r\n      - name: Checkout Repository\r\n        uses: actions/checkout@v4\r\n\r\n      - name: Setup Node.js\r\n        uses: actions/setup-node@v4\r\n        with:\r\n          node-version: '18' # 确保这里的版本与你的项目兼容\r\n          cache: 'npm'\r\n\r\n      - name: Install Dependencies\r\n        run: npm install\r\n\r\n      - name: Build Project\r\n        run: npm run build\r\n\r\n      - name: Generate Cache Key\r\n        id: cache-key\r\n        run: echo \"cache_key=$(date +%s)\" >> $GITHUB_OUTPUT\r\n\r\n      - name: Archive Artifacts\r\n        uses: actions/upload-artifact@v4\r\n        with:\r\n          name: built-app\r\n          path: |\r\n            .next\r\n            public\r\n            package.json\r\n\r\n  deploy:\r\n    needs: build\r\n    runs-on: ubuntu-latest\r\n    steps:\r\n      - name: Download Artifacts\r\n        uses: actions/download-artifact@v4\r\n        with:\r\n          name: built-app\r\n\r\n      - name: Clean Previous Build\r\n        uses: appleboy/ssh-action@master\r\n        with:\r\n          host: ${{ secrets.SSH_HOST }}\r\n          username: ${{ secrets.SSH_USERNAME }}\r\n          key: ${{ secrets.SSH_KEY }}\r\n          port: ${{ secrets.SSH_PORT }}\r\n          script: |\r\n            cd ${{ secrets.PROJECT_DIRECTORY }}\r\n            rm -rf .next public package.json\r\n\r\n      - name: Deploy to Server\r\n        uses: appleboy/scp-action@master\r\n        with:\r\n          host: ${{ secrets.SSH_HOST }}\r\n          username: ${{ secrets.SSH_USERNAME }}\r\n          key: ${{ secrets.SSH_KEY }}\r\n          port: ${{ secrets.SSH_PORT }}\r\n          source: \".next,public,package.json\"\r\n          target: ${{ secrets.PROJECT_DIRECTORY }}\r\n\r\n      - name: Restart Server\r\n        uses: appleboy/ssh-action@master\r\n        with:\r\n          host: ${{ secrets.SSH_HOST }}\r\n          username: ${{ secrets.SSH_USERNAME }}\r\n          key: ${{ secrets.SSH_KEY }}\r\n          port: ${{ secrets.SSH_PORT }}\r\n          script: | \r\n            cd ${{ secrets.PROJECT_DIRECTORY }}\r\n            export NVM_DIR=~/.nvm\r\n            source ~/.nvm/nvm.sh\r\n            NODE_OPTIONS=\"--max-old-space-size=1536\" yarn install\r\n            pm2 list | grep \"blog-velite\" &#x26;&#x26; pm2 restart \"blog-velite\" || pm2 start yarn --name \"blog-velite\" -- start\r\n            pm2 save\n</code></pre>\n<p>在<code>Restart Server</code>这一步骤中，使用了 yarn 作为部署 VPS 的包管理器。这是因为 yarn 消耗系统资源更少，适合弱鸡 VPS。</p>\n<p><code>NODE_OPTIONS=\"--max-old-space-size=1536\"</code> 增加默认内存限制，否则可能出现类似  <code>FATAL ERROR: Reached heap limit Allocation failed - JavaScript heap out of memory</code> 的 OOM 报错。</p>\n<gpt><p>这个 GitHub Actions 配置文件是用于自动化部署 Next.js 项目的流程。具体配置的解释如下：</p><h3 id=\"工作流名称\"><a aria-hidden=\"true\" tabindex=\"-1\" href=\"#工作流名称\"><span class=\"icon icon-link\"></span></a>工作流名称</h3><ul>\n<li><code>name: Deploy Next.js Project</code> 定义了工作流的名称，为“Deploy Next.js Project”。</li>\n</ul><h3 id=\"触发事件\"><a aria-hidden=\"true\" tabindex=\"-1\" href=\"#触发事件\"><span class=\"icon icon-link\"></span></a>触发事件</h3><ul>\n<li><code>on: push: branches: - master</code> 表明这个工作流会在向 <code>master</code> 分支推送代码时触发。</li>\n</ul><h3 id=\"工作定义\"><a aria-hidden=\"true\" tabindex=\"-1\" href=\"#工作定义\"><span class=\"icon icon-link\"></span></a>工作定义</h3><h4 id=\"构建工作-build\"><a aria-hidden=\"true\" tabindex=\"-1\" href=\"#构建工作-build\"><span class=\"icon icon-link\"></span></a>构建工作 (<code>build</code>)</h4><ol>\n<li>\n<p><strong>运行环境</strong>:</p>\n<ul>\n<li><code>runs-on: ubuntu-latest</code> 表示该工作在最新版本的 Ubuntu 运行环境中执行。</li>\n</ul>\n</li>\n<li>\n<p><strong>输出</strong>:</p>\n<ul>\n<li><code>outputs: cache-key: ${{ steps.cache-key.outputs.key }}</code> 指定一个输出值，保存生成的缓存键，其他工作可以使用这个值。</li>\n</ul>\n</li>\n<li>\n<p><strong>步骤</strong>:</p>\n<ul>\n<li><strong>代码检出</strong>:\n<ul>\n<li>使用 <code>actions/checkout@v4</code> 动作检出仓库代码。</li>\n</ul>\n</li>\n<li><strong>设置 Node.js</strong>:\n<ul>\n<li>使用 <code>actions/setup-node@v4</code> 动作设置 Node.js 环境，指定使用 Node.js 版本 18，并且配置 npm 缓存。</li>\n</ul>\n</li>\n<li><strong>安装依赖</strong>:\n<ul>\n<li>运行 <code>npm install</code> 安装项目依赖。</li>\n</ul>\n</li>\n<li><strong>构建项目</strong>:\n<ul>\n<li>运行 <code>npm run build</code> 构建 Next.js 项目。</li>\n</ul>\n</li>\n<li><strong>生成缓存键</strong>:\n<ul>\n<li>运行脚本生成一个基于当前时间戳的缓存键，并存储为步骤输出。</li>\n</ul>\n</li>\n<li><strong>归档项目构建产物</strong>:\n<ul>\n<li>使用 <code>actions/upload-artifact@v4</code> 动作上传构建后的文件，包括 <code>.next</code> 目录、<code>public</code> 目录和 <code>package.json</code> 文件。</li>\n</ul>\n</li>\n</ul>\n</li>\n</ol><h4 id=\"部署工作-deploy\"><a aria-hidden=\"true\" tabindex=\"-1\" href=\"#部署工作-deploy\"><span class=\"icon icon-link\"></span></a>部署工作 (<code>deploy</code>)</h4><ol>\n<li>\n<p><strong>依赖</strong>:</p>\n<ul>\n<li><code>needs: build</code> 表示部署工作需要在构建工作完成后执行。</li>\n</ul>\n</li>\n<li>\n<p><strong>运行环境</strong>:</p>\n<ul>\n<li>与构建工作相同，运行在 <code>ubuntu-latest</code>。</li>\n</ul>\n</li>\n<li>\n<p><strong>步骤</strong>:</p>\n<ul>\n<li><strong>下载构建产物</strong>:\n<ul>\n<li>使用 <code>actions/download-artifact@v4</code> 动作下载之前上传的构建产物。</li>\n</ul>\n</li>\n<li><strong>清理旧构建</strong>:\n<ul>\n<li>使用 <code>appleboy/ssh-action@master</code> 动作通过 SSH 连接到服务器，执行脚本删除旧的构建文件。</li>\n</ul>\n</li>\n<li><strong>部署新构建</strong>:\n<ul>\n<li>使用 <code>appleboy/scp-action@master</code> 动作通过 SCP 将新构建文件上传到服务器。</li>\n</ul>\n</li>\n<li><strong>重启服务器上的服务</strong>:\n<ul>\n<li>再次使用 <code>appleboy/ssh-action@master</code> 动作执行服务器上的脚本，包括安装依赖、重启或启动服务，并保存 PM2 配置。</li>\n</ul>\n</li>\n</ul>\n</li>\n</ol><h3 id=\"安全与配置\"><a aria-hidden=\"true\" tabindex=\"-1\" href=\"#安全与配置\"><span class=\"icon icon-link\"></span></a>安全与配置</h3><ul>\n<li>配置文件中使用了 <code>secrets</code> 来引用敏感信息，如 SSH 连接信息，确保这些信息不会直接暴露在公共配置文件中。</li>\n</ul><p>这个配置文件设计得很全面，涵盖了从代码构建到服务器部署的整个自动化流程，提高了部署效率并减少了人工错误。</p></gpt>\n<h2 id=\"配置-vps-服务器\"><a aria-hidden=\"true\" tabindex=\"-1\" href=\"#配置-vps-服务器\"><span class=\"icon icon-link\"></span></a>配置 VPS 服务器</h2>\n<p>在首次触发 Actions 部署之前，先安装好依赖：</p>\n<pre><code class=\"language-bash\">cd /path/to/deployment # 与 secrets.PROJECT_DIRECTORY 相同\r\nNODE_OPTIONS=\"--max-old-space-size=1536\" yarn add sharp --ignore-engines\r\n# 使用 pm2 管理应用\r\nyarn global add pm2\n</code></pre>\n<p>随后向仓库提交更改，检查 Actions 是否运行。</p>\n<h1 id=\"效果\"><a aria-hidden=\"true\" tabindex=\"-1\" href=\"#效果\"><span class=\"icon icon-link\"></span></a>效果</h1>\n<p><img src=\"/static/image-20240514011402733-4983f74b.png\" alt=\"image-20240514011402733\"></p>\n<p><img src=\"/static/image-20240514011427738-3f2b4f0c.png\" alt=\"image-20240514011427738\"></p>\n<p>配置文件使用 <code>yarn start</code> 即<code>next start</code>，默认运行在 3000 端口：</p>\n<p><img src=\"/static/image-20240514011631894-e37e95d4.png\" alt=\"image-20240514011631894\"></p>",
-    "raw": "# 流程\r\n\r\n## 配置服务器\r\n\r\n首先需要配置 SSH 允许 GitHub Actions 通过 SSH 连接到你的服务器：\r\n1. 为 GitHub Actions 配置一个系统用户。\r\n2. 生成 SSH 密钥，将公钥添加到服务器的`~/.ssh/authorized_keys`文件。\r\n3. 添加私钥到 GitHub 仓库。\r\n\r\n### 添加用户\r\n\r\n```bash\r\nsudo adduser github\r\nsudo usermod -aG sudo github # 授予 sudo 权限，可选\r\n```\r\n\r\n### 生成 SSH 密钥\r\n\r\n```bash\r\nssh-keygen -t rsa -b 4096 -C \"github-actions-node\"\r\nssh-copy-id -i ~/.ssh/keyname.pub username@remote_host # 假设生成的公钥文件是 keyname.pub。Windows 系统没有 ssh-copy-id，需要手动添加。\r\n```\r\n\r\n### 添加私钥到 GitHub 仓库\r\n\r\n使用 `pbcopy < ~/.ssh/github_actions_node` 将私钥复制到剪切板（也可手动复制）。\r\n\r\n访问 `<你的仓库 URL>/settings/secrets/actions` （Settings -> Secrets and Variables -> Actions），点击 `New repository secret` 添加新的 secret，名称 `SSH_KEY`（与下面 yaml 文件中对应），内容为私钥内容。\r\n\r\n## 设置 GitHub Actions Workflow\r\n\r\n1. 配置仓库 Secrets。\r\n2. 在 GitHub 仓库根目录下创建一个新的`.github/workflows`目录。\r\n3. 在这个目录中创建一个 YAML 文件（如 `deploy.yml`），并定义 CI/CD 流程。\r\n\r\n### 配置 Secrets\r\n\r\n访问 `<你的仓库 URL>/settings/secrets/actions` （Settings -> Secrets and Variables -> Actions），点击 `New repository secret` 新增。共需添加以下几个 secret：\r\n\r\n- `PROJECT_DIRECTORY`: 项目部署路径，可以是相对或绝对路径。相对路径相对于登录用户的`~`路径，绝对路径注意是否有权限。\r\n- `SSH_KEY`：SSH 私钥。[前文](#添加私钥到 GitHub 仓库)已添加。\r\n- `SSH_HOST`：SSH 登录服务器的 IP 地址或域名。\r\n- `SSH_USERNAME`：SSH 登录用户名。\r\n- `SSH_PORT`：SSH 端口，默认为 22。\r\n\r\n![image-20240514011103747](deploy-next-js-to-vps-using-github-actions.assets/image-20240514011103747.png)\r\n\r\n### 创建 CI/CD 流程\r\n\r\n在 GitHub 仓库根目录创建一个 `.github/workflows/deploy.yml` 如下：\r\n\r\n```yaml\r\n# .github/workflows/deploy.yml\r\n\r\nname: Deploy Next.js Project\r\n\r\non:\r\n  push:\r\n    branches:\r\n      - master\r\n\r\njobs:\r\n  build:\r\n    runs-on: ubuntu-latest\r\n    outputs:\r\n      cache-key: ${{ steps.cache-key.outputs.key }}\r\n    steps:\r\n      - name: Checkout Repository\r\n        uses: actions/checkout@v4\r\n\r\n      - name: Setup Node.js\r\n        uses: actions/setup-node@v4\r\n        with:\r\n          node-version: '18' # 确保这里的版本与你的项目兼容\r\n          cache: 'npm'\r\n\r\n      - name: Install Dependencies\r\n        run: npm install\r\n\r\n      - name: Build Project\r\n        run: npm run build\r\n\r\n      - name: Generate Cache Key\r\n        id: cache-key\r\n        run: echo \"cache_key=$(date +%s)\" >> $GITHUB_OUTPUT\r\n\r\n      - name: Archive Artifacts\r\n        uses: actions/upload-artifact@v4\r\n        with:\r\n          name: built-app\r\n          path: |\r\n            .next\r\n            public\r\n            package.json\r\n\r\n  deploy:\r\n    needs: build\r\n    runs-on: ubuntu-latest\r\n    steps:\r\n      - name: Download Artifacts\r\n        uses: actions/download-artifact@v4\r\n        with:\r\n          name: built-app\r\n\r\n      - name: Clean Previous Build\r\n        uses: appleboy/ssh-action@master\r\n        with:\r\n          host: ${{ secrets.SSH_HOST }}\r\n          username: ${{ secrets.SSH_USERNAME }}\r\n          key: ${{ secrets.SSH_KEY }}\r\n          port: ${{ secrets.SSH_PORT }}\r\n          script: |\r\n            cd ${{ secrets.PROJECT_DIRECTORY }}\r\n            rm -rf .next public package.json\r\n\r\n      - name: Deploy to Server\r\n        uses: appleboy/scp-action@master\r\n        with:\r\n          host: ${{ secrets.SSH_HOST }}\r\n          username: ${{ secrets.SSH_USERNAME }}\r\n          key: ${{ secrets.SSH_KEY }}\r\n          port: ${{ secrets.SSH_PORT }}\r\n          source: \".next,public,package.json\"\r\n          target: ${{ secrets.PROJECT_DIRECTORY }}\r\n\r\n      - name: Restart Server\r\n        uses: appleboy/ssh-action@master\r\n        with:\r\n          host: ${{ secrets.SSH_HOST }}\r\n          username: ${{ secrets.SSH_USERNAME }}\r\n          key: ${{ secrets.SSH_KEY }}\r\n          port: ${{ secrets.SSH_PORT }}\r\n          script: | \r\n            cd ${{ secrets.PROJECT_DIRECTORY }}\r\n            export NVM_DIR=~/.nvm\r\n            source ~/.nvm/nvm.sh\r\n            NODE_OPTIONS=\"--max-old-space-size=1536\" yarn install\r\n            pm2 list | grep \"blog-velite\" && pm2 restart \"blog-velite\" || pm2 start yarn --name \"blog-velite\" -- start\r\n            pm2 save\r\n```\r\n\r\n在`Restart Server`这一步骤中，使用了 yarn 作为部署 VPS 的包管理器。这是因为 yarn 消耗系统资源更少，适合弱鸡 VPS。\r\n\r\n`NODE_OPTIONS=\"--max-old-space-size=1536\"` 增加默认内存限制，否则可能出现类似  `FATAL ERROR: Reached heap limit Allocation failed - JavaScript heap out of memory` 的 OOM 报错。\r\n\r\n:::gpt\r\n这个 GitHub Actions 配置文件是用于自动化部署 Next.js 项目的流程。具体配置的解释如下：\r\n\r\n### 工作流名称\r\n- `name: Deploy Next.js Project` 定义了工作流的名称，为“Deploy Next.js Project”。\r\n\r\n### 触发事件\r\n- `on: push: branches: - master` 表明这个工作流会在向 `master` 分支推送代码时触发。\r\n\r\n### 工作定义\r\n#### 构建工作 (`build`)\r\n1. **运行环境**:\r\n    - `runs-on: ubuntu-latest` 表示该工作在最新版本的 Ubuntu 运行环境中执行。\r\n\r\n2. **输出**:\r\n    - `outputs: cache-key: ${{ steps.cache-key.outputs.key }}` 指定一个输出值，保存生成的缓存键，其他工作可以使用这个值。\r\n\r\n3. **步骤**:\r\n    - **代码检出**:\r\n        - 使用 `actions/checkout@v4` 动作检出仓库代码。\r\n    - **设置 Node.js**:\r\n        - 使用 `actions/setup-node@v4` 动作设置 Node.js 环境，指定使用 Node.js 版本 18，并且配置 npm 缓存。\r\n    - **安装依赖**:\r\n        - 运行 `npm install` 安装项目依赖。\r\n    - **构建项目**:\r\n        - 运行 `npm run build` 构建 Next.js 项目。\r\n    - **生成缓存键**:\r\n        - 运行脚本生成一个基于当前时间戳的缓存键，并存储为步骤输出。\r\n    - **归档项目构建产物**:\r\n        - 使用 `actions/upload-artifact@v4` 动作上传构建后的文件，包括 `.next` 目录、`public` 目录和 `package.json` 文件。\r\n\r\n#### 部署工作 (`deploy`)\r\n1. **依赖**:\r\n    - `needs: build` 表示部署工作需要在构建工作完成后执行。\r\n\r\n2. **运行环境**:\r\n    - 与构建工作相同，运行在 `ubuntu-latest`。\r\n\r\n3. **步骤**:\r\n    - **下载构建产物**:\r\n        - 使用 `actions/download-artifact@v4` 动作下载之前上传的构建产物。\r\n    - **清理旧构建**:\r\n        - 使用 `appleboy/ssh-action@master` 动作通过 SSH 连接到服务器，执行脚本删除旧的构建文件。\r\n    - **部署新构建**:\r\n        - 使用 `appleboy/scp-action@master` 动作通过 SCP 将新构建文件上传到服务器。\r\n    - **重启服务器上的服务**:\r\n        - 再次使用 `appleboy/ssh-action@master` 动作执行服务器上的脚本，包括安装依赖、重启或启动服务，并保存 PM2 配置。\r\n\r\n### 安全与配置\r\n- 配置文件中使用了 `secrets` 来引用敏感信息，如 SSH 连接信息，确保这些信息不会直接暴露在公共配置文件中。\r\n\r\n这个配置文件设计得很全面，涵盖了从代码构建到服务器部署的整个自动化流程，提高了部署效率并减少了人工错误。\r\n:::\r\n\r\n## 配置 VPS 服务器\r\n\r\n在首次触发 Actions 部署之前，先安装好依赖：\r\n\r\n```bash\r\ncd /path/to/deployment # 与 secrets.PROJECT_DIRECTORY 相同\r\nNODE_OPTIONS=\"--max-old-space-size=1536\" yarn add sharp --ignore-engines\r\n# 使用 pm2 管理应用\r\nyarn global add pm2\r\n```\r\n\r\n随后向仓库提交更改，检查 Actions 是否运行。\r\n\r\n# 效果\r\n\r\n![image-20240514011402733](deploy-next-js-to-vps-using-github-actions.assets/image-20240514011402733.png)\r\n\r\n![image-20240514011427738](deploy-next-js-to-vps-using-github-actions.assets/image-20240514011427738.png)\r\n\r\n配置文件使用 `yarn start` 即`next start`，默认运行在 3000 端口：\r\n\r\n![image-20240514011631894](deploy-next-js-to-vps-using-github-actions.assets/image-20240514011631894.png)",
-    "path": "posts/deploy-next-js-to-vps-using-github-actions",
-    "toc": [
-      {
-        "title": "流程",
-        "url": "#流程",
-        "items": [
-          {
-            "title": "配置服务器",
-            "url": "#配置服务器",
-            "items": [
-              {
-                "title": "添加用户",
-                "url": "#添加用户",
-                "items": []
-              },
-              {
-                "title": "生成 SSH 密钥",
-                "url": "#生成-ssh-密钥",
-                "items": []
-              },
-              {
-                "title": "添加私钥到 GitHub 仓库",
-                "url": "#添加私钥到-github-仓库",
-                "items": []
-              }
-            ]
-          },
-          {
-            "title": "设置 GitHub Actions Workflow",
-            "url": "#设置-github-actions-workflow",
-            "items": [
-              {
-                "title": "配置 Secrets",
-                "url": "#配置-secrets",
-                "items": []
-              },
-              {
-                "title": "创建 CI/CD 流程",
-                "url": "#创建-cicd-流程",
-                "items": []
-              },
-              {
-                "title": "工作流名称",
-                "url": "#工作流名称",
-                "items": []
-              },
-              {
-                "title": "触发事件",
-                "url": "#触发事件",
-                "items": []
-              },
-              {
-                "title": "工作定义",
-                "url": "#工作定义",
-                "items": [
-                  {
-                    "title": "构建工作 (build)",
-                    "url": "#构建工作-build",
-                    "items": []
-                  },
-                  {
-                    "title": "部署工作 (deploy)",
-                    "url": "#部署工作-deploy",
-                    "items": []
-                  }
-                ]
-              },
-              {
-                "title": "安全与配置",
-                "url": "#安全与配置",
-                "items": []
-              }
-            ]
-          },
-          {
-            "title": "配置 VPS 服务器",
-            "url": "#配置-vps-服务器",
-            "items": []
-          }
-        ]
-      },
-      {
-        "title": "效果",
-        "url": "#效果",
-        "items": []
-      }
-    ],
-    "metadata": {
-      "readingTime": 4,
-      "wordCount": 1022.96
-    },
-    "permalink": "/post/deploy-next-js-to-vps-using-github-actions",
-    "images": {
-      "/static/image-20240514011103747-1b57815c.png": {
-        "width": 1602,
-        "height": 710
-      },
-      "/static/image-20240514011402733-4983f74b.png": {
-        "width": 3022,
-        "height": 1708
-      },
-      "/static/image-20240514011427738-3f2b4f0c.png": {
-        "width": 3022,
-        "height": 1706
-      },
-      "/static/image-20240514011631894-e37e95d4.png": {
-        "width": 3022,
-        "height": 1804
-      }
-    },
-    "excerptRaw": "本文详细介绍了如何使用GitHub Actions自动化部署Next.js项目到VPS服务器的流程。首先，配置SSH允许GitHub Actions通过SSH连接到服务器，包括为GitHub Actions创建系统用户、生成SSH密钥并添加到服务器，以及将私钥添加到GitHub仓库。接着，设置GitHub Actions Workflow，包括配置仓库Secrets和创建CI/CD流程。在Workflow中，定义了构建和部署两个主要工作，分别负责项目的构建和部署到服务器。构建工作包括检出代码、设置Node.js环境、安装依赖、构建项目和上传构建产物。部署工作则负责下载构建产物、清理服务器上的旧构建、上传新构建和重启服务器上的服务。此外，还介绍了如何在VPS服务器上预先安装依赖，并通过pm2管理应用。整个流程自动化程度高，提高了部署效率，减少了人工干预。"
+    "excerptRaw": "<p>本文详细介绍了在BUPT校园网环境下，如何配置OpenWrt路由器实现IPv6地址的NAT转换，以允许多台设备共享单个IPv6地址。文章首先描述了网络环境，包括设备和拓扑结构，并指出校园网默认分配的IPv6地址是128位前缀的，子网大小为1，仅支持单设备使用，因此需要进行NAT6配置。接着，文章参考了相关教程，逐步指导读者如何更改全局网络选项中的IPv6 ULA前缀、LAN接口选项、WAN/WAN6接口选项、DHCP/DNS设置以及防火墙设置，以实现NAT6功能。最后，文章提供了测试IPv6连接和自动配置流量转发路由表的方法，确保所有连接到主路由的设备都能获取到IPv6地址。通过这些步骤，用户可以有效地在校园网环境中实现多设备共享IPv6地址。</p>"
   },
   {
     "title": "《让子弹飞》“剧情梗概”",
@@ -534,6 +559,6 @@
     },
     "permalink": "/post/let-the-bullets-fly-full-dialogue",
     "images": {},
-    "excerptRaw": "在电影《让子弹飞》中，张麻子（姜文饰）和他的团队在鹅城展开了一系列复杂的权力斗争。张麻子原本是一个土匪，后来冒充县长，与当地的恶霸黄四郎（周润发饰）展开了激烈的对抗。影片通过一系列的策略和反转，展现了张麻子如何利用智慧和勇气，最终击败了黄四郎，为鹅城带来了公平和正义。整个故事充满了黑色幽默和深刻的社会寓意，展现了人性的复杂和权力的腐败。"
+    "excerptRaw": "<p>在电影《让子弹飞》中，张麻子（姜文饰）和他的团队在鹅城展开了一系列复杂的权力斗争。张麻子原本是一个土匪，后来冒充县长，与当地的恶霸黄四郎（周润发饰）展开了激烈的对抗。影片通过一系列的策略和反转，展现了张麻子如何利用智慧和勇气，最终击败了黄四郎，为鹅城带来了公平和正义。整个故事充满了黑色幽默和深刻的社会寓意，展现了人性的复杂和权力的腐败。</p>"
   }
 ]

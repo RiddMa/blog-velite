@@ -29,7 +29,6 @@
     "gsap": "^3.12.5",
     "is-url": "^1.2.4",
     "lodash": "^4.17.21",
-    "mac-scrollbar": "^0.13.6",
     "next": "14",
     "openai": "^4.46.1",
     "perfect-scrollbar": "^1.5.5",

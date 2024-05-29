@@ -23,7 +23,7 @@ updated: 2024-05-14T14:24:13+08:00
 excerpt: '本文详细介绍了在BUPT校园网环境下，如何配置OpenWrt路由器实现IPv6地址的NAT转换，以允许多台设备共享单个IPv6地址。文章首先描述了网络环境，包括设备和拓扑结构，并指出校园网默认分配的IPv6地址是128位前缀的，子网大小为1，仅支持单设备使用，因此需要进行NAT6配置。接着，文章参考了相关教程，逐步指导读者如何更改全局网络选项中的IPv6 ULA前缀、LAN接口选项、WAN/WAN6接口选项、DHCP/DNS设置以及防火墙设置，以实现NAT6功能。最后，文章提供了测试IPv6连接和自动配置流量转发路由表的方法，确保所有连接到主路由的设备都能获取到IPv6地址。通过这些步骤，用户可以有效地在校园网环境中实现多设备共享IPv6地址。'
 ---
 
-# 前言
+## 前言
 
 首先介绍一下我的网络环境：
 
@@ -32,11 +32,11 @@ excerpt: '本文详细介绍了在BUPT校园网环境下，如何配置OpenWrt�
 
 BUPT 校园网默认分配的 v6 地址是 128 位前缀的，子网大小为 1，只能一台设备使用，所以需要 NAT6（方案之一，也许可以用 Relay Mode，但是我没尝试成功）。
 
-# 配置 NAT6
+## 配置 NAT6
 
 该部分参考了 [校内 IPv6 设置教程 | 南科手册](https://sustech.online/service/network/ipv6/) 和 [OpenWRT 路由器作为 IPv6 网关的配置](https://github.com/tuna/ipv6.tsinghua.edu.cn/blob/master/openwrt.md)
 
-## 更改全局网络选项 IPv6 ULA 前缀
+### 更改全局网络选项 IPv6 ULA 前缀
 
 点击“网络 Network- 接口 Interfaces”。如果你的界面没有“全局网络选项 Global Network Options”，在`/etc/config/network` 里加入 `config globals 'globals'`，刷新页面即可（若仍没有，尝试删除 LuCI 缓存并重启 LuCI 服务）。
 
@@ -48,7 +48,7 @@ BUPT 校园网默认分配的 v6 地址是 128 位前缀的，子网大小为 1�
 
 ![ULA 前缀设置](assets/20240118222722.png)
 
-## 更改 LAN 接口选项
+### 更改 LAN 接口选项
 
 LAN 接口 DHCP 服务器中，打开“动态 DHCP”和“强制”。
 
@@ -58,7 +58,7 @@ LAN 接口 IPv6 设置，“路由器通告服务”和“DHCPv6 服务”修改
 
 ![更改 DHCP 设置](assets/20240118222818.png)
 
-## 更改 WAN/WAN6 接口选项
+### 更改 WAN/WAN6 接口选项
 
 WAN 口设置 - 高级设置中，勾选上“使用内置的 IPv6 管理”。
 
@@ -72,13 +72,13 @@ WAN6 口设置 - 高级设置中，勾选“使用内置的 IPv6 管理”，“
 
 ![WAN 设置](assets/20240118222914.png)
 
-## 更改 DHCP/DNS 设置
+### 更改 DHCP/DNS 设置
 
 网络 -DHCP/DNS- 高级设置，取消勾选“禁止解析 IPv6 DNS 记录”。
 
 ![DHCP/DNS 设置](assets/20240118222927.png)
 
-## 更改防火墙设置
+### 更改防火墙设置
 
 “基本设置”中，“转发”改为“接受”。
 
@@ -100,11 +100,11 @@ ip6tables -A FORWARD -i $LAN -j ACCEPT
 
 ![防火墙自定义规则](assets/20240118222956.png)
 
-# 测试 IPv6
+## 测试 IPv6
 
 “网络 - 网络诊断”，选择 IPv6，点击 Ping，成功访问（或者在 shell 中 `ping -6 openwrt.org`）。
 
-# 自动配置流量转发路由表
+## 自动配置流量转发路由表
 
 使用 SSH 或“系统 -TTYD 终端”连接 Shell，输入用户名 root 和密码登录。
 
@@ -122,7 +122,3 @@ logger -t IPv6 "Add IPv6 default route."
 注意 `iface=wan6` 这行，`wan6` 需要替换成“网络 - 接口”里看到的 DHCPv6 客户端对应接口名字。
 
 最后，`chmod +x /etc/hotplug.d/iface/99-ipv6` 并重启主路由，此时连接到主路由的设备（不包括接入点路由）即可获取到 IPv6 地址。
-
----
-
-完

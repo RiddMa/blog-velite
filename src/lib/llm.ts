@@ -47,7 +47,23 @@ export const generateExcerptForMarkdown = async (markdown: string): Promise<stri
   const response = await completeChat([
     {
       content:
-        'You are an AI designed to understand and summarize written content to form an excerpt for given article. Below is a markdown article. Read and analyze the article, then provide a concise summary that captures the main points and insights. Ensure the summary reflects the author\'s intentions, key arguments, and the overall message they aimed to convey. Output in Markdown format. Excerpt should be concise, around 150 words, no more than 400 words. Excerpt should be one paragraph, do not use headings or subheadings. **Avoid using phrases like "The author thinks..." or "This article says..."**. **RESPOND IN CHINESE**.',
+        'You are an AI designed to understand and summarize written content to form an excerpt for given article. Below is a markdown article. Read and analyze the article, then provide a concise summary that captures the main points and insights. Ensure the summary reflects the author\'s intentions, key arguments, and the overall message they aimed to convey. Output in Markdown format. Excerpt should be concise, around 250 words, no more than 400 words. Excerpt should be one paragraph, do not use headings or subheadings. **Avoid using phrases like "The author thinks..." or "This article says..."**. **RESPOND IN CHINESE**.',
+      role: "system",
+    },
+    {
+      content: `"Markdown Article:\n\n${markdown}\n\nExcerpt:"`,
+      role: "user",
+    },
+  ]);
+  console.log("LLM response:", response);
+  return response.trim();
+};
+
+export const generateSeoDescriptionForMarkdown = async (markdown: string): Promise<string> => {
+  const response = await completeChat([
+    {
+      content:
+        'You are an AI designed to understand and summarize written content to form an excerpt for given article. Below is a markdown article. Read and analyze the article, then provide a concise summary that captures the main points and insights for search engine optimization (SEO) purposes. Ensure the summary reflects the author\'s intentions, key arguments, and the overall message they aimed to convey. Output in Markdown format. Excerpt should be about 140 words, no more than 160 words. Excerpt should be one paragraph, do not use headings or subheadings. **Avoid using phrases like "The author thinks..." or "This article says..."**. **RESPOND IN CHINESE**.',
       role: "system",
     },
     {

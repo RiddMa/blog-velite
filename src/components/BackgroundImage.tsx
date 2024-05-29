@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import bgImageDark from "@/content/globals/background/milad-fakurian-nY14Fs8pxT8-unsplash.jpg";
-import bgImageLight from "@/content/globals/background/pawel-czerwinski-nyJY9UZnkrE-unsplash.jpg";
+// import bgImageLight from "@/content/globals/background/pawel-czerwinski-nyJY9UZnkrE-unsplash.jpg";
 // import bgImageLight from "@/content/globals/background/pawel-czerwinski-SoB70WFVWGU-unsplash.jpg";
 import { usePageStateStore } from "@/src/store/store";
 import { useShallow } from "zustand/react/shallow";

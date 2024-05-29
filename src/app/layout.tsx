@@ -11,8 +11,6 @@ import TopNavbar from "@/src/components/layout/TopNavbar";
 import VisitCounter from "@/src/components/VisitCounter";
 import Footer from "@/src/components/layout/Footer";
 import UmamiTrack from "@/src/components/UmamiTrack";
-import BackToTop from "@/src/components/BackToTop";
-import ScrollToTopButton from "@/src/components/BackToTop";
 
 export const metadata: Metadata = {
   title: globals.metadata.title,
