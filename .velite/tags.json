@@ -96,6 +96,38 @@
     "slug": "css"
   },
   {
+    "name": "Masonry Layout",
+    "slug": "masonry-layout"
+  },
+  {
+    "name": "JavaScript",
+    "slug": "javascript"
+  },
+  {
+    "name": "Grid",
+    "slug": "grid"
+  },
+  {
+    "name": "Flexbox",
+    "slug": "flexbox"
+  },
+  {
+    "name": "Rows Layout",
+    "slug": "rows-layout"
+  },
+  {
+    "name": "Columns Layout",
+    "slug": "columns-layout"
+  },
+  {
+    "name": "React Photo Album",
+    "slug": "react-photo-album"
+  },
+  {
+    "name": "Next.js Image",
+    "slug": "next-js-image"
+  },
+  {
     "name": "Framer Motion",
     "slug": "framer-motion"
   },
