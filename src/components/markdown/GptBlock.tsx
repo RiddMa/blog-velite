@@ -21,31 +21,25 @@ export const GptBlock: React.FC<GptBlockProps> = ({ properties, children }) => {
 
   useGSAP(() => {
     if (open) {
+      gsap.to(divRef.current, { display: "block" });
       gsap.to(divRef.current, { opacity: 1, height: "auto" });
     } else {
       gsap.to(divRef.current, { opacity: 0, height: 0 });
+      gsap.to(divRef.current, { display: "none" });
     }
   }, [open]);
 
   return (
     <div className="gpt -mx-content">
       <div
-        className={`flex flex-row justify-between items-center m-0 pt-4 opacity-80 hover:opacity-100 transition-apple cursor-pointer ${open ? "pb-0" : "pb-3"}`}
+        className={`flex flex-row justify-between items-center m-0 pt-4 opacity-80 hover:opacity-100 transition-apple cursor-pointer ${open ? "pb-0 select-auto" : "pb-3 select-none"}`}
         onClick={() => setOpen(!open)}
       >
         <span>{properties.model ? properties.model : "大语言模型"} 如是说：</span>
-        <button className="btn btn-sm btn-ghost rounded-xl text-base font-normal outline-transparent border-none">
+        <button className="btn btn-sm btn-ghost rounded-xl text-base font-normal outline-none border-none">
           <Icon icon="heroicons:chevron-down" className={`transition-apple ${open ? "rotate-180" : ""}`} />
         </button>
       </div>
-      {/*<motion.div*/}
-      {/*  initial={{ opacity: 0, height: 0 }}*/}
-      {/*  animate={{ opacity: open ? 1 : 0, height: open ? "auto" : 0, paddingBottom: open ? "1rem" : 0 }}*/}
-      {/*  transition={transitionApple}*/}
-      {/*  className="overflow-hidden relative"*/}
-      {/*>*/}
-      {/*  {children}*/}
-      {/*</motion.div>*/}
       <div ref={divRef}>
         {children}
         <div className="h-4" />

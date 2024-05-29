@@ -40,14 +40,6 @@
     "slug": "openclash"
   },
   {
-    "name": "data science",
-    "slug": "data-science"
-  },
-  {
-    "name": "explore",
-    "slug": "explore"
-  },
-  {
     "name": "GitHub Actions",
     "slug": "github-actions"
   },
@@ -72,24 +64,24 @@
     "slug": "ssh"
   },
   {
-    "name": "python",
-    "slug": "python"
+    "name": "让子弹飞",
+    "slug": "let-bullets-fly"
   },
   {
-    "name": "greetings",
-    "slug": "greetings"
+    "name": "姜文",
+    "slug": "jiang-wen"
   },
   {
-    "name": "world",
-    "slug": "world"
+    "name": "申遗",
+    "slug": "inscribe-on-unesco-list"
   },
   {
-    "name": "javascript",
-    "slug": "javascript"
+    "name": "鹅城",
+    "slug": "goose-city"
   },
   {
-    "name": "discovery",
-    "slug": "discovery"
+    "name": "张麻子",
+    "slug": "zhang-ma-zi"
   },
   {
     "name": "React",

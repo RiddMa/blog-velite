@@ -1,29 +1,20 @@
 ---
-title: 'Hello, World!'
-cover: assets/xueyi.png
-slug: hello-world
-author: ridd
-created: 2024-04-10T11:35:55.000Z
-updated: 2024-04-10T11:35:55.000Z
-columns:
-  - column2
-categories:
-  - category1
+title: 《让子弹飞》“剧情梗概”
+cover: hello.assets/let-the-bullets-fly-cover.png
+slug: let-the-bullets-fly-full-dialogue
+author: anonymous
+created: '2024-04-10T11:35:55.000Z'
+updated: '2024-04-10T11:35:55.000Z'
 tags:
-  - hello
-  - world
-excerpt: ' 在鹅城，县长张麻子与恶霸黄四郎展开了一场智谋与勇气的较量。张麻子以剿匪之名，实则为了公平正义，与黄四郎斗智斗勇，揭露了黄四郎贩卖人口、倒卖烟土的罪行。在这场斗争中，张麻子失去了亲人，但他坚持不懈，最终揭露了黄四郎的真面目，赢得了百姓的支持。黄四郎虽然拥有财富和权力，但最终因为失去民心而败北。张麻子用智慧和勇气证明了，没有正义的支撑，任何财富和权力都是空洞的。故事以张麻子的胜利和黄四郎的失败告终，传达了正义必胜、邪恶必败的深刻道理。'
+  - 让子弹飞
+  - 姜文
+  - 申遗
+  - 鹅城
+  - 张麻子
+excerpt: >-
+  在电影《让子弹飞》中，张麻子（姜文饰）和他的团队在鹅城展开了一系列复杂的权力斗争。张麻子原本是一个土匪，后来冒充县长，与当地的恶霸黄四郎（周润发饰）展开了激烈的对抗。影片通过一系列的策略和反转，展现了张麻子如何利用智慧和勇气，最终击败了黄四郎，为鹅城带来了公平和正义。整个故事充满了黑色幽默和深刻的社会寓意，展现了人性的复杂和权力的腐败。
 ---
-
-# Hello, World!
-
-## 2nd level heading
-
-## 2nd level heading2
-
-### 3rd level heading
-
-#### 4th level heading
+> 内容来源于网络
 
 吃着火锅唱着歌
 （天之涯，地之角，知交半零落。一壶浊酒尽余欢，夕阳山外山。）
