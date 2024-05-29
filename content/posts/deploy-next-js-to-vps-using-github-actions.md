@@ -6,7 +6,7 @@ cover: deploy-next-js-to-vps-using-github-actions.assets/image-20240514011402733
 categories:
   - coding
 columns:
-  - blog
+  - from-zero-to-hero-guide-to-modern-blog
 tags:
   - GitHub Actions
   - Next.js

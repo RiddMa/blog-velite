@@ -14,7 +14,8 @@ const PostDetailPanel: React.FC<{
 
   const categories = post.categories.map((category) => getCategoryBySlug(category)).filter(isDefined);
   const columns = post.columns.map((column) => getColumnBySlug(column)).filter(isDefined);
-  const tags = post.tags.map((tag) => getTagBySlug(tag)).filter(isDefined);
+  // const tags = post.tags.map((tag) => getTagBySlug(tag)).filter(isDefined);
+  const tags = post.tags;
 
   return (
     <>
@@ -69,14 +70,10 @@ const PostDetailPanel: React.FC<{
         <h1 className={`not-prose text-h2`}>标签</h1>
         {tags?.length ? (
           <>
-            <div className={`flex flex-row flex-wrap gap-x-2 prose-a:text-slate-700 dark:prose-a:text-slate-300`}>
-              {tags.map((tag) => {
-                return (
-                  <Link href={`/tag/${tag.slug}`} className={`transition-apple hover-text-color-href`} key={tag.slug}>
-                    {tag.name}
-                  </Link>
-                );
-              })}
+            <div className={`flex flex-row flex-wrap gap-x-3 prose-a:text-slate-700 dark:prose-a:text-slate-300`}>
+              {tags.map((tag, index) => (
+                <span key={index}>{tag}</span>
+              ))}
             </div>
           </>
         ) : (

@@ -18,21 +18,23 @@ const GalleryPage: NextPage = () => {
           <h1 className="px-content mb-2">精选照片</h1>
           <SwiperLightbox images={featuredImages} autoplay={true} featured={true}></SwiperLightbox>
         </section>
-        {galleries.map((gallery) => (
-          <section key={gallery.slug} className="-mx-content">
-            <button className="group btn btn-ghost btn-lg rounded-2xl mb-2 outline-transparent border-none p-0">
-              <Link href={`gallery/${gallery.slug}`} className="px-content flex items-center not-prose">
-                <h1 className="text-h1">{gallery.name}</h1>
-                <Icon
-                  className="text-h2 transition-apple group-hover:translate-x-1/3"
-                  icon="heroicons:chevron-right"
-                  inline
-                />
-              </Link>
-            </button>
-            <SwiperLightbox images={gallery.images} maxHeight={160}></SwiperLightbox>
-          </section>
-        ))}
+        {galleries
+          .filter((gallery) => gallery.images.length > 0)
+          .map((gallery) => (
+            <section key={gallery.slug} className="-mx-content">
+              <button className="group btn btn-ghost btn-lg rounded-2xl mb-2 outline-transparent border-none p-0">
+                <Link href={`gallery/${gallery.slug}`} className="px-content flex items-center not-prose">
+                  <h1 className="text-h1">{gallery.name}</h1>
+                  <Icon
+                    className="text-h2 transition-apple group-hover:translate-x-1/3"
+                    icon="heroicons:chevron-right"
+                    inline
+                  />
+                </Link>
+              </button>
+              <SwiperLightbox images={gallery.images} maxHeight={160}></SwiperLightbox>
+            </section>
+          ))}
       </div>
     </>
   );

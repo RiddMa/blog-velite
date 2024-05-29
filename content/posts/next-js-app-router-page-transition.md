@@ -6,7 +6,7 @@ author: ridd
 categories:
   - coding
 columns:
-  - blog
+  - from-zero-to-hero-guide-to-modern-blog
 tags:
   - React
   - Next.js
@@ -22,5 +22,4 @@ excerpt: '在Stack Overflow的问答中，用户探讨了在Python中使用`mult
 https://stackoverflow.com/a/77604347/18836875
 
 https://github.com/FunTechInc/mekuri
-
 

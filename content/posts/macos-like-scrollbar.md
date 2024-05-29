@@ -6,7 +6,7 @@ author: ridd
 categories:
   - coding
 columns:
-  - blog
+  - from-zero-to-hero-guide-to-modern-blog
 tags:
   - React
   - Next.js

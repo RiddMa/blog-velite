@@ -7,9 +7,9 @@ export default function NextJsImage({
   imageProps: { alt, title, sizes, className, onClick, ...imageProps },
   wrapperStyle,
 }: RenderPhotoProps) {
-  console.log("photo", photo);
-  console.log("imageProps", imageProps);
-  console.log("wrapperStyle", wrapperStyle);
+  // console.log("photo", photo);
+  // console.log("imageProps", imageProps);
+  // console.log("wrapperStyle", wrapperStyle);
   return (
     <div style={{ ...wrapperStyle, position: "relative" }}>
       <Image

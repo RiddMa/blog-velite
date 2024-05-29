@@ -48,27 +48,24 @@ export default function PostPage({ params }: PostProps) {
   return (
     <article className="prose-article">
       <BackButton />
-      {/*<MotionH1 keyName={`post-title-${permalink}`} className={`text-center`}>*/}
-      {/*  {title}*/}
-      {/*</MotionH1>*/}
       <h1 className="text-center" data-flip-id={`post-title-${permalink}`}>
         {title}
       </h1>
       {cover && (
         <>
-          <MotionDiv keyName={`post-cover-${permalink}`}>
-            <Image
-              src={cover.src}
-              alt={`cover image`}
-              className="rounded-2xl"
-              width={cover.width}
-              height={cover.height}
-              placeholder="blur"
-              blurDataURL={cover.blurDataURL}
-              priority={true}
-              style={{ margin: 0 }}
-            />
-          </MotionDiv>
+          {/*<MotionDiv keyName={`post-cover-${permalink}`}>*/}
+          <Image
+            src={cover.src}
+            alt={cover.src}
+            className="rounded-2xl mx-auto"
+            width={cover.width}
+            height={cover.height}
+            placeholder="blur"
+            blurDataURL={cover.blurDataURL}
+            priority={true}
+            style={{ marginBottom: 0 }}
+          />
+          {/*</MotionDiv>*/}
         </>
       )}
       <br />
