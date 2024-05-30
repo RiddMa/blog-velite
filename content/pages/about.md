@@ -137,6 +137,8 @@ seoDescription: >-
 
 [Travis' Blog](https://blog.lxythan2lxy.cn/)
 
+[RssRank](https://letter.rssrank.com/)，LLM 原生互联网早报
+
 ---
 
 ↓↓ 欢迎评论！↓↓

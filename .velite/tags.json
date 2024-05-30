@@ -128,8 +128,36 @@
     "slug": "next-js-image"
   },
   {
+    "name": "App Router",
+    "slug": "app-router"
+  },
+  {
+    "name": "路由动画",
+    "slug": "route-animation"
+  },
+  {
     "name": "Framer Motion",
     "slug": "framer-motion"
+  },
+  {
+    "name": "Page Transition",
+    "slug": "page-transition"
+  },
+  {
+    "name": "Layout Transition",
+    "slug": "layout-transition"
+  },
+  {
+    "name": "页面切换动画",
+    "slug": "page-switch-animations"
+  },
+  {
+    "name": "mekuri",
+    "slug": "Mekuri"
+  },
+  {
+    "name": "Bug",
+    "slug": "bug"
   },
   {
     "name": "Markdown",
