@@ -32,7 +32,7 @@ export async function listFiles(dirPath: string): Promise<string[]> {
 }
 
 export const extractImgFromHtml = async (basePath: string, html: string) => {
-  const imgSet: { [key: string]: any } = {};
+  const imgSet: { [key: string]: { width: number; height: number; blurDataURL: string } } = {};
 
   unified()
     .use(rehypeParse, { fragment: true }) // 解析为HTML片段
@@ -41,7 +41,7 @@ export const extractImgFromHtml = async (basePath: string, html: string) => {
         if (node.tagName === "img" && node.properties) {
           const src = node.properties.src;
           if (typeof src === "string") {
-            imgSet[src] = {};
+            imgSet[src] = { width: 0, height: 0, blurDataURL: "" };
           }
         }
       });
@@ -54,8 +54,15 @@ export const extractImgFromHtml = async (basePath: string, html: string) => {
     try {
       const filePath = path.join(basePath, src);
       const data = await fs.readFile(filePath);
-      const metadata = await sharp(data).metadata();
-      imgSet[src] = { ...imgSet[src], width: metadata.width, height: metadata.height };
+      const image = sharp(data);
+
+      const metadata = await image.metadata();
+      const { width, height } = metadata;
+
+      const placeholder = await image.resize(10).toBuffer();
+      const blurDataURL = `data:image/jpeg;base64,${placeholder.toString("base64")}`;
+
+      imgSet[src] = { width: width!, height: height!, blurDataURL };
     } catch (error) {
       console.error("Error processing image:", src, error);
     }

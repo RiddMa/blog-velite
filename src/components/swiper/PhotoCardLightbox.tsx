@@ -64,8 +64,14 @@ function calculateDisplayedDimensions(
   maxWidth: number,
   maxHeight: number,
 ): { displayedWidth: number; displayedHeight: number } {
-  const aspectRatio = imageWidth / imageHeight;
+  if (imageWidth <= maxWidth && imageHeight <= maxHeight) {
+    return {
+      displayedWidth: imageWidth,
+      displayedHeight: imageHeight,
+    };
+  }
 
+  const aspectRatio = imageWidth / imageHeight;
   let displayedWidth = maxWidth;
   let displayedHeight = maxWidth / aspectRatio;
 

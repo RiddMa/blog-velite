@@ -68,7 +68,7 @@ body.dark {
   @apply fixed inset-0 object-cover blur-3xl -z-[100] w-screen h-screen;
 }
 
-.bg-white-gradient{
+.bg-white-gradient {
   @apply fixed inset-0 -z-[100] w-screen h-screen;
   background-image: linear-gradient(to top, #bddeff 0%, #e7f0fd 100%);
 }
@@ -92,15 +92,31 @@ body.dark {
 }
 
 .backdrop-blur-bg {
-  @apply backdrop-blur-xl backdrop-saturate-150;
+  @apply backdrop-blur-2xl backdrop-saturate-150;
 }
 
 .backdrop-blur-mask {
-  backdrop-filter: saturate(150%) blur(10px);
+  @apply backdrop-blur-3xl backdrop-saturate-150;
+}
+
+.px-content {
+  @apply px-8 xl:px-4;
+}
+
+.-mx-content {
+  @apply -mx-8 xl:-mx-4;
 }
 
 .main-container {
   @apply flex-grow w-full xl:max-w-[1024px] fhd:max-w-[1280px] px-content mt-[80px] pb-8;
+}
+
+.px-post {
+  @apply px-4 xl:px-4;
+}
+
+.-mx-post{
+  @apply -mx-4 xl:-mx-4;
 }
 
 .top-navbar-wrapper {
@@ -119,25 +135,23 @@ body.dark {
 }
 
 .side-navbar {
-  @apply fixed z-[90] w-screen h-screen pb-[calc(100vh-100dvh)] overflow-y-auto overflow-x-clip flex flex-col transition-apple;
+  @apply fixed z-[90] w-screen h-screen pb-[calc(100vh-100dvh+16px)] overflow-y-auto overflow-x-clip flex flex-col transition-apple;
   @apply px-8 xl:px-4 pb-4 pt-[72px] xl:sticky xl:top-[64px] xl:h-[calc(100vh-64px)] xl:max-w-[240px] xl:pt-[20px];
-  @apply backdrop-blur-bg xl:backdrop-filter-none bg-white/50 dark:bg-black/50 xl:bg-transparent dark:xl:bg-transparent;
-  @apply xl:opacity-70 xl:hover:opacity-100;
-}
-
-.px-content {
-  @apply px-8 xl:px-4;
-}
-
-.-mx-content {
-  @apply -mx-8 xl:-mx-4;
+  @apply backdrop-blur-bg xl:backdrop-filter-none bg-white/70 dark:bg-black/70 xl:bg-transparent dark:xl:bg-transparent;
+  @apply xl:opacity-50 xl:hover:opacity-100;
+  padding-bottom: calc(100vh - 100dvh + 16px);
 }
 
 .card {
   @apply bg-white/75 hover:bg-white/90 dark:bg-zinc-900/70 hover:dark:bg-zinc-800/70;
   @apply outline outline-2 outline-black/5 hover:outline-black/10 dark:outline-white/10 dark:hover:outline-white/20;
   @apply rounded-3xl transition-apple drop-shadow-lg hover:drop-shadow-2xl;
-  /*box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);*/
+}
+
+.card-sm {
+  @apply bg-white/75 hover:bg-white/90 dark:bg-zinc-900/70 hover:dark:bg-zinc-800/70;
+  @apply outline outline-2 outline-black/5 hover:outline-black/10 dark:outline-white/10 dark:hover:outline-white/20;
+  @apply rounded-3xl xl:rounded-2xl transition-apple drop-shadow-md hover:drop-shadow-xl;
 }
 
 .black-corner-top-left {

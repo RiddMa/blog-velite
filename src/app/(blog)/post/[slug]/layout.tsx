@@ -8,6 +8,7 @@ const Layout: React.FC<{ children: React.ReactNode; params: { slug: string } }> 
     <BlogLayout
       leftNavbar={<PostRelationPanel slug={params.slug} />}
       rightNavbar={<PostDetailPanel slug={params.slug} />}
+      className="px-post"
     >
       {children}
     </BlogLayout>

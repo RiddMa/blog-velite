@@ -19,7 +19,7 @@ export function RdSyntaxHighlighter(props: { language: any; value: any }) {
       showLineNumbers={true}
       PreTag="div"
       customStyle={{
-        margin: "1rem 0",
+        margin: "0 0 0 0",
         padding: "0.75rem 0.5rem",
         borderRadius: "1rem",
         border: `1px solid ${darkMode ? "rgb(64 64 64)" : "rgb(212 212 212)"}`,

@@ -21,7 +21,7 @@ const PostDetailPanel: React.FC<{
     <>
       <aside className={`prose-article flex flex-col`}>
         <span>发布于 {formatDate(post.created!)}</span>
-        <span>更新于 {formatDate(post.updated!)}</span>
+        <span>编辑于 {formatDate(post.updated!)}</span>
         <span>
           浏览量 <VisitCountDisplay />
         </span>

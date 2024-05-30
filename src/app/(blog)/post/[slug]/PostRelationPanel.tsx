@@ -14,34 +14,30 @@ const PostRelationPanel: React.FC<{
   const sameColumnPosts = post.columns.map((column) => getPostsByColumn(column));
 
   return (
-    <aside className={`prose-article-card flex flex-col`}>
+    <aside className={`prose-article flex flex-col`}>
       {columns.map((column, i) => (
         <>
-          <Link href={column.permalink} className={`text-h2`} key={column.slug}>
-            {column.name}
-          </Link>
-          <span className={`text-body`}>共{` ${sameColumnPosts[i].length} `}篇专栏文章</span>
-          <div className={`h-8`}></div>
-          {sameColumnPosts[i].length ? (
-            <div className={`not-prose flex flex-col text-left gap-y-4`}>
-              {sameColumnPosts[i].map((article) => (
-                <Link href={article.permalink} key={article.slug} className={`group`}>
-                  <div className={`card drop-shadow-lg hover:drop-shadow-2xl gap-4 p-4`}>
-                    <span
-                      className={`line-clamp-2 transition-apple group-hover:text-sky-700 dark:group-hover:text-sky-400`}
-                    >
-                      {article.title}
-                    </span>
-                    {/*<span className={`text-caption text-color-caption line-clamp-3`}>{article.excerpt}</span>*/}
-                    <span className={`text-right text-caption`}>{formatDate(article.updated!)}</span>
-                  </div>
+          <h2>
+            <Link href={column.permalink} key={column.slug}>
+              {column.name}
+            </Link>
+          </h2>
+          <span>专栏共{` ${sameColumnPosts[i].length} `}篇文章</span>
+          <div aria-hidden={true} className={`h-4`}></div>
+          {sameColumnPosts[i].length &&
+            sameColumnPosts[i].map((article) => (
+              <div key={article.slug} className={`card-sm group not-prose my-2 -mx-4 xl:mx-0`}>
+                <Link href={article.permalink} className={`prose-article flex flex-col p-4 xl:p-2`}>
+                  <span
+                    className={`text-left line-clamp-2 transition-apple group-hover:text-sky-700 dark:group-hover:text-sky-400 mb-1`}
+                  >
+                    {article.title}
+                  </span>
+                  <span className={`text-right text-caption`}>{formatDate(article.updated!)}</span>
                 </Link>
-              ))}
-            </div>
-          ) : (
-            <></>
-          )}
-          <div className={`h-8`}></div>
+              </div>
+            ))}
+          <div aria-hidden={true} className={`h-8`}></div>
         </>
       ))}
     </aside>

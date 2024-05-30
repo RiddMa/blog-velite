@@ -3,13 +3,14 @@ import { unified } from "unified";
 import rehypeParse from "rehype-parse";
 import rehypeReact from "rehype-react";
 import Copy2Clipboard from "@/src/components/markdown/Copy2Clipboard";
-import { ImageAwesome } from "@/src/components/ImageAwesome";
 import * as prod from "react/jsx-runtime";
 import { RdSyntaxHighlighter } from "@/src/components/markdown/RdSyntaxHighlighter";
 import { GptBlock } from "@/src/components/markdown/GptBlock";
 import "./markdown.css";
 import CssIsAwesome from "@/src/components/markdown/CssIsAwesome";
 import { Link } from "@/src/components/transition/react-transition-progress/next";
+import { calculateDisplayedDimensions } from "@/src/lib/util";
+import MarkdownImage from "@/src/components/markdown/MarkdownImage";
 
 interface HtmlProcessorProps {
   html: string;
@@ -17,6 +18,7 @@ interface HtmlProcessorProps {
     [key: string]: {
       width: number;
       height: number;
+      blurDataURL: string;
     };
   };
 }
@@ -58,8 +60,8 @@ const BlogHtmlRenderer: React.FC<HtmlProcessorProps> = ({ html, imgMap = {} }) =
           );
         },
         img: ({ src, alt }) => {
-          const { width, height } = imgMap[src!];
-          return <ImageAwesome src={src!} alt={alt!} width={width} height={height} halo={false} />;
+          const { width, height, blurDataURL } = imgMap[src!];
+          return <MarkdownImage src={src!} alt={alt!} width={width} height={height} blurDataURL={blurDataURL} />;
         },
         gpt: ({ node, children }: { node: any; children: React.ReactNode }) => {
           const { properties } = node;

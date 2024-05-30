@@ -8,6 +8,8 @@ import React from "react";
 import Image from "next/image";
 import { BackButton } from "@/src/components/BackButton";
 import { calculateDisplayedDimensions } from "@/src/lib/util";
+import { Icon } from "@iconify-icon/react";
+import { Link } from "@/src/components/transition/react-transition-progress/next";
 
 interface PostProps {
   params: {
@@ -74,13 +76,17 @@ export default function PostPage({ params }: PostProps) {
 
   return (
     <article className="prose-article">
-      <BackButton />
+      <Link href="/posts" className="w-full">
+        <button className="btn btn-sm btn-ghost pl-0 pr-2 m-0 rounded-xl text-body outline-none border-none transition-apple opacity-80 hover:opacity-100">
+          <span className="icon-[heroicons--chevron-left]" />
+          文章列表
+        </button>
+      </Link>
       <h1 className="text-center" data-flip-id={`post-title-${permalink}`}>
         {title}
       </h1>
       {cover && (
         <>
-          {/*<MotionDiv keyName={`post-cover-${permalink}`}>*/}
           <Image
             src={cover.src}
             alt={cover.src}
@@ -92,7 +98,6 @@ export default function PostPage({ params }: PostProps) {
             priority={true}
             style={{ marginBottom: 0 }}
           />
-          {/*</MotionDiv>*/}
         </>
       )}
       <br />

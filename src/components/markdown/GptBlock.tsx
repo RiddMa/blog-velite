@@ -29,7 +29,7 @@ export const GptBlock: React.FC<GptBlockProps> = ({ properties, children }) => {
   }, [open]);
 
   return (
-    <div className="gpt -mx-content">
+    <div className="gpt -mx-post">
       <div
         className={cn(
           "flex flex-row items-center justify-between m-0 pt-4 opacity-80 hover:opacity-100 transition-apple cursor-pointer",
