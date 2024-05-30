@@ -13,9 +13,9 @@ const MarkdownImage: React.FC<{ src: string; alt: string; width: number; height:
   blurDataURL,
 }) => {
   const { width: windowWidth, height: windowHeight } = useWindowSize();
-  const maxWidth = windowWidth < 1024 ? windowWidth : windowWidth < 1280 ? 1024 : 1280;
+  const maxWidth = windowWidth < 1024 ? windowWidth : windowWidth < 1920 ? 1024 : 1280;
   const { displayedWidth, displayedHeight } = calculateDisplayedDimensions(width, height, maxWidth, 99999);
-
+  // console.log(src, alt, width, height, displayedWidth, displayedHeight);
   return (
     <Image
       src={src!}
@@ -27,7 +27,7 @@ const MarkdownImage: React.FC<{ src: string; alt: string; width: number; height:
       blurDataURL={blurDataURL}
       priority={false}
       quality={75}
-      style={{ margin: 0 }}
+      style={{ margin: "0 auto 0 auto" }}
     />
   );
 };

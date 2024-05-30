@@ -35,9 +35,9 @@ const BlogHtmlRenderer: React.FC<HtmlProcessorProps> = ({ html, imgMap = {} }) =
           const { href } = props;
           if (!href) return <a {...props} />;
           if (href.startsWith("http")) {
-            return <Link href={href} {...props} target="_blank" rel="noopener noreferrer" />;
+            return <Link href={href} {...props} target="_blank" rel="noopener noreferrer" className="text-href" />;
           } else {
-            return <Link href={href} {...props} />;
+            return <Link href={href} {...props} className="text-href" />;
           }
         },
         pre: (props) => {

@@ -32,14 +32,10 @@ const PostDetailPanel: React.FC<{
         <h2>分类</h2>
         {categories?.length ? (
           <>
-            <div className={`flex flex-row flex-wrap gap-x-2 prose-a:text-slate-700 dark:prose-a:text-slate-300`}>
+            <div className={`flex flex-row flex-wrap gap-x-2`}>
               {categories.map((category) => {
                 return (
-                  <Link
-                    href={category.permalink}
-                    className={`transition-apple hover-text-color-href`}
-                    key={category.slug}
-                  >
+                  <Link href={category.permalink} key={category.slug}>
                     {category.name}
                   </Link>
                 );

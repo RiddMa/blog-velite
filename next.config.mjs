@@ -4,7 +4,8 @@ import { build } from "velite";
 const nextConfig = {
   images: {
     // formats: ["image/avif", "image/webp"], // Disable avif for less server CPU stress
-    deviceSizes: [162, 322, 482, 642, 1082, 1282, 1922, 3842],
+    formats: ["image/webp"],
+    deviceSizes: [162, 322, 482, 642, 1026, 1282, 1922, 3842],
     imageSizes: [16, 32, 48, 64, 96, 128, 256, 384],
   },
   webpack: (config) => {

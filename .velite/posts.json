@@ -3,6 +3,7 @@
     "title": "BUPT 校园网 OpenWrt 配置 IPv6",
     "slug": "bupt-cernet-openwrt-ipv6-configuration",
     "created": "2023-05-18T20:26:00.000Z",
+    "updated": "2024-05-30T08:42:19.000Z",
     "draft": false,
     "featured": false,
     "cover": {
@@ -142,13 +143,13 @@
         "blurDataURL": "data:image/jpeg;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAAGCAIAAAB1kpiRAAAACXBIWXMAAA7DAAAOwwHHb6hkAAAApklEQVR4nB3Eyw4BMRQA0P4CIeIxzLvtve1tO8+aYCYiiA3+QWLj/9fCWRx2eH6Oj5fb30PpQ9Un9hTpIeDbyFyxfzMsj3U7lFUvZKGp1cYLdCnXQpKwPTOm80Vbu6atfFM0pS0tWUvWEXGhWMaNJSKtFf4AwD9QCjgQ2yQoUWccJBIog9pJNFyqLIfFWrJV7MazfBlSCj6IKIjNdJ6PJpHqdufb5QvF+iC1LsbeHQAAAABJRU5ErkJggg=="
       }
     },
-    "updated": "2024-05-30T16:42:19+08:00",
     "excerptRaw": "本文详细介绍了一种在特定网络环境下配置IPv6 NAT的方法。作者首先描述了自己的网络环境，包括设备和拓扑结构，并指出校园网默认的IPv6地址分配方式导致只能单设备使用，因此需要进行NAT6配置。配置过程参考了校内外的IPv6设置教程，主要包括更改全局网络选项中的IPv6 ULA前缀、调整LAN和WAN/WAN6接口的DHCP和IPv6设置、修改DHCP/DNS和防火墙设置，以及添加防火墙自定义规则。此外，作者还介绍了如何测试IPv6连接和自动配置流量转发路由表，确保网络中的设备能够成功获取并使用IPv6地址。整个配置过程详细且实用，适合需要解决类似网络问题的用户参考。"
   },
   {
     "title": "使用 GitHub Actions 部署 Next.js 项目到 VPS",
     "slug": "deploy-next-js-to-vps-using-github-actions",
     "created": "2024-05-12T19:43:56.000Z",
+    "updated": "2024-05-30T08:42:19.000Z",
     "draft": false,
     "featured": false,
     "cover": {
@@ -317,13 +318,13 @@
         "blurDataURL": "data:image/jpeg;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAAGCAYAAAD68A/GAAAACXBIWXMAABYlAAAWJQFJUiTwAAAApUlEQVR4nCXOSXLDIABEUcqyJcSMANlisHL/S/5UyKLrbf6iRYyRWiv3fdNao/c+HaMzxiCGQB83QmlNjAdj3ORycl2N1sa09y9GG4x1iJwK2gZiabjjg3GZ3aY57Qs+JKSUCGssLiZK/SG9O/64MP7EhhNtM3LXLMsDIYRAKoPPFeUy2+7ZVJg+V8vyXP+i//C1KWz8EFIl5IqN73nDp4vXKmf4Cwm4R4UsrELWAAAAAElFTkSuQmCC"
       }
     },
-    "updated": "2024-05-30T16:42:19+08:00",
     "excerptRaw": "本文详细介绍了如何使用GitHub Actions自动化部署Next.js项目到VPS服务器。首先，配置SSH以允许GitHub Actions通过SSH连接到服务器，包括创建系统用户、生成SSH密钥并添加到服务器的`~/.ssh/authorized_keys`，以及将私钥添加到GitHub仓库。接着，通过GitHub仓库设置Secrets，包括项目部署路径、SSH私钥、服务器IP地址、用户名和端口等。\n\n在GitHub仓库中创建`.github/workflows/deploy.yml`文件，定义了CI/CD流程。该流程包括构建和部署两个主要任务。构建任务涉及检出代码、设置Node.js环境、安装依赖、构建项目和上传构建产物。部署任务则包括下载构建产物、清理旧构建、通过SCP上传新构建文件到服务器、在服务器上安装依赖、运行数据库迁移和重启应用。\n\n此外，文章还提到了在服务器上预先安装依赖和使用pm2管理应用的步骤，确保部署过程顺利进行。整个配置确保了项目在每次代码推送到`master`分支时都能自动完成构建和部署，提高了开发效率和部署的可靠性。"
   },
   {
     "title": "《让子弹飞》“剧情梗概”",
     "slug": "let-the-bullets-fly-full-dialogue",
     "created": "2024-04-10T11:35:55.000Z",
+    "updated": "2024-05-30T08:42:19.000Z",
     "draft": false,
     "featured": false,
     "cover": {
@@ -356,13 +357,13 @@
     },
     "permalink": "/post/let-the-bullets-fly-full-dialogue",
     "images": {},
-    "updated": "2024-05-30T16:42:19+08:00",
     "excerptRaw": "在电影《让子弹飞》中，故事围绕着马邦德（张麻子）和黄四郎之间的权力斗争展开。马邦德，一名曾经的军阀手枪队长，因将军去世后沦为土匪，化名张麻子。他买下县长职位，意图通过合法身份对抗黄四郎，一个在鹅城拥有巨大影响力的恶霸。\n\n电影中，马邦德利用智慧和策略，与黄四郎展开了一系列复杂的较量。他不仅要在政治上击败黄四郎，还要在道德上证明自己的正义。马邦德通过发放钱财给穷人，试图唤起民众的反抗意识，最终引发了一场大规模的民众起义，推翻了黄四郎的统治。\n\n影片的高潮部分，马邦德与黄四郎在碉楼的对决，展现了两人智慧和勇气的较量。最终，马邦德利用民众的力量，成功击败了黄四郎，实现了对鹅城的解放。电影以马邦德的胜利和黄四郎的失败告终，强调了正义最终战胜邪恶的主题。\n\n《让子弹飞》不仅是一部动作片，更是一部深刻揭示权力、正义与道德的电影。通过马邦德和黄四郎的故事，影片探讨了个人如何在腐败的社会中寻找和维护正义，以及民众在面对压迫时的觉醒和反抗。"
   },
   {
     "title": "实现 Masonry 布局",
     "slug": "masonry-layout",
     "created": "2024-05-22T08:20:21.000Z",
+    "updated": "2024-05-30T08:42:19.000Z",
     "draft": false,
     "featured": false,
     "cover": {
@@ -513,13 +514,13 @@
         "blurDataURL": "data:image/jpeg;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAAJCAYAAAALpr0TAAAACXBIWXMAABYlAAAWJQFJUiTwAAABX0lEQVR4nB3FzSuDcQDA8d9B/hQXLxc3eUubkUmPkpqtlXnZ2GQb83gbw8z7NtoLJjYvUQ7CQU4or0dbWinLS3HwVhyUw1c5fPqI4NImPYMTeKZDTPoXGfPOM+4NMzUXwR+O/b+yuYtI3L0Sv/8gnnoj9fLF08cvqbcfbp+/Sd6//7t5+EQMObvRqItwT48iD/bS3KjHaDGjlqrQNGiQdNWYOjoQdlsbNapiQuEINqcLZbmSzJws8pUKSuv1ZJeX0NglI5yOJtTVFUi2KWRDIS5zDaceF5czIwxYtWytRDg6PkeoKpXoFen4rbnkZKQRmOhmecyJx25gfd5Fl6UB2SEjzDYrhto83O2VGHVlLEcjyFYdDm0BUe8A7XUSck8/4jDm42zWxOOBn0TUwd54MztGBYmgiYtwG1dDEtt9LYiDmI/LoInrjWEuFjrZ81pYbVGRCLSS3PdxIqtZc9v5A6KH5+00e46UAAAAAElFTkSuQmCC"
       }
     },
-    "updated": "2024-05-30T16:42:19+08:00",
     "excerptRaw": "Masonry布局是一种常用于网页设计的布局方式，特别适合展示图片、卡片等内容块。这种布局模仿砖石墙的排列方式，不同高度的内容块紧密排列，最大化利用空间，使得页面看起来更加紧凑和美观。Masonry布局的特点包括非均匀排列、动态填充和响应式设计。实现Masonry布局的方式有多种，包括使用JavaScript库如Masonry.js和Isotope，以及利用CSS Grid和Flexbox技术。\n\n在实际应用中，Masonry布局常与行密铺和列密铺布局结合使用，这些布局都是处理不同长宽比元素的有效方法。例如，React Photo Album库支持这三种布局，可以根据不同需求选择合适的布局方式。此外，文章还介绍了如何手动实现Masonry布局，通过创建一个名为WaterfallGrid的React组件，该组件能够根据屏幕宽度动态调整内容块的排列方式，实现美观且响应式的页面布局。\n\n通过这些技术，开发者可以有效地在网页上展示各种内容，无论是图片、文章还是其他形式的信息，都能以最佳的方式呈现给用户。"
   },
   {
     "title": "在 Markdown 中使用自定义指令，并渲染为 React 组件",
     "slug": "use-custom-directives-in-markdown-render-as-react-components",
     "created": "2024-05-14T09:27:13.000Z",
+    "updated": "2024-05-30T08:42:19.000Z",
     "draft": false,
     "featured": false,
     "cover": {
@@ -600,7 +601,6 @@
     },
     "permalink": "/post/use-custom-directives-in-markdown-render-as-react-components",
     "images": {},
-    "updated": "2024-05-30T16:42:19+08:00",
     "excerptRaw": "本文探讨了如何通过自定义指令扩展Markdown语法，以实现更丰富的文章内容展示，如外链嵌入、图表视频和特殊样式文本等。作者提到，使用自定义指令旨在替代MDX的部分功能，因为MDX与Markdown不完全兼容，可能导致旧数据迁移困难和编译错误。文章详细介绍了自定义指令的三种格式：内联指令、叶块指令和容器块指令，并提供了相关示例和详细信息链接。\n\n此外，文章还介绍了`remark`和`rehype`这两个工具链，它们用于处理和转换Markdown和HTML内容。`remark`用于解析和转换Markdown，而`rehype`用于解析和转换HTML。两者结合使用，可以实现从Markdown到HTML的转换，并进行额外的处理，如代码块的语法高亮。\n\n作者还分享了其在博客中使用`Velite`定义Markdown文档结构和转换逻辑的实践，以及如何使用`remark`和`rehype`插件来处理Markdown内容。文章最后展示了如何通过`remark-directive`、`remark-directive-rehype`和`rehype-react`这三个插件实现自定义指令的处理，以及如何在React应用中渲染这些内容。通过这些方法，作者成功地在Markdown中嵌入了复杂组件和交互内容，增强了博客的展示效果和用户体验。"
   },
   {
