@@ -151,7 +151,7 @@ export default function Home() {
             <Link href="/gallery" className="relative prose-article-card">
               <h1 className="flex flex-row">
                 相册
-                <span className="icon-[heroicons--photo-solid] ml-1 my-auto" />
+                <span className="icon-[clarity--image-gallery-solid] ml-1 my-auto" />
               </h1>
               <button className="flex flex-row not-prose text-btn btn-sm">
                 浏览 {imageCount} 张图片

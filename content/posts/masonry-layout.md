@@ -19,15 +19,27 @@ tags:
   - React Photo Album
   - Next.js Image
 created: '2024-05-22T08:20:21.000Z'
-updated: '2024-05-30T03:27:36+08:00'
+updated: '2024-05-29T19:27:36.000Z'
 excerpt: >-
-  Masonry 布局是一种在网页设计中常用的布局方式，特别适合展示图片、卡片等内容块。这种布局模仿砖石墙的排列方式，不同高度的内容块紧密排列，最大化利用空间，使得页面看起来更加紧凑和美观。Masonry 布局的特点包括非均匀排列、动态填充和响应式设计，能够适应不同屏幕尺寸和设备。
+  Masonry
+  布局是一种在网页设计中常用的布局方式，特别适合展示图片、卡片等内容块。这种布局模仿砖石墙的排列方式，不同高度的内容块紧密排列，最大化利用空间，使得页面看起来更加紧凑和美观。Masonry
+  布局的特点包括非均匀排列、动态填充和响应式设计，能够适应不同屏幕尺寸和设备。
 
-  实现 Masonry 布局的方法有多种，包括使用 JavaScript 库如 Masonry.js、Isotope，或者利用 CSS Grid 和 CSS Flexbox 技术。文章还提到了行密铺和列密铺布局，这些布局方式也常用于排版图片等长宽比不一的元素。
+  实现 Masonry 布局的方法有多种，包括使用 JavaScript 库如 Masonry.js、Isotope，或者利用 CSS Grid 和 CSS
+  Flexbox 技术。文章还提到了行密铺和列密铺布局，这些布局方式也常用于排版图片等长宽比不一的元素。
 
-  文章通过具体的代码示例，展示了如何使用 React 和 TypeScript 手动实现 Masonry 布局，包括创建核心组件、计算布局和响应容器大小变化等步骤。首先，定义了 `WaterfallGrid` 组件，这是实现 Masonry 布局的核心组件。该组件接收两个 props：`items`（要显示的内容数组）和 `CardComponent`（用于渲染单个内容块的组件）。通过使用 `useCallback` 和 `useEffect`，组件能够动态计算和调整内容块的排列方式，并使用 ResizeObserver 监听容器大小变化，确保布局的自适应性。最终实现了一个能够根据屏幕宽度动态调整内容块排列的 Masonry 布局组件。
+  文章通过具体的代码示例，展示了如何使用 React 和 TypeScript 手动实现 Masonry
+  布局，包括创建核心组件、计算布局和响应容器大小变化等步骤。首先，定义了 `WaterfallGrid` 组件，这是实现 Masonry
+  布局的核心组件。该组件接收两个 props：`items`（要显示的内容数组）和 `CardComponent`（用于渲染单个内容块的组件）。通过使用
+  `useCallback` 和 `useEffect`，组件能够动态计算和调整内容块的排列方式，并使用 ResizeObserver
+  监听容器大小变化，确保布局的自适应性。最终实现了一个能够根据屏幕宽度动态调整内容块排列的 Masonry 布局组件。
 
-  此外，文章还介绍了几种常见的 Masonry 布局实现方式，包括使用 JavaScript 库（如 Masonry.js、Isotope）、CSS Grid 和 CSS Flexbox，并提供了一些参考资源和阅读材料。通过这些方法，读者可以选择适合自己项目的实现方式，创建出美观、高效的 Masonry 布局。
+  此外，文章还介绍了几种常见的 Masonry 布局实现方式，包括使用 JavaScript 库（如 Masonry.js、Isotope）、CSS Grid
+  和 CSS Flexbox，并提供了一些参考资源和阅读材料。通过这些方法，读者可以选择适合自己项目的实现方式，创建出美观、高效的 Masonry 布局。
+seoDescription: >-
+  Masonry布局是一种流行的网页设计技术，特别适用于展示图片和卡片等内容块。这种布局模仿砖石墙的排列方式，允许不同高度的内容块紧密排列，以最大化利用空间，并提供动态填充和响应式设计。文章详细介绍了Masonry布局的特点和实现方法，包括使用JavaScript库、CSS
+  Grid和Flexbox。此外，还探讨了行密铺和列密铺布局，并通过React Photo
+  Album库展示了这些布局的实际应用。文章还提供了一个基于React和TypeScript的Masonry布局组件实现示例，展示了如何手动实现这种布局，以及如何使其适应不同屏幕尺寸。
 ---
 
 ## 什么是 Masonry 布局
@@ -39,16 +51,18 @@ excerpt: >-
 :::gpt{model="GPT-4o"}
 Masonry Layout 是一种布局方式，经常用于网页设计中，特别是展示图片、卡片或其他内容块。这种布局方式类似于砖石墙的排列（因此得名 "Masonry"），其中不同高度的内容块紧密排列，最大限度地利用了可用空间。Masonry Layout 的特点是内容块（items）之间没有固定的行和列，而是根据内容的高度动态排列，使得页面看起来更加紧凑和美观。
 
-Masonry Layout 的主要特点包括：
+**Masonry Layout 的主要特点包括：**
 
-非均匀排列：不同高度的内容块可以在同一行中出现，形成一种砖石墙般的视觉效果。
-动态填充：内容块会自动填充空白区域，最大限度地利用可用空间，减少空白和间隙。
-响应式设计：Masonry Layout 可以适应不同屏幕尺寸和设备，内容块会根据屏幕宽度自动调整排列方式。
-常见的实现方式：
+1. **非均匀排列**：不同高度的内容块可以在同一行中出现，形成一种砖石墙般的视觉效果。
+2. **动态填充**：内容块会自动填充空白区域，最大限度地利用可用空间，减少空白和间隙。
+3. **响应式设计**：Masonry Layout 可以适应不同屏幕尺寸和设备，内容块会根据屏幕宽度自动调整排列方式。
 
-JavaScript 库：有很多 JavaScript 库可以帮助实现 Masonry Layout，比如 Masonry.js、Isotope 等。
-CSS Grid：使用现代的 CSS Grid 布局，可以通过定义自动行高和自动列宽来实现类似的效果。
-CSS Flexbox：虽然 Flexbox 不如 CSS Grid 适合 Masonry Layout，但通过一些技巧和 hack 也可以实现类似的布局。
+**常见的实现方式：**
+
+1. **JavaScript 库**：有很多 JavaScript 库可以帮助实现 Masonry Layout，比如 [Masonry.js](https://masonry.desandro.com/)、[Isotope](https://isotope.metafizzy.co/) 等。
+2. **CSS Grid**：使用现代的 CSS Grid 布局，可以通过定义自动行高和自动列宽来实现类似的效果。
+3. **CSS Flexbox**：虽然 Flexbox 不如 CSS Grid 适合 Masonry Layout，但通过一些技巧和 hack 也可以实现类似的布局。
+
 :::
 
 

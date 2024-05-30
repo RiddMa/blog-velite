@@ -19,17 +19,17 @@ const PostDetailPanel: React.FC<{
 
   return (
     <>
-      <aside className={`prose-article-card flex flex-col`}>
-        <span className={``}>发布于 {formatDate(post.created!)}</span>
-        <span className={``}>更新于 {formatDate(post.updated!)}</span>
-        <span className={``}>
+      <aside className={`prose-article flex flex-col`}>
+        <span>发布于 {formatDate(post.created!)}</span>
+        <span>更新于 {formatDate(post.updated!)}</span>
+        <span>
           浏览量 <VisitCountDisplay />
         </span>
         <div className={`h-4`}></div>
-        <h1 className={`not-prose text-h2`}>目录</h1>
+        <h2>目录</h2>
         <TableOfContents className={`not-prose`} toc={post.toc} />
         <div className={`h-4`}></div>
-        <h1 className={`not-prose text-h2`}>分类</h1>
+        <h2>分类</h2>
         {categories?.length ? (
           <>
             <div className={`flex flex-row flex-wrap gap-x-2 prose-a:text-slate-700 dark:prose-a:text-slate-300`}>
@@ -47,10 +47,10 @@ const PostDetailPanel: React.FC<{
             </div>
           </>
         ) : (
-          <span className={``}>无</span>
+          <span>无</span>
         )}
         <div className={`h-4`}></div>
-        <h1 className={`not-prose text-h2`}>专栏</h1>
+        <h2>专栏</h2>
         {columns?.length ? (
           <>
             <div className={`flex flex-row flex-wrap gap-x-2 prose-a:text-slate-700 dark:prose-a:text-slate-300`}>
@@ -67,7 +67,7 @@ const PostDetailPanel: React.FC<{
           <span className={``}>无</span>
         )}
         <div className={`h-4`}></div>
-        <h1 className={`not-prose text-h2`}>标签</h1>
+        <h2>标签</h2>
         {tags?.length ? (
           <>
             <div className={`flex flex-row flex-wrap gap-x-3 prose-a:text-slate-700 dark:prose-a:text-slate-300`}>

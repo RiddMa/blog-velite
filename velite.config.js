@@ -13,7 +13,7 @@ import rehypeAutolinkHeadings from "rehype-autolink-headings";
 import rehypeSlug from "rehype-slug";
 import path from "node:path";
 import { projectRootPath, staticBasePath } from "@/base-path";
-import { generateExcerptForMarkdown, generateSlugForTags } from "@/src/lib/llm";
+import { generateExcerptForMarkdown, generateSeoDescriptionForMarkdown, generateSlugForTags } from "@/src/lib/llm";
 import fs from "fs/promises";
 import matter from "gray-matter";
 import dayjs from "dayjs";
@@ -112,6 +112,7 @@ const pages = defineCollection({
       updated: s.isodate().optional(),
       cover: s.image().optional(), // input image relative path, output image object with blurImage.
       excerpt: s.excerpt().default(""),
+      seoDescription: s.string().default(""),
       author: s.string().default(""),
       content: blogMarkdown,
       raw: s.raw(),
@@ -139,6 +140,7 @@ const posts = defineCollection({
       featured: s.boolean().default(false),
       cover: s.image().optional(), // input image relative path, output image object with blurImage.
       excerpt: s.string().default(""),
+      seoDescription: s.string().default(""),
       author: s.string().default(""),
       columns: s.array(s.string()).default([]),
       categories: s.array(s.string()).default([]),
@@ -307,6 +309,11 @@ export default defineConfig({
             data.posts[index].excerpt = await generateExcerptForMarkdown(post.raw);
             modified = true;
           }
+          if (post.seoDescription === "") {
+            console.log("Page sent to LLM for seoDescription generation:", post.title);
+            data.posts[index].seoDescription = await generateSeoDescriptionForMarkdown(post.raw);
+            modified = true;
+          }
           if (modified) {
             const filePath = path.join(projectRootPath, veliteRoot, `${post.path}.md`);
             const fileContent = await fs.readFile(filePath, "utf8"); // Read the markdown file
@@ -315,6 +322,7 @@ export default defineConfig({
             frontmatter.created = data.posts[index].created; // Update the created date in the frontmatter
             frontmatter.updated = data.posts[index].updated; // Update the updated date in the frontmatter
             frontmatter.excerpt = data.posts[index].excerpt; // Update the excerpt in the frontmatter
+            frontmatter.seoDescription = data.posts[index].seoDescription;
 
             const updatedContent = matter.stringify(content, frontmatter); // Stringify the updated content
             await fs.writeFile(filePath, updatedContent); // Write the updated content back to the file
@@ -347,14 +355,20 @@ export default defineConfig({
             data.pages[index].excerpt = await generateExcerptForMarkdown(page.raw);
             modified = true;
           }
+          if (page.seoDescription === "") {
+            console.log("Page sent to LLM for seoDescription generation:", page.title);
+            data.pages[index].seoDescription = await generateSeoDescriptionForMarkdown(page.raw);
+            modified = true;
+          }
           if (modified) {
             const filePath = path.join(projectRootPath, veliteRoot, `${page.path}.md`);
             const fileContent = await fs.readFile(filePath, "utf8"); // Read the markdown file
             const { content, data: frontmatter } = matter(fileContent); // Parse the frontmatter using gray-matter
 
-            frontmatter.created = data.pages[index].created; // Update the created date in the frontmatter
-            frontmatter.updated = data.pages[index].updated; // Update the updated date in the frontmatter
-            frontmatter.excerpt = data.pages[index].excerpt; // Update the excerpt in the frontmatter
+            frontmatter.created = data.pages[index].created;
+            frontmatter.updated = data.pages[index].updated;
+            frontmatter.excerpt = data.pages[index].excerpt;
+            frontmatter.seoDescription = data.pages[index].seoDescription;
 
             const updatedContent = matter.stringify(content, frontmatter); // Stringify the updated content
             await fs.writeFile(filePath, updatedContent); // Write the updated content back to the file

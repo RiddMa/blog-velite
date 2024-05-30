@@ -53,6 +53,11 @@
       "icon": "heroicons:archive-box"
     },
     {
+      "label": "相册",
+      "href": "/gallery",
+      "icon": "clarity:image-gallery-line"
+    },
+    {
       "label": "关于",
       "href": "/about",
       "icon": "heroicons:user-circle"

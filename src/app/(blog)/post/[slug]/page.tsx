@@ -5,9 +5,9 @@ import { getPostBySlug } from "@/src/store/velite";
 import PostComment from "@/src/components/PostComment";
 import BlogHtmlRenderer from "@/src/components/markdown/BlogHtmlRenderer";
 import React from "react";
-import { MotionDiv } from "@/src/components/transition/MotionDiv";
 import Image from "next/image";
 import { BackButton } from "@/src/components/BackButton";
+import { calculateDisplayedDimensions } from "@/src/lib/util";
 
 interface PostProps {
   params: {
@@ -27,10 +27,37 @@ export function generateMetadata({ params }: PostProps): Metadata {
       },
     };
   }
+
+  let displayedWidth = 512,
+    displayedHeight = 512;
+  if (post.cover) {
+    const calculatedDimensions = calculateDisplayedDimensions(post.cover.width, post.cover.height, 642, 642);
+    displayedWidth = calculatedDimensions.displayedWidth;
+    displayedHeight = calculatedDimensions.displayedHeight;
+  }
+
   return {
     title: post.title,
     description: `${post.excerpt} | ${globals.metadata.description}`,
-    openGraph: { title: post.title, description: `${post.excerpt} | ${globals.metadata.description}` },
+    openGraph: {
+      title: post.title,
+      description: `${post.seoDescription} | ${globals.metadata.description}`,
+      url: `${globals.metadata.openGraph.url}/post/${params.slug}`,
+      images: post.cover
+        ? {
+            url: `${globals.metadata.openGraph.url}/_next/image?url=${encodeURIComponent(post.cover.src)}&w=${642}&q=75`,
+            width: displayedWidth,
+            height: displayedHeight,
+            alt: post.title,
+          }
+        : globals.metadata.openGraph.images,
+      type: "article",
+      publishedTime: post.created,
+      modifiedTime: post.updated,
+      authors: post.author,
+      section: post.categories.join(", "),
+      tags: post.tags,
+    },
   };
 }
 

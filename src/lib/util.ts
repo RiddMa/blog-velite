@@ -80,3 +80,25 @@ export function filterPosts(
     return columnMatch && categoryMatch && tagMatch;
   });
 }
+
+export function calculateDisplayedDimensions(
+  imageWidth: number,
+  imageHeight: number,
+  maxWidth: number,
+  maxHeight: number,
+): { displayedWidth: number; displayedHeight: number } {
+  const aspectRatio = imageWidth / imageHeight;
+
+  let displayedWidth = maxWidth;
+  let displayedHeight = maxWidth / aspectRatio;
+
+  if (displayedHeight > maxHeight) {
+    displayedHeight = maxHeight;
+    displayedWidth = maxHeight * aspectRatio;
+  }
+
+  return {
+    displayedWidth: displayedWidth,
+    displayedHeight: displayedHeight,
+  };
+}

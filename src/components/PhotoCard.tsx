@@ -4,6 +4,7 @@ import React, { useRef, useState, useMemo } from "react";
 import Image from "next/image";
 import { RdPhoto } from "@/src/lib/veliteUtils";
 import { useWindowSize } from "usehooks-ts";
+import { calculateDisplayedDimensions } from "@/src/lib/util";
 
 interface IPhotoCardProps {
   item: RdPhoto;
@@ -57,25 +58,3 @@ const PhotoCard: React.FC<IPhotoCardProps> = ({
 };
 
 export default React.memo(PhotoCard);
-
-function calculateDisplayedDimensions(
-  imageWidth: number,
-  imageHeight: number,
-  maxWidth: number,
-  maxHeight: number,
-): { displayedWidth: number; displayedHeight: number } {
-  const aspectRatio = imageWidth / imageHeight;
-
-  let displayedWidth = maxWidth;
-  let displayedHeight = maxWidth / aspectRatio;
-
-  if (displayedHeight > maxHeight) {
-    displayedHeight = maxHeight;
-    displayedWidth = maxHeight * aspectRatio;
-  }
-
-  return {
-    displayedWidth: displayedWidth,
-    displayedHeight: displayedHeight,
-  };
-}

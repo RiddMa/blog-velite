@@ -17,9 +17,11 @@ tags:
   - rehype
   - Custom Directives
 created: '2024-05-14T09:27:13.000Z'
-updated: '2024-05-29T17:45:24+08:00'
+updated: '2024-05-29T09:45:24.000Z'
 excerpt: >-
   本文详细介绍了如何通过自定义指令扩展Markdown语法，以实现更丰富的文章内容展示，如外链嵌入、图表视频和特殊样式文本等。文章首先解释了自定义指令的概念和格式，然后介绍了`remark`和`rehype`工具链的使用，这些工具用于处理和转换Markdown和HTML内容。接着，文章展示了如何使用`remark-directive`、`remark-directive-rehype`和`rehype-react`插件来实现Markdown到HTML的转换，并进一步将HTML转换为React组件，以便在React应用中渲染。此外，文章还提供了一个实际的代码示例，展示了如何定义和使用这些插件来处理Markdown内容，并将其转换为可在网页上展示的HTML。通过这些技术，作者能够在不修改代码的情况下，通过Markdown文本编辑器向博客中添加复杂组件和可交互内容。
+seoDescription: >-
+  本文详细介绍了如何通过自定义指令扩展Markdown语法，以增加个性化功能，如外链嵌入、图表视频和特殊样式文本等。文章中提到了使用`remark`和`rehype`工具链来处理和转换Markdown和HTML内容，以及如何结合`Velite`定义文档结构和转换逻辑。此外，还展示了如何使用`remark-directive`、`remark-directive-rehype`和`rehype-react`插件来实现自定义指令的解析和转换，以及如何在React应用中渲染这些内容。通过这些技术，可以有效地在Markdown文档中添加复杂组件和交互内容，丰富博客文章的表现形式和功能。
 ---
 
 ## 什么是自定义指令
