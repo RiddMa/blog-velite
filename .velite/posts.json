@@ -50,7 +50,7 @@
     },
     "permalink": "/post/next-js-app-router-page-transition",
     "images": {},
-    "excerptRaw": "在 React 中，由于缺乏组件卸载的生命周期钩子，实现元素退出动画较为困难。通常使用 Framer Motion 的 `<AnimatePresence>` 组件来包裹需要动画的组件以实现此功能。在 Next.js 中，虽然 Page Router 可以正常使用此方法，但 App Router 由于存在 bug，无法正确实现退出动画。解决这一问题的常见方法包括：1) 在路由切换时延迟 DOM 卸载，直到动画播放完毕；2) 修改所有 `<Link>` 的逻辑，先阻止跳转，动画结束后再通过 `router.push()` 触发跳转。然而，方法 2 不适用于浏览器前进 / 后退键触发的路由切换。\n\n针对 Next.js 13 中 App Router 的问题，GitHub 上的 issue (vercel/next.js/issues/49279) 描述了在共享布局动画中出现的多个场景无法正常工作的情况，主要是因为 `OuterLayoutRouter` 组件的插入导致布局组件无法提供正确的退出动画。Stack Overflow 上的一个帖子提出了一个可行的解决方案，通过调整 Next.js 的渲染堆栈或公开导航开始时的 API 事件来解决。\n\n具体的解决方案涉及创建一个 `FrozenRouter` 组件来保持页面切换过程中的上下文持久化，并使用 `PageTransitionEffect` 组件处理页面切换动画。此方法已在 Next.js 14.2.2 版本中验证有效。此外，有人基于此原理开发了 `mekuri` 库，进一步封装了这一解决方案，但其具体效果尚需测试。\n"
+    "excerptRaw": "<p>在 React 中，由于缺乏组件卸载的生命周期钩子，实现元素退出动画较为困难。通常使用 Framer Motion 的 <code>&#x3C;AnimatePresence></code> 组件来包裹需要动画的组件以实现此功能。在 Next.js 中，虽然 Page Router 可以正常使用此方法，但 App Router 由于存在 bug，无法正确实现退出动画。解决这一问题的常见方法包括：1) 在路由切换时延迟 DOM 卸载，直到动画播放完毕；2) 修改所有 <code>&#x3C;Link></code> 的逻辑，先阻止跳转，动画结束后再通过 <code>router.push()</code> 触发跳转。然而，方法 2 不适用于浏览器前进 / 后退键触发的路由切换。</p>\n<p>针对 Next.js 13 中 App Router 的问题，GitHub 上的 issue (vercel/next.js/issues/49279) 描述了在共享布局动画中出现的多个场景无法正常工作的情况，主要是因为 <code>OuterLayoutRouter</code> 组件的插入导致布局组件无法提供正确的退出动画。Stack Overflow 上的一个帖子提出了一个可行的解决方案，通过调整 Next.js 的渲染堆栈或公开导航开始时的 API 事件来解决。</p>\n<p>具体的解决方案涉及创建一个 <code>FrozenRouter</code> 组件来保持页面切换过程中的上下文持久化，并使用 <code>PageTransitionEffect</code> 组件处理页面切换动画。此方法已在 Next.js 14.2.2 版本中验证有效。此外，有人基于此原理开发了 <code>mekuri</code> 库，进一步封装了这一解决方案，但其具体效果尚需测试。</p>"
   },
   {
     "title": "BUPT 校园网 OpenWrt 配置 IPv6",
@@ -196,7 +196,7 @@
         "blurDataURL": "data:image/jpeg;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAAGCAIAAAB1kpiRAAAACXBIWXMAAA7DAAAOwwHHb6hkAAAApklEQVR4nB3Eyw4BMRQA0P4CIeIxzLvtve1tO8+aYCYiiA3+QWLj/9fCWRx2eH6Oj5fb30PpQ9Un9hTpIeDbyFyxfzMsj3U7lFUvZKGp1cYLdCnXQpKwPTOm80Vbu6atfFM0pS0tWUvWEXGhWMaNJSKtFf4AwD9QCjgQ2yQoUWccJBIog9pJNFyqLIfFWrJV7MazfBlSCj6IKIjNdJ6PJpHqdufb5QvF+iC1LsbeHQAAAABJRU5ErkJggg=="
       }
     },
-    "excerptRaw": "作者介绍了一个双网口服务器运行 OpenWrt 虚拟机（称为设备 AIO），以及一台刷 OpenWrt 的红米 AX6S 无线路由器（称为设备 AP）的网络环境。拓扑结构为墙壁有线校园网接口连接到 AIO 的 eth1，AIO 的 eth0 连接到 AP 的 LAN 口。由于 BUPT 校园网分配的 IPv6 地址只能供一台设备使用，因此需要配置 NAT6。\n\n作者参考了南科手册和清华大学的教程，首先更改全局网络选项中的 IPv6 ULA 前缀，然后配置 LAN 接口和 WAN/WAN6 接口的选项。接下来，设置 DHCP/DNS 选项和防火墙规则，加入自定义的 IPv6 转发规则。配置完成后，通过网络诊断功能进行 IPv6 测试，确保能够成功访问 IPv6 网络。\n\n最后，作者介绍了如何通过 SSH 或终端自动配置流量转发路由表，确保连接到主路由的设备能够获取到 IPv6 地址。\n"
+    "excerptRaw": "<p>作者介绍了一个双网口服务器运行 OpenWrt 虚拟机（称为设备 AIO），以及一台刷 OpenWrt 的红米 AX6S 无线路由器（称为设备 AP）的网络环境。拓扑结构为墙壁有线校园网接口连接到 AIO 的 eth1，AIO 的 eth0 连接到 AP 的 LAN 口。由于 BUPT 校园网分配的 IPv6 地址只能供一台设备使用，因此需要配置 NAT6。</p>\n<p>作者参考了南科手册和清华大学的教程，首先更改全局网络选项中的 IPv6 ULA 前缀，然后配置 LAN 接口和 WAN/WAN6 接口的选项。接下来，设置 DHCP/DNS 选项和防火墙规则，加入自定义的 IPv6 转发规则。配置完成后，通过网络诊断功能进行 IPv6 测试，确保能够成功访问 IPv6 网络。</p>\n<p>最后，作者介绍了如何通过 SSH 或终端自动配置流量转发路由表，确保连接到主路由的设备能够获取到 IPv6 地址。</p>"
   },
   {
     "title": "使用 GitHub Actions 部署 Next.js 项目到 VPS",
@@ -371,7 +371,7 @@
         "blurDataURL": "data:image/jpeg;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAAGCAYAAAD68A/GAAAACXBIWXMAABYlAAAWJQFJUiTwAAAApUlEQVR4nCXOSXLDIABEUcqyJcSMANlisHL/S/5UyKLrbf6iRYyRWiv3fdNao/c+HaMzxiCGQB83QmlNjAdj3ORycl2N1sa09y9GG4x1iJwK2gZiabjjg3GZ3aY57Qs+JKSUCGssLiZK/SG9O/64MP7EhhNtM3LXLMsDIYRAKoPPFeUy2+7ZVJg+V8vyXP+i//C1KWz8EFIl5IqN73nDp4vXKmf4Cwm4R4UsrELWAAAAAElFTkSuQmCC"
       }
     },
-    "excerptRaw": "本文详细介绍了如何使用 GitHub Actions 自动化部署 Next.js 项目到 VPS 服务器。首先，配置 SSH 以允许 GitHub Actions 通过 SSH 连接到服务器，包括创建系统用户、生成 SSH 密钥并添加到服务器的 `~/.ssh/authorized_keys`，以及将私钥添加到 GitHub 仓库。接着，通过 GitHub 仓库设置 Secrets，包括项目部署路径、SSH 私钥、服务器 IP 地址、用户名和端口等。\n\n在 GitHub 仓库中创建 `.github/workflows/deploy.yml` 文件，定义了 CI/CD 流程。该流程包括构建和部署两个主要任务。构建任务涉及检出代码、设置 Node.js 环境、安装依赖、构建项目和上传构建产物。部署任务则包括下载构建产物、清理旧构建、通过 SCP 上传新构建文件到服务器、在服务器上安装依赖、运行数据库迁移和重启应用。\n\n此外，文章还提到了在服务器上预先安装依赖和使用 pm2 管理应用的步骤，确保部署过程顺利进行。整个配置确保了项目在每次代码推送到 `master` 分支时都能自动完成构建和部署，提高了开发效率和部署的可靠性。\n"
+    "excerptRaw": "<p>本文详细介绍了如何使用 GitHub Actions 自动化部署 Next.js 项目到 VPS 服务器。首先，配置 SSH 以允许 GitHub Actions 通过 SSH 连接到服务器，包括创建系统用户、生成 SSH 密钥并添加到服务器的 <code>~/.ssh/authorized_keys</code>，以及将私钥添加到 GitHub 仓库。接着，通过 GitHub 仓库设置 Secrets，包括项目部署路径、SSH 私钥、服务器 IP 地址、用户名和端口等。</p>\n<p>在 GitHub 仓库中创建 <code>.github/workflows/deploy.yml</code> 文件，定义了 CI/CD 流程。该流程包括构建和部署两个主要任务。构建任务涉及检出代码、设置 Node.js 环境、安装依赖、构建项目和上传构建产物。部署任务则包括下载构建产物、清理旧构建、通过 SCP 上传新构建文件到服务器、在服务器上安装依赖、运行数据库迁移和重启应用。</p>\n<p>此外，文章还提到了在服务器上预先安装依赖和使用 pm2 管理应用的步骤，确保部署过程顺利进行。整个配置确保了项目在每次代码推送到 <code>master</code> 分支时都能自动完成构建和部署，提高了开发效率和部署的可靠性。</p>"
   },
   {
     "title": "实现 Masonry 布局",
@@ -528,7 +528,7 @@
         "blurDataURL": "data:image/jpeg;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAAJCAYAAAALpr0TAAAACXBIWXMAABYlAAAWJQFJUiTwAAABX0lEQVR4nB3FzSuDcQDA8d9B/hQXLxc3eUubkUmPkpqtlXnZ2GQb83gbw8z7NtoLJjYvUQ7CQU4or0dbWinLS3HwVhyUw1c5fPqI4NImPYMTeKZDTPoXGfPOM+4NMzUXwR+O/b+yuYtI3L0Sv/8gnnoj9fLF08cvqbcfbp+/Sd6//7t5+EQMObvRqItwT48iD/bS3KjHaDGjlqrQNGiQdNWYOjoQdlsbNapiQuEINqcLZbmSzJws8pUKSuv1ZJeX0NglI5yOJtTVFUi2KWRDIS5zDaceF5czIwxYtWytRDg6PkeoKpXoFen4rbnkZKQRmOhmecyJx25gfd5Fl6UB2SEjzDYrhto83O2VGHVlLEcjyFYdDm0BUe8A7XUSck8/4jDm42zWxOOBn0TUwd54MztGBYmgiYtwG1dDEtt9LYiDmI/LoInrjWEuFjrZ81pYbVGRCLSS3PdxIqtZc9v5A6KH5+00e46UAAAAAElFTkSuQmCC"
       }
     },
-    "excerptRaw": "Masonry 布局是一种常用于网页设计的布局方式，特别适合展示图片、卡片等内容块。这种布局模仿砖石墙的排列方式，不同高度的内容块紧密排列，最大化利用空间，使得页面看起来更加紧凑和美观。Masonry 布局的特点包括非均匀排列、动态填充和响应式设计。实现 Masonry 布局的方式有多种，包括使用 JavaScript 库如 Masonry.js 和 Isotope，以及利用 CSS Grid 和 Flexbox 技术。\n\n在实际应用中，Masonry 布局常与行密铺和列密铺布局结合使用，这些布局都是处理不同长宽比元素的有效方法。例如，React Photo Album 库支持这三种布局，可以根据不同需求选择合适的布局方式。此外，文章还介绍了如何手动实现 Masonry 布局，通过创建一个名为 WaterfallGrid 的 React 组件，该组件能够根据屏幕宽度动态调整内容块的排列方式，实现美观且响应式的页面布局。\n\n通过这些技术，开发者可以有效地在网页上展示各种内容，无论是图片、文章还是其他形式的信息，都能以最佳的方式呈现给用户。\n"
+    "excerptRaw": "<p>Masonry 布局是一种常用于网页设计的布局方式，特别适合展示图片、卡片等内容块。这种布局模仿砖石墙的排列方式，不同高度的内容块紧密排列，最大化利用空间，使得页面看起来更加紧凑和美观。Masonry 布局的特点包括非均匀排列、动态填充和响应式设计。实现 Masonry 布局的方式有多种，包括使用 JavaScript 库如 Masonry.js 和 Isotope，以及利用 CSS Grid 和 Flexbox 技术。</p>\n<p>在实际应用中，Masonry 布局常与行密铺和列密铺布局结合使用，这些布局都是处理不同长宽比元素的有效方法。例如，React Photo Album 库支持这三种布局，可以根据不同需求选择合适的布局方式。此外，文章还介绍了如何手动实现 Masonry 布局，通过创建一个名为 WaterfallGrid 的 React 组件，该组件能够根据屏幕宽度动态调整内容块的排列方式，实现美观且响应式的页面布局。</p>\n<p>通过这些技术，开发者可以有效地在网页上展示各种内容，无论是图片、文章还是其他形式的信息，都能以最佳的方式呈现给用户。</p>"
   },
   {
     "title": "在 Markdown 中使用自定义指令，并渲染为 React 组件",
@@ -615,7 +615,7 @@
     },
     "permalink": "/post/use-custom-directives-in-markdown-render-as-react-components",
     "images": {},
-    "excerptRaw": "本文探讨了如何通过自定义指令扩展 Markdown 语法，以实现更丰富的文章内容展示，如外链嵌入、图表视频和特殊样式文本等。作者提到，使用自定义指令旨在替代 MDX 的部分功能，因为 MDX 与 Markdown 不完全兼容，可能导致旧数据迁移困难和编译错误。文章详细介绍了自定义指令的三种格式：内联指令、叶块指令和容器块指令，并提供了相关示例和详细信息链接。\n\n此外，文章还介绍了 `remark` 和 `rehype` 这两个工具链，它们用于处理和转换 Markdown 和 HTML 内容。`remark` 用于解析和转换 Markdown，而 `rehype` 用于解析和转换 HTML。两者结合使用，可以实现从 Markdown 到 HTML 的转换，并进行额外的处理，如代码块的语法高亮。\n\n作者还分享了其在博客中使用 `Velite` 定义 Markdown 文档结构和转换逻辑的实践，以及如何使用 `remark` 和 `rehype` 插件来处理 Markdown 内容。文章最后展示了如何通过 `remark-directive`、`remark-directive-rehype` 和 `rehype-react` 这三个插件实现自定义指令的处理，以及如何在 React 应用中渲染这些内容。通过这些方法，作者成功地在 Markdown 中嵌入了复杂组件和交互内容，增强了博客的展示效果和用户体验。\n"
+    "excerptRaw": "<p>本文探讨了如何通过自定义指令扩展 Markdown 语法，以实现更丰富的文章内容展示，如外链嵌入、图表视频和特殊样式文本等。作者提到，使用自定义指令旨在替代 MDX 的部分功能，因为 MDX 与 Markdown 不完全兼容，可能导致旧数据迁移困难和编译错误。文章详细介绍了自定义指令的三种格式：内联指令、叶块指令和容器块指令，并提供了相关示例和详细信息链接。</p>\n<p>此外，文章还介绍了 <code>remark</code> 和 <code>rehype</code> 这两个工具链，它们用于处理和转换 Markdown 和 HTML 内容。<code>remark</code> 用于解析和转换 Markdown，而 <code>rehype</code> 用于解析和转换 HTML。两者结合使用，可以实现从 Markdown 到 HTML 的转换，并进行额外的处理，如代码块的语法高亮。</p>\n<p>作者还分享了其在博客中使用 <code>Velite</code> 定义 Markdown 文档结构和转换逻辑的实践，以及如何使用 <code>remark</code> 和 <code>rehype</code> 插件来处理 Markdown 内容。文章最后展示了如何通过 <code>remark-directive</code>、<code>remark-directive-rehype</code> 和 <code>rehype-react</code> 这三个插件实现自定义指令的处理，以及如何在 React 应用中渲染这些内容。通过这些方法，作者成功地在 Markdown 中嵌入了复杂组件和交互内容，增强了博客的展示效果和用户体验。</p>"
   },
   {
     "title": "Next.js 14 照片相册的实现与优化",
@@ -649,7 +649,7 @@
     },
     "permalink": "/post/next-js-photo-gallery-implementation-optimization",
     "images": {},
-    "excerptRaw": "1"
+    "excerptRaw": "<p>1</p>"
   },
   {
     "title": "在 Windows 浏览器中实现 macOS 风格的滚动条",
@@ -683,7 +683,7 @@
     },
     "permalink": "/post/macos-like-scrollbar-in-windows-browser",
     "images": {},
-    "excerptRaw": "本文深入探讨了CSS中滚动条槽（scrollbar gutter）的概念及其在网页设计中的应用。滚动条槽是指浏览器窗口中滚动条占据的空间，它对于确保页面内容在滚动条出现或消失时保持稳定布局至关重要。文章首先介绍了如何使用CSS属性`scrollbar-gutter`来预留滚动条空间，从而避免内容跳动，提升用户体验。接着，文章通过实例展示了如何利用这一属性在不同浏览器中实现页面滚动条的自适应布局，确保页面在各种设备和浏览器环境下都能保持一致的视觉效果。此外，文章还提供了来自Mozilla开发者网络（MDN）和GitHub的资源链接，供读者进一步学习和探索CSS滚动条槽的高级用法和最佳实践。通过这些内容，读者可以更好地理解并掌握滚动条槽在现代网页设计中的重要性，以及如何有效地运用它来优化页面布局。"
+    "excerptRaw": "<p>本文深入探讨了CSS中滚动条槽（scrollbar gutter）的概念及其在网页设计中的应用。滚动条槽是指浏览器窗口中滚动条占据的空间，它对于确保页面内容在滚动条出现或消失时保持稳定布局至关重要。文章首先介绍了如何使用CSS属性<code>scrollbar-gutter</code>来预留滚动条空间，从而避免内容跳动，提升用户体验。接着，文章通过实例展示了如何利用这一属性在不同浏览器中实现页面滚动条的自适应布局，确保页面在各种设备和浏览器环境下都能保持一致的视觉效果。此外，文章还提供了来自Mozilla开发者网络（MDN）和GitHub的资源链接，供读者进一步学习和探索CSS滚动条槽的高级用法和最佳实践。通过这些内容，读者可以更好地理解并掌握滚动条槽在现代网页设计中的重要性，以及如何有效地运用它来优化页面布局。</p>"
   },
   {
     "title": "《让子弹飞》“剧情梗概”",
@@ -722,6 +722,6 @@
     },
     "permalink": "/post/let-the-bullets-fly-full-dialogue",
     "images": {},
-    "excerptRaw": "《让子弹飞》是一部由姜文执导并主演的中国电影，融合了动作、喜剧和黑色幽默的元素。电影的背景设定在20世纪20年代的中国，讲述了一位劫匪张牧之（姜文饰）和一位腐败的县长黄四郎（周润发饰）之间的斗争。\n\n故事开始于张牧之劫持了一列火车，并遇到了前县长马邦德（葛优饰）。马邦德原本打算到鹅城上任新县长，但在被劫后，他提议张牧之冒充县长，以便一起从鹅城中捞取好处。张牧之同意了这个提议，并带着自己的兄弟们前往鹅城。\n\n在鹅城，张牧之发现镇上被黄四郎所控制，百姓生活在压迫之中。黄四郎是一个权力至上的人物，利用各种手段来维持自己的地位和利益。他与张牧之之间开始了一系列的明争暗斗，黄四郎试图用金钱、暴力和计谋来打压张牧之，但张牧之和他的团队并不轻易屈服。\n\n随着剧情的推进，张牧之用智慧和勇气逐步瓦解了黄四郎的权力结构。他不仅揭露了黄四郎的恶行，还赢得了鹅城百姓的信任和支持。最终，张牧之通过一场大规模的对抗，彻底击败了黄四郎，解放了鹅城的百姓。\n\n电影通过张牧之与黄四郎之间的对决，探讨了权力、正义与民众之间的关系。姜文通过夸张的手法和幽默的表现，讽刺了社会中的腐败与不公。同时，电影中的动作场面和精彩对白也为观众带来了强烈的视觉和听觉冲击，使其成为一部兼具深度与娱乐性的经典作品。\n"
+    "excerptRaw": "<p>《让子弹飞》是一部由姜文执导并主演的中国电影，融合了动作、喜剧和黑色幽默的元素。电影的背景设定在20世纪20年代的中国，讲述了一位劫匪张牧之（姜文饰）和一位腐败的县长黄四郎（周润发饰）之间的斗争。</p>\n<p>故事开始于张牧之劫持了一列火车，并遇到了前县长马邦德（葛优饰）。马邦德原本打算到鹅城上任新县长，但在被劫后，他提议张牧之冒充县长，以便一起从鹅城中捞取好处。张牧之同意了这个提议，并带着自己的兄弟们前往鹅城。</p>\n<p>在鹅城，张牧之发现镇上被黄四郎所控制，百姓生活在压迫之中。黄四郎是一个权力至上的人物，利用各种手段来维持自己的地位和利益。他与张牧之之间开始了一系列的明争暗斗，黄四郎试图用金钱、暴力和计谋来打压张牧之，但张牧之和他的团队并不轻易屈服。</p>\n<p>随着剧情的推进，张牧之用智慧和勇气逐步瓦解了黄四郎的权力结构。他不仅揭露了黄四郎的恶行，还赢得了鹅城百姓的信任和支持。最终，张牧之通过一场大规模的对抗，彻底击败了黄四郎，解放了鹅城的百姓。</p>\n<p>电影通过张牧之与黄四郎之间的对决，探讨了权力、正义与民众之间的关系。姜文通过夸张的手法和幽默的表现，讽刺了社会中的腐败与不公。同时，电影中的动作场面和精彩对白也为观众带来了强烈的视觉和听觉冲击，使其成为一部兼具深度与娱乐性的经典作品。</p>"
   }
 ]
