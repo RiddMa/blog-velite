@@ -1,5 +1,5 @@
 .prose-article {
-  @apply prose prose-slate w-full min-w-0 max-w-none dark:prose-invert leading-normal prose-a:transition-apple ;
+  @apply prose prose-slate w-full min-w-0 max-w-none dark:prose-invert leading-normal transition-apple tracking-wide;
   @apply text-slate-700 dark:text-slate-300;
   @apply prose-h1:text-2xl xl:prose-h1:text-3xl prose-h1:my-4 prose-h1:font-semibold prose-h1:text-slate-950 prose-h1:dark:text-white;
   @apply prose-h2:text-xl xl:prose-h2:text-2xl prose-h2:my-4 prose-h2:font-semibold prose-h2:text-slate-950 prose-h2:dark:text-white;
@@ -7,7 +7,7 @@
   @apply prose-h4:text-lg prose-h4:font-semibold prose-h4:text-slate-900 prose-h4:dark:text-white;
   @apply prose-pre:m-0 prose-pre:p-0 prose-pre:font-mono prose-pre:text-slate-700 prose-pre:dark:text-slate-300;
   @apply prose-code:px-1 prose-code:mx-0 prose-code:font-mono prose-code:rounded-md prose-code:bg-neutral-400/20 dark:prose-code:bg-neutral-400/20 prose-code:text-slate-700 prose-code:dark:text-slate-300;
-  @apply prose-a:underline prose-a:underline-offset-0 hover:prose-a:underline-offset-4 prose-a:text-sky-700 hover:prose-a:text-sky-500 dark:prose-a:text-sky-400 dark:hover:prose-a:text-sky-300 prose-a:font-normal prose-a:decoration-transparent hover:prose-a:decoration-inherit;
+  @apply prose-a:transition-apple prose-a:underline prose-a:underline-offset-0 hover:prose-a:underline-offset-4 prose-a:text-sky-700 hover:prose-a:text-sky-500 dark:prose-a:text-sky-400 dark:hover:prose-a:text-sky-300 prose-a:font-normal prose-a:decoration-transparent hover:prose-a:decoration-inherit;
   word-break: break-word;
   word-wrap: break-word;
   -webkit-hyphens: auto;
@@ -26,7 +26,7 @@
 }
 
 .prose-article-card {
-  @apply prose prose-sm dark:prose-invert prose-slate max-w-none transition-all duration-300 ease-apple leading-normal;
+  @apply prose prose-sm dark:prose-invert prose-slate min-w-0 max-w-none transition-apple leading-normal tracking-wide;
   @apply text-base text-slate-700 dark:text-slate-300;
   @apply prose-h1:text-xl md:prose-h1:text-xl prose-h1:my-2 prose-h1:font-semibold prose-h1:text-slate-900 prose-h1:dark:text-white;
   @apply prose-h2:text-lg md:prose-h2:text-lg prose-h2:my-2 prose-h2:font-semibold prose-h2:text-slate-900 prose-h2:dark:text-white;
@@ -42,6 +42,7 @@
   -ms-hyphens: auto;
   -moz-hyphens: auto;
   hyphens: auto;
+  transition: all 300ms;
 }
 
 .text-body {
@@ -72,19 +73,19 @@
 }
 
 .text-h0 {
-  @apply my-2 text-3xl xl:text-4xl font-bold leading-normal;
+  @apply text-3xl xl:text-4xl font-bold leading-normal text-slate-900 dark:text-white;
 }
 
 .text-h1 {
-  @apply my-2 text-2xl xl:text-3xl font-semibold leading-normal text-slate-900 dark:text-white;
+  @apply text-2xl xl:text-3xl font-semibold leading-normal text-slate-900 dark:text-white;
 }
 
 .text-h2 {
-  @apply my-2 text-xl xl:text-2xl font-semibold leading-normal text-slate-900 dark:text-white;
+  @apply text-xl xl:text-2xl font-semibold leading-normal text-slate-900 dark:text-white;
 }
 
 .text-h3 {
-  @apply my-2 text-lg xl:text-xl font-semibold leading-normal text-slate-900 dark:text-white;
+  @apply text-lg xl:text-xl font-semibold leading-normal text-slate-900 dark:text-white;
 }
 
 .text-href {

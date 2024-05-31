@@ -4,12 +4,11 @@ import type { Metadata } from "next";
 import { getPostBySlug } from "@/src/store/velite";
 import PostComment from "@/src/components/PostComment";
 import BlogHtmlRenderer from "@/src/components/markdown/BlogHtmlRenderer";
-import React from "react";
+import React, { useMemo } from "react";
 import Image from "next/image";
-import { BackButton } from "@/src/components/BackButton";
 import { calculateDisplayedDimensions } from "@/src/lib/util";
-import { Icon } from "@iconify-icon/react";
 import { Link } from "@/src/components/transition/react-transition-progress/next";
+import dayjs from "@/src/store/day";
 
 interface PostProps {
   params: {
@@ -74,6 +73,29 @@ export default function PostPage({ params }: PostProps) {
   if (!post) notFound();
   const { permalink, title, cover, content, images } = post;
 
+  const updatedReminder = useMemo(() => {
+    const date = dayjs(post.updated);
+    const threshold = { years: 0, months: 6 };
+
+    // 计算年和月的差异
+    const now = dayjs();
+    const years = now.diff(date, "year");
+    const months = now.diff(date.add(years, "year"), "month");
+
+    let text = "文章最后编辑于";
+    if (years !== 0) {
+      text += ` ${years} 年`;
+    }
+    if (months !== 0) {
+      text += ` ${months} 个月`;
+    }
+    text += "前，其中的信息可能时效性欠佳。";
+    return {
+      show: years > threshold.years || (years === threshold.years && months > threshold.months),
+      text: text,
+    };
+  }, [post.updated]);
+
   return (
     <article className="prose-article">
       <Link href="/posts" className="w-full">
@@ -90,7 +112,7 @@ export default function PostPage({ params }: PostProps) {
           <Image
             src={cover.src}
             alt={cover.src}
-            className="rounded-2xl mx-auto"
+            className="rounded-3xl mx-auto"
             width={cover.width}
             height={cover.height}
             placeholder="blur"
@@ -100,7 +122,7 @@ export default function PostPage({ params }: PostProps) {
           />
         </>
       )}
-      <br />
+      {updatedReminder.show && <p>{updatedReminder.text}</p>}
       <BlogHtmlRenderer html={content} imgMap={images} />
       <PostComment />
     </article>

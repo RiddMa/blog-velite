@@ -59,7 +59,7 @@ export default function CategoryPage({ params, searchParams }: CategoryProps) {
 
   return (
     <div className="flex flex-col">
-      <BlogIndexNav path={`/categories`} />
+      <BlogIndexNav path={`/categories`} className="-mx-post" />
       <div className="prose-article">
         <MotionH1 keyName={`category-title-${category.permalink}`}>{category.name}</MotionH1>
         <MotionDiv keyName={`category-description-${category.permalink}`}>

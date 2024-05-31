@@ -15,7 +15,7 @@ export default function ColumnListPage({ params }: ColumnListProps) {
   return (
     <>
       <div className="flex flex-col">
-        <BlogIndexNav path={`/columns`} />
+        <BlogIndexNav path={`/columns`} className="-mx-post" />
         <p className="prose-article text-end opacity-80">{columns.length}个专栏</p>
         {/*// @ts-ignore // TS cannot infer the type of CardComponent*/}
         <WaterfallGrid items={columns} CardComponent={ColumnCard} />

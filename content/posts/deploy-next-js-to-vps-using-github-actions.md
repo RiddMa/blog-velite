@@ -15,20 +15,15 @@ tags:
   - PM2
   - SSH
 created: '2024-05-12T19:43:56.000Z'
-updated: '2024-05-30T16:42:19+08:00'
-excerpt: >-
-  本文详细介绍了如何使用GitHub Actions自动化部署Next.js项目到VPS服务器。首先，配置SSH以允许GitHub
-  Actions通过SSH连接到服务器，包括创建系统用户、生成SSH密钥并添加到服务器的`~/.ssh/authorized_keys`，以及将私钥添加到GitHub仓库。接着，通过GitHub仓库设置Secrets，包括项目部署路径、SSH私钥、服务器IP地址、用户名和端口等。
+updated: '2024-05-30T08:42:19.000Z'
+excerpt: |
+  本文详细介绍了如何使用 GitHub Actions 自动化部署 Next.js 项目到 VPS 服务器。首先，配置 SSH 以允许 GitHub Actions 通过 SSH 连接到服务器，包括创建系统用户、生成 SSH 密钥并添加到服务器的 `~/.ssh/authorized_keys`，以及将私钥添加到 GitHub 仓库。接着，通过 GitHub 仓库设置 Secrets，包括项目部署路径、SSH 私钥、服务器 IP 地址、用户名和端口等。
 
+  在 GitHub 仓库中创建 `.github/workflows/deploy.yml` 文件，定义了 CI/CD 流程。该流程包括构建和部署两个主要任务。构建任务涉及检出代码、设置 Node.js 环境、安装依赖、构建项目和上传构建产物。部署任务则包括下载构建产物、清理旧构建、通过 SCP 上传新构建文件到服务器、在服务器上安装依赖、运行数据库迁移和重启应用。
 
-  在GitHub仓库中创建`.github/workflows/deploy.yml`文件，定义了CI/CD流程。该流程包括构建和部署两个主要任务。构建任务涉及检出代码、设置Node.js环境、安装依赖、构建项目和上传构建产物。部署任务则包括下载构建产物、清理旧构建、通过SCP上传新构建文件到服务器、在服务器上安装依赖、运行数据库迁移和重启应用。
-
-
-  此外，文章还提到了在服务器上预先安装依赖和使用pm2管理应用的步骤，确保部署过程顺利进行。整个配置确保了项目在每次代码推送到`master`分支时都能自动完成构建和部署，提高了开发效率和部署的可靠性。
-seoDescription: >-
-  本文详细介绍了如何使用GitHub Actions自动化部署Next.js项目到VPS服务器。首先配置SSH允许GitHub
-  Actions通过SSH连接服务器，然后生成SSH密钥并添加到服务器和GitHub仓库。接着，设置GitHub Actions
-  Workflow，包括配置仓库Secrets和创建CI/CD流程。文章还提供了详细的YAML配置文件，涵盖了从代码检出、环境设置、依赖安装、项目构建到部署的完整流程，确保项目在每次代码推送时自动完成构建和部署。此外，还介绍了如何在VPS服务器上安装依赖并使用pm2管理应用，以及如何检查Actions的运行效果。
+  此外，文章还提到了在服务器上预先安装依赖和使用 pm2 管理应用的步骤，确保部署过程顺利进行。整个配置确保了项目在每次代码推送到 `master` 分支时都能自动完成构建和部署，提高了开发效率和部署的可靠性。
+seoDescription: |
+  本文详细介绍了如何使用 GitHub Actions 自动化部署 Next.js 项目到 VPS 服务器。首先配置 SSH 允许 GitHub Actions 通过 SSH 连接服务器，然后生成 SSH 密钥并添加到服务器和 GitHub 仓库。接着，设置 GitHub Actions Workflow，包括配置仓库 Secrets 和创建 CI/CD 流程。文章还提供了详细的 YAML 配置文件，涵盖了从代码检出、环境设置、依赖安装、项目构建到部署的完整流程，确保项目在每次代码推送时自动完成构建和部署。此外，还介绍了如何在 VPS 服务器上安装依赖并使用 pm2 管理应用，以及如何检查 Actions 的运行效果。
 ---
 
 ## 流程

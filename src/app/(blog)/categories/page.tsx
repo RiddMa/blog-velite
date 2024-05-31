@@ -14,7 +14,7 @@ export default function CategoryListPage({ params }: CategoryListProps) {
   return (
     <>
       <main className="flex flex-col">
-        <BlogIndexNav path={`/categories`} />
+        <BlogIndexNav path={`/categories`} className="-mx-post" />
         <p className="prose-article text-end opacity-80">{categories.length}个分类</p>
         {/*// @ts-ignore // TS cannot infer the type of CardComponent*/}
         <WaterfallGrid items={categories} CardComponent={CategoryCard} />

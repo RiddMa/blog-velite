@@ -59,7 +59,7 @@ export default function ColumnPage({ params, searchParams }: ColumnProps) {
 
   return (
     <div className="flex flex-col">
-      <BlogIndexNav path={`/columns`} />
+      <BlogIndexNav path={`/columns`} className="-mx-post" />
       <div className="prose-article">
         <MotionH1 keyName={`column-title-${column.permalink}`}>{column.name}</MotionH1>
         <MotionDiv keyName={`column-description-${column.permalink}`}>

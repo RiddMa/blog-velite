@@ -21,32 +21,16 @@ tags:
   - Bug
 created: '2024-05-16T06:29:52.000Z'
 updated: '2024-05-30T22:36:30+08:00'
-excerpt: >-
-  在React中，由于缺乏组件卸载的生命周期钩子，实现元素退出动画较为困难。通常使用Framer
-  Motion的`<AnimatePresence>`组件来包裹需要动画的组件以实现此功能。在Next.js中，虽然Page
-  Router可以正常使用此方法，但App Router由于存在bug，无法正确实现退出动画。
+excerpt: | 
+  在 React 中，由于缺乏组件卸载的生命周期钩子，实现元素退出动画较为困难。通常使用 Framer Motion 的 `<AnimatePresence>` 组件来包裹需要动画的组件以实现此功能。在 Next.js 中，虽然 Page Router 可以正常使用此方法，但 App Router 由于存在 bug，无法正确实现退出动画。解决这一问题的常见方法包括：1) 在路由切换时延迟 DOM 卸载，直到动画播放完毕；2) 修改所有 `<Link>` 的逻辑，先阻止跳转，动画结束后再通过 `router.push()` 触发跳转。然而，方法 2 不适用于浏览器前进 / 后退键触发的路由切换。
 
+  针对 Next.js 13 中 App Router 的问题，GitHub 上的 issue (vercel/next.js/issues/49279) 描述了在共享布局动画中出现的多个场景无法正常工作的情况，主要是因为 `OuterLayoutRouter` 组件的插入导致布局组件无法提供正确的退出动画。Stack Overflow 上的一个帖子提出了一个可行的解决方案，通过调整 Next.js 的渲染堆栈或公开导航开始时的 API 事件来解决。
 
-  解决这一问题的常见方法包括：1) 在路由切换时延迟DOM卸载，直到动画播放完毕；2)
-  修改所有`<Link>`的逻辑，先阻止跳转，动画结束后再通过`router.push()`触发跳转。然而，方法2不适用于浏览器前进/后退键触发的路由切换。
-
-
-  针对Next.js 13中App Router的问题，GitHub上的issue
-  [[NEXT-1151]](https://github.com/vercel/next.js/issues/49279)
-  描述了在共享布局动画中出现的多个场景无法正常工作的情况，主要是因为`OuterLayoutRouter`组件的插入导致布局组件无法提供正确的退出动画。Stack
-  Overflow上的一个帖子提出了一个可行的解决方案，通过调整Next.js的渲染堆栈或公开导航开始时的API事件来解决。
-
-
-  具体的解决方案涉及创建一个`FrozenRouter`组件来保持页面切换过程中的上下文持久化，并使用`PageTransitionEffect`组件处理页面切换动画。此方法已在Next.js
-  14.2.2版本中验证有效。此外，有人基于此原理开发了`mekuri`库，进一步封装了这一解决方案，但其具体效果尚需测试。
-seoDescription: >-
-  在Next.js中使用Framer Motion实现App
-  Router的路由动画时，由于React未提供组件卸载的生命周期钩子，导致退出动画实现困难。虽然Next.js的Page
-  Router可以通过包裹组件实现退出动画，但App
-  Router因存在bug，无法正确执行。解决方案包括延迟DOM卸载直到动画播放完毕，或修改链接逻辑以在动画后触发路由跳转。特别地，针对Next.js
-  13的app目录下使用Framer
-  Motion的共享布局动画问题，建议调整渲染堆栈或公开导航API事件。此外，一个名为FrozenRouter的组件被提出，用于保持页面切换时的上下文一致性，确保动画效果的平滑过渡。
+  具体的解决方案涉及创建一个 `FrozenRouter` 组件来保持页面切换过程中的上下文持久化，并使用 `PageTransitionEffect` 组件处理页面切换动画。此方法已在 Next.js 14.2.2 版本中验证有效。此外，有人基于此原理开发了 `mekuri` 库，进一步封装了这一解决方案，但其具体效果尚需测试。
+seoDescription: | 
+  在 Next.js 中使用 Framer Motion 实现 App Router 的路由动画时，由于 React 未提供组件卸载的生命周期钩子，导致退出动画实现困难。虽然 Next.js 的 Page Router 可以通过包裹组件实现退出动画，但 App Router 因存在 bug，无法正确执行。解决方案包括延迟 DOM 卸载直到动画播放完毕，或修改链接逻辑以在动画后触发路由跳转。特别地，针对 Next.js 13 的 app 目录下使用 Framer Motion 的共享布局动画问题，建议调整渲染堆栈或公开导航 API 事件。此外，一个名为 FrozenRouter 的组件被提出，用于保持页面切换时的上下文一致性，确保动画效果的平滑过渡。
 ---
+
 
 ## 背景
 
