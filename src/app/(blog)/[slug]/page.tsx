@@ -4,8 +4,6 @@ import BlogHtmlRenderer from "@/src/components/markdown/BlogHtmlRenderer";
 import { getPageBySlug } from "@/src/store/velite";
 import { globals, pages, posts } from "@/.velite";
 import { notFound } from "next/navigation";
-import { MotionH1 } from "@/src/components/transition/MotionH1";
-import { MotionDiv } from "@/src/components/transition/MotionDiv";
 import Image from "next/image";
 import PostComment from "@/src/components/PostComment";
 
@@ -47,27 +45,22 @@ function Page({ params }: PageProps) {
 
   return (
     <article className="prose-article">
-      <MotionH1 keyName={`post-title-${permalink}`} className={`text-center`}>
-        {title}
-      </MotionH1>
+      <h1 className={`text-center`}>{title}</h1>
       {cover && (
         <>
-          <MotionDiv keyName={`post-cover-${permalink}`}>
-            <Image
-              src={cover.src}
-              alt={`cover image`}
-              className="rounded-2xl"
-              width={cover.width}
-              height={cover.height}
-              placeholder="blur"
-              blurDataURL={cover.blurDataURL}
-              priority={true}
-              style={{ margin: 0 }}
-            />
-          </MotionDiv>
+          <Image
+            src={cover.src}
+            alt={cover.src}
+            className="rounded-3xl mx-auto"
+            width={cover.width}
+            height={cover.height}
+            placeholder="blur"
+            blurDataURL={cover.blurDataURL}
+            priority={true}
+            style={{ marginBottom: 0 }}
+          />
         </>
       )}
-      <br />
       <BlogHtmlRenderer html={content} imgMap={images} />
       <PostComment />
     </article>
