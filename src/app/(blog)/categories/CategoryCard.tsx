@@ -31,7 +31,7 @@ export const CategoryCard: React.FC<ICategoryCardProps> = ({ item: category, img
 
   return (
     <div ref={cardRef} key={`card-container-${permalink}`}>
-      <Link href={permalink} className={cn(`card prose-article-card flex flex-col p-4`)}>
+      <Link href={permalink} className={cn("rd-card prose-article-card flex flex-col p-4")}>
         {cover && (
           <div className="relative z-[1]">
             <Image

@@ -142,7 +142,7 @@ body.dark {
   padding-bottom: calc(100vh - 100dvh + 16px);
 }
 
-.card {
+.rd-card {
   @apply bg-white/75 hover:bg-white/90 dark:bg-zinc-900/70 hover:dark:bg-zinc-800/70;
   @apply outline outline-2 outline-black/5 hover:outline-black/10 dark:outline-white/10 dark:hover:outline-white/20;
   @apply rounded-3xl transition-apple drop-shadow-lg hover:drop-shadow-2xl;

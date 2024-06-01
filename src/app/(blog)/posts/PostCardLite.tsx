@@ -34,7 +34,7 @@ export const PostCardLite: React.FC<IPostCardProps> = ({ item: post, imgWidth })
       onHoverEnd={() => setIsHovered(false)}
       className={``}
     >
-      <Link href={permalink} className={`card group prose-article-card flex flex-col p-4`}>
+      <Link href={permalink} className={`rd-card group prose-article-card flex flex-col p-4`}>
         {cover && (
           <motion.div
             className={`relative z-[1] m-0 p-0`}

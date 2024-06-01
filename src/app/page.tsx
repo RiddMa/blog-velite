@@ -104,7 +104,7 @@ export default function Home() {
 
           {/*<div className="-mx-4">*/}
           {/*  <NeonGradientCard className="flex flex-col">*/}
-          {/*    <div className="relative prose-article-card">*/}
+          {/*    <div className="relative prose-article-rd-card">*/}
           {/*      <h1 className="flex items-center">*/}
           {/*        博客*/}
           {/*        <span className="icon-[ooui--articles-ltr] mt-0.5" />*/}
@@ -120,7 +120,7 @@ export default function Home() {
           {/*</div>*/}
           {/*<div className="-mx-4">*/}
           {/*  <NeonGradientCard className="flex flex-col">*/}
-          {/*    <div className="relative prose-article-card">*/}
+          {/*    <div className="relative prose-article-rd-card">*/}
           {/*      <h1 className="flex items-center">*/}
           {/*        相册*/}
           {/*        <span className="icon-[heroicons--photo-solid] mt-0.5" />*/}
@@ -134,7 +134,7 @@ export default function Home() {
           {/*    </div>*/}
           {/*  </NeonGradientCard>*/}
           {/*</div>*/}
-          <div key="card-container-post" className="card flex flex-col pt-4 px-4 pb-4 -mx-4">
+          <div key="card-container-post" className="rd-card flex flex-col pt-4 px-4 pb-4 -mx-4">
             <Link href="/posts" className="relative prose-article-card">
               <h1 className="flex flex-row">
                 博客
@@ -146,7 +146,7 @@ export default function Home() {
               </button>
             </Link>
           </div>
-          <div key="card-container-gallery" className="card flex flex-col pt-4 px-4 pb-3 -mx-4 h-[135px]">
+          <div key="card-container-gallery" className="rd-card flex flex-col pt-4 px-4 pb-3 -mx-4 h-[135px]">
             <div className="absolute inset-0 gradient-blur h-full w-[200px] -z-40" />
             <Link href="/gallery" className="relative prose-article-card">
               <h1 className="flex flex-row">

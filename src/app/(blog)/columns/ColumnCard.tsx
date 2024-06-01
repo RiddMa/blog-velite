@@ -24,7 +24,7 @@ export const ColumnCard: React.FC<IColumnCardProps> = ({ item: column, imgWidth,
 
   return (
     <div ref={cardRef} key={`card-container-${permalink}`}>
-      <Link href={permalink} className={cn(`card prose-article-card flex flex-col p-4`)}>
+      <Link href={permalink} className={cn("rd-card prose-article-card flex flex-col p-4")}>
         <div className="relative z-[2]">
           <h1
             key={`column-title-${permalink}`}

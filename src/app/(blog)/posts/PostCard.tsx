@@ -58,8 +58,8 @@ const PostCard: React.FC<IPostCardProps> = ({ item: post, imgWidth, isMobile = f
 
   if (draft) {
     return (
-      <div key={`card-container-${permalink}`} className={cn(`card prose-article-card flex flex-col p-4`)}>
-        <div className="card absolute inset-0 w-full h-full bg-white-50/50 dark:bg-black/50 z-[3] flex items-center justify-center backdrop-blur-[1px]">
+      <div key={`card-container-${permalink}`} className={cn("rd-card prose-article-card flex flex-col p-4")}>
+        <div className="rd-card absolute inset-0 w-full h-full bg-white-50/50 dark:bg-black/50 z-[3] flex items-center justify-center backdrop-blur-[1px]">
           <h1 className="w-fit">填坑中…</h1>
         </div>
         {cover && (
@@ -110,7 +110,7 @@ const PostCard: React.FC<IPostCardProps> = ({ item: post, imgWidth, isMobile = f
       onMouseLeave={() => !isMobile && setIsHovered(false)}
       // onClick={() => setIsClicked(true)}
     >
-      <Link href={permalink} className={cn(`card prose-article-card flex flex-col p-4`)}>
+      <Link href={permalink} className={cn("rd-card prose-article-card flex flex-col p-4")}>
         {cover && (
           <div className="relative z-[1]">
             <Image

@@ -20,7 +20,7 @@ export const ContentCard: React.FC<IContentCardProps> = ({ className, cover, tit
     <div
       ref={cardRef}
       key={`card-container-${title}`}
-      className={cn(`card prose-article-card flex flex-col p-4`, className)}
+      className={cn("rd-card prose-article-card flex flex-col p-4", className)}
     >
       {cover && (
         <div className="relative">

@@ -58,8 +58,10 @@ const PostFilterWidget: React.FC<{
   return (
     <aside className={`flex flex-col gap-4 px-0`}>
       <p className={`text-h2`}>过滤器</p>
+      <p>修复中……</p>
       <Select
-        isDisabled={!!useColumn}
+        // isDisabled={!!useColumn}
+        isDisabled={true}
         label="专栏"
         selectionMode="multiple"
         placeholder="筛选专栏"
@@ -73,7 +75,8 @@ const PostFilterWidget: React.FC<{
         ))}
       </Select>
       <Select
-        isDisabled={!!useCategory}
+        // isDisabled={!!useCategory}
+        isDisabled={true}
         label="分类"
         selectionMode="multiple"
         placeholder="筛选分类"
@@ -87,7 +90,8 @@ const PostFilterWidget: React.FC<{
         ))}
       </Select>
       <Select
-        isDisabled={!!useTag}
+        // isDisabled={!!useTag}
+        isDisabled={true}
         label="标签"
         selectionMode="multiple"
         placeholder="筛选标签"

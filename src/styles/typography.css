@@ -1,5 +1,5 @@
 .prose-article {
-  @apply prose prose-slate w-full min-w-0 max-w-none dark:prose-invert leading-normal transition-apple;
+  @apply prose prose-slate w-full min-w-0 max-w-none dark:prose-invert leading-normal transition-all ease-apple duration-300;
   @apply text-slate-700 dark:text-slate-300;
   @apply prose-h1:text-2xl xl:prose-h1:text-3xl prose-h1:my-4 prose-h1:font-semibold prose-h1:text-slate-950 prose-h1:dark:text-white;
   @apply prose-h2:text-xl xl:prose-h2:text-2xl prose-h2:my-4 prose-h2:font-semibold prose-h2:text-slate-950 prose-h2:dark:text-white;

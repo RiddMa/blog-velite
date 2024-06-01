@@ -36,7 +36,7 @@ function ExifPanel(props: { showExif: boolean; rdPhoto: RdPhoto }) {
   return (
     <div
       className={cn(
-        "card fixed backdrop-blur-bg top-[60px] right-[16px] max-w-[300px] max-h-[calc(100vh-120px)] z-[999999] p-4 flex flex-col gap-4 transition-apple",
+        "rd-card fixed backdrop-blur-bg top-[60px] right-[16px] max-w-[300px] max-h-[calc(100vh-120px)] z-[999999] p-4 flex flex-col gap-4",
         props.showExif ? "" : "translate-x-[calc(100%+20px)]",
       )}
     >
@@ -160,7 +160,7 @@ const SwiperLightbox: React.FC<{ images: RdPhoto[]; autoplay?: boolean; maxHeigh
   };
 
   return (
-    <div ref={galleryRef}>
+    <>
       <AnimatePresence>
         {lightboxActive && (
           <motion.button
@@ -181,39 +181,41 @@ const SwiperLightbox: React.FC<{ images: RdPhoto[]; autoplay?: boolean; maxHeigh
         )}
       </AnimatePresence>
       <ExifPanel showExif={showExif} rdPhoto={images[(activeIndex + 1) % images.length]} />
-      {/*activeIndex={activeIndex}*/}
-      <Swiper
-        ref={swiperRef}
-        className="my-swiper"
-        spaceBetween={16}
-        slidesPerView={"auto"}
-        centeredSlides={isMobile}
-        grabCursor={true}
-        autoplay={autoplay ? { delay: 5000, disableOnInteraction: true, pauseOnMouseEnter: true } : false}
-        loop={true}
-        modules={[Autoplay, Pagination]}
-      >
-        {images.map((image, index) => (
-          <SwiperSlide key={image.slug} style={{ width: "auto" }}>
-            <a
-              href={image.src}
-              data-pswp-width={image.width}
-              data-pswp-height={image.height}
-              onClick={() => setSwiperAutoplay(false)}
-            >
-              <PhotoCard
-                key={image.slug}
-                item={image}
-                maxWidth={maxWidth}
-                maxHeight={maxH}
-                priority={true}
-                className="carousel-item"
-              />
-            </a>
-          </SwiperSlide>
-        ))}
-      </Swiper>
-    </div>
+      <div ref={galleryRef}>
+        {/*activeIndex={activeIndex}*/}
+        <Swiper
+          ref={swiperRef}
+          className="my-swiper"
+          spaceBetween={16}
+          slidesPerView={"auto"}
+          centeredSlides={isMobile}
+          grabCursor={true}
+          autoplay={autoplay ? { delay: 5000, disableOnInteraction: true, pauseOnMouseEnter: true } : false}
+          loop={true}
+          modules={[Autoplay, Pagination]}
+        >
+          {images.map((image, index) => (
+            <SwiperSlide key={image.slug} style={{ width: "auto" }}>
+              <a
+                href={image.src}
+                data-pswp-width={image.width}
+                data-pswp-height={image.height}
+                onClick={() => setSwiperAutoplay(false)}
+              >
+                <PhotoCard
+                  key={image.slug}
+                  item={image}
+                  maxWidth={maxWidth}
+                  maxHeight={maxH}
+                  priority={true}
+                  className="carousel-item"
+                />
+              </a>
+            </SwiperSlide>
+          ))}
+        </Swiper>
+      </div>
+    </>
   );
 };
 
